@@ -38,6 +38,8 @@ Productivity app that connects schedules with calendars, tasks, and daily schedu
 * To-do list is organized by priority, and can be resorted by creation date, due date, etc.
 * Users can share calendars/events with other users, and other users can accept invitations to these calendars/events
 * Reminders screen where users can see upcoming reminders they set and change/remove them
+* User profile that can show stats (like number of tasks completed)
+* Goal setting screen: let the user set personal goals (can be added to the calendar as well)
 
 ### 2. Screen Archetypes
 
@@ -84,10 +86,40 @@ Productivity app that connects schedules with calendars, tasks, and daily schedu
 <img src="Media/Wireframes.png" width=600>
 
 ## Schema 
-[This section will be completed in Unit 9]
 ### Models
-[Add table of models]
+
+#### User
+| Property | Type | Description |
+| -------- | -------- | -------- |
+| objectId | String | id for event object (default field) |
+| username | String | user's username |
+| password | String | user's password |
+| createdAt | DateTime | date when user was created (default field) |
+| updatedAt | DateTime | date when user was last updated (default field) |
+
+#### Event/Task
+| Property | Type | Description |
+| -------- | -------- | -------- |
+| objectId | String | id for event object (default field) |
+| author | Pointer to user | author of the event |
+| description | String | description of event by author |
+| notes | String | extra notes for the event |
+| location | String | event/task location |
+| remindTime | DateTime | date/time when user should receive a notification of the event |
+| startTime | DateTime | date and time when an event starts |
+| endTime | DateTime | date and time when an event ends (tasks only have end) |
+| createdAt | DateTime | date when event was created (default field) |
+| updatedAt | DateTime | date when event was last updated (default field) |
+
 ### Networking
-- [Add list of network requests by screen ]
-- [Create basic snippets for each Parse network request]
-- [OPTIONAL: List endpoints if using existing API such as Yelp]
+- Login screen
+    - (Read/GET) Login to an existing user's account/attempt login
+    - (Create/POST) Create a new user object when clicking sign up
+- Calendar (Daily/Weekly/Monthly)
+    - (Read/GET) query events/tasks that should show up on the relevant calendar
+- To-do list
+    - (Read/GET) query tasks that should show up on the to-do list
+- Create task/event screen
+    - (Create/POST) Create new task/event
+    - (Delete) Delete an existing task/event
+    - (Update/PUT) Update an existing task/event
