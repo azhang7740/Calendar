@@ -81,19 +81,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="npo-IQ-ZZG" customClass="FSCalendar">
-                                <rect key="frame" x="100" y="287" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="npo-IQ-ZZG" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="nyZ-bV-9pE" id="cxV-AF-l9M"/>
+                                    <outlet property="delegate" destination="nyZ-bV-9pE" id="akZ-BK-Ick"/>
                                 </connections>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="4X5-0B-rgV"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="4X5-0B-rgV" firstAttribute="bottom" secondItem="npo-IQ-ZZG" secondAttribute="bottom" id="KLQ-VL-6D2"/>
+                            <constraint firstItem="npo-IQ-ZZG" firstAttribute="leading" secondItem="4X5-0B-rgV" secondAttribute="leading" id="jCf-tZ-nC2"/>
+                            <constraint firstItem="npo-IQ-ZZG" firstAttribute="top" secondItem="4X5-0B-rgV" secondAttribute="top" id="nui-rg-1sL"/>
+                            <constraint firstItem="4X5-0B-rgV" firstAttribute="trailing" secondItem="npo-IQ-ZZG" secondAttribute="trailing" id="qMY-yj-hUY"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="WT7-O6-hqi"/>
+                    <connections>
+                        <outlet property="calendarView" destination="npo-IQ-ZZG" id="F29-pc-Qaz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1s9-Gy-NVH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
