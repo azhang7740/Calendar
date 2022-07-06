@@ -16,14 +16,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="osa-ut-j84" customClass="FSCalendar">
-                                <rect key="frame" x="87" y="297" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="osa-ut-j84" customClass="FSCalendar">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="osa-ut-j84" secondAttribute="trailing" id="eZj-2B-tgh"/>
+                            <constraint firstItem="osa-ut-j84" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="fat-c8-eeZ"/>
+                            <constraint firstItem="osa-ut-j84" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="fdG-yS-zuT"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="osa-ut-j84" secondAttribute="bottom" id="j4j-Wj-aOh"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="odN-rd-hkJ"/>
                     <connections>

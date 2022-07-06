@@ -24,6 +24,7 @@
 		413DE54F2876200A00CCF8E1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 413DE54E2876200A00CCF8E1 /* Keys.plist */; };
 		413DE55228762C1E00CCF8E1 /* CalendarView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55128762C1E00CCF8E1 /* CalendarView.storyboard */; };
 		413DE55428762DB300CCF8E1 /* TodoView.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoView.storyboard */; };
+		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
 		9ABC58D574AD5DE147CC020D /* libPods-CalendarTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */; };
 		A9F8029960C8174E0677EDC8 /* libPods-Calendar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 428F343F06B776A65B2D51DE /* libPods-Calendar.a */; };
 		E102A5E6C44E47B4940A94BB /* libPods-Calendar-CalendarUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57BE2F214487C13945C1F83 /* libPods-Calendar-CalendarUITests.a */; };
@@ -76,6 +77,8 @@
 		413DE54E2876200A00CCF8E1 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		413DE55128762C1E00CCF8E1 /* CalendarView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CalendarView.storyboard; sourceTree = "<group>"; };
 		413DE55328762DB300CCF8E1 /* TodoView.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoView.storyboard; sourceTree = "<group>"; };
+		413DE558287634A700CCF8E1 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
+		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		428F343F06B776A65B2D51DE /* libPods-Calendar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calendar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CalendarTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		504796EDD91AE659F6D184A1 /* Pods-Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar.release.xcconfig"; path = "Target Support Files/Pods-Calendar/Pods-Calendar.release.xcconfig"; sourceTree = "<group>"; };
@@ -139,8 +142,10 @@
 		413DE5072874B39200CCF8E1 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
+				413DE5572876349A00CCF8E1 /* Views */,
+				413DE55628762F5200CCF8E1 /* Parse Handlers */,
+				413DE55528762F4200CCF8E1 /* Models */,
 				413DE55028762BD000CCF8E1 /* Storyboards */,
-				413DE54728761E9100CCF8E1 /* Action Handlers */,
 				413DE53D2876009D00CCF8E1 /* View Controllers */,
 				413DE5082874B39200CCF8E1 /* AppDelegate.h */,
 				413DE5092874B39200CCF8E1 /* AppDelegate.m */,
@@ -184,17 +189,6 @@
 			path = "View Controllers";
 			sourceTree = "<group>";
 		};
-		413DE54728761E9100CCF8E1 /* Action Handlers */ = {
-			isa = PBXGroup;
-			children = (
-				413DE54828761EBE00CCF8E1 /* AuthenticationHandler.h */,
-				413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */,
-				413DE54928761EBE00CCF8E1 /* LogoutHandler.h */,
-				413DE54B28761EBF00CCF8E1 /* LogoutHandler.m */,
-			);
-			path = "Action Handlers";
-			sourceTree = "<group>";
-		};
 		413DE55028762BD000CCF8E1 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
@@ -204,6 +198,33 @@
 				413DE55128762C1E00CCF8E1 /* CalendarView.storyboard */,
 			);
 			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		413DE55528762F4200CCF8E1 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		413DE55628762F5200CCF8E1 /* Parse Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				413DE54828761EBE00CCF8E1 /* AuthenticationHandler.h */,
+				413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */,
+				413DE54928761EBE00CCF8E1 /* LogoutHandler.h */,
+				413DE54B28761EBF00CCF8E1 /* LogoutHandler.m */,
+			);
+			path = "Parse Handlers";
+			sourceTree = "<group>";
+		};
+		413DE5572876349A00CCF8E1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				413DE558287634A700CCF8E1 /* LoginView.h */,
+				413DE559287634A700CCF8E1 /* LoginView.m */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		F795144D40A42030DEA6F66C /* Pods */ = {
@@ -473,6 +494,7 @@
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
 				413DE54D28761EBF00CCF8E1 /* LogoutHandler.m in Sources */,
+				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
