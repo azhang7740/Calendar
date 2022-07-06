@@ -10,7 +10,7 @@
 
 @interface CalendarViewController ()
 
-@property (weak, nonatomic) IBOutlet FSCalendar *calendarView;
+@property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
 
 @end
 
