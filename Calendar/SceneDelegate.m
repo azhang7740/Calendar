@@ -6,6 +6,7 @@
 //
 
 #import "SceneDelegate.h"
+#import <Parse/Parse.h>
 
 @interface SceneDelegate ()
 
@@ -15,9 +16,12 @@
 
 
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session options:(UISceneConnectionOptions *)connectionOptions {
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    UIViewController *homeTabBarController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
-    self.window.rootViewController = homeTabBarController;
+    PFUser *currentUser = [PFUser currentUser];
+    if (currentUser) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        UIViewController *homeTabBarController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
+        self.window.rootViewController = homeTabBarController;
+    }
 }
 
 
