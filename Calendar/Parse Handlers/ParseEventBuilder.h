@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ParseEventBuilder : NSObject
 
-+ (Event *)getEventFromParseEvent:(ParseEvent *)parseEvent;
-+ (NSMutableArray<Event *> *)getEventsFromParseEventArray:(NSArray<ParseEvent *> *)parseEvents;
+- (Event *)getEventFromParseEvent:(ParseEvent *)parseEvent;
+- (NSMutableArray<Event *> *)getEventsFromParseEventArray:(NSArray<ParseEvent *> *)parseEvents;
 
 @end
 

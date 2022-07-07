@@ -9,7 +9,7 @@
 
 @implementation ParseEventBuilder
 
-+ (Event *)getEventFromParseEvent:(ParseEvent *)parseEvent {
+- (Event *)getEventFromParseEvent:(ParseEvent *)parseEvent {
     Event *canonicalEvent = [[Event alloc] init];
     if (!parseEvent.objectId ||
         !parseEvent.author ||
@@ -42,7 +42,7 @@
     return canonicalEvent;
 }
 
-+ (NSMutableArray<Event *> *)getEventsFromParseEventArray:(NSArray<ParseEvent *> *)parseEvents {
+- (NSMutableArray<Event *> *)getEventsFromParseEventArray:(NSArray<ParseEvent *> *)parseEvents {
     NSMutableArray<Event *> *canonicalEvents = [[NSMutableArray alloc] init];
     for (int i = 0; i < canonicalEvents.count; i++) {
         [canonicalEvents addObject:[self getEventFromParseEvent:parseEvents[i]]];

@@ -21,14 +21,12 @@
     [super viewDidLoad];
 }
 
-
-
 - (IBAction)onTapCancel:(id)sender {
-    
+    [self.delegate didTapCancel];
 }
 
 - (IBAction)onTapCreate:(id)sender {
-    
+
 }
 
 - (IBAction)onTapOutside:(id)sender {
