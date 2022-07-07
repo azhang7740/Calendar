@@ -7,11 +7,14 @@
 
 #import "CalendarViewController.h"
 #import "ComposeViewController.h"
+
 #import "FSCalendar/FSCalendar.h"
+#import "ParseEventHandler.h"
 
 @interface CalendarViewController () <ComposeViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
+@property (nonatomic) ParseEventHandler *parseHandler;
 
 @end
 
@@ -19,6 +22,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.parseHandler = [[ParseEventHandler alloc] init];
 }
 
 - (IBAction)onTapCompose:(id)sender {
@@ -34,7 +39,8 @@
 }
 
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
-    // communicate with parse
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.parseHandler uploadToParseWithEvent:event];
 }
 
 @end

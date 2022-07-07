@@ -42,8 +42,6 @@
     Event *newEvent = [[Event alloc] init];
     newEvent.eventTitle = self.composeView.titleTextField.text;
     newEvent.objectUUID = [NSUUID UUID];
-    newEvent.updatedAt = [NSDate date];
-    newEvent.createdAt = [NSDate date];
     
     newEvent.authorUsername = self.currentUserName;
     newEvent.location = self.composeView.locationTextField.text;

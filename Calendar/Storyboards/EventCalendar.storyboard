@@ -15,20 +15,8 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3SI-Tp-z0s" customClass="FSCalendar">
-                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="3SI-Tp-z0s" secondAttribute="trailing" id="1xr-aO-4R7"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="3SI-Tp-z0s" secondAttribute="bottom" id="aVO-sE-gEO"/>
-                            <constraint firstItem="3SI-Tp-z0s" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="bTh-yQ-BQg"/>
-                            <constraint firstItem="3SI-Tp-z0s" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="kCH-ea-28b"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="odN-rd-hkJ">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="1fE-4q-zyH">
