@@ -129,20 +129,20 @@
             </objects>
             <point key="canvasLocation" x="753.62318840579712" y="44.866071428571423"/>
         </scene>
-        <!--TodoView-->
+        <!--TodoList-->
         <scene sceneID="JjU-dq-Sd5">
             <objects>
-                <viewControllerPlaceholder storyboardName="TodoView" id="2Zu-WM-Iil" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="TodoList" id="2Zu-WM-Iil" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="0Tz-Wq-SDI"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y1h-YC-VQ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1456" y="45"/>
         </scene>
-        <!--CalendarView-->
+        <!--EventCalendar-->
         <scene sceneID="r4v-tI-39m">
             <objects>
-                <viewControllerPlaceholder storyboardName="CalendarView" id="Kpv-zp-TWh" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="EventCalendar" id="Kpv-zp-TWh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="tuN-tp-OYN"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vx9-RT-yJK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

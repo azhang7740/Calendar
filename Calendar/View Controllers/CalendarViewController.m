@@ -20,4 +20,10 @@
     [super viewDidLoad];
 }
 
+- (IBAction)onTapCompose:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Compose" bundle:[NSBundle mainBundle]];
+    UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
+   [self presentViewController:composeNavigationController animated:YES completion:nil];
+}
+
 @end
