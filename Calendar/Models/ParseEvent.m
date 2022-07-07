@@ -10,6 +10,7 @@
 @implementation ParseEvent
 
 @dynamic objectId;
+@dynamic objectUUID;
 @dynamic updatedAt;
 @dynamic createdAt;
 

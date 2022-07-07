@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ComposeScrollView : UIScrollView
 
+@property (nonatomic) IBOutlet UILabel *errorLabel;
 @property (nonatomic) IBOutlet UITextField *titleTextField;
 @property (nonatomic) IBOutlet UIDatePicker *startDatePicker;
 @property (nonatomic) IBOutlet UIDatePicker *endDatePicker;

@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSString *eventTitle;
 @property (nonatomic) NSString *authorUsername;
 @property (nonatomic) NSString *eventDescription;
-@property (nonatomic)  NSString *location;
+@property (nonatomic) NSString *location;
 
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) NSDate *endDate;
