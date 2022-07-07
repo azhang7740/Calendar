@@ -13,6 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ParseEvent : PFObject<PFSubclassing>
 
 @property (nonatomic) NSString *objectId;
+@property (nonatomic) NSString *objectUUID;
 @property (nonatomic) NSDate *updatedAt;
 @property (nonatomic) NSDate *createdAt;
 

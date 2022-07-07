@@ -22,6 +22,14 @@
     canonicalEvent.createdAt = parseEvent.createdAt;
     canonicalEvent.updatedAt = parseEvent.updatedAt;
     
+    if (!parseEvent.objectUUID ||
+        [parseEvent.objectUUID isEqual:[NSNull null]] ||
+        ![parseEvent.objectUUID isKindOfClass:NSString.class] ||
+        parseEvent.objectUUID.length == 0) {
+        return nil;
+    }
+    canonicalEvent.objectUUID = [[NSUUID alloc] initWithUUIDString:parseEvent.objectUUID];
+    
     if (!parseEvent.eventTitle ||
         [parseEvent.eventTitle isEqual:[NSNull null]] ||
         parseEvent.eventTitle.length == 0) {
@@ -44,8 +52,8 @@
 
 - (NSMutableArray<Event *> *)getEventsFromParseEventArray:(NSArray<ParseEvent *> *)parseEvents {
     NSMutableArray<Event *> *canonicalEvents = [[NSMutableArray alloc] init];
-    for (int i = 0; i < canonicalEvents.count; i++) {
-        [canonicalEvents addObject:[self getEventFromParseEvent:parseEvents[i]]];
+    for (ParseEvent *event in parseEvents) {
+        [canonicalEvents addObject:[self getEventFromParseEvent:event]];
     }
     return canonicalEvents;
 }

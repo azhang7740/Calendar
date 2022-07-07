@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface Event : NSObject
 
 @property (nonatomic) NSString *parseObjectId;
+@property (nonatomic) NSUUID *objectUUID;
 @property (nonatomic) NSDate *updatedAt;
 @property (nonatomic) NSDate *createdAt;
 
