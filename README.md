@@ -29,7 +29,8 @@ Productivity app that connects schedules with calendars, tasks, and daily schedu
 * Calendar: Users can add things to a calendar 
 * Schedule: Users can create a daily schedule and view their schedule of the day
 * To-do list: Users can create a to-do list
-* Reminders: Users can set reminders and notifications for scheduled items or tasks
+* Offline/online syncing using CoreData
+* Import/export specific events to apple calendar using EventKit
 * Login: Users can log in and log out to their account, and they can see calendars/schedules based on the account they are logged in to. 
 
 **Optional Nice-to-have Stories**
@@ -37,6 +38,7 @@ Productivity app that connects schedules with calendars, tasks, and daily schedu
 * Calendar can be imported/exported from apple calendar and/or google calendar
 * To-do list is organized by priority, and can be resorted by creation date, due date, etc.
 * Users can share calendars/events with other users, and other users can accept invitations to these calendars/events
+* Reminders: Users can set reminders and notifications for scheduled items or tasks
 * Reminders screen where users can see upcoming reminders they set and change/remove them
 * User profile that can show stats (like number of tasks completed)
 * Goal setting screen: let the user set personal goals (can be added to the calendar as well)
