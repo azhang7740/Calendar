@@ -12,6 +12,7 @@
 		410A1022287744120023F523 /* ComposeScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1021287744120023F523 /* ComposeScrollView.m */; };
 		410A1025287749770023F523 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1024287749770023F523 /* Event.m */; };
 		410A1028287749860023F523 /* ParseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1027287749860023F523 /* ParseEvent.m */; };
+		410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102A28774BE50023F523 /* ParseEventBuilder.m */; };
 		413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5092874B39200CCF8E1 /* AppDelegate.m */; };
 		413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE50C2874B39200CCF8E1 /* SceneDelegate.m */; };
 		413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE5112874B39200CCF8E1 /* Main.storyboard */; };
@@ -63,6 +64,8 @@
 		410A1024287749770023F523 /* Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		410A1026287749860023F523 /* ParseEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEvent.h; sourceTree = "<group>"; };
 		410A1027287749860023F523 /* ParseEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEvent.m; sourceTree = "<group>"; };
+		410A102928774BE50023F523 /* ParseEventBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEventBuilder.h; sourceTree = "<group>"; };
+		410A102A28774BE50023F523 /* ParseEventBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEventBuilder.m; sourceTree = "<group>"; };
 		413DE5052874B39200CCF8E1 /* Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		413DE5082874B39200CCF8E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		413DE5092874B39200CCF8E1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -235,6 +238,8 @@
 				413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */,
 				413DE54928761EBE00CCF8E1 /* LogoutHandler.h */,
 				413DE54B28761EBF00CCF8E1 /* LogoutHandler.m */,
+				410A102928774BE50023F523 /* ParseEventBuilder.h */,
+				410A102A28774BE50023F523 /* ParseEventBuilder.m */,
 			);
 			path = "Parse Handlers";
 			sourceTree = "<group>";
@@ -519,6 +524,7 @@
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
+				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				413DE54D28761EBF00CCF8E1 /* LogoutHandler.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
