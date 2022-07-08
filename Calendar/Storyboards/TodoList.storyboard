@@ -28,7 +28,7 @@
         <scene sceneID="nvM-71-fE4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6Q1-Iu-qVr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="To-Do" id="5b4-C8-EkK"/>
+                    <tabBarItem key="tabBarItem" title="To-Do" image="book.closed" catalog="system" id="5b4-C8-EkK"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EbG-bS-XlV">
@@ -46,6 +46,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="book.closed" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
