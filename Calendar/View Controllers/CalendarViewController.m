@@ -33,10 +33,14 @@
     [super viewDidLoad];
     
     self.parseHandler = [[ParseEventHandler alloc] init];
-    self.scheduleView.scheduleTableView.delegate = self;
-    self.scheduleView.scheduleTableView.dataSource = self;
     self.scheduleCellDecorator = [[ScheduleCellDecorator alloc] init];
     self.date = [NSDate date];
+    
+    self.scheduleView.scheduleTableView.delegate = self;
+    self.scheduleView.scheduleTableView.dataSource = self;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE, MMM d, yyyy"];
+    self.scheduleView.dateLabel.text = [dateFormatter stringFromDate:self.date];
     
     UINib *nib = [UINib nibWithNibName:@"ScheduleCell" bundle:nil];
     [self.scheduleView.scheduleTableView registerNib:nib forCellReuseIdentifier:@"ScheduleCellId"];
