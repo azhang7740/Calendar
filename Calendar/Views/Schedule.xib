@@ -11,6 +11,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScheduleView">
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="dkC-9b-O09"/>
+                <outlet property="dateLabel" destination="60d-Kr-ZGq" id="2ry-fz-SKn"/>
                 <outlet property="scheduleTableView" destination="2dM-SC-sob" id="6de-oW-WAU"/>
             </connections>
         </placeholder>
@@ -20,19 +21,27 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="2dM-SC-sob">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                    <rect key="frame" x="0.0" y="94" width="414" height="768"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </tableView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="60d-Kr-ZGq">
+                    <rect key="frame" x="10" y="54" width="115.5" height="30"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="2dM-SC-sob" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="6E9-Wk-0E7"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="2dM-SC-sob" secondAttribute="trailing" id="8Dn-IT-bVQ"/>
-                <constraint firstItem="2dM-SC-sob" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="Xb3-Rh-F9H"/>
+                <constraint firstItem="2dM-SC-sob" firstAttribute="top" secondItem="60d-Kr-ZGq" secondAttribute="bottom" constant="10" id="ATE-c1-PTQ"/>
+                <constraint firstItem="60d-Kr-ZGq" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="10" id="ds6-5c-b1G"/>
+                <constraint firstItem="60d-Kr-ZGq" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="10" id="rdn-Uv-RRo"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="2dM-SC-sob" secondAttribute="bottom" id="tKj-tg-md9"/>
             </constraints>
-            <point key="canvasLocation" x="132" y="79"/>
+            <point key="canvasLocation" x="131.8840579710145" y="78.348214285714278"/>
         </view>
     </objects>
     <resources>

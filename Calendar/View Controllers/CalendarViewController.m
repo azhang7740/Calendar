@@ -10,6 +10,7 @@
 
 #import "ScheduleView.h"
 #import "ScheduleCell.h"
+#import "ScheduleCellDecorator.h"
 
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
@@ -18,7 +19,11 @@
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
 @property (weak, nonatomic) IBOutlet ScheduleView *scheduleView;
+
 @property (nonatomic) ParseEventHandler *parseHandler;
+@property (nonatomic) ScheduleCellDecorator *scheduleCellDecorator;
+@property (nonatomic) NSMutableArray<Event *> *events;
+@property (nonatomic) NSDate *date;
 
 @end
 
@@ -30,10 +35,12 @@
     self.parseHandler = [[ParseEventHandler alloc] init];
     self.scheduleView.scheduleTableView.delegate = self;
     self.scheduleView.scheduleTableView.dataSource = self;
+    self.scheduleCellDecorator = [[ScheduleCellDecorator alloc] init];
+    self.date = [NSDate date];
     
     UINib *nib = [UINib nibWithNibName:@"ScheduleCell" bundle:nil];
     [self.scheduleView.scheduleTableView registerNib:nib forCellReuseIdentifier:@"ScheduleCellId"];
-    self.scheduleView.scheduleTableView.rowHeight = 200;
+    self.scheduleView.scheduleTableView.rowHeight = 150;
     [self.scheduleView.scheduleTableView reloadData];
 }
 
@@ -57,8 +64,10 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ScheduleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScheduleCellId"
                                                          forIndexPath:indexPath];
-    cell.eventTitleLabel.text = @"HI";
-    cell.timeLabel.text = @"1:00am";
+    [self.scheduleCellDecorator decorateCell:cell
+                                   indexPath:indexPath
+                                      events:(NSArray *)self.events
+                                    pageDate:self.date];
     return cell;
 }
 

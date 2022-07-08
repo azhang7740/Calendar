@@ -11,6 +11,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScheduleView : UIView
 
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UITableView *scheduleTableView;
 
 @end

@@ -13,7 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScheduleCellDecorator : NSObject
 
-- (instancetype)init;
 - (void)decorateCell:(ScheduleCell *)cell
            indexPath:(NSIndexPath *)indexPath
               events:(NSArray<Event *> *)events
