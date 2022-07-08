@@ -184,9 +184,9 @@
 		413DE5072874B39200CCF8E1 /* Calendar */ = {
 			isa = PBXGroup;
 			children = (
-				412D3A2E2878C0190023C9AA /* Decorators */,
-				413DE5572876349A00CCF8E1 /* Views */,
 				413DE55628762F5200CCF8E1 /* Parse Handlers */,
+				413DE5572876349A00CCF8E1 /* Views */,
+				412D3A2E2878C0190023C9AA /* Decorators */,
 				413DE55528762F4200CCF8E1 /* Models */,
 				413DE55028762BD000CCF8E1 /* Storyboards */,
 				413DE53D2876009D00CCF8E1 /* View Controllers */,

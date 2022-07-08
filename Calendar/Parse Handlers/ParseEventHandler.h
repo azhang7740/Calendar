@@ -10,10 +10,19 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol ParseEventHandlerDelegate
+
+- (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events;
+- (void)failedRequestWithMessage:(NSString *)errorMessage;
+
+@end
+
 @interface ParseEventHandler : NSObject
 
+@property (weak, nonatomic) id<ParseEventHandlerDelegate> delegate;
+
 - (void)uploadToParseWithEvent:(Event *)newEvent;
-- (NSArray<Event *> *)queryUserEvents;
+- (NSArray<Event *> *)queryUserEventsAfterDate:(NSDate *)date;
 
 @end
 

@@ -6,7 +6,7 @@
 //
 
 #import "ParseEventHandler.h"
-#import "ParseEvent.h"
+#import "ParseEventBuilder.h"
 
 @implementation ParseEventHandler
 
@@ -23,13 +23,36 @@
     
     [newParseEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (!succeeded) {
-
+            [self.delegate failedRequestWithMessage:@"Failed to upload to Parse."];
         }
     }];
 }
 
-- (NSArray<Event *> *)queryUserEvents {
+- (NSArray<Event *> *)queryUserEventsAfterDate:(NSDate *)date {
     NSArray<Event *> *events = [[NSArray alloc] init];
+    
+    PFUser *currentUser = [PFUser currentUser];
+    ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query orderByAscending:@"startDate"];
+    [query includeKey:@"author"];
+    [query includeKey:@"createdAt"];
+    [query includeKey:@"updatedAt"];
+    
+    [query whereKey:@"author" equalTo:currentUser];
+    [query whereKey:@"startDate" greaterThan:date];
+    query.limit = 20;
+
+    [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
+        if (parseEvents) {
+            NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
+            [self.delegate successfullyQueriedWithEvents:queriedEvents];
+        } else {
+            [self.delegate failedRequestWithMessage:@"Failed to query posts."];
+        }
+    }];
+    
+    
     return events;
 }
 
