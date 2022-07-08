@@ -15,7 +15,7 @@
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
 @property (weak, nonatomic) IBOutlet ScheduleView *scheduleView;
@@ -33,6 +33,7 @@
     [super viewDidLoad];
     
     self.parseHandler = [[ParseEventHandler alloc] init];
+    self.parseHandler.delegate = self;
     self.scheduleCellDecorator = [[ScheduleCellDecorator alloc] init];
     self.date = [NSDate date];
     
@@ -45,7 +46,20 @@
     UINib *nib = [UINib nibWithNibName:@"ScheduleCell" bundle:nil];
     [self.scheduleView.scheduleTableView registerNib:nib forCellReuseIdentifier:@"ScheduleCellId"];
     self.scheduleView.scheduleTableView.rowHeight = 150;
+    [self fetchData];
+}
+
+- (void)fetchData {
+    [self.parseHandler queryUserEventsOnDate:self.date];
+}
+
+- (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events {
+    self.events = events;
     [self.scheduleView.scheduleTableView reloadData];
+}
+
+- (void)failedRequestWithMessage:(NSString *)errorMessage {
+    
 }
 
 - (IBAction)onTapCompose:(id)sender {

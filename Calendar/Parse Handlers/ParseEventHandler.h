@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) id<ParseEventHandlerDelegate> delegate;
 
 - (void)uploadToParseWithEvent:(Event *)newEvent;
-- (NSArray<Event *> *)queryUserEventsAfterDate:(NSDate *)date;
+- (NSArray<Event *> *)queryUserEventsOnDate:(NSDate *)date;
 
 @end
 

@@ -7,23 +7,7 @@
 
 #import "ScheduleCellDecorator.h"
 
-@interface ScheduleCellDecorator ()
-
-@property (nonatomic) NSDateFormatter *dateFormatter;
-
-@end
-
 @implementation ScheduleCellDecorator
-
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        self.dateFormatter = [[NSDateFormatter alloc] init];
-        [self.dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE, MMM d, yyyy"];
-        
-    }
-    return self;
-}
 
 - (void)decorateCell:(ScheduleCell *)cell
            indexPath:(NSIndexPath *)indexPath

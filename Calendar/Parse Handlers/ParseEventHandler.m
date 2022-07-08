@@ -28,20 +28,29 @@
     }];
 }
 
-- (NSArray<Event *> *)queryUserEventsAfterDate:(NSDate *)date {
+- (NSArray<Event *> *)queryUserEventsOnDate:(NSDate *)date {
     NSArray<Event *> *events = [[NSArray alloc] init];
     
     PFUser *currentUser = [PFUser currentUser];
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    query.limit = 20;
+
     [query orderByAscending:@"startDate"];
     [query includeKey:@"author"];
     [query includeKey:@"createdAt"];
     [query includeKey:@"updatedAt"];
-    
     [query whereKey:@"author" equalTo:currentUser];
-    [query whereKey:@"startDate" greaterThan:date];
-    query.limit = 20;
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
+    [query whereKey:@"startDate" greaterThan:midnightDate];
+    
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = 1;
+    NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:midnightDate options:0];
+    [query whereKey:@"startDate" lessThan:nextDate];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
         if (parseEvents) {
