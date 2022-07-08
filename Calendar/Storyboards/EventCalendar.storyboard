@@ -15,8 +15,20 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhZ-AE-fRr" customClass="ScheduleView">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="mhZ-AE-fRr" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="GMX-uE-xm4"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="mhZ-AE-fRr" secondAttribute="trailing" id="PTT-Uj-z3h"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="mhZ-AE-fRr" secondAttribute="bottom" id="j2y-6N-QYj"/>
+                            <constraint firstItem="mhZ-AE-fRr" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="w0m-Yp-cYf"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="odN-rd-hkJ">
                         <barButtonItem key="rightBarButtonItem" style="plain" id="1fE-4q-zyH">
@@ -31,6 +43,9 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="scheduleView" destination="mhZ-AE-fRr" id="Ipm-iS-hEm"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

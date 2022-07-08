@@ -8,12 +8,16 @@
 #import "CalendarViewController.h"
 #import "ComposeViewController.h"
 
+#import "ScheduleView.h"
+#import "ScheduleCell.h"
+
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate>
+@interface CalendarViewController () <ComposeViewControllerDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
+@property (weak, nonatomic) IBOutlet ScheduleView *scheduleView;
 @property (nonatomic) ParseEventHandler *parseHandler;
 
 @end
@@ -24,6 +28,13 @@
     [super viewDidLoad];
     
     self.parseHandler = [[ParseEventHandler alloc] init];
+    self.scheduleView.scheduleTableView.delegate = self;
+    self.scheduleView.scheduleTableView.dataSource = self;
+    
+    UINib *nib = [UINib nibWithNibName:@"ScheduleCell" bundle:nil];
+    [self.scheduleView.scheduleTableView registerNib:nib forCellReuseIdentifier:@"ScheduleCellId"];
+    self.scheduleView.scheduleTableView.rowHeight = 200;
+    [self.scheduleView.scheduleTableView reloadData];
 }
 
 - (IBAction)onTapCompose:(id)sender {
@@ -41,6 +52,18 @@
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadToParseWithEvent:event];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    ScheduleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScheduleCellId"
+                                                         forIndexPath:indexPath];
+    cell.eventTitleLabel.text = @"HI";
+    cell.timeLabel.text = @"1:00am";
+    return cell;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 24;
 }
 
 @end

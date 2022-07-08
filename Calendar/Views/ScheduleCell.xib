@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ScheduleCellId" rowHeight="259" id="gLb-WL-Mr6" customClass="ScheduleCell">
+            <rect key="frame" x="0.0" y="0.0" width="438" height="259"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gLb-WL-Mr6" id="AC9-HW-led">
+                <rect key="frame" x="0.0" y="0.0" width="438" height="259"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7aQ-ER-RSq">
+                        <rect key="frame" x="25" y="16" width="84" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ILX-TZ-alP">
+                        <rect key="frame" x="119" y="0.0" width="314" height="259"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNe-bq-8GM">
+                                <rect key="frame" x="0.0" y="0.0" width="314" height="45"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lEi-OU-KAD">
+                                        <rect key="frame" x="10" y="10" width="80" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.73143258030861569" green="0.81112516817933422" blue="1" alpha="0.70288584183673475" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="fUM-5u-c2p"/>
+                                    <constraint firstItem="lEi-OU-KAD" firstAttribute="leading" secondItem="pNe-bq-8GM" secondAttribute="leading" constant="10" id="yR8-ai-ik9"/>
+                                    <constraint firstItem="lEi-OU-KAD" firstAttribute="top" secondItem="pNe-bq-8GM" secondAttribute="top" constant="10" id="ykx-TM-XAe"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="0.73143258030861569" green="0.81112516817933422" blue="1" alpha="0.36963222789115646" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="pNe-bq-8GM" firstAttribute="top" secondItem="ILX-TZ-alP" secondAttribute="top" id="3BX-68-X8T"/>
+                            <constraint firstItem="pNe-bq-8GM" firstAttribute="leading" secondItem="ILX-TZ-alP" secondAttribute="leading" id="HfO-dl-AUb"/>
+                            <constraint firstAttribute="trailing" secondItem="pNe-bq-8GM" secondAttribute="trailing" id="Htm-jh-Lnn"/>
+                            <constraint firstItem="pNe-bq-8GM" firstAttribute="leading" secondItem="ILX-TZ-alP" secondAttribute="leading" id="a0P-eP-dBy"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7aQ-ER-RSq" firstAttribute="top" secondItem="AC9-HW-led" secondAttribute="topMargin" constant="5" id="Na4-dN-WX8"/>
+                    <constraint firstAttribute="bottom" secondItem="ILX-TZ-alP" secondAttribute="bottom" id="QiI-nd-BO3"/>
+                    <constraint firstAttribute="trailing" secondItem="ILX-TZ-alP" secondAttribute="trailing" constant="5" id="TWW-y9-GV5"/>
+                    <constraint firstItem="7aQ-ER-RSq" firstAttribute="leading" secondItem="AC9-HW-led" secondAttribute="leadingMargin" constant="5" id="dMq-BH-zNG"/>
+                    <constraint firstItem="ILX-TZ-alP" firstAttribute="leading" secondItem="7aQ-ER-RSq" secondAttribute="trailing" constant="10" id="kMA-u5-14K"/>
+                    <constraint firstItem="ILX-TZ-alP" firstAttribute="top" secondItem="AC9-HW-led" secondAttribute="top" id="suf-HH-wPy"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="eventBodyView" destination="ILX-TZ-alP" id="bga-nt-zck"/>
+                <outlet property="eventTitleLabel" destination="lEi-OU-KAD" id="jsj-H9-9Xt"/>
+                <outlet property="timeLabel" destination="7aQ-ER-RSq" id="biM-bO-cB5"/>
+                <outlet property="titleLabelView" destination="pNe-bq-8GM" id="lcU-3Z-HzE"/>
+            </connections>
+            <point key="canvasLocation" x="153.62318840579712" y="110.82589285714285"/>
+        </tableViewCell>
+    </objects>
+</document>
