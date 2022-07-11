@@ -16,15 +16,17 @@
     [dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE, MMM d, yyyy"];
     view.dateLabel.text = [dateFormatter stringFromDate:date];
     
+    int height = view.scrollView.frame.size.height / 24;
     for (int index = 0; index < 24; index++) {
         ScheduleHour *hourView = [ScheduleHour new];
         hourView.timeLabel.text = [self getTimeStringWithIndex:index];
         hourView.translatesAutoresizingMaskIntoConstraints = false;
-        [[hourView.widthAnchor constraintEqualToConstant:view.frame.size.width] isActive];
-        [[hourView.topAnchor constraintEqualToAnchor:view.topAnchor] isActive];
-        [[hourView.centerXAnchor constraintEqualToAnchor:view.centerXAnchor] isActive];
-        [[hourView.heightAnchor constraintEqualToConstant:(view.frame.size.height / 24)] isActive];
         [view.scrollView addSubview:hourView];
+        [[hourView.widthAnchor constraintEqualToConstant:view.scrollView.frame.size.width] setActive:true];
+        [[hourView.heightAnchor constraintEqualToConstant:height] setActive:true];
+        [[hourView.topAnchor constraintEqualToAnchor:view.scrollView.topAnchor
+                                            constant:height * index] setActive:true];
+        [[hourView.centerXAnchor constraintEqualToAnchor:view.scrollView.centerXAnchor] setActive:true];
         
     }
 }
