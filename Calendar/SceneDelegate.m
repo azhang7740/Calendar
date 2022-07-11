@@ -21,6 +21,8 @@
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
         UIViewController *homeTabBarController = [storyboard instantiateViewControllerWithIdentifier:@"TabBarController"];
         self.window.rootViewController = homeTabBarController;
+    } else {
+        // Is already showing login view at launch
     }
 }
 

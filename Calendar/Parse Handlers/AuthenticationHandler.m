@@ -10,14 +10,14 @@
 
 @implementation AuthenticationHandler
 
-- (BOOL)fieldsAreEmpty:(NSString *)username
-          withPassword:(NSString *)password {
+- (BOOL)fieldsAreEmptyWithUsername:(NSString *)username
+                          password:(NSString *)password {
     return [username isEqual:@""] || [password isEqual:@""];
 }
 
-- (void)registerUser:(NSString *)username
-        withPassword:(NSString *)password {
-    if ([self fieldsAreEmpty:username withPassword:password]) {
+- (void)registerUserWithUsername:(NSString *)username
+                        password:(NSString *)password {
+    if ([self fieldsAreEmptyWithUsername:username password:password]) {
         [self.delegate failedAuthentication:@"Username or password field is empty."];
         return;
     }
@@ -39,9 +39,9 @@
     }];
 }
 
-- (void)loginUser:(NSString *)username
-           withPassword:(NSString *)password {
-    if ([self fieldsAreEmpty:username withPassword:password]) {
+- (void)loginUserWithUsername:(NSString *)username
+                     password:(NSString *)password {
+    if ([self fieldsAreEmptyWithUsername:username password:password]) {
         [self.delegate failedAuthentication:@"Username or password field is empty."];
         return;
     }

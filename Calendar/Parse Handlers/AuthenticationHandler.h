@@ -20,10 +20,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<AuthenticationDelegate> delegate;
 
-- (void)registerUser:(NSString *)username
-        withPassword:(NSString *)password;
-- (void)loginUser:(NSString *)username
-    withPassword:(NSString *)password;
+- (void)registerUserWithUsername:(NSString *)username
+        password:(NSString *)password;
+- (void)loginUserWithUsername:(NSString *)username
+    password:(NSString *)password;
 
 @end
 

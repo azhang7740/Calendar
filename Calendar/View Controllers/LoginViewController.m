@@ -24,7 +24,6 @@
     self.loginView.errorLabel.text = @"";
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.authenticationHandler.delegate = self;
-    
 }
 
 - (void)completedAuthentication {
@@ -37,13 +36,13 @@
 }
 
 - (IBAction)onTapSignUp:(id)sender {
-    [self.authenticationHandler registerUser:self.loginView.usernameTextField.text
-                                withPassword:self.loginView.passwordTextField.text];
+    [self.authenticationHandler registerUserWithUsername:self.loginView.usernameTextField.text
+                                password:self.loginView.passwordTextField.text];
 }
 
 - (IBAction)onTapLogin:(id)sender {
-    [self.authenticationHandler loginUser:self.loginView.usernameTextField.text
-                             withPassword:self.loginView.passwordTextField.text];
+    [self.authenticationHandler loginUserWithUsername:self.loginView.usernameTextField.text
+                             password:self.loginView.passwordTextField.text];
 }
 
 - (IBAction)onTapOutside:(id)sender {
