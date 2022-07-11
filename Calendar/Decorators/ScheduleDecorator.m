@@ -7,6 +7,7 @@
 
 #import "ScheduleDecorator.h"
 #import "ScheduleHour.h"
+#import "ScheduleEventView.h"
 
 @implementation ScheduleDecorator
 
@@ -27,12 +28,41 @@
         [[hourView.topAnchor constraintEqualToAnchor:view.scrollView.topAnchor
                                             constant:height * index] setActive:true];
         [[hourView.centerXAnchor constraintEqualToAnchor:view.scrollView.centerXAnchor] setActive:true];
+    }
+}
+
+- (void)addEvents:(NSArray<Event *> *)newEvents
+      contentView:(ScheduleScrollView *)view {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    for (Event *event in newEvents) {
+        ScheduleEventView *eventView = [ScheduleEventView new];
+        eventView.eventTitleLabel.text = event.eventTitle;
+        eventView.translatesAutoresizingMaskIntoConstraints = false;
+        [view.scrollView addSubview:eventView];
         
+        NSDateComponents *startComponents = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute)
+                                                        fromDate:event.startDate];
+        NSDateComponents *durationComponents = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute)
+                                                      fromDate:event.startDate toDate:event.endDate options:0];
+        
+        [[eventView.leadingAnchor constraintEqualToAnchor:view.scrollView.leadingAnchor
+                                                 constant:100] setActive:true];
+        [[eventView.trailingAnchor constraintEqualToAnchor:view.scrollView.trailingAnchor] setActive:true];
+        
+        int hourHeight = view.scrollView.frame.size.height / 24;
+        int distanceFromTop = (int)[startComponents hour] * hourHeight +
+                              (int)(((double)[startComponents minute] / 60) * hourHeight);
+        int eventHeight = (int)[durationComponents hour] * hourHeight +
+                          (int)(((double)[durationComponents minute] / 60) * hourHeight);
+        
+        [[eventView.topAnchor constraintEqualToAnchor:view.scrollView.topAnchor
+                                             constant:distanceFromTop] setActive:true];
+        [[eventView.heightAnchor constraintEqualToConstant:eventHeight] setActive:true];
     }
 }
 
 - (NSString *)getTimeStringWithIndex:(int)index {
-    NSString *baseTimeString = @":00";
     NSString *hourTimeString;
     NSString *finalTimeString;
     if (index % 12 == 0) {
@@ -43,11 +73,9 @@
     
     BOOL isFirstHalfOfDay = (index / 12) == 0;
     if (isFirstHalfOfDay) {
-        finalTimeString = [[hourTimeString stringByAppendingString:baseTimeString]
-                           stringByAppendingString:@"am"];
+        finalTimeString = [hourTimeString stringByAppendingString:@"am"];
     } else {
-        finalTimeString = [[hourTimeString stringByAppendingString:baseTimeString]
-                           stringByAppendingString:@"pm"];
+        finalTimeString = [hourTimeString stringByAppendingString:@"pm"];
     }
     return finalTimeString;
 }

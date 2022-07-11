@@ -7,6 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ScheduleScrollView.h"
+#import "Event.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -14,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)decorateBaseScheduleWithDate:(NSDate *)date
                          contentView:(ScheduleScrollView *)view;
+- (void)addEvents:(NSArray<Event *> *)newEvents
+      contentView:(ScheduleScrollView *)view;
 
 @end
 

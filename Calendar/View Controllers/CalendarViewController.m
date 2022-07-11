@@ -47,6 +47,7 @@
 
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events {
     self.events = events;
+    [self.scheduleDecorator addEvents:(NSArray<Event *> *)self.events contentView:self.scheduleView];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {

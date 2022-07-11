@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScheduleEventView">
+            <connections>
+                <outlet property="contentView" destination="iN0-l3-epB" id="4Vi-Z4-tdr"/>
+                <outlet property="eventTitleLabel" destination="Pt4-nM-TOS" id="nL7-1A-sfR"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="672" height="332"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Event Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pt4-nM-TOS">
+                    <rect key="frame" x="30" y="20" width="92" height="24"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gGS-gh-vhg">
+                    <rect key="frame" x="5" y="5" width="5" height="317"/>
+                    <color key="backgroundColor" red="0.76412735120822306" green="0.81988826793733838" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="5" id="CwE-Sx-apT"/>
+                    </constraints>
+                </view>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" red="0.88430852851599429" green="0.93196439382634222" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Pt4-nM-TOS" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" id="AQF-b8-2Nj"/>
+                <constraint firstItem="gGS-gh-vhg" firstAttribute="bottom" secondItem="iN0-l3-epB" secondAttribute="bottom" constant="-10" id="Z1T-kZ-ZOp"/>
+                <constraint firstItem="gGS-gh-vhg" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="5" id="gjN-g9-T1K"/>
+                <constraint firstItem="Pt4-nM-TOS" firstAttribute="leading" secondItem="gGS-gh-vhg" secondAttribute="trailing" constant="20" id="pPk-5R-wbB"/>
+                <constraint firstItem="gGS-gh-vhg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="5" id="tcg-3D-H8W"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="118.84057971014494" y="-50.892857142857139"/>
+        </view>
+    </objects>
+</document>

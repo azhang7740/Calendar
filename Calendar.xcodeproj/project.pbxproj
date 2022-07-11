@@ -19,6 +19,8 @@
 		412D3A392879E4CF0023C9AA /* ScheduleHour.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A382879E4CF0023C9AA /* ScheduleHour.xib */; };
 		412D3A3F2879E7A20023C9AA /* ScheduleDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A3E2879E7A20023C9AA /* ScheduleDecorator.m */; };
 		412D3A42287C88950023C9AA /* ScheduleHour.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A41287C88950023C9AA /* ScheduleHour.m */; };
+		412D3A44287C9B5D0023C9AA /* ScheduleEvent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */; };
+		412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A46287C9B720023C9AA /* ScheduleEventView.m */; };
 		413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5092874B39200CCF8E1 /* AppDelegate.m */; };
 		413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE50C2874B39200CCF8E1 /* SceneDelegate.m */; };
 		413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE5112874B39200CCF8E1 /* Main.storyboard */; };
@@ -82,6 +84,9 @@
 		412D3A3E2879E7A20023C9AA /* ScheduleDecorator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleDecorator.m; sourceTree = "<group>"; };
 		412D3A40287C88950023C9AA /* ScheduleHour.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleHour.h; sourceTree = "<group>"; };
 		412D3A41287C88950023C9AA /* ScheduleHour.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleHour.m; sourceTree = "<group>"; };
+		412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleEvent.xib; sourceTree = "<group>"; };
+		412D3A45287C9B720023C9AA /* ScheduleEventView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleEventView.h; sourceTree = "<group>"; };
+		412D3A46287C9B720023C9AA /* ScheduleEventView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleEventView.m; sourceTree = "<group>"; };
 		413DE5052874B39200CCF8E1 /* Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		413DE5082874B39200CCF8E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		413DE5092874B39200CCF8E1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -285,6 +290,9 @@
 				412D3A40287C88950023C9AA /* ScheduleHour.h */,
 				412D3A41287C88950023C9AA /* ScheduleHour.m */,
 				412D3A382879E4CF0023C9AA /* ScheduleHour.xib */,
+				412D3A45287C9B720023C9AA /* ScheduleEventView.h */,
+				412D3A46287C9B720023C9AA /* ScheduleEventView.m */,
+				412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -429,6 +437,7 @@
 				413DE5152874B39400CCF8E1 /* Assets.xcassets in Resources */,
 				413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */,
 				413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */,
+				412D3A44287C9B5D0023C9AA /* ScheduleEvent.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -565,6 +574,7 @@
 				410A102E287797850023F523 /* ParseEventHandler.m in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				413DE54D28761EBF00CCF8E1 /* LogoutHandler.m in Sources */,
+				412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
