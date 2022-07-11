@@ -10,14 +10,17 @@
 
 #import "ScheduleScrollView.h"
 #import "ScheduleDecorator.h"
+#import "ScheduleCollectionCell.h"
 
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
-@property (weak, nonatomic) IBOutlet ScheduleScrollView *scheduleView;
+@property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
+@property (nonatomic) CGFloat lastContentOffset;
+@property int prevPage;
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
@@ -36,7 +39,7 @@
 
     self.date = [NSDate date];
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
-    [self.scheduleDecorator decorateBaseScheduleWithDate:self.date contentView:self.scheduleView];
+    self.prevPage = 0;
     
     [self fetchData];
 }
@@ -46,12 +49,12 @@
 }
 
 - (void)successfullyUploadedEvent:(Event *)event {
-    [self.scheduleDecorator addEvent:event contentView:self.scheduleView];
+    [self fetchData];
 }
 
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events {
     self.events = events;
-    [self.scheduleDecorator addEvents:(NSArray<Event *> *)self.events contentView:self.scheduleView];
+    [self.scheduleCollectionView reloadData];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -73,6 +76,48 @@
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadToParseWithEvent:event];
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 0;
+}
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    return 3;
+}
+
+- (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    ScheduleCollectionCell *cell = [collectionView
+                                    dequeueReusableCellWithReuseIdentifier:@"scheduleCellId"
+                                    forIndexPath:indexPath];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    if (self.prevPage < indexPath.row) {
+        dayComponent.day = 1;
+        NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:self.date options:0];
+        self.date = nextDate;
+    } else if (self.prevPage > indexPath.row) {
+        dayComponent.day = -1;
+        NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:self.date options:0];
+        self.date = nextDate;
+    }
+    self.prevPage = (int)indexPath.row;
+    [self.scheduleDecorator decorateBaseScheduleWithDate:self.date contentView:cell.scheduleView];
+    [self.scheduleDecorator addEvents:self.events contentView:cell.scheduleView];
+    return cell;
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return CGSizeMake(self.scheduleCollectionView.frame.size.width, self.scheduleCollectionView.frame.size.height);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    
 }
 
 @end

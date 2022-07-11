@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,18 +17,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhZ-AE-fRr" customClass="ScheduleScrollView">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uoI-nc-cgx">
                                 <rect key="frame" x="0.0" y="88" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="4u1-qb-juV">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="scheduleCellId" id="8Y5-rH-99t" customClass="ScheduleCollectionCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rmw-7Q-tfi" customClass="ScheduleScrollView">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="scheduleView" destination="rmw-7Q-tfi" id="0PW-EJ-Qns"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="qar-aB-LjX"/>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="jQ5-RX-FIi"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="mhZ-AE-fRr" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="GMX-uE-xm4"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="mhZ-AE-fRr" secondAttribute="trailing" id="PTT-Uj-z3h"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="mhZ-AE-fRr" secondAttribute="bottom" id="j2y-6N-QYj"/>
-                            <constraint firstItem="mhZ-AE-fRr" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="w0m-Yp-cYf"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="uoI-nc-cgx" secondAttribute="bottom" id="MwH-CQ-ceC"/>
+                            <constraint firstItem="uoI-nc-cgx" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="XGq-O3-Bgk"/>
+                            <constraint firstItem="uoI-nc-cgx" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="g30-3N-8kP"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="uoI-nc-cgx" secondAttribute="trailing" id="x3n-He-9nV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="odN-rd-hkJ">
@@ -44,7 +68,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="scheduleView" destination="mhZ-AE-fRr" id="0fJ-KB-ile"/>
+                        <outlet property="scheduleCollectionView" destination="uoI-nc-cgx" id="c06-be-a6H"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

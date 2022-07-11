@@ -46,7 +46,7 @@
     
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
+    NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:date options:0];
     [query whereKey:@"startDate" greaterThan:midnightDate];
     
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
