@@ -2,7 +2,7 @@
 //  ScheduleHour.m
 //  Calendar
 //
-//  Created by Angelina Zhang on 7/9/22.
+//  Created by Angelina Zhang on 7/11/22.
 //
 
 #import "ScheduleHour.h"
@@ -34,7 +34,7 @@
 }
 
 - (void)customInit {
-    [[NSBundle mainBundle] loadNibNamed:@"ScheduleScroll" owner:self options:nil];
+    [[NSBundle mainBundle] loadNibNamed:@"ScheduleHour" owner:self options:nil];
     [self addSubview:self.contentView];
     self.contentView.frame = self.bounds;
 }

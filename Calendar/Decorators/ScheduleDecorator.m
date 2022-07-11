@@ -6,6 +6,7 @@
 //
 
 #import "ScheduleDecorator.h"
+#import "ScheduleHour.h"
 
 @implementation ScheduleDecorator
 
@@ -14,6 +15,18 @@
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE, MMM d, yyyy"];
     view.dateLabel.text = [dateFormatter stringFromDate:date];
+    
+    for (int index = 0; index < 24; index++) {
+        ScheduleHour *hourView = [ScheduleHour new];
+        hourView.timeLabel.text = [self getTimeStringWithIndex:index];
+        hourView.translatesAutoresizingMaskIntoConstraints = false;
+        [[hourView.widthAnchor constraintEqualToConstant:view.frame.size.width] isActive];
+        [[hourView.topAnchor constraintEqualToAnchor:view.topAnchor] isActive];
+        [[hourView.centerXAnchor constraintEqualToAnchor:view.centerXAnchor] isActive];
+        [[hourView.heightAnchor constraintEqualToConstant:(view.frame.size.height / 24)] isActive];
+        [view.scrollView addSubview:hourView];
+        
+    }
 }
 
 - (NSString *)getTimeStringWithIndex:(int)index {

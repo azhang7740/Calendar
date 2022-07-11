@@ -10,7 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScheduleHour">
             <connections>
-                <outlet property="contentView" destination="iN0-l3-epB" id="oEZ-TV-g0d"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="O04-je-HJh"/>
+                <outlet property="timeLabel" destination="Do7-av-ZY0" id="I6o-4w-C7b"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

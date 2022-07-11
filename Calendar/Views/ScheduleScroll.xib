@@ -10,8 +10,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ScheduleScrollView">
             <connections>
-                <outlet property="contentView" destination="iN0-l3-epB" id="obg-k9-t7U"/>
-                <outlet property="dateLabel" destination="bjw-Qa-Euu" id="jnp-HM-xml"/>
+                <outlet property="contentView" destination="iN0-l3-epB" id="IWm-wh-jMP"/>
+                <outlet property="dateLabel" destination="bjw-Qa-Euu" id="1t5-jb-Lgn"/>
+                <outlet property="scrollView" destination="lVh-8Z-mu3" id="boM-ZR-58u"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
