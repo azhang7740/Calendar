@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ParseEventHandlerDelegate
 
+- (void)successfullyUploadedEvent:(Event *)event;
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events;
 - (void)failedRequestWithMessage:(NSString *)errorMessage;
 

@@ -17,6 +17,8 @@ NS_ASSUME_NONNULL_BEGIN
                          contentView:(ScheduleScrollView *)view;
 - (void)addEvents:(NSArray<Event *> *)newEvents
       contentView:(ScheduleScrollView *)view;
+- (void)addEvent:(Event *)newEvent
+     contentView:(ScheduleScrollView *)view;
 
 @end
 

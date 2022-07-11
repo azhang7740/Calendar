@@ -45,6 +45,10 @@
     [self.parseHandler queryUserEventsOnDate:self.date];
 }
 
+- (void)successfullyUploadedEvent:(Event *)event {
+    [self.scheduleDecorator addEvent:event contentView:self.scheduleView];
+}
+
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events {
     self.events = events;
     [self.scheduleDecorator addEvents:(NSArray<Event *> *)self.events contentView:self.scheduleView];
