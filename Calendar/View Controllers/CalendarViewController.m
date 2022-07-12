@@ -17,12 +17,10 @@
 
 @interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
-@property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
-@property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
-@property (nonatomic) CGFloat lastContentOffset;
-
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
+
+@property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
 @property (nonatomic) NSMutableArray<NSMutableArray<Event *> *> *events;
 @property (nonatomic) NSMutableArray<NSDate *> *dates;
 
@@ -44,26 +42,32 @@
     self.today = [self.calendar dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
     self.dates = [[NSMutableArray alloc] init];
     self.events = [[NSMutableArray alloc] init];
-    [self addDatesToEndWithDate:self.today];
+    [self.dates addObject:self.today];
+    [self addDatesToEnd];
     
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
-    [self fetchData];
 }
 
-- (void)addDatesToEndWithDate:(NSDate *)date {
+- (void)addDatesToEnd {
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.day = 0;
+    dayComponent.day = 1;
     
     for (int i = 0; i < 7; i++) {
-        [self.dates addObject:[self.calendar dateByAddingComponents:dayComponent toDate:date options:0]];
+        [self.dates addObject:[self.calendar dateByAddingComponents:dayComponent
+                                                             toDate:self.dates[self.dates.count - 1]
+                                                            options:0]];
         [self.events addObject:[[NSMutableArray alloc] init]];
-        dayComponent.day += 1;
     }
 }
 
-- (void)fetchData {
-    for (NSDate *date in self.dates) {
-        [self fetchDataWithDate:date];
+- (void)addDatesToStart {
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = -1;
+    
+    for (int i = 0; i < 7; i++) {
+        [self.dates insertObject:[self.calendar dateByAddingComponents:dayComponent toDate:self.dates[0] options:0]
+                         atIndex:0];
+        [self.events insertObject:[[NSMutableArray alloc] init] atIndex:0];
     }
 }
 
@@ -78,7 +82,7 @@
                                                                 toDate:date
                                                                options:0];
     if ([differenceComponents day] < self.dates.count) {
-        [self fetchDataWithDate:date];
+        [self.events[[differenceComponents day]] addObject:event];
     }
 }
 
@@ -89,8 +93,9 @@
                                                                 toDate:date
                                                                options:0];
     self.events[[differenceComponents day]] = events;
-    [self.scheduleCollectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:[differenceComponents day]
-                                                                            inSection:0]];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[differenceComponents day] inSection:0];
+    ScheduleCollectionCell *cell = (ScheduleCollectionCell *)[self.scheduleCollectionView cellForItemAtIndexPath:indexPath];
+    [self.scheduleDecorator addEvents:self.events[indexPath.row] contentView:cell.scheduleView];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -127,7 +132,17 @@
                                     dequeueReusableCellWithReuseIdentifier:@"scheduleCellId"
                                     forIndexPath:indexPath];
     [self.scheduleDecorator decorateBaseScheduleWithDate:self.dates[indexPath.row] contentView:cell.scheduleView];
-    [self.scheduleDecorator addEvents:self.events[indexPath.row] contentView:cell.scheduleView];
+    if (self.events[indexPath.row].count == 0) {
+        [self fetchDataWithDate:self.dates[indexPath.row]];
+    } else {
+        [self.scheduleDecorator addEvents:self.events[indexPath.row] contentView:cell.scheduleView];
+    }
+    
+    if (indexPath.row == 0) {
+        
+    } else if (indexPath.row == self.dates.count - 1) {
+        
+    }
     return cell;
 }
 
