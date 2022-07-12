@@ -23,7 +23,10 @@
     
     [newParseEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
-            [self.delegate successfullyUploadedEvent:newEvent];
+            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+            [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+            NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:newEvent.startDate options:0];
+            [self.delegate successfullyUploadedEvent:newEvent forDate:midnightDate];
         } else {
             [self.delegate failedRequestWithMessage:@"Failed to upload to Parse."];
         }
@@ -57,7 +60,7 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
         if (parseEvents) {
             NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
-            [self.delegate successfullyQueriedWithEvents:queriedEvents];
+            [self.delegate successfullyQueriedWithEvents:queriedEvents forDate:date];
         } else {
             [self.delegate failedRequestWithMessage:@"Failed to query posts."];
         }
