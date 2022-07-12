@@ -85,6 +85,9 @@
                                                                options:0];
     if ([differenceComponents day] < self.dates.count) {
         [self.events[[differenceComponents day]] addObject:event];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[differenceComponents day] inSection:0];
+        NSArray<NSIndexPath *> *arrayOfNewIndexPaths = [[NSArray alloc] initWithObjects:indexPath, nil];
+        [self.scheduleCollectionView reloadItemsAtIndexPaths:arrayOfNewIndexPaths];
     }
 }
 
@@ -144,7 +147,7 @@
     if (indexPath.row == 0) {
         [self addDatesToStart];
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:7 inSection:0];
-        [self.scheduleCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
+        [self.scheduleCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionNone animated:false];
     }
     if (indexPath.row == self.dates.count - 2) {
         [self addDatesToEnd];
