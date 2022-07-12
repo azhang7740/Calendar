@@ -15,7 +15,7 @@
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, ScheduleDecoratorDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
@@ -46,6 +46,7 @@
     [self addDatesToEnd];
     
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
+    self.scheduleDecorator.delegate = self;
 }
 
 - (void)addDatesToEnd {
@@ -105,6 +106,11 @@
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
     
+}
+
+- (void)didTapView:(NSUUID *)eventId {
+    // find corresponding view
+    // display details view controller
 }
 
 - (IBAction)onTapCompose:(id)sender {

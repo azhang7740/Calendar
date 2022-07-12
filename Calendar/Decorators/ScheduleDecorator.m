@@ -65,6 +65,16 @@
     [[eventView.topAnchor constraintEqualToAnchor:view.scrollView.topAnchor
                                          constant:distanceFromTop] setActive:true];
     [[eventView.heightAnchor constraintEqualToConstant:eventHeight] setActive:true];
+    
+    eventView.eventId = newEvent.objectUUID;
+    UITapGestureRecognizer *tapView =
+      [[UITapGestureRecognizer alloc] initWithTarget:self
+                                              action:@selector(onTapView:)];
+    [eventView addGestureRecognizer:tapView];
+}
+
+- (void)onTapView:(UITapGestureRecognizer *)sender {
+    [self.delegate didTapView:((ScheduleEventView *)sender.view).eventId];
 }
 
 - (NSString *)getTimeStringWithIndex:(int)index {

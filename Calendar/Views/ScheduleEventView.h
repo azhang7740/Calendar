@@ -12,6 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ScheduleEventView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *eventTitleLabel;
+@property (nonatomic) NSUUID *eventId;
 
 @end
 
