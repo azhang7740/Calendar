@@ -58,6 +58,7 @@
                                                             options:0]];
         [self.events addObject:[[NSMutableArray alloc] init]];
     }
+    [self.scheduleCollectionView reloadData];
 }
 
 - (void)addDatesToStart {
@@ -69,6 +70,7 @@
                          atIndex:0];
         [self.events insertObject:[[NSMutableArray alloc] init] atIndex:0];
     }
+    [self.scheduleCollectionView reloadData];
 }
 
 - (void)fetchDataWithDate:(NSDate *)date {
@@ -131,6 +133,7 @@
     ScheduleCollectionCell *cell = [collectionView
                                     dequeueReusableCellWithReuseIdentifier:@"scheduleCellId"
                                     forIndexPath:indexPath];
+    
     [self.scheduleDecorator decorateBaseScheduleWithDate:self.dates[indexPath.row] contentView:cell.scheduleView];
     if (self.events[indexPath.row].count == 0) {
         [self fetchDataWithDate:self.dates[indexPath.row]];
@@ -139,10 +142,14 @@
     }
     
     if (indexPath.row == 0) {
-        
-    } else if (indexPath.row == self.dates.count - 1) {
-        
+        [self addDatesToStart];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:7 inSection:0];
+        [self.scheduleCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:false];
     }
+    if (indexPath.row == self.dates.count - 2) {
+        [self addDatesToEnd];
+    }
+    
     return cell;
 }
 
