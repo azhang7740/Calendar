@@ -24,13 +24,31 @@
     [self updateDetailsView];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self updateDetailsView];
-}
-
 - (void)updateDetailsView {
     self.detailsView.eventTitleLabel.text = self.event.eventTitle;
+    // format time
+    if ([self.event.location isEqual:@""]) {
+        [self.detailsView.locationIcon setHidden:true];
+        [self.detailsView.locationLabel setHidden:true];
+        
+        [self.detailsView.descriptionIconTopConstraint setActive:false];
+    } else {
+        [self.detailsView.locationIcon setHidden:false];
+        [self.detailsView.locationLabel setHidden:false];
+        self.detailsView.locationLabel.text = self.event.location;
+        
+        [self.detailsView.descriptionIconTopConstraint setActive:true];
+    }
+    
+    if ([self.event.eventDescription isEqual:@""]) {
+        [self.detailsView.descriptionIcon setHidden:true];
+        [self.detailsView.descriptionLabel setHidden:true];
+    } else {
+        [self.detailsView.descriptionIcon setHidden:false];
+        [self.detailsView.descriptionLabel setHidden:false];
+        
+        self.detailsView.descriptionLabel.text = self.event.eventDescription;
+    }
 }
 
 - (void)didTapClose {

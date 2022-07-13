@@ -17,17 +17,17 @@
     [dateFormatter setLocalizedDateFormatFromTemplate:@"EE, MMM d, yyyy"];
     view.dateLabel.text = [dateFormatter stringFromDate:date];
     
-    int height = view.scrollView.frame.size.height / 24;
+    int height = view.scrollContentView.frame.size.height / 24;
     for (int index = 0; index < 24; index++) {
         ScheduleHour *hourView = [ScheduleHour new];
         hourView.timeLabel.text = [self getTimeStringWithIndex:index];
         hourView.translatesAutoresizingMaskIntoConstraints = false;
-        [view.scrollView addSubview:hourView];
-        [[hourView.widthAnchor constraintEqualToConstant:view.scrollView.frame.size.width] setActive:true];
+        [view.scrollContentView addSubview:hourView];
+        [[hourView.widthAnchor constraintEqualToConstant:view.scrollContentView.frame.size.width] setActive:true];
         [[hourView.heightAnchor constraintEqualToConstant:height] setActive:true];
-        [[hourView.topAnchor constraintEqualToAnchor:view.scrollView.topAnchor
+        [[hourView.topAnchor constraintEqualToAnchor:view.scrollContentView.topAnchor
                                             constant:height * index] setActive:true];
-        [[hourView.centerXAnchor constraintEqualToAnchor:view.scrollView.centerXAnchor] setActive:true];
+        [[hourView.centerXAnchor constraintEqualToAnchor:view.scrollContentView.centerXAnchor] setActive:true];
     }
 }
 
@@ -45,24 +45,24 @@
     ScheduleEventView *eventView = [ScheduleEventView new];
     eventView.eventTitleLabel.text = newEvent.eventTitle;
     eventView.translatesAutoresizingMaskIntoConstraints = false;
-    [view.scrollView addSubview:eventView];
+    [view.scrollContentView addSubview:eventView];
     
     NSDateComponents *startComponents = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute)
                                                     fromDate:newEvent.startDate];
     NSDateComponents *durationComponents = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute)
                                                   fromDate:newEvent.startDate toDate:newEvent.endDate options:0];
     
-    [[eventView.leadingAnchor constraintEqualToAnchor:view.scrollView.leadingAnchor
+    [[eventView.leadingAnchor constraintEqualToAnchor:view.scrollContentView.leadingAnchor
                                              constant:100] setActive:true];
-    [[eventView.trailingAnchor constraintEqualToAnchor:view.scrollView.trailingAnchor] setActive:true];
+    [[eventView.trailingAnchor constraintEqualToAnchor:view.scrollContentView.trailingAnchor] setActive:true];
     
-    int hourHeight = view.scrollView.frame.size.height / 24;
+    int hourHeight = view.scrollContentView.frame.size.height / 24;
     int distanceFromTop = (int)[startComponents hour] * hourHeight +
                           (int)(((double)[startComponents minute] / 60) * hourHeight);
     int eventHeight = (int)[durationComponents hour] * hourHeight +
                       (int)(((double)[durationComponents minute] / 60) * hourHeight);
     
-    [[eventView.topAnchor constraintEqualToAnchor:view.scrollView.topAnchor
+    [[eventView.topAnchor constraintEqualToAnchor:view.scrollContentView.topAnchor
                                          constant:distanceFromTop] setActive:true];
     [[eventView.heightAnchor constraintEqualToConstant:eventHeight] setActive:true];
     

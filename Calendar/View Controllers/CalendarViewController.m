@@ -17,13 +17,14 @@
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
 @property (nonatomic) EventDateLogicHandler *dateLogicHandler;
+@property (nonatomic) CGFloat pageContentOffsetY;
 
 @end
 
@@ -37,6 +38,7 @@
     
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
     self.scheduleDecorator.delegate = self;
+    self.pageContentOffsetY = 0;
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -152,6 +154,8 @@
                                     forIndexPath:indexPath];
     NSDate *date = [self.dateLogicHandler getDateForIndexPath:indexPath];
     [self.scheduleDecorator decorateBaseScheduleWithDate:date contentView:cell.scheduleView];
+    [cell.scheduleView.scrollView setContentOffset:CGPointMake(0, self.pageContentOffsetY) animated:false];
+    cell.scheduleView.scrollView.delegate = self;
     
     int numberOfEvents = [self.dateLogicHandler getNumberOfEventsForDate:date];
     if (numberOfEvents == 0) {
@@ -174,6 +178,12 @@
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     return CGSizeMake(self.scheduleCollectionView.frame.size.width, self.scheduleCollectionView.frame.size.height);
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    if (scrollView.contentOffset.y != self.pageContentOffsetY) {
+        self.pageContentOffsetY = scrollView.contentOffset.y;
+    }
 }
 
 @end

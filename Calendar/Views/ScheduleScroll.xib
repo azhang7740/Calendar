@@ -12,7 +12,8 @@
             <connections>
                 <outlet property="contentView" destination="iN0-l3-epB" id="IWm-wh-jMP"/>
                 <outlet property="dateLabel" destination="bjw-Qa-Euu" id="1t5-jb-Lgn"/>
-                <outlet property="scrollView" destination="lVh-8Z-mu3" id="boM-ZR-58u"/>
+                <outlet property="scrollContentView" destination="lVh-8Z-mu3" id="3Ck-gU-MbM"/>
+                <outlet property="scrollView" destination="tAu-c3-jz4" id="oVL-T0-pKI"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>

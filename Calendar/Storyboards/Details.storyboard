@@ -69,6 +69,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="oLN-s8-Ee2" firstAttribute="top" secondItem="Ypg-Kf-x5W" secondAttribute="bottom" constant="30" id="3tw-fM-pcz"/>
+                            <constraint firstItem="exg-SY-dLR" firstAttribute="top" secondItem="Ypg-Kf-x5W" secondAttribute="bottom" priority="900" constant="30" id="AJI-hV-GZw"/>
                             <constraint firstItem="Ypg-Kf-x5W" firstAttribute="top" secondItem="Ev5-yO-0nm" secondAttribute="bottom" constant="30" id="GHh-ev-7f8"/>
                             <constraint firstItem="oLN-s8-Ee2" firstAttribute="leading" secondItem="Ypg-Kf-x5W" secondAttribute="leading" id="GVF-FY-bsS"/>
                             <constraint firstItem="8Vm-zd-Fez" firstAttribute="centerY" secondItem="Ypg-Kf-x5W" secondAttribute="centerY" id="Ivg-En-1xe"/>
@@ -88,7 +89,14 @@
                             <constraint firstItem="SVR-zB-GxM" firstAttribute="leading" secondItem="8Vm-zd-Fez" secondAttribute="leading" id="yI3-pL-AzK"/>
                         </constraints>
                         <connections>
+                            <outlet property="descriptionIcon" destination="exg-SY-dLR" id="agj-zP-aNm"/>
+                            <outlet property="descriptionIconTopConstraint" destination="k4l-Xw-Xcp" id="evU-3C-ZeU"/>
+                            <outlet property="descriptionLabel" destination="MJ3-yk-hYo" id="W0T-55-WZ6"/>
                             <outlet property="eventTitleLabel" destination="Ev5-yO-0nm" id="fjb-j3-cJN"/>
+                            <outlet property="locationIcon" destination="oLN-s8-Ee2" id="JW0-cL-kwe"/>
+                            <outlet property="locationLabel" destination="SVR-zB-GxM" id="Djr-4f-Uj9"/>
+                            <outlet property="timeIcon" destination="Ypg-Kf-x5W" id="H8T-Hb-MwZ"/>
+                            <outlet property="timeLabel" destination="8Vm-zd-Fez" id="VYC-KI-7vz"/>
                         </connections>
                     </view>
                     <toolbarItems/>

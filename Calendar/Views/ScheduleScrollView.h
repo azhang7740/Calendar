@@ -12,7 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ScheduleScrollView : UIView
 
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
-@property (weak, nonatomic) IBOutlet UIView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *scrollContentView;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 
