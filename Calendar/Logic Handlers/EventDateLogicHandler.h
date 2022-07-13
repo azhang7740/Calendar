@@ -10,24 +10,26 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface DateLogicHandler : NSObject
+@interface EventDateLogicHandler : NSObject
 
 - (instancetype)init;
 - (void)appendDatesWithCount:(int)count;
 - (void)prependDatesWithCount:(int)count;
 
-- (int)getItemIndexWithDate:(NSDate *)date;
+- (NSIndexPath * _Nullable)getItemIndexWithDate:(NSDate *)date;
 - (void)addNewEventsWithArray:(NSMutableArray<Event *> *)events
                       forDate:(NSDate *)date;
 - (void)addNewEvent:(Event *)event
             forDate:(NSDate *)date;
 
-- (BOOL)eventsAreEmptyForIndex:(int)index;
-- (NSMutableArray<Event *> *)getEventsForIndex:(int)index;
-- (NSDate *)getDateForIndex:(int)index;
-- (int)scrollToItemAfterPrependingDates;
+- (BOOL)eventsAreEmptyForIndexPath:(NSIndexPath *)indexPath;
+- (NSMutableArray<Event *> *)getEventsForIndexPath:(NSIndexPath *)indexPath;
+- (NSDate *)getDateForIndexPath:(NSIndexPath *)indexPath;
+- (NSIndexPath *)scrollToItemAfterPrependingDates;
 - (int)getNumberOfElements;
 - (int)getNumberOfEventsForDate:(NSDate *)date;
+- (Event * _Nullable)getEventFromId:(NSUUID *)eventId
+                          withIndex:(NSArray<NSIndexPath *> *)visibleIndexPaths;
 
 @end
 

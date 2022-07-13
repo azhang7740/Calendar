@@ -11,7 +11,7 @@
 #import "ScheduleScrollView.h"
 #import "ScheduleDecorator.h"
 #import "ScheduleCollectionCell.h"
-#import "DateLogicHandler.h"
+#import "EventDateLogicHandler.h"
 
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
@@ -22,7 +22,7 @@
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
-@property (nonatomic) DateLogicHandler *dateLogicHandler;
+@property (nonatomic) EventDateLogicHandler *dateLogicHandler;
 
 @end
 
@@ -31,8 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.parseHandler = [[ParseEventHandler alloc] init];    
-    self.dateLogicHandler = [[DateLogicHandler alloc] init];
+    self.parseHandler = [[ParseEventHandler alloc] init];
+    self.dateLogicHandler = [[EventDateLogicHandler alloc] init];
     
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
     self.scheduleDecorator.delegate = self;
@@ -60,10 +60,9 @@
 
 - (void)successfullyUploadedEvent:(Event *)event
                           forDate:(NSDate *)date {
-    int index = [self.dateLogicHandler getItemIndexWithDate:date];
+    NSIndexPath *indexPath = [self.dateLogicHandler getItemIndexWithDate:date];
     [self.dateLogicHandler addNewEvent:event forDate:date];
-    if (index != -1) {
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    if (indexPath) {
         NSArray<NSIndexPath *> *arrayOfNewIndexPaths = [[NSArray alloc] initWithObjects:indexPath, nil];
         [self.scheduleCollectionView reloadItemsAtIndexPaths:arrayOfNewIndexPaths];
     }
@@ -72,11 +71,12 @@
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events
                               forDate:(NSDate *)date {
     [self.dateLogicHandler addNewEventsWithArray:events forDate:date];
-    int index = [self.dateLogicHandler getItemIndexWithDate:date];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    ScheduleCollectionCell *cell = (ScheduleCollectionCell *)[self.scheduleCollectionView cellForItemAtIndexPath:indexPath];
-    if (cell.scheduleView) {
-        [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndex:(int)indexPath.row] contentView:cell.scheduleView];
+    NSIndexPath *indexPath = [self.dateLogicHandler getItemIndexWithDate:date];
+    if (indexPath) {
+        ScheduleCollectionCell *cell = (ScheduleCollectionCell *)[self.scheduleCollectionView cellForItemAtIndexPath:indexPath];
+        if (cell.scheduleView) {
+            [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndexPath:indexPath] contentView:cell.scheduleView];
+        }
     }
 }
 
@@ -124,19 +124,19 @@
     ScheduleCollectionCell *cell = [collectionView
                                     dequeueReusableCellWithReuseIdentifier:@"scheduleCellId"
                                     forIndexPath:indexPath];
-    NSDate *date = [self.dateLogicHandler getDateForIndex:(int)indexPath.row];
+    NSDate *date = [self.dateLogicHandler getDateForIndexPath:indexPath];
     [self.scheduleDecorator decorateBaseScheduleWithDate:date contentView:cell.scheduleView];
     
     int numberOfEvents = [self.dateLogicHandler getNumberOfEventsForDate:date];
     if (numberOfEvents == 0) {
         [self fetchDataWithDate:date];
     } else if (numberOfEvents > 0) {
-        [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndex:(int)indexPath.row] contentView:cell.scheduleView];
+        [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndexPath:indexPath] contentView:cell.scheduleView];
     }
     
     if (indexPath.row == 0) {
         [self addDatesToStart];
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:[self.dateLogicHandler scrollToItemAfterPrependingDates] inSection:0];
+        NSIndexPath *newIndexPath = [self.dateLogicHandler scrollToItemAfterPrependingDates];
         [self.scheduleCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionNone animated:false];
     }
     if (indexPath.row == [self.dateLogicHandler getNumberOfElements] - 2) {

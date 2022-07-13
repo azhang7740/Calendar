@@ -5,9 +5,10 @@
 //  Created by Angelina Zhang on 7/12/22.
 //
 
-#import "DateLogicHandler.h"
+#import "EventDateLogicHandler.h"
+#import <UIKit/UIKit.h>
 
-@interface DateLogicHandler ()
+@interface EventDateLogicHandler ()
 
 @property (nonatomic) NSCalendar *calendar;
 @property (nonatomic) NSDate *today;
@@ -16,7 +17,7 @@
 
 @end
 
-@implementation DateLogicHandler
+@implementation EventDateLogicHandler
 
 - (instancetype)init {
     self = [super init];
@@ -62,17 +63,21 @@
     }
 }
 
-- (int)getItemIndexWithDate:(NSDate *)date {
+- (NSIndexPath * _Nullable)getItemIndexWithDate:(NSDate *)date {
     NSDateComponents *differenceComponents = [self.calendar components:(NSCalendarUnitDay)
                                                               fromDate:self.dates[0]
                                                                 toDate:date
                                                                options:0];
-    return (int)[differenceComponents day];
+    if ([differenceComponents day] >= 0 && [differenceComponents day] < self.dates.count) {
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:[differenceComponents day] inSection:0];
+        return newIndexPath;
+    }
+    return nil;
 }
 
 - (void)addNewEventsWithArray:(NSMutableArray<Event *> *)events
                       forDate:(NSDate *)date {
-    int index = [self getItemIndexWithDate:date];
+    int index = (int)[self getItemIndexWithDate:date].row;
     
     if (index >= 0 && index < self.dates.count) {
         self.events[index] = events;
@@ -81,30 +86,33 @@
 
 - (void)addNewEvent:(Event *)event
             forDate:(NSDate *)date {
-    int index = [self getItemIndexWithDate:event.startDate];
+    int index = (int)[self getItemIndexWithDate:event.startDate].row;
     
     if (index >= 0 && index < self.dates.count) {
         [self.events[index] addObject:event];
     }
 }
 
-- (BOOL)eventsAreEmptyForIndex:(int)index {
-    return self.events[index].count == 0;
+- (BOOL)eventsAreEmptyForIndexPath:(NSIndexPath *)indexPath {
+    return self.events[indexPath.row].count == 0;
 }
 
-- (NSMutableArray<Event *> *)getEventsForIndex:(int)index {
-    return self.events[index];
+- (NSMutableArray<Event *> *)getEventsForIndexPath:(NSIndexPath *)indexPath {
+    return self.events[indexPath.row];
 }
 
-- (NSDate *)getDateForIndex:(int)index {
-    return self.dates[index];
+- (NSDate *)getDateForIndexPath:(NSIndexPath *)indexPath {
+    return self.dates[indexPath.row];
 }
 
-- (int)scrollToItemAfterPrependingDates {
+- (NSIndexPath *)scrollToItemAfterPrependingDates {
+    NSIndexPath *newIndexPath;
     if (self.dates.count > 15) {
-        return 8;
+        newIndexPath = [NSIndexPath indexPathForItem:8 inSection:0];
+    } else {
+        newIndexPath = [NSIndexPath indexPathForItem:7 inSection:0];
     }
-    return 7;
+    return newIndexPath;
 }
 
 - (int)getNumberOfElements {
@@ -112,11 +120,23 @@
 }
 
 - (int)getNumberOfEventsForDate:(NSDate *)date {
-    int index = [self getItemIndexWithDate:date];
+    int index = (int)[self getItemIndexWithDate:date].row;
     if (index >= 0 && index < self.dates.count) {
         return (int)self.events[index].count;
     }
     return -1;
+}
+
+- (Event * _Nullable)getEventFromId:(NSUUID *)eventId
+                          withIndex:(NSArray<NSIndexPath *> *)visibleIndexPaths {
+    for (NSIndexPath *indexPath in visibleIndexPaths) {
+        for (Event *event in self.events[indexPath.row]) {
+            if (event.objectUUID == eventId) {
+                return event;
+            }
+        }
+    }
+    return nil;
 }
 
 @end

@@ -23,7 +23,7 @@
 		412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A46287C9B720023C9AA /* ScheduleEventView.m */; };
 		412D3A4A287CCBAB0023C9AA /* ScheduleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */; };
 		412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A4B287E0F2D0023C9AA /* Details.storyboard */; };
-		412D3A50287E352A0023C9AA /* DateLogicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A4F287E352A0023C9AA /* DateLogicHandler.m */; };
+		412D3A50287E352A0023C9AA /* EventDateLogicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */; };
 		412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A52287F388E0023C9AA /* DetailsViewController.m */; };
 		412D3A56287F394D0023C9AA /* DetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A55287F394D0023C9AA /* DetailsView.m */; };
 		413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5092874B39200CCF8E1 /* AppDelegate.m */; };
@@ -95,8 +95,8 @@
 		412D3A48287CCBAB0023C9AA /* ScheduleCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleCollectionCell.h; sourceTree = "<group>"; };
 		412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleCollectionCell.m; sourceTree = "<group>"; };
 		412D3A4B287E0F2D0023C9AA /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
-		412D3A4E287E352A0023C9AA /* DateLogicHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateLogicHandler.h; sourceTree = "<group>"; };
-		412D3A4F287E352A0023C9AA /* DateLogicHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateLogicHandler.m; sourceTree = "<group>"; };
+		412D3A4E287E352A0023C9AA /* EventDateLogicHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventDateLogicHandler.h; sourceTree = "<group>"; };
+		412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventDateLogicHandler.m; sourceTree = "<group>"; };
 		412D3A51287F388E0023C9AA /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		412D3A52287F388E0023C9AA /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		412D3A54287F394D0023C9AA /* DetailsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsView.h; sourceTree = "<group>"; };
@@ -181,8 +181,8 @@
 		412D3A4D287E333E0023C9AA /* Logic Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				412D3A4E287E352A0023C9AA /* DateLogicHandler.h */,
-				412D3A4F287E352A0023C9AA /* DateLogicHandler.m */,
+				412D3A4E287E352A0023C9AA /* EventDateLogicHandler.h */,
+				412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */,
 			);
 			path = "Logic Handlers";
 			sourceTree = "<group>";
@@ -598,7 +598,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				412D3A42287C88950023C9AA /* ScheduleHour.m in Sources */,
-				412D3A50287E352A0023C9AA /* DateLogicHandler.m in Sources */,
+				412D3A50287E352A0023C9AA /* EventDateLogicHandler.m in Sources */,
 				410A1025287749770023F523 /* Event.m in Sources */,
 				412D3A3F2879E7A20023C9AA /* ScheduleDecorator.m in Sources */,
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
