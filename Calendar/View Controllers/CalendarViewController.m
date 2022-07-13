@@ -70,7 +70,9 @@
     int index = [self.dateLogicHandler getItemIndexWithDate:date];
     NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
     ScheduleCollectionCell *cell = (ScheduleCollectionCell *)[self.scheduleCollectionView cellForItemAtIndexPath:indexPath];
-    [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndex:(int)indexPath.row] contentView:cell.scheduleView];
+    if (cell.scheduleView) {
+        [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndex:(int)indexPath.row] contentView:cell.scheduleView];
+    }
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
