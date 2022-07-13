@@ -16,7 +16,7 @@
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, ScheduleDecoratorDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
@@ -31,9 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.parseHandler = [[ParseEventHandler alloc] init];
-    self.parseHandler.delegate = self;
-    
+    self.parseHandler = [[ParseEventHandler alloc] init];    
     self.dateLogicHandler = [[DateLogicHandler alloc] init];
     
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
@@ -51,12 +49,19 @@
 }
 
 - (void)fetchDataWithDate:(NSDate *)date {
-    [self.parseHandler queryUserEventsOnDate:date];
+    [self.parseHandler queryUserEventsOnDate:date withCompletion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:error];
+        } else {
+            [self successfullyQueriedWithEvents:events forDate:date];
+        }
+    }];
 }
 
 - (void)successfullyUploadedEvent:(Event *)event
                           forDate:(NSDate *)date {
     int index = [self.dateLogicHandler getItemIndexWithDate:date];
+    [self.dateLogicHandler addNewEvent:event forDate:date];
     if (index != -1) {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
         NSArray<NSIndexPath *> *arrayOfNewIndexPaths = [[NSArray alloc] initWithObjects:indexPath, nil];
@@ -98,7 +103,13 @@
 
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadToParseWithEvent:event];
+    [self.parseHandler uploadToParseWithEvent:event withCompletion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:error];
+        } else {
+            [self successfullyUploadedEvent:event forDate:date];
+        }
+    }];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {

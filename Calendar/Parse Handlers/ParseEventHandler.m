@@ -10,7 +10,8 @@
 
 @implementation ParseEventHandler
 
-- (void)uploadToParseWithEvent:(Event *)newEvent {
+- (void)uploadToParseWithEvent:(Event *)newEvent
+                withCompletion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
     newParseEvent.objectUUID = [newEvent.objectUUID UUIDString];
     newParseEvent.eventTitle = newEvent.eventTitle;
@@ -22,20 +23,19 @@
     newParseEvent.endDate = newEvent.endDate;
     
     [newParseEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+        NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:newEvent.startDate options:0];
         if (succeeded) {
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-            NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:newEvent.startDate options:0];
-            [self.delegate successfullyUploadedEvent:newEvent forDate:midnightDate];
+            completion(newEvent, midnightDate, nil);
         } else {
-            [self.delegate failedRequestWithMessage:@"Failed to upload to Parse."];
+            completion(newEvent, midnightDate, @"Failed to upload to Parse.");
         }
     }];
 }
 
-- (NSArray<Event *> *)queryUserEventsOnDate:(NSDate *)date {
-    NSArray<Event *> *events = [[NSArray alloc] init];
-    
+- (void)queryUserEventsOnDate:(NSDate *)date
+               withCompletion:(void(^_Nonnull)(NSMutableArray<Event *> * _Nullable events, NSDate *date, NSString * _Nullable error))completion {
     PFUser *currentUser = [PFUser currentUser];
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
@@ -60,13 +60,11 @@
     [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
         if (parseEvents) {
             NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
-            [self.delegate successfullyQueriedWithEvents:queriedEvents forDate:date];
+            completion(queriedEvents, date, nil);
         } else {
-            [self.delegate failedRequestWithMessage:@"Failed to query posts."];
+            completion(nil, date, @"Failed to query posts.");
         }
     }];
-    
-    return events;
 }
 
 @end
