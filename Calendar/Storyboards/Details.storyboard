@@ -78,6 +78,9 @@
                             </view>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="detailsView" destination="5EZ-qb-Rvc" id="cby-m8-2Xx"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="glO-Zt-hjb" userLabel="Exit" sceneMemberID="exit"/>

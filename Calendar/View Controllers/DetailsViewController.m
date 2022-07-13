@@ -6,8 +6,11 @@
 //
 
 #import "DetailsViewController.h"
+#import "DetailsView.h"
 
-@interface DetailsViewController ()
+@interface DetailsViewController () <DetailsViewDelegate>
+
+@property (strong, nonatomic) IBOutlet DetailsView *detailsView;
 
 @end
 
@@ -15,6 +18,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    self.detailsView.delegate = self;
+}
+
+- (void)didTapClose {
+    
+}
+
+- (void)didTapEdit {
+    
+}
+
+- (void)didTapDelete {
+    
 }
 
 @end
