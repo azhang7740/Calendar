@@ -38,7 +38,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Calendar" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gzI-2W-VW7">
                                 <rect key="frame" x="126" y="323" width="162.5" height="50.5"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="162.5" id="ZCS-Zg-be3"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="162.5" id="ZCS-Zg-be3"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                 <nil key="textColor"/>

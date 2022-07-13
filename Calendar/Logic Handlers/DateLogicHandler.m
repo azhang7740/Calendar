@@ -114,7 +114,7 @@
 - (int)getNumberOfEventsForDate:(NSDate *)date {
     int index = [self getItemIndexWithDate:date];
     if (index >= 0 && index < self.dates.count) {
-        return self.events[index].count;
+        return (int)self.events[index].count;
     }
     return -1;
 }

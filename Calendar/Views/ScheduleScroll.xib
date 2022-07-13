@@ -21,13 +21,13 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tAu-c3-jz4">
-                    <rect key="frame" x="0.0" y="100" width="414" height="762"/>
+                    <rect key="frame" x="0.0" y="110" width="414" height="752"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lVh-8Z-mu3">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="3600"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="2400"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="3600" id="gdv-NU-p7F"/>
+                                <constraint firstAttribute="height" constant="2400" id="gdv-NU-p7F"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -41,7 +41,7 @@
                     <viewLayoutGuide key="frameLayoutGuide" id="ifz-WY-xfa"/>
                 </scrollView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bjw-Qa-Euu">
-                    <rect key="frame" x="20" y="64" width="139" height="36"/>
+                    <rect key="frame" x="20" y="64" width="138.5" height="36"/>
                     <fontDescription key="fontDescription" type="system" pointSize="30"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -56,7 +56,7 @@
                 <constraint firstItem="lVh-8Z-mu3" firstAttribute="width" secondItem="iN0-l3-epB" secondAttribute="width" id="Co1-Gf-6TL"/>
                 <constraint firstItem="bjw-Qa-Euu" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="20" id="LBr-nx-dxN"/>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="tAu-c3-jz4" secondAttribute="bottom" id="LVu-vr-dIc"/>
-                <constraint firstItem="tAu-c3-jz4" firstAttribute="top" secondItem="bjw-Qa-Euu" secondAttribute="bottom" id="NZg-UL-elZ"/>
+                <constraint firstItem="tAu-c3-jz4" firstAttribute="top" secondItem="bjw-Qa-Euu" secondAttribute="bottom" constant="10" id="NZg-UL-elZ"/>
             </constraints>
             <point key="canvasLocation" x="131.8840579710145" y="89.732142857142847"/>
         </view>

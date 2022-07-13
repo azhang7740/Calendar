@@ -24,6 +24,8 @@
 		412D3A4A287CCBAB0023C9AA /* ScheduleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */; };
 		412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A4B287E0F2D0023C9AA /* Details.storyboard */; };
 		412D3A50287E352A0023C9AA /* DateLogicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A4F287E352A0023C9AA /* DateLogicHandler.m */; };
+		412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A52287F388E0023C9AA /* DetailsViewController.m */; };
+		412D3A56287F394D0023C9AA /* DetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A55287F394D0023C9AA /* DetailsView.m */; };
 		413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5092874B39200CCF8E1 /* AppDelegate.m */; };
 		413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE50C2874B39200CCF8E1 /* SceneDelegate.m */; };
 		413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE5112874B39200CCF8E1 /* Main.storyboard */; };
@@ -95,6 +97,10 @@
 		412D3A4B287E0F2D0023C9AA /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		412D3A4E287E352A0023C9AA /* DateLogicHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DateLogicHandler.h; sourceTree = "<group>"; };
 		412D3A4F287E352A0023C9AA /* DateLogicHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DateLogicHandler.m; sourceTree = "<group>"; };
+		412D3A51287F388E0023C9AA /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
+		412D3A52287F388E0023C9AA /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
+		412D3A54287F394D0023C9AA /* DetailsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsView.h; sourceTree = "<group>"; };
+		412D3A55287F394D0023C9AA /* DetailsView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsView.m; sourceTree = "<group>"; };
 		413DE5052874B39200CCF8E1 /* Calendar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calendar.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		413DE5082874B39200CCF8E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		413DE5092874B39200CCF8E1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -253,6 +259,8 @@
 				413DE5452876027600CCF8E1 /* CalendarViewController.m */,
 				410A101A287659E40023F523 /* ComposeViewController.h */,
 				410A101B287659E40023F523 /* ComposeViewController.m */,
+				412D3A51287F388E0023C9AA /* DetailsViewController.h */,
+				412D3A52287F388E0023C9AA /* DetailsViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -314,6 +322,8 @@
 				412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */,
 				412D3A48287CCBAB0023C9AA /* ScheduleCollectionCell.h */,
 				412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */,
+				412D3A54287F394D0023C9AA /* DetailsView.h */,
+				412D3A55287F394D0023C9AA /* DetailsView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -600,11 +610,13 @@
 				412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
+				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
 				413DE5462876027700CCF8E1 /* CalendarViewController.m in Sources */,
 				412D3A4A287CCBAB0023C9AA /* ScheduleCollectionCell.m in Sources */,
+				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				410A1028287749860023F523 /* ParseEvent.m in Sources */,
 				412D3A372879E2CF0023C9AA /* ScheduleScrollView.m in Sources */,
 				413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */,

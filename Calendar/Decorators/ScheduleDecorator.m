@@ -14,7 +14,7 @@
 - (void)decorateBaseScheduleWithDate:(NSDate *)date
                          contentView:(ScheduleScrollView *)view{
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE, MMM d, yyyy"];
+    [dateFormatter setLocalizedDateFormatFromTemplate:@"EE, MMM d, yyyy"];
     view.dateLabel.text = [dateFormatter stringFromDate:date];
     
     int height = view.scrollView.frame.size.height / 24;
