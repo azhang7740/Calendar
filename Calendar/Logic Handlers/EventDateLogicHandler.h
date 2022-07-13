@@ -30,6 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (int)getNumberOfEventsForDate:(NSDate *)date;
 - (Event * _Nullable)getEventFromId:(NSUUID *)eventId
                           withIndex:(NSArray<NSIndexPath *> *)visibleIndexPaths;
+- (void)deleteEvent:(Event *)event;
 
 @end
 

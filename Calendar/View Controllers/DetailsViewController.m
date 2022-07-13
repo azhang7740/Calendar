@@ -21,6 +21,15 @@
     [super viewDidLoad];
     
     self.detailsView.delegate = self;
+    [self updateDetailsView];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self updateDetailsView];
+}
+
+- (void)updateDetailsView {
     self.detailsView.eventTitleLabel.text = self.event.eventTitle;
 }
 
@@ -39,7 +48,13 @@
 }
 
 - (void)didTapDelete {
-    
+    [self.parseEventHandler deleteParseObjectWithEvent:self.event withCompletion:^(NSString * _Nullable error) {
+        if (!error) {
+            [self.delegate didDeleteEvent:self.event];
+        } else {
+            // error handling
+        }
+    }];
 }
 
 - (void)didTapCancel {

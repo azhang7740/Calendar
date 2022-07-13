@@ -139,4 +139,9 @@
     return nil;
 }
 
+- (void)deleteEvent:(Event *)event {
+    NSIndexPath *indexPath = [self getItemIndexWithDate:event.startDate];
+    [self.events[indexPath.row] removeObject:event];
+}
+
 @end

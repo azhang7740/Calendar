@@ -20,6 +20,8 @@ NS_ASSUME_NONNULL_BEGIN
                 withCompletion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion;
 - (void)updateParseObjectWithEvent:(Event *)event
                     withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion;
+- (void)deleteParseObjectWithEvent:(Event *)event
+                    withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion;
 
 @end
 

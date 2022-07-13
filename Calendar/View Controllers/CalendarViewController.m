@@ -118,10 +118,6 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapClose {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadToParseWithEvent:event withCompletion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
@@ -131,6 +127,15 @@
             [self successfullyUploadedEvent:event forDate:date];
         }
     }];
+}
+
+- (void)didTapClose {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didDeleteEvent:(Event *)event {
+    [self.dateLogicHandler deleteEvent:event];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {

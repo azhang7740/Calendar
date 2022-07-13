@@ -95,4 +95,22 @@
     }];
 }
 
+- (void)deleteParseObjectWithEvent:(Event *)event
+                    withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion {
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (error) {
+            completion(@"Could not find the event.");
+        } else {
+            [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (!succeeded) {
+                    completion(@"Could not delete from Parse successfully.");
+                } else {
+                    completion(nil);
+                }
+            }];
+        }
+    }];
+}
+
 @end
