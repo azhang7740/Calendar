@@ -71,4 +71,28 @@
     }];
 }
 
+- (void)updateParseObjectWithEvent:(Event *)event
+                    withCompletion:(void (^)(NSString * _Nullable))completion {
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (error) {
+            completion(@"Could not find the event.");
+        } else {
+            object[@"eventTitle"] = event.eventTitle;
+            object[@"eventDescription"] = event.eventDescription;
+            object[@"location"] = event.location;
+            object[@"startDate"] = event.startDate;
+            object[@"endDate"] = event.endDate;
+            event.updatedAt = [NSDate date];
+            [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (!succeeded) {
+                    completion(@"Could not upload to Parse successfully.");
+                } else {
+                    completion(nil);
+                }
+            }];
+        }
+    }];
+}
+
 @end

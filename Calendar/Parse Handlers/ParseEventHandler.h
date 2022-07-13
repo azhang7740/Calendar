@@ -18,6 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)uploadToParseWithEvent:(Event *)newEvent
                 withCompletion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion;
+- (void)updateParseObjectWithEvent:(Event *)event
+                    withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion;
 
 @end
 

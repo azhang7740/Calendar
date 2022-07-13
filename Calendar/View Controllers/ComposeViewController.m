@@ -43,18 +43,16 @@
 }
 
 - (Event *)createEventFromView {
-    if (self.composeView.titleTextField.text.length == 0) {
-        [self displayErrorMessage:@"Title field is empty."];
+    if (![self inputIsValid]) {
         return nil;
     }
-    
-    if ([self.composeView.startDatePicker.date compare:
-         self.composeView.endDatePicker.date] != NSOrderedAscending) {
-        [self displayErrorMessage:@"End date should be after start date."];
-        return nil;
-    }
-    
     Event *newEvent = [[Event alloc] init];
+    [self setEventFields:newEvent];
+    
+    return newEvent;
+}
+
+- (void)setEventFields:(Event *)newEvent {
     newEvent.eventTitle = self.composeView.titleTextField.text;
     newEvent.objectUUID = [NSUUID UUID];
     
@@ -69,8 +67,21 @@
     } else {
         newEvent.eventDescription = self.composeView.descriptionTextView.text;
     }
+}
+
+- (BOOL)inputIsValid {
+    if (self.composeView.titleTextField.text.length == 0) {
+        [self displayErrorMessage:@"Title field is empty."];
+        return false;
+    }
     
-    return newEvent;
+    if ([self.composeView.startDatePicker.date compare:
+         self.composeView.endDatePicker.date] != NSOrderedAscending) {
+        [self displayErrorMessage:@"End date should be after start date."];
+        return false;
+    }
+    
+    return true;
 }
 
 - (void)displayErrorMessage:(NSString *)message {
@@ -82,13 +93,14 @@
 }
 
 - (IBAction)onTapCreate:(id)sender {
-    if ([self.updateParseButton.currentTitle isEqual:@"Create"]) {
+    if (self.event && [self inputIsValid]) {
+        [self setEventFields:self.event];
+        [self.delegate didTapCreateWithEvent:self.event];
+    } else {
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
             [self.delegate didTapCreateWithEvent:newEvent];
         }
-    } else {
-        [self.delegate didTapCreateWithEvent:self.event];
     }
 }
 

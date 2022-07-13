@@ -39,6 +39,11 @@
     self.scheduleDecorator.delegate = self;
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self.scheduleCollectionView reloadData];
+}
+
 - (void)addDatesToEnd {
     [self.dateLogicHandler appendDatesWithCount:7];
     [self.scheduleCollectionView reloadData];

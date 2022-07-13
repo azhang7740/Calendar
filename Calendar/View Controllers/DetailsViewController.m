@@ -47,7 +47,12 @@
 }
 
 - (void)didTapCreateWithEvent:(Event *)event {
-    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.parseEventHandler updateParseObjectWithEvent:event withCompletion:^(NSString * _Nullable error) {
+        if (error) {
+            // error handling
+        }
+    }];
 }
 
 @end
