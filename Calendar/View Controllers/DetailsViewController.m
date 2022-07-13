@@ -26,7 +26,8 @@
 
 - (void)updateDetailsView {
     self.detailsView.eventTitleLabel.text = self.event.eventTitle;
-    // format time
+    self.detailsView.timeLabel.text = [self getTimeString];
+    
     if ([self.event.location isEqual:@""]) {
         [self.detailsView.locationIcon setHidden:true];
         [self.detailsView.locationLabel setHidden:true];
@@ -49,6 +50,28 @@
         
         self.detailsView.descriptionLabel.text = self.event.eventDescription;
     }
+}
+
+- (NSString *)getTimeString {
+    NSString *finalString;
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setLocalizedDateFormatFromTemplate:@"EE, MMM d, yyyy"];
+    NSString *startDay = [dateFormatter stringFromDate:self.event.startDate];
+    NSString *endDay = [dateFormatter stringFromDate:self.event.endDate];
+    
+    [dateFormatter setLocalizedDateFormatFromTemplate:@"h:mm"];
+    NSString *startTime = [dateFormatter stringFromDate:self.event.startDate];
+    NSString *endTime = [dateFormatter stringFromDate:self.event.endDate];
+    NSString *startDateTime = [[startDay stringByAppendingString:@" "] stringByAppendingString:startTime];
+    if ([startDay isEqual:endDay]) {
+        finalString = [[startDateTime stringByAppendingString:@" - "]
+                       stringByAppendingString:endTime];
+    } else {
+        NSString *endDateTime = [[endDay stringByAppendingString:@" "] stringByAppendingString:endTime];
+        finalString = [[startDateTime stringByAppendingString:@" - "]
+                       stringByAppendingString:endDateTime];
+    }
+    return finalString;
 }
 
 - (void)didTapClose {
@@ -84,6 +107,8 @@
     [self.parseEventHandler updateParseObjectWithEvent:event withCompletion:^(NSString * _Nullable error) {
         if (error) {
             // error handling
+        } else {
+            [self updateDetailsView];
         }
     }];
 }
