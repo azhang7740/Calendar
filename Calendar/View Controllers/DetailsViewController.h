@@ -11,8 +11,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@protocol DetailsViewControllerDelegate
+
+- (void)didTapClose;
+
+@end
+
 @interface DetailsViewController : UIViewController
 
+@property (weak, nonatomic) id<DetailsViewControllerDelegate> delegate;
 @property (nonatomic) Event *event;
 @property (nonatomic) ParseEventHandler *parseEventHandler;
 

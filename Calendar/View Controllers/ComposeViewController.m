@@ -63,7 +63,7 @@
 }
 
 - (IBAction)onTapCancel:(id)sender {
-    [self.delegate didTapCancel];
+    [self.delegate didTapClose];
 }
 
 - (IBAction)onTapCreate:(id)sender {

@@ -41,6 +41,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Close"/>
                                 <connections>
+                                    <action selector="onTapClose:" destination="5EZ-qb-Rvc" eventType="touchUpInside" id="Itx-mn-gM3"/>
                                     <action selector="onTapClose:" destination="glO-Zt-hjb" eventType="touchUpInside" id="Nw9-4C-39E"/>
                                 </connections>
                             </button>
@@ -55,6 +56,7 @@
                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                         <state key="normal" image="square.and.pencil" catalog="system"/>
                                         <connections>
+                                            <action selector="onTapEdit:" destination="5EZ-qb-Rvc" eventType="touchUpInside" id="352-C4-o3F"/>
                                             <action selector="onTapEdit:" destination="glO-Zt-hjb" eventType="touchUpInside" id="NIo-WN-IlI"/>
                                         </connections>
                                     </button>
@@ -64,6 +66,7 @@
                                         <state key="normal" image="trash" catalog="system"/>
                                         <connections>
                                             <action selector="onTapDelete:" destination="glO-Zt-hjb" eventType="touchUpInside" id="ctY-ml-sFx"/>
+                                            <action selector="onTapDelete:" destination="5EZ-qb-Rvc" eventType="touchUpInside" id="s1y-5u-aPb"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -90,7 +93,7 @@
         <!--Navigation Controller-->
         <scene sceneID="HvI-C3-iYw">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="eIn-pr-32D" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DetailsNavigation" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="eIn-pr-32D" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="fYJ-G4-6u4">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>

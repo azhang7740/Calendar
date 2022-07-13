@@ -20,10 +20,11 @@
     [super viewDidLoad];
     
     self.detailsView.delegate = self;
+    self.detailsView.eventTitleLabel.text = self.event.eventTitle;
 }
 
 - (void)didTapClose {
-    
+    [self.delegate didTapClose];
 }
 
 - (void)didTapEdit {

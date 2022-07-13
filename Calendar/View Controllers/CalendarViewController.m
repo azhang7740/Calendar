@@ -7,6 +7,7 @@
 
 #import "CalendarViewController.h"
 #import "ComposeViewController.h"
+#import "DetailsViewController.h"
 
 #import "ScheduleScrollView.h"
 #import "ScheduleDecorator.h"
@@ -16,7 +17,7 @@
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
@@ -85,8 +86,18 @@
 }
 
 - (void)didTapView:(NSUUID *)eventId {
-    // find corresponding view
-    // display details view controller
+    Event *detailedEvent = [self.dateLogicHandler getEventFromId:eventId withIndex:[self.scheduleCollectionView indexPathsForVisibleItems]];
+    if (detailedEvent) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Details" bundle:[NSBundle mainBundle]];
+        UINavigationController *detailsNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"DetailsNavigation"];
+        DetailsViewController *detailsView = (DetailsViewController *)detailsNavigationController.topViewController;
+        detailsView.event = detailedEvent;
+        detailsView.parseEventHandler = self.parseHandler;
+        detailsView.delegate = self;
+        [self presentViewController:detailsNavigationController animated:YES completion:nil];
+    } else {
+        [self failedRequestWithMessage:@"Your event cannot be displayed"];
+    }
 }
 
 - (IBAction)onTapCompose:(id)sender {
@@ -97,7 +108,7 @@
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
-- (void)didTapCancel {
+- (void)didTapClose {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
