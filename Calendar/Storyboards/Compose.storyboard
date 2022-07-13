@@ -29,7 +29,7 @@
                                     <datePicker contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Xsd-Bh-hdC">
                                         <rect key="frame" x="131.5" y="187" width="240" height="38"/>
                                     </datePicker>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" scrollEnabled="NO" text="text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-YJ-z2T">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-YJ-z2T">
                                         <rect key="frame" x="37.5" y="346" width="334" height="33"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="textColor" systemColor="labelColor"/>
@@ -159,6 +159,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="composeView" destination="MXE-6h-Y0o" id="P7R-ef-BLD"/>
+                        <outlet property="updateParseButton" destination="QXP-O1-fEF" id="z0K-fb-HQU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

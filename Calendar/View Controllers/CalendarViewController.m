@@ -105,7 +105,12 @@
     UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
     ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
     composeView.delegate = self;
+    composeView.currentUserName = [self.parseHandler getCurrentUsername];
     [self presentViewController:composeNavigationController animated:YES completion:nil];
+}
+
+- (void)didTapCancel {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didTapClose {

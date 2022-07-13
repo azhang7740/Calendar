@@ -12,6 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet ComposeScrollView *composeView;
 @property (nonatomic) UIDatePicker *datePicker;
+@property (weak, nonatomic) IBOutlet UIButton *updateParseButton;
 
 @end
 
@@ -20,8 +21,22 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.composeView.descriptionTextView.text = @"Type here...";
-    self.composeView.descriptionTextView.textColor = UIColor.lightGrayColor;
+    if (self.event) {
+        self.composeView.titleTextField.text = self.event.eventTitle;
+        self.composeView.startDatePicker.date = self.event.startDate;
+        self.composeView.endDatePicker.date = self.event.endDate;
+        
+        self.composeView.locationTextField.text = self.event.location;
+        self.composeView.descriptionTextView.text = self.event.eventDescription;
+        
+        [self.updateParseButton setTitle:@"Update" forState:UIControlStateNormal];
+    }
+    
+    if ([self.composeView.descriptionTextView.text  isEqual:@""]) {
+        self.composeView.descriptionTextView.text = @"Type here...";
+        self.composeView.descriptionTextView.textColor = UIColor.lightGrayColor;
+    }
+    
     self.composeView.descriptionTextView.delegate = self;
     
     self.composeView.errorLabel.text = @"";
@@ -63,13 +78,17 @@
 }
 
 - (IBAction)onTapCancel:(id)sender {
-    [self.delegate didTapClose];
+    [self.delegate didTapCancel];
 }
 
 - (IBAction)onTapCreate:(id)sender {
-    Event *newEvent = [self createEventFromView];
-    if (newEvent) {
-        [self.delegate didTapCreateWithEvent:newEvent];
+    if ([self.updateParseButton.currentTitle isEqual:@"Create"]) {
+        Event *newEvent = [self createEventFromView];
+        if (newEvent) {
+            [self.delegate didTapCreateWithEvent:newEvent];
+        }
+    } else {
+        [self.delegate didTapCreateWithEvent:self.event];
     }
 }
 
@@ -83,7 +102,6 @@
         self.composeView.descriptionTextView.text = nil;
         self.composeView.descriptionTextView.textColor = UIColor.blackColor;
     }
-
 }
 
 - (void)textViewDidEndEditing:(UITextView *)textView {

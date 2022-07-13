@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol ComposeViewControllerDelegate
 
-- (void)didTapClose;
+- (void)didTapCancel;
 - (void)didTapCreateWithEvent:(Event *)event;
 
 @end
@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, weak) id<ComposeViewControllerDelegate> delegate;
 @property (nonatomic) NSString *currentUserName;
+@property (nonatomic) Event *event;
 
 @end
 

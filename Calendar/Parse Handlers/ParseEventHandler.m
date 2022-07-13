@@ -10,6 +10,10 @@
 
 @implementation ParseEventHandler
 
+- (NSString *)getCurrentUsername {
+    return [PFUser currentUser].username;
+}
+
 - (void)uploadToParseWithEvent:(Event *)newEvent
                 withCompletion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
