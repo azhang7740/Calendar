@@ -11,21 +11,18 @@
 #import "ScheduleScrollView.h"
 #import "ScheduleDecorator.h"
 #import "ScheduleCollectionCell.h"
+#import "DateLogicHandler.h"
 
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, ScheduleDecoratorDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, ScheduleDecoratorDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
-@property (nonatomic) NSMutableArray<NSMutableArray<Event *> *> *events;
-@property (nonatomic) NSMutableArray<NSDate *> *dates;
-
-@property (nonatomic) NSCalendar *calendar;
-@property (nonatomic) NSDate *today;
+@property (nonatomic) DateLogicHandler *dateLogicHandler;
 
 @end
 
@@ -37,40 +34,19 @@
     self.parseHandler = [[ParseEventHandler alloc] init];
     self.parseHandler.delegate = self;
     
-    self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [self.calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    self.today = [self.calendar dateBySettingHour:0 minute:0 second:0 ofDate:[NSDate date] options:0];
-    self.dates = [[NSMutableArray alloc] init];
-    self.events = [[NSMutableArray alloc] init];
-    [self.dates addObject:self.today];
-    [self addDatesToEnd];
+    self.dateLogicHandler = [[DateLogicHandler alloc] init];
     
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
     self.scheduleDecorator.delegate = self;
 }
 
 - (void)addDatesToEnd {
-    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.day = 1;
-    
-    for (int i = 0; i < 7; i++) {
-        [self.dates addObject:[self.calendar dateByAddingComponents:dayComponent
-                                                             toDate:self.dates[self.dates.count - 1]
-                                                            options:0]];
-        [self.events addObject:[[NSMutableArray alloc] init]];
-    }
+    [self.dateLogicHandler appendDatesWithCount:7];
     [self.scheduleCollectionView reloadData];
 }
 
 - (void)addDatesToStart {
-    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.day = -1;
-    
-    for (int i = 0; i < 7; i++) {
-        [self.dates insertObject:[self.calendar dateByAddingComponents:dayComponent toDate:self.dates[0] options:0]
-                         atIndex:0];
-        [self.events insertObject:[[NSMutableArray alloc] init] atIndex:0];
-    }
+    [self.dateLogicHandler prependDatesWithCount:7];
     [self.scheduleCollectionView reloadData];
 }
 
@@ -80,13 +56,9 @@
 
 - (void)successfullyUploadedEvent:(Event *)event
                           forDate:(NSDate *)date {
-    NSDateComponents *differenceComponents = [self.calendar components:(NSCalendarUnitDay)
-                                                              fromDate:self.dates[0]
-                                                                toDate:date
-                                                               options:0];
-    if ([differenceComponents day] < self.dates.count) {
-        [self.events[[differenceComponents day]] addObject:event];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[differenceComponents day] inSection:0];
+    int index = [self.dateLogicHandler getItemIndexWithDate:date];
+    if (index != -1) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
         NSArray<NSIndexPath *> *arrayOfNewIndexPaths = [[NSArray alloc] initWithObjects:indexPath, nil];
         [self.scheduleCollectionView reloadItemsAtIndexPaths:arrayOfNewIndexPaths];
     }
@@ -94,14 +66,11 @@
 
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events
                               forDate:(NSDate *)date {
-    NSDateComponents *differenceComponents = [self.calendar components:(NSCalendarUnitDay)
-                                                              fromDate:self.dates[0]
-                                                                toDate:date
-                                                               options:0];
-    self.events[[differenceComponents day]] = events;
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:[differenceComponents day] inSection:0];
+    [self.dateLogicHandler addNewEventsWithArray:events forDate:date];
+    int index = [self.dateLogicHandler getItemIndexWithDate:date];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
     ScheduleCollectionCell *cell = (ScheduleCollectionCell *)[self.scheduleCollectionView cellForItemAtIndexPath:indexPath];
-    [self.scheduleDecorator addEvents:self.events[indexPath.row] contentView:cell.scheduleView];
+    [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndex:(int)indexPath.row] contentView:cell.scheduleView];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -135,27 +104,29 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.dates.count;
+    return [self.dateLogicHandler getNumberOfElements];
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ScheduleCollectionCell *cell = [collectionView
                                     dequeueReusableCellWithReuseIdentifier:@"scheduleCellId"
                                     forIndexPath:indexPath];
+    NSDate *date = [self.dateLogicHandler getDateForIndex:(int)indexPath.row];
+    [self.scheduleDecorator decorateBaseScheduleWithDate:date contentView:cell.scheduleView];
     
-    [self.scheduleDecorator decorateBaseScheduleWithDate:self.dates[indexPath.row] contentView:cell.scheduleView];
-    if (self.events[indexPath.row].count == 0) {
-        [self fetchDataWithDate:self.dates[indexPath.row]];
-    } else {
-        [self.scheduleDecorator addEvents:self.events[indexPath.row] contentView:cell.scheduleView];
+    int numberOfEvents = [self.dateLogicHandler getNumberOfEventsForDate:date];
+    if (numberOfEvents == 0) {
+        [self fetchDataWithDate:date];
+    } else if (numberOfEvents > 0) {
+        [self.scheduleDecorator addEvents:[self.dateLogicHandler getEventsForIndex:(int)indexPath.row] contentView:cell.scheduleView];
     }
     
     if (indexPath.row == 0) {
         [self addDatesToStart];
-        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:7 inSection:0];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForItem:[self.dateLogicHandler scrollToItemAfterPrependingDates] inSection:0];
         [self.scheduleCollectionView scrollToItemAtIndexPath:newIndexPath atScrollPosition:UICollectionViewScrollPositionNone animated:false];
     }
-    if (indexPath.row == self.dates.count - 2) {
+    if (indexPath.row == [self.dateLogicHandler getNumberOfElements] - 2) {
         [self addDatesToEnd];
     }
     
