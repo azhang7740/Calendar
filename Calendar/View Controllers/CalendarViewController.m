@@ -8,20 +8,19 @@
 #import "CalendarViewController.h"
 #import "ComposeViewController.h"
 
-#import "ScheduleView.h"
-#import "ScheduleCell.h"
-#import "ScheduleCellDecorator.h"
+#import "ScheduleScrollView.h"
+#import "ScheduleDecorator.h"
 
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate, UITableViewDelegate, UITableViewDataSource>
+@interface CalendarViewController () <ComposeViewControllerDelegate, ParseEventHandlerDelegate>
 
 @property (weak, nonatomic) IBOutlet FSCalendar *calendarDisplay;
-@property (weak, nonatomic) IBOutlet ScheduleView *scheduleView;
+@property (weak, nonatomic) IBOutlet ScheduleScrollView *scheduleView;
 
 @property (nonatomic) ParseEventHandler *parseHandler;
-@property (nonatomic) ScheduleCellDecorator *scheduleCellDecorator;
+@property (nonatomic) ScheduleDecorator *scheduleDecorator;
 @property (nonatomic) NSMutableArray<Event *> *events;
 @property (nonatomic) NSDate *date;
 
@@ -34,18 +33,11 @@
     
     self.parseHandler = [[ParseEventHandler alloc] init];
     self.parseHandler.delegate = self;
-    self.scheduleCellDecorator = [[ScheduleCellDecorator alloc] init];
+
     self.date = [NSDate date];
+    self.scheduleDecorator = [[ScheduleDecorator alloc] init];
+    [self.scheduleDecorator decorateBaseScheduleWithDate:self.date contentView:self.scheduleView];
     
-    self.scheduleView.scheduleTableView.delegate = self;
-    self.scheduleView.scheduleTableView.dataSource = self;
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    [dateFormatter setLocalizedDateFormatFromTemplate:@"EEEE, MMM d, yyyy"];
-    self.scheduleView.dateLabel.text = [dateFormatter stringFromDate:self.date];
-    
-    UINib *nib = [UINib nibWithNibName:@"ScheduleCell" bundle:nil];
-    [self.scheduleView.scheduleTableView registerNib:nib forCellReuseIdentifier:@"ScheduleCellId"];
-    self.scheduleView.scheduleTableView.rowHeight = 150;
     [self fetchData];
 }
 
@@ -53,9 +45,13 @@
     [self.parseHandler queryUserEventsOnDate:self.date];
 }
 
+- (void)successfullyUploadedEvent:(Event *)event {
+    [self.scheduleDecorator addEvent:event contentView:self.scheduleView];
+}
+
 - (void)successfullyQueriedWithEvents:(NSMutableArray<Event *> *)events {
     self.events = events;
-    [self.scheduleView.scheduleTableView reloadData];
+    [self.scheduleDecorator addEvents:(NSArray<Event *> *)self.events contentView:self.scheduleView];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -77,20 +73,6 @@
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadToParseWithEvent:event];
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    ScheduleCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ScheduleCellId"
-                                                         forIndexPath:indexPath];
-    [self.scheduleCellDecorator decorateCell:cell
-                                   indexPath:indexPath
-                                      events:(NSArray *)self.events
-                                    pageDate:self.date];
-    return cell;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 24;
 }
 
 @end

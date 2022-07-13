@@ -22,7 +22,9 @@
     newParseEvent.endDate = newEvent.endDate;
     
     [newParseEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (!succeeded) {
+        if (succeeded) {
+            [self.delegate successfullyUploadedEvent:newEvent];
+        } else {
             [self.delegate failedRequestWithMessage:@"Failed to upload to Parse."];
         }
     }];
