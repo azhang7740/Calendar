@@ -18,10 +18,6 @@
 #import "ParseEventHandler.h"
 #import "AuthenticationHandler.h"
 
-#import <Parse/Parse.h>
-#import "LoginViewController.h"
-#import "SceneDelegate.h"
-
 @interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
@@ -46,6 +42,8 @@
     self.scheduleDecorator.delegate = self;
     self.pageContentOffsetY = 0;
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
+    
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {

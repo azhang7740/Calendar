@@ -8,6 +8,7 @@ target 'Calendar' do
   # Pods for Calendar
   pod 'FSCalendar'
   pod 'Parse'
+  pod 'CalendarKit'
 
   target 'CalendarTests' do
     inherit! :search_paths
