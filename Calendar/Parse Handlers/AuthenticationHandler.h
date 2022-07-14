@@ -9,21 +9,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol AuthenticationDelegate
-
-- (void)completedAuthentication;
-- (void)failedAuthentication:(NSString *)errorMessage;
-
-@end
-
 @interface AuthenticationHandler : NSObject
 
-@property (nonatomic, weak) id<AuthenticationDelegate> delegate;
-
 - (void)registerUserWithUsername:(NSString *)username
-        password:(NSString *)password;
+                        password:(NSString *)password
+                      completion:(void(^_Nonnull)(NSString * _Nullable error))completion;
 - (void)loginUserWithUsername:(NSString *)username
-    password:(NSString *)password;
+                     password:(NSString *)password
+                   completion:(void(^_Nonnull)(NSString * _Nullable error))completion;
+- (void)logoutWithCompletion:(void(^_Nonnull)(NSString * _Nullable error))completion;
 
 @end
 

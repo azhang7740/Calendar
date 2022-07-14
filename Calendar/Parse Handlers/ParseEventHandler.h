@@ -14,14 +14,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)getCurrentUsername;
 - (void)queryUserEventsOnDate:(NSDate *)date
-               withCompletion:(void(^_Nonnull)(NSMutableArray<Event *> * _Nullable events, NSDate *date, NSString * _Nullable error))completion;
+                   completion:(void(^_Nonnull)(NSMutableArray<Event *> * _Nullable events, NSDate *date, NSString * _Nullable error))completion;
 
 - (void)uploadToParseWithEvent:(Event *)newEvent
-                withCompletion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion;
+                    completion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion;
 - (void)updateParseObjectWithEvent:(Event *)event
-                    withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion;
+                        completion:(void (^_Nonnull)(NSString * _Nullable error))completion;
 - (void)deleteParseObjectWithEvent:(Event *)event
-                    withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion;
+                        completion:(void (^_Nonnull)(NSString * _Nullable error))completion;
 
 @end
 

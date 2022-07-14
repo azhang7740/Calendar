@@ -6,6 +6,8 @@
 //
 
 #import "AuthenticationHandler.h"
+#import "SceneDelegate.h"
+#import "LoginViewController.h"
 #import <Parse/Parse.h>
 
 @implementation AuthenticationHandler
@@ -16,9 +18,10 @@
 }
 
 - (void)registerUserWithUsername:(NSString *)username
-                        password:(NSString *)password {
+                        password:(NSString *)password
+                      completion:(void(^_Nonnull)(NSString * _Nullable error))completion {
     if ([self fieldsAreEmptyWithUsername:username password:password]) {
-        [self.delegate failedAuthentication:@"Username or password field is empty."];
+        completion(@"Username or password field is empty");
         return;
     }
     PFUser *newUser = [PFUser user];
@@ -29,32 +32,47 @@
     [newUser signUpInBackgroundWithBlock:^(BOOL succeeded, NSError * error) {
         if (error) {
             if ([error code] == 202) {
-                [self.delegate failedAuthentication:@"Username is taken."];
+                completion(@"Username is taken.");
             } else {
-                [self.delegate failedAuthentication:@"Something went wrong."];
+                completion(@"Something went wrong.");
             }
         } else {
-            [self.delegate completedAuthentication];
+            completion(nil);
         }
     }];
 }
 
 - (void)loginUserWithUsername:(NSString *)username
-                     password:(NSString *)password {
+                     password:(NSString *)password
+                   completion:(void(^_Nonnull)(NSString * _Nullable error))completion {
     if ([self fieldsAreEmptyWithUsername:username password:password]) {
-        [self.delegate failedAuthentication:@"Username or password field is empty."];
+        completion(@"Username or password field is empty");
         return;
     }
     
     [PFUser logInWithUsernameInBackground:username password:password block:^(PFUser * user, NSError *  error) {
         if (error) {
             if ([error code] == 101) {
-                [self.delegate failedAuthentication:@"Invalid username or password."];
+                completion(@"Invalid username or password.");
             } else {
-                [self.delegate failedAuthentication:@"Something went wrong."];
+                completion(@"Something went wrong.");
             }
         } else {
-            [self.delegate completedAuthentication];
+            completion(nil);
+        }
+    }];
+}
+
+- (void)logoutWithCompletion:(void(^_Nonnull)(NSString * _Nullable error))completion {
+    [PFUser logOutInBackgroundWithBlock:^(NSError * _Nullable error) {
+        if (error) {
+            completion(@"Failed to logout.");
+        } else {
+            SceneDelegate *sceneDelegate = (SceneDelegate * ) UIApplication.sharedApplication.connectedScenes.allObjects.firstObject.delegate;
+            
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            LoginViewController *loginViewController = [storyboard instantiateViewControllerWithIdentifier:@"LoginViewController"];
+            sceneDelegate.window.rootViewController = loginViewController;
         }
     }];
 }

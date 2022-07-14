@@ -15,7 +15,7 @@
 }
 
 - (void)uploadToParseWithEvent:(Event *)newEvent
-                withCompletion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion {
+                    completion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
     newParseEvent.objectUUID = [newEvent.objectUUID UUIDString];
     newParseEvent.eventTitle = newEvent.eventTitle;
@@ -39,7 +39,7 @@
 }
 
 - (void)queryUserEventsOnDate:(NSDate *)date
-               withCompletion:(void(^_Nonnull)(NSMutableArray<Event *> * _Nullable events, NSDate *date, NSString * _Nullable error))completion {
+                   completion:(void(^_Nonnull)(NSMutableArray<Event *> * _Nullable events, NSDate *date, NSString * _Nullable error))completion {
     PFUser *currentUser = [PFUser currentUser];
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
@@ -72,7 +72,7 @@
 }
 
 - (void)updateParseObjectWithEvent:(Event *)event
-                    withCompletion:(void (^)(NSString * _Nullable))completion {
+                        completion:(void (^)(NSString * _Nullable))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
@@ -96,7 +96,7 @@
 }
 
 - (void)deleteParseObjectWithEvent:(Event *)event
-                    withCompletion:(void (^_Nonnull)(NSString * _Nullable error))completion {
+                        completion:(void (^_Nonnull)(NSString * _Nullable error))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {

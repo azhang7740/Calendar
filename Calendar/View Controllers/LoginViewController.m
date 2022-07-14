@@ -9,7 +9,7 @@
 #import "AuthenticationHandler.h"
 #import "LoginView.h"
 
-@interface LoginViewController () <AuthenticationDelegate, UITextFieldDelegate>
+@interface LoginViewController () <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet LoginView *loginView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
@@ -23,7 +23,6 @@
     
     self.loginView.errorLabel.text = @"";
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
-    self.authenticationHandler.delegate = self;
 }
 
 - (void)completedAuthentication {
@@ -37,12 +36,26 @@
 
 - (IBAction)onTapSignUp:(id)sender {
     [self.authenticationHandler registerUserWithUsername:self.loginView.usernameTextField.text
-                                password:self.loginView.passwordTextField.text];
+                                                password:self.loginView.passwordTextField.text
+                                              completion:^(NSString * _Nullable error) {
+        if (error) {
+            [self failedAuthentication:error];
+        } else {
+            [self completedAuthentication];
+        }
+    }];
 }
 
 - (IBAction)onTapLogin:(id)sender {
     [self.authenticationHandler loginUserWithUsername:self.loginView.usernameTextField.text
-                             password:self.loginView.passwordTextField.text];
+                                             password:self.loginView.passwordTextField.text
+                                           completion:^(NSString * _Nullable error) {
+        if (error) {
+            [self failedAuthentication:error];
+        } else {
+            [self completedAuthentication];
+        }
+    }];
 }
 
 - (IBAction)onTapOutside:(id)sender {

@@ -57,7 +57,7 @@
 }
 
 - (void)fetchDataWithDate:(NSDate *)date {
-    [self.parseHandler queryUserEventsOnDate:date withCompletion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler queryUserEventsOnDate:date   completion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
@@ -122,7 +122,7 @@
 
 - (void)didTapCreateWithEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadToParseWithEvent:event withCompletion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
