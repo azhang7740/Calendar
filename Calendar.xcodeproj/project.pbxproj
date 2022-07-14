@@ -39,7 +39,6 @@
 		413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE542287600E800CCF8E1 /* TodoViewController.m */; };
 		413DE5462876027700CCF8E1 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5452876027600CCF8E1 /* CalendarViewController.m */; };
 		413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */; };
-		413DE54D28761EBF00CCF8E1 /* LogoutHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE54B28761EBF00CCF8E1 /* LogoutHandler.m */; };
 		413DE54F2876200A00CCF8E1 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 413DE54E2876200A00CCF8E1 /* Keys.plist */; };
 		413DE55228762C1E00CCF8E1 /* EventCalendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */; };
 		413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoList.storyboard */; };
@@ -123,9 +122,7 @@
 		413DE5442876027600CCF8E1 /* CalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
 		413DE5452876027600CCF8E1 /* CalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		413DE54828761EBE00CCF8E1 /* AuthenticationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationHandler.h; sourceTree = "<group>"; };
-		413DE54928761EBE00CCF8E1 /* LogoutHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogoutHandler.h; sourceTree = "<group>"; };
 		413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationHandler.m; sourceTree = "<group>"; };
-		413DE54B28761EBF00CCF8E1 /* LogoutHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LogoutHandler.m; sourceTree = "<group>"; };
 		413DE54E2876200A00CCF8E1 /* Keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EventCalendar.storyboard; sourceTree = "<group>"; };
 		413DE55328762DB300CCF8E1 /* TodoList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoList.storyboard; sourceTree = "<group>"; };
@@ -294,8 +291,6 @@
 			children = (
 				413DE54828761EBE00CCF8E1 /* AuthenticationHandler.h */,
 				413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */,
-				413DE54928761EBE00CCF8E1 /* LogoutHandler.h */,
-				413DE54B28761EBF00CCF8E1 /* LogoutHandler.m */,
 				410A102928774BE50023F523 /* ParseEventBuilder.h */,
 				410A102A28774BE50023F523 /* ParseEventBuilder.m */,
 				410A102C287797850023F523 /* ParseEventHandler.h */,
@@ -606,7 +601,6 @@
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
 				410A102E287797850023F523 /* ParseEventHandler.m in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
-				413DE54D28761EBF00CCF8E1 /* LogoutHandler.m in Sources */,
 				412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,

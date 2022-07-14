@@ -16,6 +16,11 @@
 
 #import "FSCalendar/FSCalendar.h"
 #import "ParseEventHandler.h"
+#import "AuthenticationHandler.h"
+
+#import <Parse/Parse.h>
+#import "LoginViewController.h"
+#import "SceneDelegate.h"
 
 @interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
@@ -24,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UICollectionView *scheduleCollectionView;
 @property (nonatomic) EventDateLogicHandler *dateLogicHandler;
+@property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) CGFloat pageContentOffsetY;
 
 @end
@@ -39,6 +45,7 @@
     self.scheduleDecorator = [[ScheduleDecorator alloc] init];
     self.scheduleDecorator.delegate = self;
     self.pageContentOffsetY = 0;
+    self.authenticationHandler = [[AuthenticationHandler alloc] init];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -105,6 +112,14 @@
     } else {
         [self failedRequestWithMessage:@"Your event cannot be displayed"];
     }
+}
+
+- (IBAction)onTapLogout:(id)sender {
+    [self.authenticationHandler logoutWithCompletion:^(NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:error];
+        }
+    }];
 }
 
 - (IBAction)onTapCompose:(id)sender {
