@@ -139,10 +139,10 @@
             </objects>
             <point key="canvasLocation" x="1456" y="45"/>
         </scene>
-        <!--Schedule-->
+        <!--EventCalendar-->
         <scene sceneID="r4v-tI-39m">
             <objects>
-                <viewControllerPlaceholder storyboardName="Schedule" id="Kpv-zp-TWh" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="EventCalendar" id="Kpv-zp-TWh" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="tuN-tp-OYN"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vx9-RT-yJK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
