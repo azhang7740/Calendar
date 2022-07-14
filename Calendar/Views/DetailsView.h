@@ -29,7 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *descriptionIcon;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionIconTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLocationTopConstraint;
+
 
 @end
 

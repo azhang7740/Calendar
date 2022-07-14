@@ -32,13 +32,13 @@
         [self.detailsView.locationIcon setHidden:true];
         [self.detailsView.locationLabel setHidden:true];
         
-        [self.detailsView.descriptionIconTopConstraint setActive:false];
+        [self.detailsView.descriptionLocationTopConstraint setConstant:0];
     } else {
         [self.detailsView.locationIcon setHidden:false];
         [self.detailsView.locationLabel setHidden:false];
         self.detailsView.locationLabel.text = self.event.location;
         
-        [self.detailsView.descriptionIconTopConstraint setActive:true];
+        [self.detailsView.descriptionLocationTopConstraint setConstant:50];
     }
     
     if ([self.event.eventDescription isEqual:@""]) {
