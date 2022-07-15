@@ -104,7 +104,7 @@
         UINavigationController *detailsNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"DetailsNavigation"];
         DetailsViewController *detailsView = (DetailsViewController *)detailsNavigationController.topViewController;
         detailsView.event = detailedEvent;
-        detailsView.parseEventHandler = self.parseHandler;
+//        detailsView.parseEventHandler = self.parseHandler;
         detailsView.delegate = self;
         [self presentViewController:detailsNavigationController animated:YES completion:nil];
     } else {

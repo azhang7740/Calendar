@@ -8,12 +8,20 @@
 import Foundation
 import CalendarKit
 
+@objc
+public protocol ScheduleSubViewControllerDelegate {
+    func didTapEvent(_ event: CalendarApp.Event);
+    func didLongPressEvent(_ event: CalendarApp.Event);
+}
+
 @objcMembers
 class ScheduleSubViewController : DayViewController {
     
+    public var controllerDelegate: ScheduleSubViewControllerDelegate?
     private let parseEventHandler = ParseEventHandler()
     private var eventModels = [CalendarApp.Event]()
     private var alreadyFetchedDates = Set<Date>()
+    private var eventDictionary = [UUID: CalendarApp.Event]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +59,8 @@ class ScheduleSubViewController : DayViewController {
             var info = [eventModel.eventTitle, eventModel.location]
             info.append(dateIntervalFormatter.string(from: event.dateInterval.start, to: event.dateInterval.end))
             event.text = info.reduce("", {$0 + $1 + "\n"})
+            event.objectID = eventModel.objectUUID
+            eventDictionary[eventModel.objectUUID] = eventModel
             calendarKitEvents.append(event)
         }
         
@@ -58,10 +68,22 @@ class ScheduleSubViewController : DayViewController {
     }
     
     override func dayViewDidSelectEventView(_ eventView: EventView) {
-
+        guard let descriptor = eventView.descriptor as? CalendarKit.Event else {
+          return
+        }
+        guard let objectID = descriptor.objectID else {
+            return
+        }
+        self.controllerDelegate?.didTapEvent(eventDictionary[objectID]!)
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
-        
+        guard let descriptor = eventView.descriptor as? CalendarKit.Event else {
+          return
+        }
+        guard let objectID = descriptor.objectID else {
+            return
+        }
+        self.controllerDelegate?.didLongPressEvent(eventDictionary[objectID]!)
     }
 }

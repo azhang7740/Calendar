@@ -22,7 +22,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (weak, nonatomic) id<DetailsViewControllerDelegate> delegate;
 @property (nonatomic) Event *event;
-@property (nonatomic) ParseEventHandler *parseEventHandler;
 
 @end
 

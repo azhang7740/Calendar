@@ -12,6 +12,7 @@
 @interface DetailsViewController () <DetailsViewDelegate, ComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet DetailsView *detailsView;
+@property (nonatomic) ParseEventHandler *parseEventHandler;
 
 @end
 
@@ -21,6 +22,7 @@
     [super viewDidLoad];
     
     self.detailsView.delegate = self;
+    self.parseEventHandler = [[ParseEventHandler alloc] init];
     [self updateDetailsView];
 }
 
@@ -93,7 +95,7 @@
         if (!error) {
             [self.delegate didDeleteEvent:self.event];
         } else {
-            // error handling
+            // TODO: error handling
         }
     }];
 }
@@ -106,7 +108,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseEventHandler updateParseObjectWithEvent:event completion:^(NSString * _Nullable error) {
         if (error) {
-            // error handling
+            // TODO: error handling
         } else {
             [self updateDetailsView];
         }
