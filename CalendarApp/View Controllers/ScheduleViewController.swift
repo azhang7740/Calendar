@@ -64,6 +64,11 @@ class ScheduleSubViewController : DayViewController {
         }
     }
     
+    func addEvent(_ eventModel: CalendarApp.Event, _ date: Date) {
+        dateToCalendarKitEvents[date]?.append(getCalendarKitEvent(eventModel))
+        reloadData()
+    }
+    
     func getCalendarKitEvent(_ eventModel: CalendarApp.Event) -> CalendarKit.Event {
         let dateIntervalFormatter = DateIntervalFormatter()
         let newEvent = CalendarKit.Event()
@@ -80,7 +85,9 @@ class ScheduleSubViewController : DayViewController {
         controllerDelegate?.fetchEventsForDate(date, callback: { events, errorMessage in
             if let newEvents = events {
                 self.addCalendarKitEventFromEvents(newEvents, date)
-                self.reloadData()
+                DispatchQueue.main.async {
+                    self.reloadData()
+                }
             } else if let fetchErrorMessage = errorMessage {
                 self.failedRequest(fetchErrorMessage)
             } else {
