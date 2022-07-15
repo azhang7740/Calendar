@@ -10,60 +10,65 @@ import CalendarKit
 
 @objc
 public protocol ScheduleSubViewControllerDelegate {
-    func didTapEvent(_ event: CalendarApp.Event);
-    func didLongPressEvent(_ event: CalendarApp.Event);
+    func didTapEvent(_ eventID: UUID)
+    func didLongPressEvent(_ eventID: UUID)
+    func fetchEventsForDate(_ date: Date, callback: @escaping(_ events:[CalendarApp.Event]?, _ errorMessage: String?) -> Void)
+    func hasEventsForDate(_ date: Date) -> Bool
 }
 
 @objcMembers
 class ScheduleSubViewController : DayViewController {
     
-    public var controllerDelegate: ScheduleSubViewControllerDelegate?
-    public let parseEventHandler = ParseEventHandler()
-    private var eventModels = [CalendarApp.Event]()
-    private var alreadyFetchedDates = Set<Date>()
-    private var eventDictionary = [UUID: CalendarApp.Event]()
+    var controllerDelegate: ScheduleSubViewControllerDelegate?
+    private var calendarKitEvents = [CalendarKit.Event]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
-    func fetchEventsForDate(_ date: Date) {
-        parseEventHandler.queryUserEvents(on: date) { [self] events, date, errorMessage in
-            if errorMessage != nil {
-                failedRequest(errorMessage ?? "")
-            } else {
-                for event in events ?? [] {
-                    eventModels.append(event as? CalendarApp.Event ?? CalendarApp.Event())
-                }
-                reloadData()
-            }
-        }
+    func updateCalendarEvents() {
+        reloadData()
     }
     
     func failedRequest(_ errorMessage: String) {
+        // TODO: Error handling
+    }
+    
+    func addCalendarKitEventFromEvents(_ events:[CalendarApp.Event]) {
+        let dateIntervalFormatter = DateIntervalFormatter()
         
+        for eventModel in events {
+            let newEvent = CalendarKit.Event()
+            newEvent.dateInterval = DateInterval(start: eventModel.startDate, end: eventModel.endDate)
+            
+            var info = [eventModel.eventTitle, eventModel.location]
+            info.append(dateIntervalFormatter.string(from: newEvent.dateInterval.start, to: newEvent.dateInterval.end))
+            newEvent.text = info.reduce("", {$0 + $1 + "\n"})
+            newEvent.objectID = eventModel.objectUUID
+            calendarKitEvents.append(newEvent)
+        }
+    }
+    
+    func fetchCalendarEventsForDate(_ date: Date) {
+        controllerDelegate?.fetchEventsForDate(date, callback: { events, errorMessage in
+            if let newEvents = events {
+                self.addCalendarKitEventFromEvents(newEvents)
+                self.reloadData()
+            } else if let fetchErrorMessage = errorMessage {
+                self.failedRequest(fetchErrorMessage)
+            } else {
+                self.failedRequest("Something went wrong.")
+            }
+        })
     }
     
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
-        if (!alreadyFetchedDates.contains(date)) {
-            alreadyFetchedDates.insert(date)
-            fetchEventsForDate(date)
+        guard let hasEvents = controllerDelegate?.hasEventsForDate(date) else {
+            return calendarKitEvents;
         }
-        var calendarKitEvents = [CalendarKit.Event]()
-        let dateIntervalFormatter = DateIntervalFormatter()
-
-        for eventModel in eventModels {
-            let event = CalendarKit.Event()
-            event.dateInterval = DateInterval(start: eventModel.startDate, end: eventModel.endDate)
-            
-            var info = [eventModel.eventTitle, eventModel.location]
-            info.append(dateIntervalFormatter.string(from: event.dateInterval.start, to: event.dateInterval.end))
-            event.text = info.reduce("", {$0 + $1 + "\n"})
-            event.objectID = eventModel.objectUUID
-            eventDictionary[eventModel.objectUUID] = eventModel
-            calendarKitEvents.append(event)
+        if (!hasEvents) {
+            fetchCalendarEventsForDate(date)
         }
-        
         return calendarKitEvents
     }
     
@@ -74,7 +79,7 @@ class ScheduleSubViewController : DayViewController {
         guard let objectID = descriptor.objectID else {
             return
         }
-        self.controllerDelegate?.didTapEvent(eventDictionary[objectID]!)
+        self.controllerDelegate?.didTapEvent(objectID)
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
@@ -84,6 +89,6 @@ class ScheduleSubViewController : DayViewController {
         guard let objectID = descriptor.objectID else {
             return
         }
-        self.controllerDelegate?.didLongPressEvent(eventDictionary[objectID]!)
+        self.controllerDelegate?.didLongPressEvent(objectID)
     }
 }

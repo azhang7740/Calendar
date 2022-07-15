@@ -19,6 +19,9 @@
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) ParseEventHandler *parseHandler;
 
+@property (nonatomic) NSMutableDictionary<NSDate *, NSMutableArray<Event *> *> *datesToEvents;
+@property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
+
 @end
 
 @implementation ScheduleViewController
@@ -35,24 +38,52 @@
     self.scheduleView.controllerDelegate = self;
     
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
-    self.parseHandler = self.scheduleView.parseEventHandler;
+    self.parseHandler = [[ParseEventHandler alloc] init];
+    self.datesToEvents = [[NSMutableDictionary alloc] init];
+    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
     // TODO: error handling
 }
 
+- (void)fetchEventsForDate:(NSDate *)date
+                  callback:(void (^)(NSArray<Event *> * _Nullable, NSString * _Nullable))callback {
+    if ([self.datesToEvents objectForKey:date]) {
+        callback(self.datesToEvents[date], nil);
+    } else {
+        [self.parseHandler queryUserEventsOnDate:date
+                                      completion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
+            if (error) {
+                callback(nil, error);
+            } else {
+                self.datesToEvents[date] = events;
+                for (Event *newEvent in events) {
+                    self.objectIDToEvents[newEvent.objectUUID] = newEvent;
+                }
+                callback(events, nil);
+            }
+        }];
+    }
+}
 
-- (void)didTapEvent:(Event *)event {
+- (BOOL)hasEventsForDate:(NSDate *)date {
+    if ([self.datesToEvents objectForKey:date]) {
+        return true;
+    }
+    return false;
+}
+
+- (void)didTapEvent:(NSUUID *)eventID {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Details" bundle:[NSBundle mainBundle]];
     UINavigationController *detailsNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"DetailsNavigation"];
     DetailsViewController *detailsView = (DetailsViewController *)detailsNavigationController.topViewController;
-    detailsView.event = event;
+    detailsView.event = self.objectIDToEvents[eventID];
     detailsView.delegate = self;
     [self presentViewController:detailsNavigationController animated:YES completion:nil];
 }
 
-- (void)didLongPressEvent:(Event *)event {
+- (void)didLongPressEvent:(NSUUID *)eventID {
     
 }
 

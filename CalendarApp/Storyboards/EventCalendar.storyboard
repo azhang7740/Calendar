@@ -55,7 +55,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="odN-rd-hkJ">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="qrW-jV-oD5">
+                        <barButtonItem key="leftBarButtonItem" id="qrW-jV-oD5">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="ELO-dp-oFo">
                                 <rect key="frame" x="20" y="6.5" width="92" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
