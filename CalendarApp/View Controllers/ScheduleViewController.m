@@ -10,6 +10,8 @@
 
 @interface ScheduleViewController ()
 
+@property (nonatomic) ScheduleSubViewController* scheduleView;
+
 @end
 
 @implementation ScheduleViewController
@@ -17,12 +19,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    ScheduleSubViewController *scheduleView = [[ScheduleSubViewController alloc] init];
-    [self addChildViewController:scheduleView];
-    [self.view addSubview:scheduleView.view];
+    self.scheduleView = [[ScheduleSubViewController alloc] init];
+    [self addChildViewController:self.scheduleView];
+    [self.view addSubview:self.scheduleView.view];
     
-    [scheduleView didMoveToParentViewController:self];
-    scheduleView.view.frame = self.view.bounds;
+    [self.scheduleView didMoveToParentViewController:self];
+    self.scheduleView.view.frame = self.view.bounds;
 }
 
 @end
