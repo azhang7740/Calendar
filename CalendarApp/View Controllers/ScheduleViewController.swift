@@ -13,7 +13,6 @@ public protocol ScheduleSubViewControllerDelegate {
     func didTapEvent(_ eventID: UUID)
     func didLongPressEvent(_ eventID: UUID)
     func fetchEventsForDate(_ date: Date, callback: @escaping(_ events:[CalendarApp.Event]?, _ errorMessage: String?) -> Void)
-    func hasEventsForDate(_ date: Date) -> Bool
 }
 
 @objcMembers
@@ -21,6 +20,7 @@ class ScheduleSubViewController : DayViewController {
     
     var controllerDelegate: ScheduleSubViewControllerDelegate?
     private var calendarKitEvents = [CalendarKit.Event]()
+    private var alreadyFetchedDates = Set<Date>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +63,8 @@ class ScheduleSubViewController : DayViewController {
     }
     
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
-        guard let hasEvents = controllerDelegate?.hasEventsForDate(date) else {
-            return calendarKitEvents;
-        }
-        if (!hasEvents) {
+        if (!alreadyFetchedDates.contains(date)) {
+            alreadyFetchedDates.insert(date)
             fetchCalendarEventsForDate(date)
         }
         return calendarKitEvents

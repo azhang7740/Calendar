@@ -67,13 +67,6 @@
     }
 }
 
-- (BOOL)hasEventsForDate:(NSDate *)date {
-    if ([self.datesToEvents objectForKey:date]) {
-        return true;
-    }
-    return false;
-}
-
 - (void)didTapEvent:(NSUUID *)eventID {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Details" bundle:[NSBundle mainBundle]];
     UINavigationController *detailsNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"DetailsNavigation"];
