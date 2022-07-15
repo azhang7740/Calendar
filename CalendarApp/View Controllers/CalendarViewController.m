@@ -153,6 +153,10 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)didUpdateEvent:(Event *)event {
+    
+}
+
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }

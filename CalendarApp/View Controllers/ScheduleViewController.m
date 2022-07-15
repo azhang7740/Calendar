@@ -85,7 +85,19 @@
 }
 
 - (void)didDeleteEvent:(Event *)event {
-    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
+    [self.datesToEvents[midnight] removeObject:event];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.scheduleView deleteCalendarEvent:event :midnight];
+}
+
+- (void)didUpdateEvent:(Event *)event {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
+    [self.scheduleView updateCalendarEvent:event :midnight];
 }
 
 - (void)didTapCancel {

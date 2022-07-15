@@ -111,6 +111,7 @@
             // TODO: error handling
         } else {
             [self updateDetailsView];
+            [self.delegate didUpdateEvent:event];
         }
     }];
 }
