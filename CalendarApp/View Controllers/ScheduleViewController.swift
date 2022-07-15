@@ -18,7 +18,7 @@ public protocol ScheduleSubViewControllerDelegate {
 class ScheduleSubViewController : DayViewController {
     
     public var controllerDelegate: ScheduleSubViewControllerDelegate?
-    private let parseEventHandler = ParseEventHandler()
+    public let parseEventHandler = ParseEventHandler()
     private var eventModels = [CalendarApp.Event]()
     private var alreadyFetchedDates = Set<Date>()
     private var eventDictionary = [UUID: CalendarApp.Event]()

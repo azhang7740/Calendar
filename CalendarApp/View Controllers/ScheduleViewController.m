@@ -7,11 +7,17 @@
 
 #import "ScheduleViewController.h"
 #import "DetailsViewController.h"
-#import "CalendarApp-Swift.h"
+#import "ComposeViewController.h"
 
-@interface ScheduleViewController () <ScheduleSubViewControllerDelegate, DetailsViewControllerDelegate>
+#import "CalendarApp-Swift.h"
+#import "AuthenticationHandler.h"
+#import "ParseEventHandler.h"
+
+@interface ScheduleViewController () <ScheduleSubViewControllerDelegate, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
 @property (nonatomic) ScheduleSubViewController* scheduleView;
+@property (nonatomic) AuthenticationHandler *authenticationHandler;
+@property (nonatomic) ParseEventHandler *parseHandler;
 
 @end
 
@@ -27,6 +33,13 @@
     [self.scheduleView didMoveToParentViewController:self];
     self.scheduleView.view.frame = self.view.bounds;
     self.scheduleView.controllerDelegate = self;
+    
+    self.authenticationHandler = [[AuthenticationHandler alloc] init];
+    self.parseHandler = self.scheduleView.parseEventHandler;
+}
+
+- (void)failedRequestWithMessage:(NSString *)errorMessage {
+    // TODO: error handling
 }
 
 
@@ -48,6 +61,31 @@
 }
 
 - (void)didDeleteEvent:(Event *)event {
+    
+}
+
+- (void)didTapCancel {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)onTapLogout:(id)sender {
+    [self.authenticationHandler logoutWithCompletion:^(NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:error];
+        }
+    }];
+}
+
+- (IBAction)onTapAdd:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Compose" bundle:[NSBundle mainBundle]];
+    UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
+    ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
+    composeView.delegate = self;
+    composeView.currentUserName = [self.parseHandler getCurrentUsername];
+    [self presentViewController:composeNavigationController animated:YES completion:nil];
+}
+
+- (void)didTapCreateWithEvent:(Event *)event {
     
 }
 
