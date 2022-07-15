@@ -46,8 +46,8 @@ class ScheduleSubViewController : DayViewController {
     }
     
     func getEventIndex(_ eventID: UUID, _ calendarKitEvents: [CalendarKit.Event]) -> Int {
-        for eventIndex in 0...calendarKitEvents.count - 1 {
-            if calendarKitEvents[eventIndex].objectID {
+        for eventIndex in 0...calendarKitEvents.count {
+            if calendarKitEvents[eventIndex].objectID == eventID {
                 return eventIndex
             }
         }
