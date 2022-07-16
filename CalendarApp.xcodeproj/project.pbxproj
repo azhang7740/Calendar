@@ -43,6 +43,9 @@
 		413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoList.storyboard */; };
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
+		41E2CF6E2880CBC60077F173 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* ScheduleViewController.swift */; };
+		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
+		41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF7B2880DE930077F173 /* ScheduleViewController.m */; };
 		9ABC58D574AD5DE147CC020D /* libPods-CalendarTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */; };
 		A9F8029960C8174E0677EDC8 /* libPods-Calendar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 428F343F06B776A65B2D51DE /* libPods-Calendar.a */; };
 		E102A5E6C44E47B4940A94BB /* libPods-Calendar-CalendarUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57BE2F214487C13945C1F83 /* libPods-Calendar-CalendarUITests.a */; };
@@ -128,6 +131,11 @@
 		413DE558287634A700CCF8E1 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
+		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		41E2CF6D2880CBC60077F173 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		41E2CF782880DE500077F173 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
+		41E2CF7A2880DE930077F173 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
+		41E2CF7B2880DE930077F173 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		428F343F06B776A65B2D51DE /* libPods-Calendar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calendar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CalendarTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		504796EDD91AE659F6D184A1 /* Pods-Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar.release.xcconfig"; path = "Target Support Files/Pods-Calendar/Pods-Calendar.release.xcconfig"; sourceTree = "<group>"; };
@@ -224,6 +232,7 @@
 				413DE5142874B39400CCF8E1 /* Assets.xcassets */,
 				413DE5192874B39400CCF8E1 /* Info.plist */,
 				413DE51A2874B39400CCF8E1 /* main.m */,
+				41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */,
 			);
 			path = CalendarApp;
 			sourceTree = "<group>";
@@ -258,6 +267,9 @@
 				410A101B287659E40023F523 /* ComposeViewController.m */,
 				412D3A51287F388E0023C9AA /* DetailsViewController.h */,
 				412D3A52287F388E0023C9AA /* DetailsViewController.m */,
+				41E2CF6D2880CBC60077F173 /* ScheduleViewController.swift */,
+				41E2CF7A2880DE930077F173 /* ScheduleViewController.h */,
+				41E2CF7B2880DE930077F173 /* ScheduleViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -271,6 +283,7 @@
 				413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */,
 				410A101828764D5C0023F523 /* Compose.storyboard */,
 				412D3A4B287E0F2D0023C9AA /* Details.storyboard */,
+				41E2CF782880DE500077F173 /* Schedule.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -466,6 +479,7 @@
 				413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */,
 				413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */,
 				412D3A44287C9B5D0023C9AA /* ScheduleEvent.xib in Resources */,
+				41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -600,6 +614,8 @@
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
+				41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */,
+				41E2CF6E2880CBC60077F173 /* ScheduleViewController.swift in Sources */,
 				410A102E287797850023F523 /* ParseEventHandler.m in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */,
@@ -806,7 +822,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.Calendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Calendar/Calendar-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CalendarApp/CalendarApp-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -839,7 +855,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.Calendar;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "Calendar/Calendar-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "CalendarApp/CalendarApp-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -849,6 +865,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 409A67BDEC49EFADE60844D5 /* Pods-CalendarTests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -868,6 +885,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A6C562733995A14A0194FD62 /* Pods-CalendarTests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -887,6 +905,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 74B456A65A3976A8B730423D /* Pods-Calendar-CalendarUITests.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3AU6YJ5LJW;
@@ -904,6 +923,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B4160B553E899F99AE6F60C2 /* Pods-Calendar-CalendarUITests.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3AU6YJ5LJW;
