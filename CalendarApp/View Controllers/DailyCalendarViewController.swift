@@ -9,21 +9,17 @@ import Foundation
 import CalendarKit
 
 @objc
-public protocol ScheduleSubViewControllerDelegate {
+public protocol EventInteraction {
     func didTapEvent(_ eventID: UUID)
     func didLongPressEvent(_ eventID: UUID)
     func fetchEventsForDate(_ date: Date, callback: @escaping(_ events:[CalendarApp.Event]?, _ errorMessage: String?) -> Void)
 }
 
 @objcMembers
-class ScheduleSubViewController : DayViewController {
+class DailyCalendarViewController : DayViewController {
     
-    var controllerDelegate: ScheduleSubViewControllerDelegate?
+    var controllerDelegate: EventInteraction?
     private var dateToCalendarKitEvents = [Date: [CalendarKit.Event]]()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     func updateCalendarEvent(_ event: CalendarApp.Event, _ date: Date) {
         guard var calendarKitEvents = dateToCalendarKitEvents[date] else {
@@ -106,21 +102,17 @@ class ScheduleSubViewController : DayViewController {
     }
     
     override func dayViewDidSelectEventView(_ eventView: EventView) {
-        guard let descriptor = eventView.descriptor as? CalendarKit.Event else {
+        guard let descriptor = eventView.descriptor as? CalendarKit.Event,
+            let objectID = descriptor.objectID else {
           return
-        }
-        guard let objectID = descriptor.objectID else {
-            return
         }
         controllerDelegate?.didTapEvent(objectID)
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
-        guard let descriptor = eventView.descriptor as? CalendarKit.Event else {
+        guard let descriptor = eventView.descriptor as? CalendarKit.Event,
+            let objectID = descriptor.objectID else {
           return
-        }
-        guard let objectID = descriptor.objectID else {
-            return
         }
         controllerDelegate?.didLongPressEvent(objectID)
     }

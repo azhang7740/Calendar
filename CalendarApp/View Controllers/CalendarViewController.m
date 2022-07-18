@@ -18,7 +18,7 @@
 #import "ParseEventHandler.h"
 #import "AuthenticationHandler.h"
 
-@interface CalendarViewController () <ComposeViewControllerDelegate, ScheduleDecoratorDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
+@interface CalendarViewController () <ComposeViewControllerDelegate, TapViewDelegate, DetailsViewControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) ScheduleDecorator *scheduleDecorator;

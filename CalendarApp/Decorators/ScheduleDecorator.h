@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@protocol ScheduleDecoratorDelegate
+@protocol TapViewDelegate
 
 - (void)didTapView:(NSUUID *)eventId;
 
@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ScheduleDecorator : NSObject
 
-@property (weak, nonatomic) id<ScheduleDecoratorDelegate> delegate;
+@property (weak, nonatomic) id<TapViewDelegate> delegate;
 
 - (void)decorateBaseScheduleWithDate:(NSDate *)date
                          contentView:(ScheduleScrollView *)view;

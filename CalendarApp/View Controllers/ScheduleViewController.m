@@ -13,9 +13,9 @@
 #import "AuthenticationHandler.h"
 #import "ParseEventHandler.h"
 
-@interface ScheduleViewController () <ScheduleSubViewControllerDelegate, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
+@interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
-@property (nonatomic) ScheduleSubViewController* scheduleView;
+@property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) ParseEventHandler *parseHandler;
 
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.scheduleView = [[ScheduleSubViewController alloc] init];
+    self.scheduleView = [[DailyCalendarViewController alloc] init];
     self.scheduleView.controllerDelegate = self;
     self.parseHandler = [[ParseEventHandler alloc] init];
     [self addChildViewController:self.scheduleView];
