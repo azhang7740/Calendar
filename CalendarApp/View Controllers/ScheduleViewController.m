@@ -123,16 +123,13 @@
 
 - (void)didTapChangeEvent:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-            NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-            self.objectIDToEvents[event.objectUUID] = event;
-            [self.datesToEvents[midnight] addObject:event];
-            [self.scheduleView addEvent:event :midnight];
+            self.objectIDToEvents[parseEvent.objectUUID] = parseEvent;
+            [self.datesToEvents[date] addObject:parseEvent];
+            [self.scheduleView addEvent: parseEvent: date];
         }
     }];
 }

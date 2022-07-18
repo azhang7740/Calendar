@@ -15,7 +15,7 @@
 }
 
 - (void)uploadToParseWithEvent:(Event *)newEvent
-                    completion:(void (^_Nonnull)(Event *event, NSDate *date, NSString * _Nullable error))completion {
+                    completion:(void (^_Nonnull)(Event *parseEvent, NSDate *date, NSString * _Nullable error))completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
     newParseEvent.objectUUID = [newEvent.objectUUID UUIDString];
     newParseEvent.eventTitle = newEvent.eventTitle;
@@ -31,6 +31,7 @@
         [calendar setTimeZone:[NSTimeZone systemTimeZone]];
         NSDate *midnightDate = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:newEvent.startDate options:0];
         if (succeeded) {
+            newEvent.parseObjectId = newParseEvent.objectId;
             completion(newEvent, midnightDate, nil);
         } else {
             completion(newEvent, midnightDate, @"Failed to upload to Parse.");
