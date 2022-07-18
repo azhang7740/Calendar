@@ -2,7 +2,6 @@ import UIKit
 
 public final class Event: EventDescriptor {
   public var dateInterval = DateInterval()
-  public var objectID: UUID?
   public var isAllDay = false
   public var text = ""
   public var attributedText: NSAttributedString?
