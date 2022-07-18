@@ -30,12 +30,12 @@
     [super viewDidLoad];
     
     self.scheduleView = [[ScheduleSubViewController alloc] init];
+    self.scheduleView.controllerDelegate = self;
     [self addChildViewController:self.scheduleView];
     [self.view addSubview:self.scheduleView.view];
     
     [self.scheduleView didMoveToParentViewController:self];
     self.scheduleView.view.frame = self.view.bounds;
-    self.scheduleView.controllerDelegate = self;
     
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.parseHandler = [[ParseEventHandler alloc] init];

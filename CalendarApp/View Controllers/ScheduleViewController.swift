@@ -32,7 +32,6 @@ class ScheduleSubViewController : DayViewController {
         let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
         calendarKitEvents[eventIndex] = getCalendarKitEvent(event)
         reloadData()
-        reloadInputViews()
     }
     
     func deleteCalendarEvent(_ event: CalendarApp.Event, _ date: Date) {
@@ -42,7 +41,6 @@ class ScheduleSubViewController : DayViewController {
         let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
         calendarKitEvents.remove(at: eventIndex)
         reloadData()
-        reloadInputViews()
     }
     
     func getEventIndex(_ eventID: UUID, _ calendarKitEvents: [CalendarKit.Event]) -> Int {
