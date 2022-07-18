@@ -31,6 +31,7 @@ class ScheduleSubViewController : DayViewController {
         }
         let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
         calendarKitEvents[eventIndex] = getCalendarKitEvent(event)
+        dateToCalendarKitEvents[date] = calendarKitEvents
         reloadData()
     }
     
@@ -98,7 +99,7 @@ class ScheduleSubViewController : DayViewController {
         guard let calendarKitEvents = dateToCalendarKitEvents[date] else {
             dateToCalendarKitEvents[date] = [CalendarKit.Event]()
             fetchCalendarEventsForDate(date)
-            return dateToCalendarKitEvents[date] ?? [CalendarKit.Event]()
+            return dateToCalendarKitEvents[date] ?? [ ]
         }
         return calendarKitEvents
     }

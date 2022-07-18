@@ -133,7 +133,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapCreateWithEvent:(nonnull Event *)event {
+- (void)didTapChangeEvent:(nonnull Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {

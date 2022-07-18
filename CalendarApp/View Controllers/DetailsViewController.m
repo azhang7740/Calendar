@@ -104,7 +104,7 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapCreateWithEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseEventHandler updateParseObjectWithEvent:event completion:^(NSString * _Nullable error) {
         if (error) {

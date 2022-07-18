@@ -121,7 +121,7 @@
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
-- (void)didTapCreateWithEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
