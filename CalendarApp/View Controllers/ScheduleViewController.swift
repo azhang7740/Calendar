@@ -41,6 +41,7 @@ class ScheduleSubViewController : DayViewController {
         }
         let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
         calendarKitEvents.remove(at: eventIndex)
+        dateToCalendarKitEvents[date] = calendarKitEvents;
         reloadData()
     }
     
