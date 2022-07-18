@@ -10,7 +10,6 @@
 		410A101928764D5C0023F523 /* Compose.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 410A101828764D5C0023F523 /* Compose.storyboard */; };
 		410A101C287659E40023F523 /* ComposeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A101B287659E40023F523 /* ComposeViewController.m */; };
 		410A1022287744120023F523 /* ComposeScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1021287744120023F523 /* ComposeScrollView.m */; };
-		410A1025287749770023F523 /* Event.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1024287749770023F523 /* Event.m */; };
 		410A1028287749860023F523 /* ParseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1027287749860023F523 /* ParseEvent.m */; };
 		410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102A28774BE50023F523 /* ParseEventBuilder.m */; };
 		410A102E287797850023F523 /* ParseEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102D287797850023F523 /* ParseEventHandler.m */; };
@@ -66,8 +65,6 @@
 		410A101B287659E40023F523 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
 		410A1020287744120023F523 /* ComposeScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeScrollView.h; sourceTree = "<group>"; };
 		410A1021287744120023F523 /* ComposeScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeScrollView.m; sourceTree = "<group>"; };
-		410A1023287749770023F523 /* Event.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
-		410A1024287749770023F523 /* Event.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Event.m; sourceTree = "<group>"; };
 		410A1026287749860023F523 /* ParseEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEvent.h; sourceTree = "<group>"; };
 		410A1027287749860023F523 /* ParseEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEvent.m; sourceTree = "<group>"; };
 		410A102928774BE50023F523 /* ParseEventBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEventBuilder.h; sourceTree = "<group>"; };
@@ -252,8 +249,6 @@
 		413DE55528762F4200CCF8E1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				410A1023287749770023F523 /* Event.h */,
-				410A1024287749770023F523 /* Event.m */,
 				410A1026287749860023F523 /* ParseEvent.h */,
 				410A1027287749860023F523 /* ParseEvent.m */,
 				41B7F4EC2885FDC800030027 /* EventModel.swift */,
@@ -554,7 +549,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				410A1025287749770023F523 /* Event.m in Sources */,
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,

@@ -22,8 +22,10 @@ public class Event : NSObject {
     
     public var startDate = Date()
     public var endDate = Date()
+    public var isAllDay = false
     
-    private var eventEdit : EventDescriptor?
+    public var color = SystemColors.systemBlue
+    public weak var editedEvent: EventDescriptor?
     
 }
 
@@ -36,19 +38,6 @@ extension Event : EventDescriptor {
             startDate = newValue.start
             endDate = newValue.end
         }
-    }
-    
-    public var editedEvent: EventDescriptor? {
-        get {
-            return eventEdit
-        }
-        set(newValue) {
-            eventEdit = newValue
-        }
-    }
-    
-    public var isAllDay: Bool {
-        return false;
     }
     
     public var text: String {
@@ -70,52 +59,42 @@ extension Event : EventDescriptor {
         return UIFont.boldSystemFont(ofSize: 12)
     }
     
-    public var color: UIColor {
-        return SystemColors.systemBlue
-    }
-    
     public var textColor: UIColor {
-        return SystemColors.label
+        if (editedEvent != nil) {
+            return .white
+        }
+        return dynamicStandardTextColor()
     }
     
     public var backgroundColor: UIColor {
-        return SystemColors.systemBlue.withAlphaComponent(0.3)
+        if (editedEvent != nil) {
+            return color.withAlphaComponent(0.95)
+        }
+        return dynamicStandardBackgroundColor()
     }
     
     public func makeEditable() -> Self {
         let cloned = Event()
-        cloned.dateInterval = dateInterval
+        cloned.parseObjectId = parseObjectId
+        cloned.objectUUID = objectUUID
+        cloned.updatedAt = updatedAt
+        cloned.createdAt = createdAt
+        
+        cloned.eventTitle = eventTitle
+        cloned.authorUsername = authorUsername
+        cloned.eventDescription = eventDescription
+        cloned.location = location
+        
+        cloned.startDate = startDate
+        cloned.endDate = endDate
         cloned.isAllDay = isAllDay
-        cloned.text = text
-        cloned.attributedText = attributedText
-        cloned.lineBreakMode = lineBreakMode
-        cloned.color = color
-        cloned.backgroundColor = backgroundColor
-        cloned.textColor = textColor
-        cloned.userInfo = userInfo
         cloned.editedEvent = self
-        return cloned
+        return cloned as! Self
     }
     
     public func commitEditing() {
         guard let edited = editedEvent else {return}
         edited.dateInterval = dateInterval
-    }
-    
-    private func updateColors() {
-      (editedEvent != nil) ? applyEditingColors() : applyStandardColors()
-    }
-    
-    /// Colors used when event is not in editing mode
-    private func applyStandardColors() {
-      backgroundColor = dynamicStandardBackgroundColor()
-      textColor = dynamicStandardTextColor()
-    }
-    
-    /// Colors used in editing mode
-    private func applyEditingColors() {
-      backgroundColor = color.withAlphaComponent(0.95)
-      textColor = .white
     }
     
     /// Dynamic color that changes depending on the user interface style (dark / light)

@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Event.h"
+#import "CalendarApp-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 

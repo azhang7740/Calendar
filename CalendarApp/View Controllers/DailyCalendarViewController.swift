@@ -64,18 +64,16 @@ class DailyCalendarViewController : DayViewController {
     }
     
     override func dayViewDidSelectEventView(_ eventView: EventView) {
-        guard let descriptor = eventView.descriptor as? CalendarKit.Event,
-            let objectID = descriptor.objectID else {
+        guard let descriptor = eventView.descriptor as? CalendarApp.Event else {
           return
         }
-        controllerDelegate?.didTapEvent(objectID)
+        controllerDelegate?.didTapEvent(descriptor.objectUUID)
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
-        guard let descriptor = eventView.descriptor as? CalendarKit.Event,
-            let objectID = descriptor.objectID else {
+        guard let descriptor = eventView.descriptor as? CalendarApp.Event else {
           return
         }
-        controllerDelegate?.didLongPressEvent(objectID)
+        controllerDelegate?.didLongPressEvent(descriptor.objectUUID)
     }
 }

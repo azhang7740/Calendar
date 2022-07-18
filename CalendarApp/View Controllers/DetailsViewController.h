@@ -6,8 +6,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Event.h"
 #import "ParseEventHandler.h"
+#import "CalendarApp-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
