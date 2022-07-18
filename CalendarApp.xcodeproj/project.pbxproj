@@ -42,6 +42,7 @@
 		413DE55228762C1E00CCF8E1 /* EventCalendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */; };
 		413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoList.storyboard */; };
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
+		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -130,6 +131,7 @@
 		413DE55328762DB300CCF8E1 /* TodoList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoList.storyboard; sourceTree = "<group>"; };
 		413DE558287634A700CCF8E1 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
+		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				412D3A4E287E352A0023C9AA /* EventDateLogicHandler.h */,
 				412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */,
+				41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */,
 			);
 			path = "Logic Handlers";
 			sourceTree = "<group>";
@@ -621,6 +624,7 @@
 				412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
+				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
