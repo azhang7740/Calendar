@@ -76,8 +76,14 @@
     [self presentViewController:detailsNavigationController animated:YES completion:nil];
 }
 
-- (void)didLongPressEvent:(NSUUID *)eventID {
-    
+- (void)didChangeEvent:(Event *)event {
+    [self.parseHandler updateParseObjectWithEvent:event completion:^(NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:@"Failed to update event."];
+        } else {
+            [self didUpdateEvent:event];
+        }
+    }];
 }
 
 - (void)didTapClose {

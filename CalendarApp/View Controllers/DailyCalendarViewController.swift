@@ -11,7 +11,7 @@ import CalendarKit
 @objc
 public protocol EventInteraction {
     func didTapEvent(_ eventID: UUID)
-    func didLongPressEvent(_ eventID: UUID)
+    func didChangeEvent(_ event: CalendarApp.Event)
     func fetchEventsForDate(_ date: Date, callback: @escaping(_ events:[CalendarApp.Event]?, _ errorMessage: String?) -> Void)
 }
 
@@ -71,9 +71,29 @@ class DailyCalendarViewController : DayViewController {
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
+        endEventEditing()
         guard let descriptor = eventView.descriptor as? CalendarApp.Event else {
           return
         }
-        controllerDelegate?.didLongPressEvent(descriptor.objectUUID)
+        beginEditing(event: descriptor)
+    }
+    
+    override func dayView(dayView: DayView, didTapTimelineAt date: Date) {
+        endEventEditing()
+    }
+    
+    override func dayViewDidBeginDragging(dayView: DayView) {
+        endEventEditing()
+    }
+    
+    override func dayView(dayView: DayView, didUpdate event: EventDescriptor) {
+        guard let editingEvent = event as? CalendarApp.Event else {
+            return
+        }
+        
+        if editingEvent.editedEvent != nil {
+            editingEvent.commitEditing()
+            controllerDelegate?.didChangeEvent(editingEvent)
+        }
     }
 }
