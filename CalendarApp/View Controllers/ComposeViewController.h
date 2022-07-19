@@ -22,6 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<ComposeViewControllerDelegate> delegate;
 @property (nonatomic) NSString *currentUserName;
 @property (nonatomic) Event *event;
+@property (nonatomic) NSDate *date;
 
 @end
 

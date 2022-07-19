@@ -76,14 +76,18 @@
     [self presentViewController:detailsNavigationController animated:YES completion:nil];
 }
 
-- (void)didChangeEvent:(Event *)event {
-    [self.parseHandler updateParseObjectWithEvent:event completion:^(NSString * _Nullable error) {
-        if (error) {
-            [self failedRequestWithMessage:@"Failed to update event."];
-        } else {
-            [self didUpdateEvent:event];
-        }
-    }];
+- (void)didLongPressEvent:(NSUUID *)eventID {
+
+}
+
+- (void)didLongPressTimeline:(NSDate *)date {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Compose" bundle:[NSBundle mainBundle]];
+    UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
+    ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
+    composeView.delegate = self;
+    composeView.currentUserName = [self.parseHandler getCurrentUsername];
+    composeView.date = date;
+    [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
 - (void)didTapClose {
