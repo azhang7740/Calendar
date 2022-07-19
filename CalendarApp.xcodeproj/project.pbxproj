@@ -33,6 +33,7 @@
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* EventModel.swift */; };
 		41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F02887162B00030027 /* EKEventHandler.m */; };
+		41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F5288740B400030027 /* EKEventBuilder.m */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -106,6 +107,8 @@
 		41B7F4EF2887162B00030027 /* EKEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEventHandler.h; sourceTree = "<group>"; };
 		41B7F4F02887162B00030027 /* EKEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKEventHandler.m; sourceTree = "<group>"; };
 		41B7F4F22887171500030027 /* EventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventHandler.h; sourceTree = "<group>"; };
+		41B7F4F4288740B400030027 /* EKEventBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEventBuilder.h; sourceTree = "<group>"; };
+		41B7F4F5288740B400030027 /* EKEventBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKEventBuilder.m; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -183,6 +186,7 @@
 		413DE5072874B39200CCF8E1 /* CalendarApp */ = {
 			isa = PBXGroup;
 			children = (
+				41B7F4F328873E1C00030027 /* EventKit Handlers */,
 				41B7F4EE2887160100030027 /* Event Handlers */,
 				413DE55628762F5200CCF8E1 /* Parse Handlers */,
 				412D3A4D287E333E0023C9AA /* Logic Handlers */,
@@ -295,6 +299,15 @@
 				41B7F4F22887171500030027 /* EventHandler.h */,
 			);
 			path = "Event Handlers";
+			sourceTree = "<group>";
+		};
+		41B7F4F328873E1C00030027 /* EventKit Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				41B7F4F4288740B400030027 /* EKEventBuilder.h */,
+				41B7F4F5288740B400030027 /* EKEventBuilder.m */,
+			);
+			path = "EventKit Handlers";
 			sourceTree = "<group>";
 		};
 		F795144D40A42030DEA6F66C /* Pods */ = {
@@ -580,6 +593,7 @@
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
+				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				410A1028287749860023F523 /* ParseEvent.m in Sources */,
 				413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */,
