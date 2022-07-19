@@ -26,7 +26,6 @@ public class Event : NSObject {
     
     public var color = SystemColors.systemBlue
     public weak var editedEvent: EventDescriptor?
-    
 }
 
 extension Event : EventDescriptor {

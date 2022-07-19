@@ -20,6 +20,7 @@ class DailyCalendarViewController : DayViewController {
     
     var controllerDelegate: EventInteraction?
     private let calendarEventHandler = CalendarEventHandler()
+    private var fetchedDates = Set<Date>()
     
     func updateCalendarEvent(_ event: CalendarApp.Event, _ date: Date) {
         calendarEventHandler.updateEvent(event, date)
@@ -57,7 +58,10 @@ class DailyCalendarViewController : DayViewController {
     
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
         guard let calendarKitEvents = calendarEventHandler.getEventsForDate(date) else {
-            fetchCalendarEventsForDate(date)
+            if (!fetchedDates.contains(date)) {
+                fetchedDates.insert(date)
+                fetchCalendarEventsForDate(date)
+            }
             return calendarEventHandler.getEventsForDate(date) ?? []
         }
         return calendarKitEvents
@@ -71,10 +75,10 @@ class DailyCalendarViewController : DayViewController {
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
-        endEventEditing()
         guard let descriptor = eventView.descriptor as? CalendarApp.Event else {
           return
         }
+        endEventEditing()
         beginEditing(event: descriptor)
     }
     
