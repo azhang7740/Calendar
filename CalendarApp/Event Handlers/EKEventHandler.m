@@ -7,6 +7,7 @@
 
 #import "EKEventHandler.h"
 #import <Eventkit/EventKit.h>
+#import "EKEventBuilder.h"
 
 @interface EKEventHandler ()
 
@@ -51,7 +52,24 @@
 
 - (void)queryUserEventsOnDate:(nonnull NSDate *)date
                    completion:(void (^ _Nonnull)(NSMutableArray<Event *> * _Nullable, NSDate * _Nonnull, NSString * _Nullable))completion {
+    EKEventBuilder *builder = [[EKEventBuilder alloc] init];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:date options:0];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = 1;
+    NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:midnight options:0];
     
+    NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:midnight endDate:nextDate calendars:nil];
+    
+    NSArray<EKEvent *> *events = [self.eventStore eventsMatchingPredicate:predicate];
+    
+    if (!events) {
+        completion([[NSMutableArray alloc] init], midnight, @"Failed to retrieve calendar events.");
+    } else {
+        NSMutableArray<Event *> *newEvents = [builder getEventsFromEKEventArray:events];
+        completion(newEvents, midnight, nil);
+    }
 }
 
 - (void)updateRemoteObjectWithEvent:(nonnull Event *)event
