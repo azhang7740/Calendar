@@ -43,32 +43,18 @@ class CalendarEventHandler {
             return
         }
         let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
-        if (eventIndex == -1) {
-            // TODO: Error handling
-        } else {
-            guard let newEventIndex = eventIndex else {
-                return
-            }
-            calendarKitEvents.remove(at: newEventIndex)
+        guard let newEventIndex = eventIndex else {
+            return
         }
+        calendarKitEvents.remove(at: newEventIndex)
         dateToCalendarKitEvents[midnight] = calendarKitEvents;
     }
     
-    func updateEvent(_ event: CalendarApp.Event, _ date: Date) {
-        let midnight = calendar.startOfDay(for: date)
-        guard var calendarKitEvents = dateToCalendarKitEvents[midnight] else {
-            return
-        }
-        let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
-        if (eventIndex == -1) {
-            // TODO: error handling
-        } else {
-            guard let newEventIndex = eventIndex else {
-                return
-            }
-            calendarKitEvents[newEventIndex] = event
-        }
-        dateToCalendarKitEvents[midnight] = calendarKitEvents
+    func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
+        let originalMidnight = calendar.startOfDay(for: originalStart)
+        let newMidnight = calendar.startOfDay(for: newStart)
+        deleteEvent(event, originalMidnight)
+        addEvent(event, newMidnight)
     }
     
     private func getEventIndex(_ eventID: UUID, _ calendarEvents: [CalendarApp.Event]) -> Int? {

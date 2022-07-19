@@ -104,14 +104,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapChangeEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event
+             originalDate:(NSDate *)date{
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseEventHandler updateRemoteObjectWithEvent:event completion:^(NSString * _Nullable error) {
         if (error) {
             // TODO: error handling
         } else {
             [self updateDetailsView];
-            [self.delegate didUpdateEvent:event];
+            [self.delegate didUpdateEvent:event
+                             originalDate:date];
         }
     }];
 }

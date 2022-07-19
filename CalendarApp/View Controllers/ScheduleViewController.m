@@ -112,11 +112,13 @@
     [self.scheduleView deleteCalendarEvent:event :midnight];
 }
 
-- (void)didUpdateEvent:(Event *)event {
+- (void)didUpdateEvent:(Event *)event
+          originalDate:(NSDate *)date {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    [self.scheduleView updateCalendarEvent:event :midnight];
+    NSDate *newMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
+    NSDate *prevMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
+    [self.scheduleView updateCalendarEvent:event :prevMidnightStart :newMidnightStart];
 }
 
 - (void)didTapCancel {
@@ -140,7 +142,8 @@
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
-- (void)didTapChangeEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event
+             originalDate:(NSDate *)date{
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {

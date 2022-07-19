@@ -116,17 +116,20 @@
 }
 
 - (IBAction)onTapCreate:(id)sender {
-    if (self.event && [self inputIsValid]) {
-        [self setEventFields:self.event];
-        [self.delegate didTapChangeEvent:self.event];
-    } else if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
+    if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
-            [self.delegate didTapChangeEvent:newEvent];
+            [self.delegate didTapChangeEvent:newEvent
+                                originalDate:newEvent.startDate];
         }
     } else {
+        NSDate *prevDate = self.event.startDate;
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+        NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:prevDate options:0];
         Event *updatedEvent = [self updateEventFromView];
-        [self.delegate didTapChangeEvent:updatedEvent];
+        [self.delegate didTapChangeEvent:updatedEvent
+                            originalDate:midnight];
     }
 }
 
