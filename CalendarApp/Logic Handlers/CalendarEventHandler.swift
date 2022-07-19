@@ -46,7 +46,10 @@ class CalendarEventHandler {
         if (eventIndex == -1) {
             // TODO: Error handling
         } else {
-            calendarKitEvents.remove(at: eventIndex)
+            guard let newEventIndex = eventIndex else {
+                return
+            }
+            calendarKitEvents.remove(at: newEventIndex)
         }
         dateToCalendarKitEvents[midnight] = calendarKitEvents;
     }
@@ -60,17 +63,17 @@ class CalendarEventHandler {
         if (eventIndex == -1) {
             // TODO: error handling
         } else {
-            calendarKitEvents[eventIndex] = event
+            guard let newEventIndex = eventIndex else {
+                return
+            }
+            calendarKitEvents[newEventIndex] = event
         }
         dateToCalendarKitEvents[midnight] = calendarKitEvents
     }
     
-    private func getEventIndex(_ eventID: UUID, _ calendarEvents: [CalendarApp.Event]) -> Int {
-        for eventIndex in 0...calendarEvents.count - 1 {
-            if calendarEvents[eventIndex].objectUUID == eventID {
-                return eventIndex
-            }
-        }
-        return -1
+    private func getEventIndex(_ eventID: UUID, _ calendarEvents: [CalendarApp.Event]) -> Int? {
+        calendarEvents.enumerated().first { element in
+            element.element.objectUUID == eventID
+        }?.offset
     }
 }

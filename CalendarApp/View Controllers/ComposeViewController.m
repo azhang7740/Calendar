@@ -22,25 +22,10 @@
     [super viewDidLoad];
     
     if (self.event) {
-        self.composeView.titleTextField.text = self.event.eventTitle;
-        self.composeView.startDatePicker.date = self.event.startDate;
-        self.composeView.endDatePicker.date = self.event.endDate;
-        
-        self.composeView.locationTextField.text = self.event.location;
-        self.composeView.descriptionTextView.text = self.event.eventDescription;
-        
-        [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
+        [self setViewEvent];
+    } else {
+        [self setViewDate];
     }
-    
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.hour = 1;
-    if (!self.date) {
-        self.date = [NSDate date];
-    }
-    self.composeView.startDatePicker.date = self.date;
-    self.composeView.endDatePicker.date = [calendar dateByAddingComponents:dayComponent toDate:self.date options:0];
     
     if ([self.composeView.descriptionTextView.text  isEqual:@""]) {
         self.composeView.descriptionTextView.text = @"Type here...";
@@ -50,6 +35,29 @@
     self.composeView.descriptionTextView.delegate = self;
     
     self.composeView.errorLabel.text = @"";
+}
+
+- (void)setViewDate {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.hour = 1;
+    if (!self.date) {
+        self.date = [NSDate date];
+    }
+    self.composeView.startDatePicker.date = self.date;
+    self.composeView.endDatePicker.date = [calendar dateByAddingComponents:dayComponent toDate:self.date options:0];
+}
+
+- (void)setViewEvent {
+    self.composeView.titleTextField.text = self.event.eventTitle;
+    self.composeView.startDatePicker.date = self.event.startDate;
+    self.composeView.endDatePicker.date = self.event.endDate;
+    
+    self.composeView.locationTextField.text = self.event.location;
+    self.composeView.descriptionTextView.text = self.event.eventDescription;
+    
+    [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
 }
 
 - (Event *)createEventFromView {
