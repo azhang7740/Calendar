@@ -58,6 +58,7 @@
     canonicalEvent.endDate = ekEvent.endDate;
     canonicalEvent.isAllDay = ekEvent.isAllDay;
     canonicalEvent.objectUUID = [[NSUUID alloc] init];
+    canonicalEvent.color = [[UIColor alloc] initWithCGColor:ekEvent.calendar.CGColor];
     
     return canonicalEvent;
 }

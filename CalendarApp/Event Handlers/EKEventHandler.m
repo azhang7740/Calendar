@@ -51,7 +51,17 @@
 
 - (void)deleteRemoteObjectWithEvent:(nonnull Event *)event
                          completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
-    
+    EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
+    if (!deletingEvent) {
+        completion(@"Event was not found in Apple calendar.");
+    } else {
+        BOOL success = [self.eventStore removeEvent:deletingEvent span:EKSpanThisEvent error:nil];
+        if (success) {
+            completion(nil);
+        } else {
+            completion(@"Event was not deleted successfully.");
+        }
+    }
 }
 
 - (void)queryUserEventsOnDate:(nonnull NSDate *)date
@@ -78,12 +88,33 @@
 
 - (void)updateRemoteObjectWithEvent:(nonnull Event *)event
                          completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
-    
+    EKEvent *updatingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
+    if (!updatingEvent) {
+        completion(@"Event was not found in Apple calendar.");
+    } else {
+        [self updateEKEventFromEvent:event ekEvent:updatingEvent];
+        BOOL success = [self.eventStore saveEvent:updatingEvent span:EKSpanThisEvent error:nil];
+        if (success) {
+            completion(nil);
+        } else {
+            completion(@"Event was not updated successfully.");
+        }
+    }
 }
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(void (^ _Nonnull)(Event * _Nonnull, NSDate * _Nonnull, NSString * _Nullable))completion {
     
+}
+
+- (void)updateEKEventFromEvent:(Event *)canonicalEvent
+                       ekEvent:(EKEvent *)remoteEvent {
+    remoteEvent.title = canonicalEvent.eventTitle;
+    remoteEvent.notes = canonicalEvent.eventDescription;
+    remoteEvent.location = canonicalEvent.location;
+    remoteEvent.startDate = canonicalEvent.startDate;
+    remoteEvent.endDate = canonicalEvent.endDate;
+    [remoteEvent setAllDay:canonicalEvent.isAllDay];
 }
 
 @end

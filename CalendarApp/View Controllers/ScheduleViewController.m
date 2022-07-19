@@ -40,15 +40,14 @@
             [self failedRequestWithMessage:error];
         }
     }];
+    self.authenticationHandler = [[AuthenticationHandler alloc] init];
+    self.datesToEvents = [[NSMutableDictionary alloc] init];
+    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     
     [self addChildViewController:self.scheduleView];
     [self.view addSubview:self.scheduleView.view];
     [self.scheduleView didMoveToParentViewController:self];
     self.scheduleView.view.frame = self.view.bounds;
-    
-    self.authenticationHandler = [[AuthenticationHandler alloc] init];
-    self.datesToEvents = [[NSMutableDictionary alloc] init];
-    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
