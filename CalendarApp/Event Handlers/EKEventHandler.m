@@ -104,7 +104,14 @@
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(void (^ _Nonnull)(Event * _Nonnull, NSDate * _Nonnull, NSString * _Nullable))completion {
-    
+    EKEvent *newEKEvent = [EKEvent eventWithEventStore:self.eventStore];
+    [self updateEKEventFromEvent:newEvent ekEvent:newEKEvent];
+    BOOL success = [self.eventStore saveEvent:newEKEvent span:EKSpanThisEvent error:nil];
+    if (success) {
+        completion(newEvent, newEvent.startDate, nil);
+    } else {
+        completion(newEvent, newEvent.startDate, @"Error uploading event to Apple calendar.");
+    }
 }
 
 - (void)updateEKEventFromEvent:(Event *)canonicalEvent
@@ -115,6 +122,7 @@
     remoteEvent.startDate = canonicalEvent.startDate;
     remoteEvent.endDate = canonicalEvent.endDate;
     [remoteEvent setAllDay:canonicalEvent.isAllDay];
+    remoteEvent.calendar = [self.eventStore defaultCalendarForNewEvents];
 }
 
 @end

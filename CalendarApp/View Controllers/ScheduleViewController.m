@@ -59,7 +59,7 @@
     if ([self.datesToEvents objectForKey:date]) {
         callback(self.datesToEvents[date], nil);
     } else {
-        [self.ekEventHandler queryUserEventsOnDate:date
+        [self.parseHandler queryUserEventsOnDate:date
                                       completion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
             if (error) {
                 callback(nil, error);
