@@ -14,7 +14,7 @@
     return [PFUser currentUser].username;
 }
 
-- (void)uploadToParseWithEvent:(Event *)newEvent
+- (void)uploadWithEvent:(Event *)newEvent
                     completion:(void (^_Nonnull)(Event *parseEvent, NSDate *date, NSString * _Nullable error))completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
     newParseEvent.objectUUID = [newEvent.objectUUID UUIDString];
@@ -72,7 +72,7 @@
     }];
 }
 
-- (void)updateParseObjectWithEvent:(Event *)event
+- (void)updateRemoteObjectWithEvent:(Event *)event
                         completion:(void (^)(NSString * _Nullable))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -96,7 +96,7 @@
     }];
 }
 
-- (void)deleteParseObjectWithEvent:(Event *)event
+- (void)deleteRemoteObjectWithEvent:(Event *)event
                         completion:(void (^_Nonnull)(NSString * _Nullable error))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {

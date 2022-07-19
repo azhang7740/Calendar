@@ -91,7 +91,7 @@
 }
 
 - (void)didTapDelete {
-    [self.parseEventHandler deleteParseObjectWithEvent:self.event completion:^(NSString * _Nullable error) {
+    [self.parseEventHandler deleteRemoteObjectWithEvent:self.event completion:^(NSString * _Nullable error) {
         if (!error) {
             [self.delegate didDeleteEvent:self.event];
         } else {
@@ -106,7 +106,7 @@
 
 - (void)didTapChangeEvent:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseEventHandler updateParseObjectWithEvent:event completion:^(NSString * _Nullable error) {
+    [self.parseEventHandler updateRemoteObjectWithEvent:event completion:^(NSString * _Nullable error) {
         if (error) {
             // TODO: error handling
         } else {

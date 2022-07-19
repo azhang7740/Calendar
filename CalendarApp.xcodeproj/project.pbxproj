@@ -32,6 +32,7 @@
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* EventModel.swift */; };
+		41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F02887162B00030027 /* EKEventHandler.m */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -102,6 +103,9 @@
 		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4EC2885FDC800030027 /* EventModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventModel.swift; sourceTree = "<group>"; };
+		41B7F4EF2887162B00030027 /* EKEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEventHandler.h; sourceTree = "<group>"; };
+		41B7F4F02887162B00030027 /* EKEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKEventHandler.m; sourceTree = "<group>"; };
+		41B7F4F22887171500030027 /* EventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventHandler.h; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -179,6 +183,7 @@
 		413DE5072874B39200CCF8E1 /* CalendarApp */ = {
 			isa = PBXGroup;
 			children = (
+				41B7F4EE2887160100030027 /* Event Handlers */,
 				413DE55628762F5200CCF8E1 /* Parse Handlers */,
 				412D3A4D287E333E0023C9AA /* Logic Handlers */,
 				413DE5572876349A00CCF8E1 /* Views */,
@@ -263,8 +268,6 @@
 				413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */,
 				410A102928774BE50023F523 /* ParseEventBuilder.h */,
 				410A102A28774BE50023F523 /* ParseEventBuilder.m */,
-				410A102C287797850023F523 /* ParseEventHandler.h */,
-				410A102D287797850023F523 /* ParseEventHandler.m */,
 			);
 			path = "Parse Handlers";
 			sourceTree = "<group>";
@@ -280,6 +283,18 @@
 				412D3A55287F394D0023C9AA /* DetailsView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		41B7F4EE2887160100030027 /* Event Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				410A102C287797850023F523 /* ParseEventHandler.h */,
+				410A102D287797850023F523 /* ParseEventHandler.m */,
+				41B7F4EF2887162B00030027 /* EKEventHandler.h */,
+				41B7F4F02887162B00030027 /* EKEventHandler.m */,
+				41B7F4F22887171500030027 /* EventHandler.h */,
+			);
+			path = "Event Handlers";
 			sourceTree = "<group>";
 		};
 		F795144D40A42030DEA6F66C /* Pods */ = {
@@ -558,6 +573,7 @@
 				41B7F4ED2885FDC800030027 /* EventModel.swift in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
+				41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
@@ -744,6 +760,7 @@
 				DEVELOPMENT_TEAM = 3AU6YJ5LJW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarApp/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "The app needs access to your calendar to sync events.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -777,6 +794,7 @@
 				DEVELOPMENT_TEAM = 3AU6YJ5LJW;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = CalendarApp/Info.plist;
+				INFOPLIST_KEY_NSCalendarsUsageDescription = "The app needs access to your calendar to sync events.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

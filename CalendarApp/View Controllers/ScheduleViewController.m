@@ -133,7 +133,7 @@
 
 - (void)didTapChangeEvent:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler uploadWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
