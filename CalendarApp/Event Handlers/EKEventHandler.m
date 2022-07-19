@@ -40,9 +40,13 @@
 
 - (void)subscribeToNotifications {
     [NSNotificationCenter.defaultCenter addObserver:self
-                                           selector:@selector(remoteEventsDidChange:)
+                                           selector:@selector(eventsDidChange)
                                                name:EKEventStoreChangedNotification
                                              object:self.eventStore];
+}
+
+- (void)eventsDidChange {
+    [self.delegate remoteEventsDidChange];
 }
 
 - (void)deleteRemoteObjectWithEvent:(nonnull Event *)event

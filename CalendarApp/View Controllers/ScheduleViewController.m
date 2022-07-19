@@ -34,22 +34,21 @@
     self.scheduleView = [[DailyCalendarViewController alloc] init];
     self.scheduleView.controllerDelegate = self;
     self.parseHandler = [[ParseEventHandler alloc] init];
-    [self addChildViewController:self.scheduleView];
-    [self.view addSubview:self.scheduleView.view];
-    
-    [self.scheduleView didMoveToParentViewController:self];
-    self.scheduleView.view.frame = self.view.bounds;
-    
-    self.authenticationHandler = [[AuthenticationHandler alloc] init];
-    self.datesToEvents = [[NSMutableDictionary alloc] init];
-    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
-    
     self.ekEventHandler = [[EKEventHandler alloc] init];
     [self.ekEventHandler requestAccessToCalendarWithCompletion:^(BOOL success, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         }
     }];
+    
+    [self addChildViewController:self.scheduleView];
+    [self.view addSubview:self.scheduleView.view];
+    [self.scheduleView didMoveToParentViewController:self];
+    self.scheduleView.view.frame = self.view.bounds;
+    
+    self.authenticationHandler = [[AuthenticationHandler alloc] init];
+    self.datesToEvents = [[NSMutableDictionary alloc] init];
+    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -61,7 +60,7 @@
     if ([self.datesToEvents objectForKey:date]) {
         callback(self.datesToEvents[date], nil);
     } else {
-        [self.parseHandler queryUserEventsOnDate:date
+        [self.ekEventHandler queryUserEventsOnDate:date
                                       completion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
             if (error) {
                 callback(nil, error);
