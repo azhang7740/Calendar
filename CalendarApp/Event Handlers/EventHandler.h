@@ -26,4 +26,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+@protocol RemoteEventUpdates <NSObject>
+
+@required
+- (void)remoteEventsDidChange:(NSArray<Event *> *)events;
+
+@end
+
 NS_ASSUME_NONNULL_END

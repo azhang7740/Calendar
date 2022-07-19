@@ -11,6 +11,7 @@ import CalendarKit
 @objcMembers
 public class Event : NSObject {
     public var parseObjectId: String?
+    public var ekeEventID: String?
     public var objectUUID = UUID()
     public var updatedAt: Date?
     public var createdAt: Date?

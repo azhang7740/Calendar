@@ -12,12 +12,14 @@
 #import "CalendarApp-Swift.h"
 #import "AuthenticationHandler.h"
 #import "ParseEventHandler.h"
+#import "EKEventHandler.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) ParseEventHandler *parseHandler;
+@property (nonatomic) EKEventHandler *ekEventHandler;
 
 @property (nonatomic) NSMutableDictionary<NSDate *, NSMutableArray<Event *> *> *datesToEvents;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
@@ -41,6 +43,13 @@
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.datesToEvents = [[NSMutableDictionary alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
+    
+    self.ekEventHandler = [[EKEventHandler alloc] init];
+    [self.ekEventHandler requestAccessToCalendarWithCompletion:^(BOOL success, NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:error];
+        }
+    }];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
