@@ -46,7 +46,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 - (NSPersistentContainer *)persistentContainer {
     @synchronized (self) {
         if (_persistentContainer == nil) {
-            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"Placeholder"];
+            _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"CalendarApp"];
             [_persistentContainer loadPersistentStoresWithCompletionHandler:^(NSPersistentStoreDescription *storeDescription, NSError *error) {
                 if (error != nil) {
                     // TODO: Error handling

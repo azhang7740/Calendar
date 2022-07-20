@@ -205,7 +205,6 @@
 				413DE5192874B39400CCF8E1 /* Info.plist */,
 				413DE51A2874B39400CCF8E1 /* main.m */,
 				41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */,
-				41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */,
 			);
 			path = CalendarApp;
 			sourceTree = "<group>";
@@ -264,6 +263,7 @@
 				410A1026287749860023F523 /* ParseEvent.h */,
 				410A1027287749860023F523 /* ParseEvent.m */,
 				41B7F4EC2885FDC800030027 /* EventModel.swift */,
+				41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */,
 			);
 			path = Models;
 			sourceTree = "<group>";
