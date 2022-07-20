@@ -116,7 +116,7 @@
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
     NSDate *newMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
     NSDate *prevMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    [self.scheduleView updateCalendarEvent:event :prevMidnightStart :newMidnightStart];
+    [self.scheduleView updateCalendarEvent:event originalStartDate:prevMidnightStart newStartDate:newMidnightStart];
 }
 
 - (void)didTapCancel {

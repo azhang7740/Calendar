@@ -23,7 +23,7 @@ class DailyCalendarViewController : DayViewController {
     private let calendarEventHandler = CalendarEventHandler()
     private var fetchedDates = Set<Date>()
     
-    func updateCalendarEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
+    func updateCalendarEvent(_ event: CalendarApp.Event, originalStartDate originalStart: Date, newStartDate newStart: Date) {
         calendarEventHandler.updateEvent(event, originalStart, newStart)
         reloadData()
     }
