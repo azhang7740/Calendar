@@ -159,7 +159,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="composeView" destination="MXE-6h-Y0o" id="P7R-ef-BLD"/>
-                        <outlet property="updateParseButton" destination="QXP-O1-fEF" id="z0K-fb-HQU"/>
+                        <outlet property="createUpdateButton" destination="QXP-O1-fEF" id="z0K-fb-HQU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

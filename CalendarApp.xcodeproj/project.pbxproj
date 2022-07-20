@@ -14,16 +14,7 @@
 		410A1028287749860023F523 /* ParseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1027287749860023F523 /* ParseEvent.m */; };
 		410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102A28774BE50023F523 /* ParseEventBuilder.m */; };
 		410A102E287797850023F523 /* ParseEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102D287797850023F523 /* ParseEventHandler.m */; };
-		412D3A342879E2BD0023C9AA /* ScheduleScroll.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A332879E2BD0023C9AA /* ScheduleScroll.xib */; };
-		412D3A372879E2CF0023C9AA /* ScheduleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A362879E2CF0023C9AA /* ScheduleScrollView.m */; };
-		412D3A392879E4CF0023C9AA /* ScheduleHour.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A382879E4CF0023C9AA /* ScheduleHour.xib */; };
-		412D3A3F2879E7A20023C9AA /* ScheduleDecorator.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A3E2879E7A20023C9AA /* ScheduleDecorator.m */; };
-		412D3A42287C88950023C9AA /* ScheduleHour.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A41287C88950023C9AA /* ScheduleHour.m */; };
-		412D3A44287C9B5D0023C9AA /* ScheduleEvent.xib in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */; };
-		412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A46287C9B720023C9AA /* ScheduleEventView.m */; };
-		412D3A4A287CCBAB0023C9AA /* ScheduleCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */; };
 		412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A4B287E0F2D0023C9AA /* Details.storyboard */; };
-		412D3A50287E352A0023C9AA /* EventDateLogicHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */; };
 		412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A52287F388E0023C9AA /* DetailsViewController.m */; };
 		412D3A56287F394D0023C9AA /* DetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A55287F394D0023C9AA /* DetailsView.m */; };
 		413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5092874B39200CCF8E1 /* AppDelegate.m */; };
@@ -37,13 +28,12 @@
 		413DE5312874B39400CCF8E1 /* CalendarUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5302874B39400CCF8E1 /* CalendarUITestsLaunchTests.m */; };
 		413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE53F287600C000CCF8E1 /* LoginViewController.m */; };
 		413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE542287600E800CCF8E1 /* TodoViewController.m */; };
-		413DE5462876027700CCF8E1 /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5452876027600CCF8E1 /* CalendarViewController.m */; };
 		413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */; };
-		413DE55228762C1E00CCF8E1 /* EventCalendar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */; };
 		413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoList.storyboard */; };
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
+		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
-		41E2CF6E2880CBC60077F173 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* ScheduleViewController.swift */; };
+		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
 		41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF7B2880DE930077F173 /* ScheduleViewController.m */; };
 		9ABC58D574AD5DE147CC020D /* libPods-CalendarTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */; };
@@ -83,22 +73,7 @@
 		410A102A28774BE50023F523 /* ParseEventBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEventBuilder.m; sourceTree = "<group>"; };
 		410A102C287797850023F523 /* ParseEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEventHandler.h; sourceTree = "<group>"; };
 		410A102D287797850023F523 /* ParseEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEventHandler.m; sourceTree = "<group>"; };
-		412D3A332879E2BD0023C9AA /* ScheduleScroll.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleScroll.xib; sourceTree = "<group>"; };
-		412D3A352879E2CF0023C9AA /* ScheduleScrollView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleScrollView.h; sourceTree = "<group>"; };
-		412D3A362879E2CF0023C9AA /* ScheduleScrollView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleScrollView.m; sourceTree = "<group>"; };
-		412D3A382879E4CF0023C9AA /* ScheduleHour.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleHour.xib; sourceTree = "<group>"; };
-		412D3A3D2879E7A20023C9AA /* ScheduleDecorator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleDecorator.h; sourceTree = "<group>"; };
-		412D3A3E2879E7A20023C9AA /* ScheduleDecorator.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleDecorator.m; sourceTree = "<group>"; };
-		412D3A40287C88950023C9AA /* ScheduleHour.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleHour.h; sourceTree = "<group>"; };
-		412D3A41287C88950023C9AA /* ScheduleHour.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleHour.m; sourceTree = "<group>"; };
-		412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ScheduleEvent.xib; sourceTree = "<group>"; };
-		412D3A45287C9B720023C9AA /* ScheduleEventView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleEventView.h; sourceTree = "<group>"; };
-		412D3A46287C9B720023C9AA /* ScheduleEventView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleEventView.m; sourceTree = "<group>"; };
-		412D3A48287CCBAB0023C9AA /* ScheduleCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleCollectionCell.h; sourceTree = "<group>"; };
-		412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleCollectionCell.m; sourceTree = "<group>"; };
 		412D3A4B287E0F2D0023C9AA /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
-		412D3A4E287E352A0023C9AA /* EventDateLogicHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventDateLogicHandler.h; sourceTree = "<group>"; };
-		412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventDateLogicHandler.m; sourceTree = "<group>"; };
 		412D3A51287F388E0023C9AA /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		412D3A52287F388E0023C9AA /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
 		412D3A54287F394D0023C9AA /* DetailsView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsView.h; sourceTree = "<group>"; };
@@ -122,17 +97,15 @@
 		413DE53F287600C000CCF8E1 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		413DE541287600E800CCF8E1 /* TodoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoViewController.h; sourceTree = "<group>"; };
 		413DE542287600E800CCF8E1 /* TodoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoViewController.m; sourceTree = "<group>"; };
-		413DE5442876027600CCF8E1 /* CalendarViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
-		413DE5452876027600CCF8E1 /* CalendarViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
 		413DE54828761EBE00CCF8E1 /* AuthenticationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationHandler.h; sourceTree = "<group>"; };
 		413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationHandler.m; sourceTree = "<group>"; };
-		413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = EventCalendar.storyboard; sourceTree = "<group>"; };
 		413DE55328762DB300CCF8E1 /* TodoList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoList.storyboard; sourceTree = "<group>"; };
 		413DE558287634A700CCF8E1 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
+		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
-		41E2CF6D2880CBC60077F173 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
+		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
 		41E2CF782880DE500077F173 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
 		41E2CF7A2880DE930077F173 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
 		41E2CF7B2880DE930077F173 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
@@ -174,20 +147,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		412D3A2E2878C0190023C9AA /* Decorators */ = {
-			isa = PBXGroup;
-			children = (
-				412D3A3D2879E7A20023C9AA /* ScheduleDecorator.h */,
-				412D3A3E2879E7A20023C9AA /* ScheduleDecorator.m */,
-			);
-			path = Decorators;
-			sourceTree = "<group>";
-		};
 		412D3A4D287E333E0023C9AA /* Logic Handlers */ = {
 			isa = PBXGroup;
 			children = (
-				412D3A4E287E352A0023C9AA /* EventDateLogicHandler.h */,
-				412D3A4F287E352A0023C9AA /* EventDateLogicHandler.m */,
+				41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */,
 			);
 			path = "Logic Handlers";
 			sourceTree = "<group>";
@@ -220,7 +183,6 @@
 				413DE55628762F5200CCF8E1 /* Parse Handlers */,
 				412D3A4D287E333E0023C9AA /* Logic Handlers */,
 				413DE5572876349A00CCF8E1 /* Views */,
-				412D3A2E2878C0190023C9AA /* Decorators */,
 				413DE55528762F4200CCF8E1 /* Models */,
 				413DE55028762BD000CCF8E1 /* Storyboards */,
 				413DE53D2876009D00CCF8E1 /* View Controllers */,
@@ -261,13 +223,11 @@
 				413DE53F287600C000CCF8E1 /* LoginViewController.m */,
 				413DE541287600E800CCF8E1 /* TodoViewController.h */,
 				413DE542287600E800CCF8E1 /* TodoViewController.m */,
-				413DE5442876027600CCF8E1 /* CalendarViewController.h */,
-				413DE5452876027600CCF8E1 /* CalendarViewController.m */,
 				410A101A287659E40023F523 /* ComposeViewController.h */,
 				410A101B287659E40023F523 /* ComposeViewController.m */,
 				412D3A51287F388E0023C9AA /* DetailsViewController.h */,
 				412D3A52287F388E0023C9AA /* DetailsViewController.m */,
-				41E2CF6D2880CBC60077F173 /* ScheduleViewController.swift */,
+				41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */,
 				41E2CF7A2880DE930077F173 /* ScheduleViewController.h */,
 				41E2CF7B2880DE930077F173 /* ScheduleViewController.m */,
 			);
@@ -280,7 +240,6 @@
 				413DE5112874B39200CCF8E1 /* Main.storyboard */,
 				413DE5162874B39400CCF8E1 /* LaunchScreen.storyboard */,
 				413DE55328762DB300CCF8E1 /* TodoList.storyboard */,
-				413DE55128762C1E00CCF8E1 /* EventCalendar.storyboard */,
 				410A101828764D5C0023F523 /* Compose.storyboard */,
 				412D3A4B287E0F2D0023C9AA /* Details.storyboard */,
 				41E2CF782880DE500077F173 /* Schedule.storyboard */,
@@ -319,17 +278,6 @@
 				413DE559287634A700CCF8E1 /* LoginView.m */,
 				410A1020287744120023F523 /* ComposeScrollView.h */,
 				410A1021287744120023F523 /* ComposeScrollView.m */,
-				412D3A352879E2CF0023C9AA /* ScheduleScrollView.h */,
-				412D3A362879E2CF0023C9AA /* ScheduleScrollView.m */,
-				412D3A332879E2BD0023C9AA /* ScheduleScroll.xib */,
-				412D3A40287C88950023C9AA /* ScheduleHour.h */,
-				412D3A41287C88950023C9AA /* ScheduleHour.m */,
-				412D3A382879E4CF0023C9AA /* ScheduleHour.xib */,
-				412D3A45287C9B720023C9AA /* ScheduleEventView.h */,
-				412D3A46287C9B720023C9AA /* ScheduleEventView.m */,
-				412D3A43287C9B5D0023C9AA /* ScheduleEvent.xib */,
-				412D3A48287CCBAB0023C9AA /* ScheduleCollectionCell.h */,
-				412D3A49287CCBAB0023C9AA /* ScheduleCollectionCell.m */,
 				412D3A54287F394D0023C9AA /* DetailsView.h */,
 				412D3A55287F394D0023C9AA /* DetailsView.m */,
 			);
@@ -468,17 +416,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				413DE55228762C1E00CCF8E1 /* EventCalendar.storyboard in Resources */,
 				410A101928764D5C0023F523 /* Compose.storyboard in Resources */,
 				41E2CF642880C9A20077F173 /* Keys.plist in Resources */,
-				412D3A342879E2BD0023C9AA /* ScheduleScroll.xib in Resources */,
-				412D3A392879E4CF0023C9AA /* ScheduleHour.xib in Resources */,
 				412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */,
 				413DE5182874B39400CCF8E1 /* LaunchScreen.storyboard in Resources */,
 				413DE5152874B39400CCF8E1 /* Assets.xcassets in Resources */,
 				413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */,
 				413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */,
-				412D3A44287C9B5D0023C9AA /* ScheduleEvent.xib in Resources */,
 				41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -607,29 +551,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				412D3A42287C88950023C9AA /* ScheduleHour.m in Sources */,
-				412D3A50287E352A0023C9AA /* EventDateLogicHandler.m in Sources */,
 				410A1025287749770023F523 /* Event.m in Sources */,
-				412D3A3F2879E7A20023C9AA /* ScheduleDecorator.m in Sources */,
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
 				41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */,
-				41E2CF6E2880CBC60077F173 /* ScheduleViewController.swift in Sources */,
+				41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */,
 				410A102E287797850023F523 /* ParseEventHandler.m in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
-				412D3A47287C9B720023C9AA /* ScheduleEventView.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
+				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
-				413DE5462876027700CCF8E1 /* CalendarViewController.m in Sources */,
-				412D3A4A287CCBAB0023C9AA /* ScheduleCollectionCell.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				410A1028287749860023F523 /* ParseEvent.m in Sources */,
-				412D3A372879E2CF0023C9AA /* ScheduleScrollView.m in Sources */,
 				413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

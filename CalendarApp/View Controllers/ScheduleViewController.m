@@ -13,9 +13,9 @@
 #import "AuthenticationHandler.h"
 #import "ParseEventHandler.h"
 
-@interface ScheduleViewController () <ScheduleSubViewControllerDelegate, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
+@interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
-@property (nonatomic) ScheduleSubViewController* scheduleView;
+@property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) ParseEventHandler *parseHandler;
 
@@ -29,16 +29,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.scheduleView = [[ScheduleSubViewController alloc] init];
+    self.scheduleView = [[DailyCalendarViewController alloc] init];
+    self.scheduleView.controllerDelegate = self;
+    self.parseHandler = [[ParseEventHandler alloc] init];
     [self addChildViewController:self.scheduleView];
     [self.view addSubview:self.scheduleView.view];
     
     [self.scheduleView didMoveToParentViewController:self];
     self.scheduleView.view.frame = self.view.bounds;
-    self.scheduleView.controllerDelegate = self;
     
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
-    self.parseHandler = [[ParseEventHandler alloc] init];
     self.datesToEvents = [[NSMutableDictionary alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
 }
@@ -121,18 +121,15 @@
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
-- (void)didTapCreateWithEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull event, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
-            NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-            [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-            NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-            self.objectIDToEvents[event.objectUUID] = event;
-            [self.datesToEvents[midnight] addObject:event];
-            [self.scheduleView addEvent:event :midnight];
+            self.objectIDToEvents[parseEvent.objectUUID] = parseEvent;
+            [self.datesToEvents[date] addObject:parseEvent];
+            [self.scheduleView addEvent: parseEvent: date];
         }
     }];
 }

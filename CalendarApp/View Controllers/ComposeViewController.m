@@ -12,7 +12,7 @@
 
 @property (weak, nonatomic) IBOutlet ComposeScrollView *composeView;
 @property (nonatomic) UIDatePicker *datePicker;
-@property (weak, nonatomic) IBOutlet UIButton *updateParseButton;
+@property (weak, nonatomic) IBOutlet UIButton *createUpdateButton;
 
 @end
 
@@ -29,7 +29,7 @@
         self.composeView.locationTextField.text = self.event.location;
         self.composeView.descriptionTextView.text = self.event.eventDescription;
         
-        [self.updateParseButton setTitle:@"Update" forState:UIControlStateNormal];
+        [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
     }
     
     if ([self.composeView.descriptionTextView.text  isEqual:@""]) {
@@ -47,14 +47,19 @@
         return nil;
     }
     Event *newEvent = [[Event alloc] init];
+    newEvent.objectUUID = [NSUUID UUID];
     [self setEventFields:newEvent];
     
     return newEvent;
 }
 
+- (Event *)updateEventFromView {
+    [self setEventFields:self.event];
+    return self.event;
+}
+
 - (void)setEventFields:(Event *)newEvent {
     newEvent.eventTitle = self.composeView.titleTextField.text;
-    newEvent.objectUUID = [NSUUID UUID];
     
     newEvent.authorUsername = self.currentUserName;
     newEvent.location = self.composeView.locationTextField.text;
@@ -95,12 +100,15 @@
 - (IBAction)onTapCreate:(id)sender {
     if (self.event && [self inputIsValid]) {
         [self setEventFields:self.event];
-        [self.delegate didTapCreateWithEvent:self.event];
-    } else {
+        [self.delegate didTapChangeEvent:self.event];
+    } else if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
-            [self.delegate didTapCreateWithEvent:newEvent];
+            [self.delegate didTapChangeEvent:newEvent];
         }
+    } else {
+        Event *updatedEvent = [self updateEventFromView];
+        [self.delegate didTapChangeEvent:updatedEvent];
     }
 }
 
