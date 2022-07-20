@@ -43,27 +43,29 @@ class DailyCalendarViewController : DayViewController {
     }
     
     func fetchCalendarEventsForDate(_ date: Date) {
-        controllerDelegate?.fetchEventsForDate(date, callback: { events, errorMessage in
+        controllerDelegate?.fetchEventsForDate(date, callback: { [self] events, errorMessage in
             if let newEvents = events {
-                self.calendarEventHandler.addEventsFromArray(newEvents, date)
-                DispatchQueue.main.async {
-                    self.reloadData()
+                calendarEventHandler.addEventsFromArray(newEvents, date)
+                DispatchQueue.main.async { [self] in
+                    reloadData()
                 }
             } else if let fetchErrorMessage = errorMessage {
-                self.failedRequest(fetchErrorMessage)
+                DispatchQueue.main.async { [self] in
+                    failedRequest(fetchErrorMessage)
+                }
             } else {
-                self.failedRequest("Something went wrong.")
+                DispatchQueue.main.async { [self] in
+                    failedRequest("Something went wrong.")
+                }
             }
         })
     }
     
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
-        guard let calendarKitEvents = calendarEventHandler.getEventsForDate(date) else {
-            if (!fetchedDates.contains(date)) {
-                fetchedDates.insert(date)
-                fetchCalendarEventsForDate(date)
-            }
-            return calendarEventHandler.getEventsForDate(date) ?? []
+        let calendarKitEvents = calendarEventHandler.getEventsForDate(date)
+        if (!fetchedDates.contains(date)) {
+            fetchedDates.insert(date)
+            fetchCalendarEventsForDate(date)
         }
         return calendarKitEvents
     }

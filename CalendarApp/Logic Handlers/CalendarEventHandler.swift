@@ -16,14 +16,14 @@ class CalendarEventHandler {
         calendar.timeZone = TimeZone.current
     }
     
-    func getEventsForDate(_ date: Date) -> [CalendarApp.Event]? {
+    func getEventsForDate(_ date: Date) -> [CalendarApp.Event] {
         let midnight = calendar.startOfDay(for: date)
-        return dateToCalendarKitEvents[midnight]
+        return dateToCalendarKitEvents[midnight] ?? []
     }
     
     func addEvent(_ event: CalendarApp.Event, _ date: Date) {
         let midnight = calendar.startOfDay(for: date)
-        var calendarEvents = dateToCalendarKitEvents[midnight] ?? [CalendarApp.Event]()
+        var calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         calendarEvents.append(event)
         dateToCalendarKitEvents[midnight] = calendarEvents
     }
@@ -31,22 +31,17 @@ class CalendarEventHandler {
     func addEventsFromArray(_ events:[CalendarApp.Event], _ date: Date) {
         let midnight = calendar.startOfDay(for: date)
         var calendarEvents = dateToCalendarKitEvents[midnight] ?? [CalendarApp.Event]()
-        for eventModel in events {
-            calendarEvents.append(eventModel)
-        }
+        events.forEach { calendarEvents.append($0) }
         dateToCalendarKitEvents[midnight] = calendarEvents
     }
     
     func deleteEvent(_ event: CalendarApp.Event, _ date: Date) {
         let midnight = calendar.startOfDay(for: date)
-        guard var calendarKitEvents = dateToCalendarKitEvents[midnight] else {
+        guard var calendarKitEvents = dateToCalendarKitEvents[midnight],
+        let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) else {
             return
         }
-        let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents)
-        guard let newEventIndex = eventIndex else {
-            return
-        }
-        calendarKitEvents.remove(at: newEventIndex)
+        calendarKitEvents.remove(at: eventIndex)
         dateToCalendarKitEvents[midnight] = calendarKitEvents;
     }
     

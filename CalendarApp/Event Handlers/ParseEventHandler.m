@@ -39,7 +39,7 @@
     }];
 }
 
-- (void)queryUserEventsOnDate:(NSDate *)date
+- (void)queryEventsOnDate:(NSDate *)date
                    completion:(void(^_Nonnull)(NSMutableArray<Event *> * _Nullable events, NSDate *date, NSString * _Nullable error))completion {
     PFUser *currentUser = [PFUser currentUser];
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
@@ -72,7 +72,7 @@
     }];
 }
 
-- (void)updateRemoteObjectWithEvent:(Event *)event
+- (void)updateEvent:(Event *)event
                         completion:(void (^)(NSString * _Nullable))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
@@ -96,7 +96,7 @@
     }];
 }
 
-- (void)deleteRemoteObjectWithEvent:(Event *)event
+- (void)deleteEvent:(Event *)event
                         completion:(void (^_Nonnull)(NSString * _Nullable error))completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
     [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {

@@ -18,8 +18,7 @@
 @implementation EKEventHandler
 
 - (instancetype)init {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         self.eventStore = [[EKEventStore alloc] init];
     }
     return self;
@@ -49,7 +48,7 @@
     [self.delegate remoteEventsDidChange];
 }
 
-- (void)deleteRemoteObjectWithEvent:(nonnull Event *)event
+- (void)deleteEvent:(nonnull Event *)event
                          completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
     EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
     if (!deletingEvent) {
@@ -64,7 +63,7 @@
     }
 }
 
-- (void)queryUserEventsOnDate:(nonnull NSDate *)date
+- (void)queryEventsOnDate:(nonnull NSDate *)date
                    completion:(void (^ _Nonnull)(NSMutableArray<Event *> * _Nullable, NSDate * _Nonnull, NSString * _Nullable))completion {
     EKEventBuilder *builder = [[EKEventBuilder alloc] init];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
@@ -86,7 +85,7 @@
     }
 }
 
-- (void)updateRemoteObjectWithEvent:(nonnull Event *)event
+- (void)updateEvent:(nonnull Event *)event
                          completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
     EKEvent *updatingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
     if (!updatingEvent) {
