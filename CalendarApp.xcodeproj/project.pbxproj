@@ -34,6 +34,7 @@
 		41B7F4ED2885FDC800030027 /* EventModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* EventModel.swift */; };
 		41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F02887162B00030027 /* EKEventHandler.m */; };
 		41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F5288740B400030027 /* EKEventBuilder.m */; };
+		41B7F53D288868E800030027 /* CalendarApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -109,6 +110,7 @@
 		41B7F4F22887171500030027 /* EventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventHandler.h; sourceTree = "<group>"; };
 		41B7F4F4288740B400030027 /* EKEventBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEventBuilder.h; sourceTree = "<group>"; };
 		41B7F4F5288740B400030027 /* EKEventBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EKEventBuilder.m; sourceTree = "<group>"; };
+		41B7F53C288868E800030027 /* CalendarApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CalendarApp.xcdatamodel; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 				413DE5192874B39400CCF8E1 /* Info.plist */,
 				413DE51A2874B39400CCF8E1 /* main.m */,
 				41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */,
+				41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */,
 			);
 			path = CalendarApp;
 			sourceTree = "<group>";
@@ -595,6 +598,7 @@
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
+				41B7F53D288868E800030027 /* CalendarApp.xcdatamodeld in Sources */,
 				410A1028287749860023F523 /* ParseEvent.m in Sources */,
 				413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */,
 			);
@@ -945,6 +949,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				41B7F53C288868E800030027 /* CalendarApp.xcdatamodel */,
+			);
+			currentVersion = 41B7F53C288868E800030027 /* CalendarApp.xcdatamodel */;
+			path = CalendarApp.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 413DE4FD2874B39200CCF8E1 /* Project object */;
 }
