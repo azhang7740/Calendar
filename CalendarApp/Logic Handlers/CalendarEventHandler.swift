@@ -9,7 +9,6 @@ import Foundation
 import CalendarKit
 
 class CalendarEventHandler {
-    public var fetchedDates = Set<Date>()
     private var dateToCalendarKitEvents = [Date: [CalendarApp.Event]]()
     private var calendar = Calendar(identifier: .gregorian)
     

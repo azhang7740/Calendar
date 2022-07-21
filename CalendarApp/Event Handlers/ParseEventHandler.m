@@ -59,9 +59,6 @@
     [query includeKey:@"updatedAt"];
     [query whereKey:@"author" equalTo:currentUser];
 
-    
-    // query startDate is in the date range
-    // OR start date is before the start of the day,
     [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
         if (parseEvents) {
             NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
