@@ -9,6 +9,7 @@ import Foundation
 import CalendarKit
 
 class CalendarEventHandler {
+    public var fetchedDates = Set<Date>()
     private var dateToCalendarKitEvents = [Date: [CalendarApp.Event]]()
     private var calendar = Calendar(identifier: .gregorian)
     
@@ -28,7 +29,9 @@ class CalendarEventHandler {
         dateComponents.day = 1
         
         while (midnight <= endMidnight) {
-            var calendarEvents = dateToCalendarKitEvents[midnight] ?? []
+            guard var calendarEvents = dateToCalendarKitEvents[midnight] else {
+                return
+            }
             calendarEvents.append(event)
             dateToCalendarKitEvents[midnight] = calendarEvents
             guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
@@ -40,9 +43,9 @@ class CalendarEventHandler {
     
     func addEventsFromArray(_ events:[CalendarApp.Event], _ date: Date) {
         let midnight = calendar.startOfDay(for: date)
-        var calendarEvents = dateToCalendarKitEvents[midnight] ?? [CalendarApp.Event]()
-        events.forEach { calendarEvents.append($0) }
+        let calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         dateToCalendarKitEvents[midnight] = calendarEvents
+        events.forEach { addEvent($0) }
     }
     
     func deleteEvent(_ event: CalendarApp.Event, _ date: Date) {
