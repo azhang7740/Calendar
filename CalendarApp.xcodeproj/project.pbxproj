@@ -22,7 +22,6 @@
 		413DE5152874B39400CCF8E1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 413DE5142874B39400CCF8E1 /* Assets.xcassets */; };
 		413DE5182874B39400CCF8E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE5162874B39400CCF8E1 /* LaunchScreen.storyboard */; };
 		413DE51B2874B39400CCF8E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE51A2874B39400CCF8E1 /* main.m */; };
-		413DE5252874B39400CCF8E1 /* CalendarTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5242874B39400CCF8E1 /* CalendarTests.m */; };
 		413DE52F2874B39400CCF8E1 /* CalendarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE52E2874B39400CCF8E1 /* CalendarUITests.m */; };
 		413DE5312874B39400CCF8E1 /* CalendarUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5302874B39400CCF8E1 /* CalendarUITestsLaunchTests.m */; };
 		413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE53F287600C000CCF8E1 /* LoginViewController.m */; };
@@ -36,6 +35,8 @@
 		41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F5288740B400030027 /* EKEventBuilder.m */; };
 		41B7F53D288868E800030027 /* CalendarApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */; };
 		41B7F544288886DF00030027 /* CoreDataEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F543288886DF00030027 /* CoreDataEventHandler.m */; };
+		41B7F5472888A28700030027 /* CalendarEventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F5462888A28700030027 /* CalendarEventHandlerTests.swift */; };
+		41B7F5492888A79400030027 /* SampleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F5482888A79400030027 /* SampleEvents.swift */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -91,7 +92,6 @@
 		413DE5192874B39400CCF8E1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		413DE51A2874B39400CCF8E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		413DE5202874B39400CCF8E1 /* CalendarAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendarAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		413DE5242874B39400CCF8E1 /* CalendarTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarTests.m; sourceTree = "<group>"; };
 		413DE52A2874B39400CCF8E1 /* CalendarAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CalendarAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		413DE52E2874B39400CCF8E1 /* CalendarUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarUITests.m; sourceTree = "<group>"; };
 		413DE5302874B39400CCF8E1 /* CalendarUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarUITestsLaunchTests.m; sourceTree = "<group>"; };
@@ -114,6 +114,9 @@
 		41B7F53C288868E800030027 /* CalendarApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CalendarApp.xcdatamodel; sourceTree = "<group>"; };
 		41B7F542288886DF00030027 /* CoreDataEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataEventHandler.h; sourceTree = "<group>"; };
 		41B7F543288886DF00030027 /* CoreDataEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataEventHandler.m; sourceTree = "<group>"; };
+		41B7F5452888A28600030027 /* CalendarAppTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarAppTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		41B7F5462888A28700030027 /* CalendarEventHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandlerTests.swift; sourceTree = "<group>"; };
+		41B7F5482888A79400030027 /* SampleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEvents.swift; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -215,7 +218,9 @@
 		413DE5232874B39400CCF8E1 /* CalendarAppTests */ = {
 			isa = PBXGroup;
 			children = (
-				413DE5242874B39400CCF8E1 /* CalendarTests.m */,
+				41B7F5462888A28700030027 /* CalendarEventHandlerTests.swift */,
+				41B7F5452888A28600030027 /* CalendarAppTests-Bridging-Header.h */,
+				41B7F5482888A79400030027 /* SampleEvents.swift */,
 			);
 			path = CalendarAppTests;
 			sourceTree = "<group>";
@@ -302,9 +307,9 @@
 				410A102D287797850023F523 /* ParseEventHandler.m */,
 				41B7F4EF2887162B00030027 /* EKEventHandler.h */,
 				41B7F4F02887162B00030027 /* EKEventHandler.m */,
-				41B7F4F22887171500030027 /* EventHandler.h */,
 				41B7F542288886DF00030027 /* CoreDataEventHandler.h */,
 				41B7F543288886DF00030027 /* CoreDataEventHandler.m */,
+				41B7F4F22887171500030027 /* EventHandler.h */,
 			);
 			path = "Event Handlers";
 			sourceTree = "<group>";
@@ -417,6 +422,7 @@
 					};
 					413DE51F2874B39400CCF8E1 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 						TestTargetID = 413DE5042874B39200CCF8E1;
 					};
 					413DE5292874B39400CCF8E1 = {
@@ -614,7 +620,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				413DE5252874B39400CCF8E1 /* CalendarTests.m in Sources */,
+				41B7F5492888A79400030027 /* SampleEvents.swift in Sources */,
+				41B7F5472888A28700030027 /* CalendarEventHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -845,15 +852,24 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3AU6YJ5LJW;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.CalendarTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "CalendarAppTests/CalendarAppTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CalendarApp.app/CalendarApp";
 			};
@@ -865,15 +881,23 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3AU6YJ5LJW;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.codepath.CalendarTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OBJC_BRIDGING_HEADER = "CalendarAppTests/CalendarAppTests-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CalendarApp.app/CalendarApp";
 			};

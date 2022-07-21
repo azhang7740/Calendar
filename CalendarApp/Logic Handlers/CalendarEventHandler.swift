@@ -21,8 +21,8 @@ class CalendarEventHandler {
         return dateToCalendarKitEvents[midnight] ?? []
     }
     
-    func addEvent(_ event: CalendarApp.Event, _ date: Date) {
-        let midnight = calendar.startOfDay(for: date)
+    func addEvent(_ event: CalendarApp.Event) {
+        let midnight = calendar.startOfDay(for: event.startDate)
         var calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         calendarEvents.append(event)
         dateToCalendarKitEvents[midnight] = calendarEvents
@@ -47,9 +47,8 @@ class CalendarEventHandler {
     
     func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
         let originalMidnight = calendar.startOfDay(for: originalStart)
-        let newMidnight = calendar.startOfDay(for: newStart)
         deleteEvent(event, originalMidnight)
-        addEvent(event, newMidnight)
+        addEvent(event)
     }
     
     private func getEventIndex(_ eventID: UUID, _ calendarEvents: [CalendarApp.Event]) -> Int? {

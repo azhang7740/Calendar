@@ -30,7 +30,7 @@
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
                completion:(void (^ _Nonnull)(NSMutableArray<Event *> * _Nullable, NSDate * _Nonnull, NSString * _Nullable))completion {
-    
+    NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:CoreDataEvent.fetchRequest error:nil];
 }
 
 - (void)updateEvent:(nonnull Event *)event
@@ -40,7 +40,9 @@
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(void (^ _Nonnull)(Event * _Nonnull, NSDate * _Nonnull, NSString * _Nullable))completion {
+    CoreDataEvent *cdEvent = [[CoreDataEvent alloc] initWithContext:self.context];
     
+    [self.context save:nil];
 }
 
 @end

@@ -15,7 +15,7 @@
 }
 
 - (void)uploadWithEvent:(Event *)newEvent
-                    completion:(void (^_Nonnull)(Event *parseEvent, NSDate *date, NSString * _Nullable error))completion {
+             completion:(void (^_Nonnull)(Event *parseEvent, NSDate *date, NSString * _Nullable error))completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
     newParseEvent.objectUUID = [newEvent.objectUUID UUIDString];
     newParseEvent.eventTitle = newEvent.eventTitle;

@@ -38,7 +38,7 @@ class DailyCalendarViewController : DayViewController {
     }
     
     func addEvent(_ eventModel: CalendarApp.Event, _ date: Date) {
-        calendarEventHandler.addEvent(eventModel, date)
+        calendarEventHandler.addEvent(eventModel)
         reloadData()
     }
     
