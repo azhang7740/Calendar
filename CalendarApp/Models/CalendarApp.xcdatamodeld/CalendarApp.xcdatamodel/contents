@@ -4,15 +4,17 @@
         <attribute name="authorUsername" optional="YES" attributeType="String"/>
         <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="ekEventID" optional="YES" attributeType="String"/>
+        <attribute name="endDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="eventDescription" optional="YES" attributeType="String"/>
         <attribute name="eventTitle" optional="YES" attributeType="String"/>
         <attribute name="isAllDay" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="objectUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="parseID" optional="YES" attributeType="String"/>
+        <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <elements>
-        <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="14"/>
+        <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="209"/>
     </elements>
 </model>
