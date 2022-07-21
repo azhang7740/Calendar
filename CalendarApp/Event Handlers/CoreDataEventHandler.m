@@ -62,7 +62,16 @@
 
 - (void)updateEvent:(nonnull Event *)event
          completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
-    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
+    request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", event.objectUUID];
+    NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:request error:nil];
+    if (cdEvents.count != 1) {
+        completion(@"Something went wrong.");
+    } else {
+        [self updateRemoteEventFrom:event cdEvent:cdEvents[0]];
+        [self.context save:nil];
+        completion(nil);
+    }
 }
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
