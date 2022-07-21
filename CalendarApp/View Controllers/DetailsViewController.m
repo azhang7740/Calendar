@@ -8,6 +8,7 @@
 #import "DetailsViewController.h"
 #import "DetailsView.h"
 #import "ComposeViewController.h"
+#import "CoreDataEventHandler.h"
 
 @interface DetailsViewController () <DetailsViewDelegate, ComposeViewControllerDelegate>
 

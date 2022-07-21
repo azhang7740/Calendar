@@ -66,6 +66,7 @@
     }
     Event *newEvent = [[Event alloc] init];
     newEvent.objectUUID = [NSUUID UUID];
+    newEvent.createdAt = [NSDate date];
     [self setEventFields:newEvent];
     
     return newEvent;
@@ -83,6 +84,7 @@
     newEvent.location = self.composeView.locationTextField.text;
     newEvent.startDate = self.composeView.startDatePicker.date;
     newEvent.endDate = self.composeView.endDatePicker.date;
+    newEvent.updatedAt = [NSDate date];
     
     if (self.composeView.descriptionTextView.textColor
         == UIColor.lightGrayColor) {

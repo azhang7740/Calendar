@@ -33,6 +33,7 @@
         completion(@"Something went wrong.");
     } else {
         [self.context deleteObject:cdEvents[0]];
+        [self.context save:nil];
         completion(nil);
     }
 }
@@ -70,6 +71,10 @@
     cdEvent.objectUUID = newEvent.objectUUID;
     [self updateRemoteEventFrom:newEvent cdEvent:cdEvent];
     [self.context save:nil];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:newEvent.startDate options:0];
+    completion(newEvent, midnight, nil);
 }
 
 - (void)updateRemoteEventFrom:(Event *)canonicalEvent

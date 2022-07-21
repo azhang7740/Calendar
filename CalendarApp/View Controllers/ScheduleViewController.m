@@ -13,6 +13,7 @@
 #import "AuthenticationHandler.h"
 #import "ParseEventHandler.h"
 #import "EKEventHandler.h"
+#import "CoreDataEventHandler.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 

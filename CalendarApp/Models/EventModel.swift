@@ -16,7 +16,7 @@ public class Event : NSObject {
     public var updatedAt: Date?
     public var createdAt: Date?
     
-    public var eventTitle = ""
+    public var eventTitle = "[No title]"
     public var authorUsername: String?
     public var eventDescription = ""
     public var location = ""
