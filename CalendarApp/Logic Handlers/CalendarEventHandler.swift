@@ -22,10 +22,20 @@ class CalendarEventHandler {
     }
     
     func addEvent(_ event: CalendarApp.Event) {
-        let midnight = calendar.startOfDay(for: event.startDate)
-        var calendarEvents = dateToCalendarKitEvents[midnight] ?? []
-        calendarEvents.append(event)
-        dateToCalendarKitEvents[midnight] = calendarEvents
+        var midnight = calendar.startOfDay(for: event.startDate)
+        let endMidnight = calendar.startOfDay(for: event.endDate)
+        var dateComponents = DateComponents()
+        dateComponents.day = 1
+        
+        while (midnight <= endMidnight) {
+            var calendarEvents = dateToCalendarKitEvents[midnight] ?? []
+            calendarEvents.append(event)
+            dateToCalendarKitEvents[midnight] = calendarEvents
+            guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
+                return
+            }
+            midnight = nextMidnight
+        }
     }
     
     func addEventsFromArray(_ events:[CalendarApp.Event], _ date: Date) {
@@ -36,13 +46,23 @@ class CalendarEventHandler {
     }
     
     func deleteEvent(_ event: CalendarApp.Event, _ date: Date) {
-        let midnight = calendar.startOfDay(for: date)
-        guard var calendarKitEvents = dateToCalendarKitEvents[midnight],
-        let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) else {
-            return
+        var midnight = calendar.startOfDay(for: date)
+        let endMidnight = calendar.startOfDay(for: event.endDate)
+        var dateComponents = DateComponents()
+        dateComponents.day = 1
+        while (midnight <= endMidnight) {
+            guard var calendarKitEvents = dateToCalendarKitEvents[midnight],
+            let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) else {
+                return
+            }
+            calendarKitEvents.remove(at: eventIndex)
+            dateToCalendarKitEvents[midnight] = calendarKitEvents;
+            guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
+                return
+            }
+            midnight = nextMidnight
         }
-        calendarKitEvents.remove(at: eventIndex)
-        dateToCalendarKitEvents[midnight] = calendarKitEvents;
+        
     }
     
     func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
