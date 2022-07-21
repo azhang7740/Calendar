@@ -49,22 +49,22 @@
 }
 
 - (void)deleteEvent:(nonnull Event *)event
-                         completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
+                         completion:(RemoteEventChangeCompletion)completion {
     EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
     if (!deletingEvent) {
-        completion(@"Event was not found in Apple calendar.");
+        completion(false, @"Event was not found in Apple calendar.");
     } else {
         BOOL success = [self.eventStore removeEvent:deletingEvent span:EKSpanThisEvent error:nil];
         if (success) {
-            completion(nil);
+            completion(true, nil);
         } else {
-            completion(@"Event was not deleted successfully.");
+            completion(false, @"Event was not deleted successfully.");
         }
     }
 }
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
-                   completion:(void (^ _Nonnull)(NSMutableArray<Event *> * _Nullable, NSDate * _Nonnull, NSString * _Nullable))completion {
+                   completion:(EventQueryCompletion)completion {
     EKEventBuilder *builder = [[EKEventBuilder alloc] init];
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
@@ -78,38 +78,38 @@
     NSArray<EKEvent *> *events = [self.eventStore eventsMatchingPredicate:predicate];
     
     if (!events) {
-        completion([[NSMutableArray alloc] init], midnight, @"Failed to retrieve calendar events.");
+        completion(false, nil, nil, @"Failed to retrieve calendar events.");
     } else {
         NSMutableArray<Event *> *newEvents = [builder getEventsFromEKEventArray:events];
-        completion(newEvents, midnight, nil);
+        completion(true, newEvents, midnight, nil);
     }
 }
 
 - (void)updateEvent:(nonnull Event *)event
-                         completion:(void (^ _Nonnull)(NSString * _Nullable))completion {
+                         completion:(RemoteEventChangeCompletion)completion {
     EKEvent *updatingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
     if (!updatingEvent) {
-        completion(@"Event was not found in Apple calendar.");
+        completion(false, @"Event was not found in Apple calendar.");
     } else {
         [self updateEKEventFromEvent:event ekEvent:updatingEvent];
         BOOL success = [self.eventStore saveEvent:updatingEvent span:EKSpanThisEvent error:nil];
         if (success) {
-            completion(nil);
+            completion(true, nil);
         } else {
-            completion(@"Event was not updated successfully.");
+            completion(false, @"Event was not updated successfully.");
         }
     }
 }
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
-             completion:(void (^ _Nonnull)(Event * _Nonnull, NSDate * _Nonnull, NSString * _Nullable))completion {
+             completion:(RemoteEventChangeCompletion)completion {
     EKEvent *newEKEvent = [EKEvent eventWithEventStore:self.eventStore];
     [self updateEKEventFromEvent:newEvent ekEvent:newEKEvent];
     BOOL success = [self.eventStore saveEvent:newEKEvent span:EKSpanThisEvent error:nil];
     if (success) {
-        completion(newEvent, newEvent.startDate, nil);
+        completion(true, nil);
     } else {
-        completion(newEvent, newEvent.startDate, @"Error uploading event to Apple calendar.");
+        completion(false, @"Error uploading event to Apple calendar.");
     }
 }
 

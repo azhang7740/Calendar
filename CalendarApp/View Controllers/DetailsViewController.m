@@ -92,8 +92,8 @@
 }
 
 - (void)didTapDelete {
-    [self.parseEventHandler deleteEvent:self.event completion:^(NSString * _Nullable error) {
-        if (!error) {
+    [self.parseEventHandler deleteEvent:self.event completion:^(BOOL success, NSString * _Nullable error) {
+        if (success) {
             [self.delegate didDeleteEvent:self.event];
         } else {
             // TODO: error handling
@@ -108,13 +108,13 @@
 - (void)didTapChangeEvent:(Event *)event
              originalDate:(NSDate *)date{
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseEventHandler updateEvent:event completion:^(NSString * _Nullable error) {
-        if (error) {
-            // TODO: error handling
-        } else {
+    [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+        if (success) {
             [self updateDetailsView];
             [self.delegate didUpdateEvent:event
                              originalDate:date];
+        } else {
+            // TODO: error handling
         }
     }];
 }

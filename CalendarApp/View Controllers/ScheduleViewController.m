@@ -61,7 +61,7 @@
         callback(self.datesToEvents[date], nil);
     } else {
         [self.parseHandler queryEventsOnDate:date
-                                      completion:^(NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
+                                      completion:^(BOOL success, NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
             if (error) {
                 callback(nil, error);
             } else {
@@ -144,13 +144,13 @@
 - (void)didTapChangeEvent:(Event *)event
              originalDate:(NSDate *)date{
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
-            self.objectIDToEvents[parseEvent.objectUUID] = parseEvent;
-            [self.datesToEvents[date] addObject:parseEvent];
-            [self.scheduleView addEvent: parseEvent: date];
+            self.objectIDToEvents[event.objectUUID] = event;
+            [self.datesToEvents[date] addObject:event];
+            [self.scheduleView addEvent: event: date];
         }
     }];
 }
