@@ -59,8 +59,25 @@
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(void (^ _Nonnull)(Event * _Nonnull, NSDate * _Nonnull, NSString * _Nullable))completion {
     CoreDataEvent *cdEvent = [[CoreDataEvent alloc] initWithContext:self.context];
-    
+    cdEvent.objectUUID = newEvent.objectUUID;
+    [self updateRemoteEventFrom:newEvent cdEvent:cdEvent];
     [self.context save:nil];
+}
+
+- (void)updateRemoteEventFrom:(Event *)canonicalEvent
+                      cdEvent:(CoreDataEvent *)remoteEvent {
+    remoteEvent.eventTitle = canonicalEvent.eventTitle;
+    remoteEvent.authorUsername = canonicalEvent.authorUsername;
+    remoteEvent.ekEventID = canonicalEvent.ekEventID;
+    remoteEvent.parseID = remoteEvent.parseID;
+    remoteEvent.updatedAt = canonicalEvent.updatedAt;
+    remoteEvent.createdAt = canonicalEvent.createdAt;
+    
+    remoteEvent.startDate = canonicalEvent.startDate;
+    remoteEvent.endDate = canonicalEvent.endDate;
+    remoteEvent.eventDescription = canonicalEvent.eventDescription;
+    remoteEvent.isAllDay = canonicalEvent.isAllDay;
+    remoteEvent.location = canonicalEvent.location;
 }
 
 @end
