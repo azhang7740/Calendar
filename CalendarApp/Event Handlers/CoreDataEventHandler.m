@@ -7,6 +7,7 @@
 
 #import "CoreDataEventHandler.h"
 #import "AppDelegate.h"
+#import "CoreDataEventBuilder.h"
 
 @interface CoreDataEventHandler ()
 
@@ -30,7 +31,24 @@
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
                completion:(void (^ _Nonnull)(NSMutableArray<Event *> * _Nullable, NSDate * _Nonnull, NSString * _Nullable))completion {
-    NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:CoreDataEvent.fetchRequest error:nil];
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:date options:0];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = 1;
+    NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:midnight options:0];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
+    request.predicate = [NSPredicate predicateWithFormat:@"startDate >= %@ AND startDate <= %@", date, nextDate];
+    NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:request error:nil];
+    
+    if (!cdEvents) {
+        completion([[NSMutableArray alloc] init], midnight, @"Failed to retrieve CoreData events.");
+    } else {
+        CoreDataEventBuilder *builder = [[CoreDataEventBuilder alloc] init];
+        NSMutableArray<Event *> *newEvents = [builder getEventsFromCoreDataEventArray:cdEvents];
+        completion(newEvents, midnight, nil);
+    }
 }
 
 - (void)updateEvent:(nonnull Event *)event
