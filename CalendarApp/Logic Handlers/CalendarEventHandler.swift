@@ -11,6 +11,7 @@ import CalendarKit
 class CalendarEventHandler {
     private var dateToCalendarKitEvents = [Date: [CalendarApp.Event]]()
     private var calendar = Calendar(identifier: .gregorian)
+    private var fetchedDates = Set<Date>()
     
     init() {
         calendar.timeZone = TimeZone.current
@@ -28,11 +29,12 @@ class CalendarEventHandler {
         dateComponents.day = 1
         
         while (midnight <= endMidnight) {
-            guard var calendarEvents = dateToCalendarKitEvents[midnight] else {
-                return
+            if var calendarEvents = dateToCalendarKitEvents[midnight]  {
+                if (!fetchedDates.contains(midnight)) {
+                    calendarEvents.append(event)
+                    dateToCalendarKitEvents[midnight] = calendarEvents
+                }
             }
-            calendarEvents.append(event)
-            dateToCalendarKitEvents[midnight] = calendarEvents
             guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
                 return
             }
@@ -45,6 +47,7 @@ class CalendarEventHandler {
         let calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         dateToCalendarKitEvents[midnight] = calendarEvents
         events.forEach { addEvent($0) }
+        fetchedDates.insert(date)
     }
     
     func deleteEvent(_ event: CalendarApp.Event, _ date: Date) {
@@ -64,7 +67,6 @@ class CalendarEventHandler {
             }
             midnight = nextMidnight
         }
-        
     }
     
     func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
