@@ -67,7 +67,7 @@ class CalendarEventHandler {
         let calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         dateToCalendarKitEvents[midnight] = calendarEvents
         events.forEach { addEvent($0) }
-        fetchedDates.insert(date)
+        fetchedDates.insert(midnight)
     }
     
     func deleteEvent(_ event: CalendarApp.Event, _ date: Date) {
