@@ -13,15 +13,13 @@ class CalendarEventHandlerTests: XCTestCase {
     var earlyEvent: Event!
     var laterEvent: Event!
     var currentEvent: Event!
-    var yesterday: Date!
-    var tomorrow: Date!
+    let yesterday = Date().advanced(by: TimeInterval(-86400))
+    let tomorrow = Date().advanced(by: TimeInterval(86400))
     
     override func setUp() {
         super.setUp()
         
         handler = CalendarEventHandler()
-        yesterday = Date().advanced(by: TimeInterval(-86400))
-        tomorrow = Date().advanced(by: TimeInterval(86400))
         
         earlyEvent = SampleEvents.makeEvent(on: yesterday)
         laterEvent = SampleEvents.makeEvent(on: tomorrow)
@@ -30,6 +28,9 @@ class CalendarEventHandlerTests: XCTestCase {
     
     override func tearDown() {
         handler = nil
+        earlyEvent = nil
+        laterEvent = nil
+        currentEvent = nil
     }
     
     func testAddEventsFromArray() {
@@ -217,30 +218,112 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testUpdateEvent() {
+        handler.addEventsFromArray([currentEvent], Date())
+        let originalStart = currentEvent.startDate
+        let originalEnd = currentEvent.endDate
         
+        currentEvent.eventTitle = "hi"
+        handler.updateEvent(currentEvent, originalStart, originalEnd)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
     }
     
     func testUpdateNonexistentEvent() {
+        handler.addEventsFromArray([], Date())
+        let originalStart = currentEvent.startDate
+        let originalEnd = currentEvent.endDate
         
+        handler.updateEvent(currentEvent, originalStart, originalEnd)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
     }
     
     func testUpdateEventToNewDate() {
+        handler.addEventsFromArray([currentEvent], Date())
+        handler.addEventsFromArray([], tomorrow)
+        let originalStart = currentEvent.startDate
+        let originalEnd = currentEvent.endDate
         
+        currentEvent.startDate = currentEvent.startDate.advanced(by: TimeInterval(86400))
+        currentEvent.endDate = currentEvent.endDate.advanced(by: TimeInterval(86400))
+        handler.updateEvent(currentEvent, originalStart, originalEnd)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [currentEvent])
     }
     
     func testUpdateEventToNonexistingDate() {
+        handler.addEventsFromArray([currentEvent], Date())
+        let originalStart = currentEvent.startDate
+        let originalEnd = currentEvent.endDate
         
+        currentEvent.startDate = currentEvent.startDate.advanced(by: TimeInterval(86400))
+        currentEvent.endDate = currentEvent.endDate.advanced(by: TimeInterval(86400))
+        handler.updateEvent(currentEvent, originalStart, originalEnd)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [])
     }
     
     func testUpdateEventToMultipleDayEvent() {
+        handler.addEventsFromArray([currentEvent], Date())
+        handler.addEventsFromArray([], tomorrow)
+        let originalStart = currentEvent.startDate
+        let originalEnd = currentEvent.endDate
         
+        currentEvent.endDate = currentEvent.endDate.advanced(by: TimeInterval(86400))
+        handler.updateEvent(currentEvent, originalStart, originalEnd)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [currentEvent])
+        
+        handler.addEventsFromArray([], yesterday)
+        currentEvent.startDate = currentEvent.startDate.advanced(by: TimeInterval(-86400))
+        handler.updateEvent(currentEvent, originalStart, currentEvent.endDate)
+        
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [currentEvent])
     }
     
     func testUpdateEventFromMultipleDayEvent() {
+        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
+        handler.addEventsFromArray([longEvent], Date())
+        handler.addEventsFromArray([longEvent], tomorrow)
+        handler.addEventsFromArray([longEvent], yesterday)
         
+        let originalStart = longEvent.startDate
+        let originalEnd = longEvent.endDate
+        
+        longEvent.startDate = Date()
+        longEvent.endDate = Date().advanced(by: 3600)
+        handler.updateEvent(longEvent, originalStart, originalEnd)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [longEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [])
     }
     
     func testUpdateMultipleEvents() {
+        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
+        handler.addEventsFromArray([longEvent, currentEvent], Date())
+        handler.addEventsFromArray([longEvent, laterEvent], tomorrow)
+        handler.addEventsFromArray([longEvent, earlyEvent], yesterday)
         
+        let longOriginalStart = longEvent.startDate
+        let longOriginalEnd = longEvent.endDate
+        longEvent.startDate = tomorrow
+        longEvent.endDate = tomorrow.advanced(by: TimeInterval(3600))
+        handler.updateEvent(longEvent, longOriginalStart, longOriginalEnd)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [laterEvent, longEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent])
+        
+        let earlyOriginalStart = earlyEvent.startDate
+        let earlyOriginalEnd = earlyEvent.endDate
+        earlyEvent.startDate = tomorrow
+        earlyEvent.endDate = tomorrow.advanced(by: TimeInterval(3600))
+        handler.updateEvent(earlyEvent, earlyOriginalStart, earlyOriginalEnd)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [laterEvent, longEvent, earlyEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
     }
 }
