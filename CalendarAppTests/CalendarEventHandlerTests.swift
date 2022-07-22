@@ -215,4 +215,32 @@ class CalendarEventHandlerTests: XCTestCase {
         handler.addNewEvent(currentEvent)
         XCTAssertEqual(handler.getEventsForDate(Date()), [event, currentEvent])
     }
+    
+    func testUpdateEvent() {
+        
+    }
+    
+    func testUpdateNonexistentEvent() {
+        
+    }
+    
+    func testUpdateEventToNewDate() {
+        
+    }
+    
+    func testUpdateEventToNonexistingDate() {
+        
+    }
+    
+    func testUpdateEventToMultipleDayEvent() {
+        
+    }
+    
+    func testUpdateEventFromMultipleDayEvent() {
+        
+    }
+    
+    func testUpdateMultipleEvents() {
+        
+    }
 }
