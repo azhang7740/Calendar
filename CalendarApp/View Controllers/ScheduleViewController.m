@@ -12,12 +12,14 @@
 #import "CalendarApp-Swift.h"
 #import "AuthenticationHandler.h"
 #import "ParseEventHandler.h"
+#import "EKEventHandler.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) ParseEventHandler *parseHandler;
+@property (nonatomic) EKEventHandler *ekEventHandler;
 
 @property (nonatomic) NSMutableDictionary<NSDate *, NSMutableArray<Event *> *> *datesToEvents;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
@@ -32,15 +34,20 @@
     self.scheduleView = [[DailyCalendarViewController alloc] init];
     self.scheduleView.controllerDelegate = self;
     self.parseHandler = [[ParseEventHandler alloc] init];
-    [self addChildViewController:self.scheduleView];
-    [self.view addSubview:self.scheduleView.view];
-    
-    [self.scheduleView didMoveToParentViewController:self];
-    self.scheduleView.view.frame = self.view.bounds;
-    
+    self.ekEventHandler = [[EKEventHandler alloc] init];
+    [self.ekEventHandler requestAccessToCalendarWithCompletion:^(BOOL success, NSString * _Nullable error) {
+        if (error) {
+            [self failedRequestWithMessage:error];
+        }
+    }];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.datesToEvents = [[NSMutableDictionary alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
+    
+    [self addChildViewController:self.scheduleView];
+    [self.view addSubview:self.scheduleView.view];
+    [self.scheduleView didMoveToParentViewController:self];
+    self.scheduleView.view.frame = self.view.bounds;
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -77,7 +84,17 @@
 }
 
 - (void)didLongPressEvent:(NSUUID *)eventID {
-    
+
+}
+
+- (void)didLongPressTimeline:(NSDate *)date {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Compose" bundle:[NSBundle mainBundle]];
+    UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
+    ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
+    composeView.delegate = self;
+    composeView.currentUserName = [self.parseHandler getCurrentUsername];
+    composeView.date = date;
+    [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
 - (void)didTapClose {
@@ -93,11 +110,13 @@
     [self.scheduleView deleteCalendarEvent:event :midnight];
 }
 
-- (void)didUpdateEvent:(Event *)event {
+- (void)didUpdateEvent:(Event *)event
+          originalDate:(NSDate *)date {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    [self.scheduleView updateCalendarEvent:event :midnight];
+    NSDate *newMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
+    NSDate *prevMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
+    [self.scheduleView updateCalendarEvent:event :prevMidnightStart :newMidnightStart];
 }
 
 - (void)didTapCancel {
@@ -121,9 +140,10 @@
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
-- (void)didTapChangeEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event
+             originalDate:(NSDate *)date{
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadToParseWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
+    [self.parseHandler uploadWithEvent:event completion:^(Event * _Nonnull parseEvent, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {

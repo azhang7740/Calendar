@@ -22,14 +22,9 @@
     [super viewDidLoad];
     
     if (self.event) {
-        self.composeView.titleTextField.text = self.event.eventTitle;
-        self.composeView.startDatePicker.date = self.event.startDate;
-        self.composeView.endDatePicker.date = self.event.endDate;
-        
-        self.composeView.locationTextField.text = self.event.location;
-        self.composeView.descriptionTextView.text = self.event.eventDescription;
-        
-        [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
+        [self setViewEvent];
+    } else {
+        [self setViewDate];
     }
     
     if ([self.composeView.descriptionTextView.text  isEqual:@""]) {
@@ -40,6 +35,29 @@
     self.composeView.descriptionTextView.delegate = self;
     
     self.composeView.errorLabel.text = @"";
+}
+
+- (void)setViewDate {
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.hour = 1;
+    if (!self.date) {
+        self.date = [NSDate date];
+    }
+    self.composeView.startDatePicker.date = self.date;
+    self.composeView.endDatePicker.date = [calendar dateByAddingComponents:dayComponent toDate:self.date options:0];
+}
+
+- (void)setViewEvent {
+    self.composeView.titleTextField.text = self.event.eventTitle;
+    self.composeView.startDatePicker.date = self.event.startDate;
+    self.composeView.endDatePicker.date = self.event.endDate;
+    
+    self.composeView.locationTextField.text = self.event.location;
+    self.composeView.descriptionTextView.text = self.event.eventDescription;
+    
+    [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
 }
 
 - (Event *)createEventFromView {
@@ -98,17 +116,20 @@
 }
 
 - (IBAction)onTapCreate:(id)sender {
-    if (self.event && [self inputIsValid]) {
-        [self setEventFields:self.event];
-        [self.delegate didTapChangeEvent:self.event];
-    } else if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
+    if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
-            [self.delegate didTapChangeEvent:newEvent];
+            [self.delegate didTapChangeEvent:newEvent
+                                originalDate:newEvent.startDate];
         }
     } else {
+        NSDate *prevDate = self.event.startDate;
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+        NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:prevDate options:0];
         Event *updatedEvent = [self updateEventFromView];
-        [self.delegate didTapChangeEvent:updatedEvent];
+        [self.delegate didTapChangeEvent:updatedEvent
+                            originalDate:midnight];
     }
 }
 

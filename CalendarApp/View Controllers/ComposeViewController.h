@@ -6,14 +6,15 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Event.h"
+#import "CalendarApp-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @protocol ComposeViewControllerDelegate
 
 - (void)didTapCancel;
-- (void)didTapChangeEvent:(Event *)event;
+- (void)didTapChangeEvent:(Event *)event
+             originalDate:(NSDate *)date;
 
 @end
 
@@ -22,6 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, weak) id<ComposeViewControllerDelegate> delegate;
 @property (nonatomic) NSString *currentUserName;
 @property (nonatomic) Event *event;
+@property (nonatomic) NSDate *date;
 
 @end
 

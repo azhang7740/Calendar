@@ -91,7 +91,7 @@
 }
 
 - (void)didTapDelete {
-    [self.parseEventHandler deleteParseObjectWithEvent:self.event completion:^(NSString * _Nullable error) {
+    [self.parseEventHandler deleteRemoteObjectWithEvent:self.event completion:^(NSString * _Nullable error) {
         if (!error) {
             [self.delegate didDeleteEvent:self.event];
         } else {
@@ -104,14 +104,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapChangeEvent:(Event *)event {
+- (void)didTapChangeEvent:(Event *)event
+             originalDate:(NSDate *)date{
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseEventHandler updateParseObjectWithEvent:event completion:^(NSString * _Nullable error) {
+    [self.parseEventHandler updateRemoteObjectWithEvent:event completion:^(NSString * _Nullable error) {
         if (error) {
             // TODO: error handling
         } else {
             [self updateDetailsView];
-            [self.delegate didUpdateEvent:event];
+            [self.delegate didUpdateEvent:event
+                             originalDate:date];
         }
     }];
 }

@@ -12,6 +12,7 @@ import CalendarKit
 public protocol EventInteraction {
     func didTapEvent(_ eventID: UUID)
     func didLongPressEvent(_ eventID: UUID)
+    func didLongPressTimeline(_ date: Date)
     func fetchEventsForDate(_ date: Date, callback: @escaping(_ events:[CalendarApp.Event]?, _ errorMessage: String?) -> Void)
 }
 
@@ -20,9 +21,10 @@ class DailyCalendarViewController : DayViewController {
     
     var controllerDelegate: EventInteraction?
     private let calendarEventHandler = CalendarEventHandler()
+    private var fetchedDates = Set<Date>()
     
-    func updateCalendarEvent(_ event: CalendarApp.Event, _ date: Date) {
-        calendarEventHandler.updateEvent(event, date)
+    func updateCalendarEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
+        calendarEventHandler.updateEvent(event, originalStart, newStart)
         reloadData()
     }
     
@@ -57,25 +59,30 @@ class DailyCalendarViewController : DayViewController {
     
     override func eventsForDate(_ date: Date) -> [EventDescriptor] {
         guard let calendarKitEvents = calendarEventHandler.getEventsForDate(date) else {
-            fetchCalendarEventsForDate(date)
+            if (!fetchedDates.contains(date)) {
+                fetchedDates.insert(date)
+                fetchCalendarEventsForDate(date)
+            }
             return calendarEventHandler.getEventsForDate(date) ?? []
         }
         return calendarKitEvents
     }
     
     override func dayViewDidSelectEventView(_ eventView: EventView) {
-        guard let descriptor = eventView.descriptor as? CalendarKit.Event,
-            let objectID = descriptor.objectID else {
+        guard let descriptor = eventView.descriptor as? CalendarApp.Event else {
           return
         }
-        controllerDelegate?.didTapEvent(objectID)
+        controllerDelegate?.didTapEvent(descriptor.objectUUID)
     }
     
     override func dayViewDidLongPressEventView(_ eventView: EventView) {
-        guard let descriptor = eventView.descriptor as? CalendarKit.Event,
-            let objectID = descriptor.objectID else {
+        guard let descriptor = eventView.descriptor as? CalendarApp.Event else {
           return
         }
-        controllerDelegate?.didLongPressEvent(objectID)
+        controllerDelegate?.didLongPressEvent(descriptor.objectUUID)
+    }
+    
+    override func dayView(dayView: DayView, didLongPressTimelineAt date: Date) {
+        controllerDelegate?.didLongPressTimeline(date)
     }
 }
