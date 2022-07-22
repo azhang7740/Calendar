@@ -76,12 +76,10 @@ class CalendarEventHandler {
         var dateComponents = DateComponents()
         dateComponents.day = 1
         while (midnight <= endMidnight) {
-            guard var calendarKitEvents = dateToCalendarKitEvents[midnight],
-            let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) else {
-                return
+            if var calendarKitEvents = dateToCalendarKitEvents[midnight], let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
+                calendarKitEvents.remove(at: eventIndex)
+                dateToCalendarKitEvents[midnight] = calendarKitEvents
             }
-            calendarKitEvents.remove(at: eventIndex)
-            dateToCalendarKitEvents[midnight] = calendarKitEvents;
             guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
                 return
             }
