@@ -206,6 +206,13 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testAddEventAfterDelete() {
-        
+        let event = Event()
+        handler.addEventsFromArray([currentEvent, event], Date())
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent, event])
+        handler.deleteEvent(currentEvent)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [event])
+
+        handler.addNewEvent(currentEvent)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [event, currentEvent])
     }
 }
