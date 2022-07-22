@@ -22,7 +22,27 @@ class CalendarEventHandler {
         return dateToCalendarKitEvents[midnight] ?? []
     }
     
-    func addEvent(_ event: CalendarApp.Event) {
+    func addNewEvent(_ event:CalendarApp.Event) {
+        var midnight = calendar.startOfDay(for: event.startDate)
+        let endMidnight = calendar.startOfDay(for: event.endDate)
+        var dateComponents = DateComponents()
+        dateComponents.day = 1
+        
+        while (midnight <= endMidnight) {
+            if var calendarEvents = dateToCalendarKitEvents[midnight]  {
+                if (fetchedDates.contains(midnight)) {
+                    calendarEvents.append(event)
+                    dateToCalendarKitEvents[midnight] = calendarEvents
+                }
+            }
+            guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
+                return
+            }
+            midnight = nextMidnight
+        }
+    }
+    
+    private func addEvent(_ event: CalendarApp.Event) {
         var midnight = calendar.startOfDay(for: event.startDate)
         let endMidnight = calendar.startOfDay(for: event.endDate)
         var dateComponents = DateComponents()
@@ -72,7 +92,7 @@ class CalendarEventHandler {
     func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
         let originalMidnight = calendar.startOfDay(for: originalStart)
         deleteEvent(event, originalMidnight)
-        addEvent(event)
+        addNewEvent(event)
     }
     
     private func getEventIndex(_ eventID: UUID, _ calendarEvents: [CalendarApp.Event]) -> Int? {

@@ -22,7 +22,7 @@ class CalendarEventHandlerTests: XCTestCase {
         handler = nil
     }
     
-    func testAddEvent() {
+    func testAddEventsFromArray() {
         event = Event()
         handler.addEventsFromArray([event], Date())
         
