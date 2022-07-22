@@ -104,4 +104,21 @@ class CalendarEventHandlerTests: XCTestCase {
         XCTAssertEqual(handler.getEventsForDate(tomorrow), [longEvent])
         XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent, longEvent])
     }
+    
+    func testAddNewEventToNewDate() {
+        handler.addEventsFromArray([currentEvent], Date())
+        handler.addNewEvent(earlyEvent)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+    }
+    
+    func testAddNewEventToExistingDate() {
+        let secondEarlyEvent = SampleEvents.makeEvent(on: yesterday)
+        let thirdEarlyEvent = SampleEvents.makeEvent(on: yesterday)
+        handler.addEventsFromArray([earlyEvent, secondEarlyEvent], yesterday)
+        handler.addNewEvent(thirdEarlyEvent)
+        
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent, secondEarlyEvent, thirdEarlyEvent])
+    }
 }
