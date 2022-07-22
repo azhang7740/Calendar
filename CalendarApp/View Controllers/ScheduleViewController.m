@@ -120,12 +120,13 @@
 }
 
 - (void)didUpdateEvent:(Event *)event
-          originalDate:(NSDate *)date {
+     originalStartDate:(NSDate *)startDate
+       originalEndDate:(NSDate *)endDate {
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *newMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    NSDate *prevMidnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    [self.scheduleView updateCalendarEvent:event originalStartDate:prevMidnightStart newStartDate:newMidnightStart];
+    NSDate *midnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:startDate options:0];
+    NSDate *midnightEnd = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:endDate options:0];
+    [self.scheduleView updateCalendarEvent:event originalStartDate:midnightStart originalEndDate:midnightEnd];
 }
 
 - (void)didTapCancel {

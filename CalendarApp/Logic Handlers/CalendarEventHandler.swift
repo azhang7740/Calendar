@@ -70,26 +70,34 @@ class CalendarEventHandler {
         fetchedDates.insert(midnight)
     }
     
-    func deleteEvent(_ event: CalendarApp.Event, _ date: Date) {
-        var midnight = calendar.startOfDay(for: date)
+    func deleteEvent(_ event: CalendarApp.Event) {
+        let startMidnight = calendar.startOfDay(for: event.startDate)
         let endMidnight = calendar.startOfDay(for: event.endDate)
+        deleteEventWithDates(event, startMidnight, endMidnight)
+    }
+    
+    private func deleteEventWithDates(_ event: CalendarApp.Event,
+                                      _ startDate: Date,
+                                      _ endDate: Date) {
+        var startMidnight = calendar.startOfDay(for: startDate)
         var dateComponents = DateComponents()
         dateComponents.day = 1
-        while (midnight <= endMidnight) {
-            if var calendarKitEvents = dateToCalendarKitEvents[midnight], let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
+        while (startMidnight <= endDate) {
+            if var calendarKitEvents = dateToCalendarKitEvents[startMidnight], let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
                 calendarKitEvents.remove(at: eventIndex)
-                dateToCalendarKitEvents[midnight] = calendarKitEvents
+                dateToCalendarKitEvents[startMidnight] = calendarKitEvents
             }
-            guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: midnight) else {
+            guard let nextMidnight = calendar.date(byAdding: .day, value: 1, to: startMidnight) else {
                 return
             }
-            midnight = nextMidnight
+            startMidnight = nextMidnight
         }
     }
     
-    func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ newStart: Date) {
+    func updateEvent(_ event: CalendarApp.Event, _ originalStart: Date, _ originalEnd: Date) {
         let originalMidnight = calendar.startOfDay(for: originalStart)
-        deleteEvent(event, originalMidnight)
+        let originalEndMidnight = calendar.startOfDay(for: originalEnd)
+        deleteEventWithDates(event, originalMidnight, originalEndMidnight)
         addNewEvent(event)
     }
     

@@ -106,13 +106,15 @@
 }
 
 - (void)didTapChangeEvent:(Event *)event
-             originalDate:(NSDate *)date{
+        originalStartDate:(NSDate *)startDate
+          originalEndDate:(NSDate *)endDate {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
             [self updateDetailsView];
             [self.delegate didUpdateEvent:event
-                             originalDate:date];
+                        originalStartDate:startDate
+                          originalEndDate:endDate];
         } else {
             // TODO: error handling
         }

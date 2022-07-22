@@ -121,4 +121,91 @@ class CalendarEventHandlerTests: XCTestCase {
         
         XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent, secondEarlyEvent, thirdEarlyEvent])
     }
+    
+    func testDeleteNonExistingEvent() {
+        let event = Event()
+        handler.addEventsFromArray([], yesterday)
+        handler.addEventsFromArray([currentEvent], Date())
+        handler.deleteEvent(event)
+        handler.deleteEvent(earlyEvent)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+    }
+    
+    func testDeleteExistingEvent() {
+        handler.addEventsFromArray([currentEvent], Date())
+        handler.deleteEvent(currentEvent)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+    }
+    
+    func testDeleteEventTwice() {
+        handler.addEventsFromArray([currentEvent], Date())
+        handler.deleteEvent(currentEvent)
+        
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+        
+        handler.deleteEvent(currentEvent)
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+    }
+    
+    func testDeleteEventSpanningMultipleDays() {
+        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
+        handler.addEventsFromArray([], yesterday)
+        handler.addEventsFromArray([], Date())
+        handler.addEventsFromArray([], tomorrow)
+        
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+        
+        handler.addNewEvent(longEvent)
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [longEvent])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [longEvent])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [longEvent])
+        
+        handler.deleteEvent(longEvent)
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+    }
+    
+    func testDeleteLongEventWithUnfetchedDates() {
+        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
+        handler.addEventsFromArray([], Date())
+        handler.addEventsFromArray([], tomorrow)
+        handler.addNewEvent(longEvent)
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [longEvent])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [longEvent])
+        
+        handler.deleteEvent(longEvent)
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [])
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [])
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+    }
+    
+    func testDeleteMultipleEvents() {
+        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
+        handler.addEventsFromArray([currentEvent, longEvent], Date())
+        handler.addEventsFromArray([earlyEvent, longEvent], yesterday)
+        
+        XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent, longEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent, longEvent])
+        
+        handler.deleteEvent(currentEvent)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [longEvent])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent, longEvent])
+        
+        handler.deleteEvent(longEvent)
+        XCTAssertEqual(handler.getEventsForDate(Date()), [])
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent])
+    }
+    
+    func testAddEventAfterDelete() {
+        
+    }
 }
