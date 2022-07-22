@@ -48,7 +48,7 @@
     NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:midnight options:0];
     
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
-    request.predicate = [NSPredicate predicateWithFormat:@"startDate >= %@ AND startDate <= %@", date, nextDate];
+    request.predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", midnight, nextDate, midnight, midnight];
     NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:request error:nil];
     
     if (!cdEvents) {

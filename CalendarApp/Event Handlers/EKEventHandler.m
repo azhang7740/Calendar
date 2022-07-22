@@ -73,7 +73,7 @@
     dayComponent.day = 1;
     NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:midnight options:0];
     
-    NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:midnight endDate:nextDate calendars:nil];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", midnight, nextDate, midnight, midnight];
     
     NSArray<EKEvent *> *events = [self.eventStore eventsMatchingPredicate:predicate];
     
