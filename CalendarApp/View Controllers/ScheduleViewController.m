@@ -21,8 +21,6 @@
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) ParseEventHandler *parseHandler;
 @property (nonatomic) EKEventHandler *ekEventHandler;
-
-@property (nonatomic) NSMutableDictionary<NSDate *, NSMutableArray<Event *> *> *datesToEvents;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
 
 @end
@@ -42,7 +40,6 @@
         }
     }];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
-    self.datesToEvents = [[NSMutableDictionary alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     
     [self addChildViewController:self.scheduleView];
@@ -57,22 +54,17 @@
 
 - (void)fetchEventsForDate:(NSDate *)date
                   callback:(void (^)(NSArray<Event *> * _Nullable, NSString * _Nullable))callback {
-    if ([self.datesToEvents objectForKey:date]) {
-        callback(self.datesToEvents[date], nil);
-    } else {
-        [self.parseHandler queryEventsOnDate:date
-                                      completion:^(BOOL success, NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
-            if (error) {
-                callback(nil, error);
-            } else {
-                self.datesToEvents[date] = events;
-                for (Event *newEvent in events) {
-                    self.objectIDToEvents[newEvent.objectUUID] = newEvent;
-                }
-                callback(events, nil);
+    [self.parseHandler queryEventsOnDate:date
+                              completion:^(BOOL success, NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
+        if (error) {
+            callback(nil, error);
+        } else {
+            for (Event *newEvent in events) {
+                self.objectIDToEvents[newEvent.objectUUID] = newEvent;
             }
-        }];
-    }
+            callback(events, nil);
+        }
+    }];
 }
 
 - (void)didTapEvent:(NSUUID *)eventID {
@@ -103,20 +95,8 @@
 }
 
 - (void)didDeleteEvent:(Event *)event {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    NSDate *endMidnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.endDate options:0];
-    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
-    dateComponents.day = 1;
-    while (midnight <= endMidnight) {
-        if (self.datesToEvents[midnight]) {
-            [self.datesToEvents[midnight] removeObject:event];
-        }
-        midnight = [calendar dateByAddingComponents:dateComponents toDate:midnight options:0];
-    }
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.scheduleView deleteCalendarEvent:event :midnight];
+    [self.scheduleView deleteCalendarEvent:event];
 }
 
 - (void)didUpdateEvent:(Event *)event
@@ -151,15 +131,15 @@
 }
 
 - (void)didTapChangeEvent:(Event *)event
-             originalDate:(NSDate *)date{
+        originalStartDate:(NSDate *)startDate
+          originalEndDate:(NSDate *)endDate {
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.parseHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
             self.objectIDToEvents[event.objectUUID] = event;
-            [self.datesToEvents[date] addObject:event];
-            [self.scheduleView addEvent: event: date];
+            [self.scheduleView addEvent:event];
         }
     }];
 }

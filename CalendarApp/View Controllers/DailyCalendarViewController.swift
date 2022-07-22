@@ -28,7 +28,7 @@ class DailyCalendarViewController : DayViewController {
         reloadData()
     }
     
-    func deleteCalendarEvent(_ event: CalendarApp.Event, _ date: Date) {
+    func deleteCalendarEvent(_ event: CalendarApp.Event) {
         calendarEventHandler.deleteEvent(event)
         reloadData()
     }
@@ -37,7 +37,7 @@ class DailyCalendarViewController : DayViewController {
         // TODO: Error handling
     }
     
-    func addEvent(_ eventModel: CalendarApp.Event, _ date: Date) {
+    func addEvent(_ eventModel: CalendarApp.Event) {
         calendarEventHandler.addNewEvent(eventModel)
         reloadData()
     }
