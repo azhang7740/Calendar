@@ -106,7 +106,15 @@
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
     NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.startDate options:0];
-    [self.datesToEvents[midnight] removeObject:event];
+    NSDate *endMidnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:event.endDate options:0];
+    NSDateComponents *dateComponents = [[NSDateComponents alloc] init];
+    dateComponents.day = 1;
+    while (midnight <= endMidnight) {
+        if (self.datesToEvents[midnight]) {
+            [self.datesToEvents[midnight] removeObject:event];
+        }
+        midnight = [calendar dateByAddingComponents:dateComponents toDate:midnight options:0];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.scheduleView deleteCalendarEvent:event :midnight];
 }
