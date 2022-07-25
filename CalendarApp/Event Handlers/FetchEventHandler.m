@@ -31,23 +31,51 @@
 - (void)deleteEvent:(nonnull Event *)event
          completion:(nonnull RemoteEventChangeCompletion)completion {
     [self.cdEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
-        
+        if (!success) {
+            completion(false, error);
+        } else {
+            completion (true, nil);
+        }
     }];
+    
+    [self.eventSyncHandler didChangeEvent:event action:ChangeTypeDelete];
 }
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
                completion:(nonnull EventQueryCompletion)completion {
-    
+    [self.cdEventHandler queryEventsOnDate:date completion:^(BOOL success, NSMutableArray<Event *> * _Nullable events, NSDate * _Nullable fetchedDate, NSString * _Nullable error) {
+        if (!success) {
+            completion(false, nil, nil, error);
+        } else {
+            completion (true, events, fetchedDate, nil);
+        }
+    }];
 }
 
 - (void)updateEvent:(nonnull Event *)event
          completion:(nonnull RemoteEventChangeCompletion)completion {
+    [self.cdEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            completion(false, error);
+        } else {
+            completion (true, nil);
+        }
+    }];
     
+    [self.eventSyncHandler didChangeEvent:event action:ChangeTypeUpdate];
 }
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(nonnull RemoteEventChangeCompletion)completion {
+    [self.cdEventHandler uploadWithEvent:newEvent completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            completion(false, error);
+        } else {
+            completion (true, nil);
+        }
+    }];
     
+    [self.eventSyncHandler didChangeEvent:newEvent action:ChangeTypeCreate];
 }
 
 @end
