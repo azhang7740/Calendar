@@ -41,6 +41,8 @@
 		41B7F554288B5DD600030027 /* EventSyncHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F553288B5DD600030027 /* EventSyncHandler.m */; };
 		41B7F556288EF7DE00030027 /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F555288EF7DE00030027 /* NetworkHandler.swift */; };
 		41B7F559288EFF7900030027 /* FetchEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F558288EFF7900030027 /* FetchEventHandler.m */; };
+		41B7F564288F14BD00030027 /* LocalChange+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */; };
+		41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -128,6 +130,8 @@
 		41B7F555288EF7DE00030027 /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		41B7F557288EFF7900030027 /* FetchEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FetchEventHandler.h; sourceTree = "<group>"; };
 		41B7F558288EFF7900030027 /* FetchEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchEventHandler.m; sourceTree = "<group>"; };
+		41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LocalChange+CoreDataClass.swift"; path = "/Users/angelinaz/Projects/CalendarApp/CalendarApp/Models/LocalChange+CoreDataClass.swift"; sourceTree = "<absolute>"; };
+		41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LocalChange+CoreDataProperties.swift"; path = "/Users/angelinaz/Projects/CalendarApp/CalendarApp/Models/LocalChange+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +286,8 @@
 		413DE55528762F4200CCF8E1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */,
+				41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */,
 				410A1026287749860023F523 /* ParseEvent.h */,
 				410A1027287749860023F523 /* ParseEvent.m */,
 				41B7F4EC2885FDC800030027 /* EventModel.swift */,
@@ -628,11 +634,13 @@
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
+				41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				41B7F53D288868E800030027 /* CalendarApp.xcdatamodeld in Sources */,
+				41B7F564288F14BD00030027 /* LocalChange+CoreDataClass.swift in Sources */,
 				410A1028287749860023F523 /* ParseEvent.m in Sources */,
 				413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */,
 			);
