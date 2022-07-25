@@ -8,7 +8,6 @@
 #import "EventSyncHandler.h"
 #import "CoreDataEventHandler.h"
 #import "ParseEventHandler.h"
-#import "CalendarApp-Swift.h"
 
 @interface EventSyncHandler () <NetworkChangeDelegate>
 
@@ -25,20 +24,57 @@
         self.cdEventHandler = [[CoreDataEventHandler alloc] init];
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         
-        self.isOnline = false;
         self.networkHandler = [[NetworkHandler alloc] init];
         [self.networkHandler startMonitoring];
-        self.networkHandler.delegate = self;
     }
     return self;
 }
 
 - (void)didChangeOnline {
-    self.isOnline = true;
+    // TODO: Sync
 }
 
-- (void)didChangeOffline {
-    self.isOnline = false;
+- (void)didChangeEvent:(Event *)event
+                action:(ChangeType)action {
+    if (self.networkHandler.isOnline) {
+        switch (action) {
+            case ChangeTypeCreate:
+                [self syncNewEventToParse:event];
+                break;
+            case ChangeTypeDelete:
+                [self syncDeleteToParse:event];
+                break;
+            case ChangeTypeUpdate:
+                [self syncUpdateToParse:event];
+                break;
+        }
+    } else {
+        
+    }
+}
+
+- (void)syncNewEventToParse:(Event *)event {
+    [self.parseEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: Error handling
+        }
+    }];
+}
+
+- (void)syncDeleteToParse:(Event *)event {
+    [self.parseEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: Error handling
+        }
+    }];
+}
+
+- (void)syncUpdateToParse:(Event *)event {
+    [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: Error handling
+        }
+    }];
 }
 
 @end

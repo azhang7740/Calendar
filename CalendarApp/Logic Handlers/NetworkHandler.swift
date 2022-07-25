@@ -11,12 +11,12 @@ import Network
 @objc
 public protocol NetworkChangeDelegate {
     func didChangeOnline();
-    func didChangeOffline();
 }
 
 @objcMembers
 class NetworkHandler : NSObject {
     public var delegate : NetworkChangeDelegate?
+    public var isOnline = false
     private let monitor = NWPathMonitor()
     private var status : NWPath.Status = .requiresConnection
     
@@ -25,8 +25,9 @@ class NetworkHandler : NSObject {
             self?.status = path.status
             if path.status == .satisfied {
                 self?.delegate?.didChangeOnline()
+                self?.isOnline = true;
             } else {
-                self?.delegate?.didChangeOffline()
+                self?.isOnline = false
             }
         }
         let queue = DispatchQueue(label: "NewtorkHandler")

@@ -34,11 +34,7 @@
         
     }];
     
-    if (self.eventSyncHandler.isOnline) {
-        
-    } else {
-        
-    }
+    
 }
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date

@@ -6,12 +6,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "CalendarApp-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface EventSyncHandler : NSObject
 
-@property BOOL isOnline;
+- (void)didChangeEvent:(Event *)event
+                action:(ChangeType)action;
 
 @end
 
