@@ -11,6 +11,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EventSyncHandler : NSObject
 
+@property BOOL isOnline;
+
 @end
 
 NS_ASSUME_NONNULL_END

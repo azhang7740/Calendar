@@ -24,6 +24,8 @@
     if ((self = [super init])) {
         self.cdEventHandler = [[CoreDataEventHandler alloc] init];
         self.parseEventHandler = [[ParseEventHandler alloc] init];
+        
+        self.isOnline = false;
         self.networkHandler = [[NetworkHandler alloc] init];
         [self.networkHandler startMonitoring];
         self.networkHandler.delegate = self;
@@ -32,11 +34,11 @@
 }
 
 - (void)didChangeOnline {
-    
+    self.isOnline = true;
 }
 
 - (void)didChangeOffline {
-    
+    self.isOnline = false;
 }
 
 @end
