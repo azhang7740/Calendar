@@ -95,7 +95,7 @@
         
         if (action == ChangeTypeUpdate && prevChange == ChangeTypeCreate) {
             [self addLocalChangeWithEventID:event.objectUUID action:ChangeTypeCreate];
-        } else if (!(action == ChangeTypeDelete && prevChange == ChangeTypeCreate)){
+        } else {
             [self addLocalChangeWithEventID:event.objectUUID action:action];
         }
         [self.context save:nil];

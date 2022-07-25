@@ -25,10 +25,14 @@ class NetworkHandler : NSObject {
         monitor.pathUpdateHandler = { [weak self] path in
             self?.status = path.status
             if path.status == .satisfied {
-                self?.delegate?.didChangeOnline()
+                DispatchQueue.main.async {
+                    self?.delegate?.didChangeOnline()
+                }
                 self?.isOnline = true;
             } else {
-                self?.delegate?.didChangeOffline()
+                DispatchQueue.main.async {
+                    self?.delegate?.didChangeOffline()
+                }
                 self?.isOnline = false
             }
         }
