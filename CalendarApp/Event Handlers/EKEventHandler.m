@@ -18,7 +18,7 @@
 @implementation EKEventHandler
 
 - (instancetype)init {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         self.eventStore = [[EKEventStore alloc] init];
     }
     return self;

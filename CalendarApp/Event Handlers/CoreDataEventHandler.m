@@ -18,7 +18,7 @@
 @implementation CoreDataEventHandler
 
 - (instancetype)init {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
     }
     return self;
