@@ -172,6 +172,8 @@
 		412D3A4D287E333E0023C9AA /* Logic Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				41B7F552288B5DD600030027 /* EventSyncHandler.h */,
+				41B7F553288B5DD600030027 /* EventSyncHandler.m */,
 				41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */,
 				41B7F555288EF7DE00030027 /* NetworkHandler.swift */,
 			);
@@ -317,8 +319,6 @@
 				41B7F542288886DF00030027 /* CoreDataEventHandler.h */,
 				41B7F543288886DF00030027 /* CoreDataEventHandler.m */,
 				41B7F4F22887171500030027 /* EventHandler.h */,
-				41B7F552288B5DD600030027 /* EventSyncHandler.h */,
-				41B7F553288B5DD600030027 /* EventSyncHandler.m */,
 			);
 			path = "Event Handlers";
 			sourceTree = "<group>";

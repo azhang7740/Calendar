@@ -10,7 +10,7 @@
 #import "ParseEventHandler.h"
 #import "CalendarApp-Swift.h"
 
-@interface EventSyncHandler ()
+@interface EventSyncHandler () <NetworkChangeDelegate>
 
 @property (nonatomic) CoreDataEventHandler *cdEventHandler;
 @property (nonatomic) ParseEventHandler *parseEventHandler;
@@ -26,8 +26,17 @@
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.networkHandler = [[NetworkHandler alloc] init];
         [self.networkHandler startMonitoring];
+        self.networkHandler.delegate = self;
     }
     return self;
+}
+
+- (void)didChangeOnline {
+    
+}
+
+- (void)didChangeOffline {
+    
 }
 
 @end

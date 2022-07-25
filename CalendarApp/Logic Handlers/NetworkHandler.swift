@@ -8,25 +8,32 @@
 import Foundation
 import Network
 
+@objc
+public protocol NetworkChangeDelegate {
+    func didChangeOnline();
+    func didChangeOffline();
+}
+
 @objcMembers
 class NetworkHandler : NSObject {
+    public var delegate : NetworkChangeDelegate?
     private let monitor = NWPathMonitor()
     private var status : NWPath.Status = .requiresConnection
     
-    public func startMonitoring() {
+    func startMonitoring() {
         monitor.pathUpdateHandler = { [weak self] path in
             self?.status = path.status
             if path.status == .satisfied {
-                print("online")
+                self?.delegate?.didChangeOnline()
             } else {
-                print("offline")
+                self?.delegate?.didChangeOffline()
             }
         }
         let queue = DispatchQueue(label: "NewtorkHandler")
         monitor.start(queue: queue)
     }
     
-    public func stopMonitoring() {
+    func stopMonitoring() {
         monitor.cancel()
     }
 }
