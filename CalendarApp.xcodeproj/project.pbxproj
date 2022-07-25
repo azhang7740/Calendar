@@ -38,6 +38,8 @@
 		41B7F5472888A28700030027 /* CalendarEventHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F5462888A28700030027 /* CalendarEventHandlerTests.swift */; };
 		41B7F5492888A79400030027 /* SampleEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F5482888A79400030027 /* SampleEvents.swift */; };
 		41B7F54F2889AF5800030027 /* CoreDataEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F54E2889AF5800030027 /* CoreDataEventBuilder.m */; };
+		41B7F554288B5DD600030027 /* EventSyncHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F553288B5DD600030027 /* EventSyncHandler.m */; };
+		41B7F556288EF7DE00030027 /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F555288EF7DE00030027 /* NetworkHandler.swift */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -120,6 +122,9 @@
 		41B7F5482888A79400030027 /* SampleEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleEvents.swift; sourceTree = "<group>"; };
 		41B7F54D2889AF5800030027 /* CoreDataEventBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CoreDataEventBuilder.h; sourceTree = "<group>"; };
 		41B7F54E2889AF5800030027 /* CoreDataEventBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CoreDataEventBuilder.m; sourceTree = "<group>"; };
+		41B7F552288B5DD600030027 /* EventSyncHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EventSyncHandler.h; sourceTree = "<group>"; };
+		41B7F553288B5DD600030027 /* EventSyncHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EventSyncHandler.m; sourceTree = "<group>"; };
+		41B7F555288EF7DE00030027 /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -168,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */,
+				41B7F555288EF7DE00030027 /* NetworkHandler.swift */,
 			);
 			path = "Logic Handlers";
 			sourceTree = "<group>";
@@ -311,6 +317,8 @@
 				41B7F542288886DF00030027 /* CoreDataEventHandler.h */,
 				41B7F543288886DF00030027 /* CoreDataEventHandler.m */,
 				41B7F4F22887171500030027 /* EventHandler.h */,
+				41B7F552288B5DD600030027 /* EventSyncHandler.h */,
+				41B7F553288B5DD600030027 /* EventSyncHandler.m */,
 			);
 			path = "Event Handlers";
 			sourceTree = "<group>";
@@ -598,11 +606,13 @@
 			files = (
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
+				41B7F554288B5DD600030027 /* EventSyncHandler.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
 				41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */,
 				41B7F544288886DF00030027 /* CoreDataEventHandler.m in Sources */,
 				41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */,
 				410A102E287797850023F523 /* ParseEventHandler.m in Sources */,
+				41B7F556288EF7DE00030027 /* NetworkHandler.swift in Sources */,
 				41B7F4ED2885FDC800030027 /* EventModel.swift in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				41B7F54F2889AF5800030027 /* CoreDataEventBuilder.m in Sources */,
