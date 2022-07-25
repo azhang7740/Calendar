@@ -20,6 +20,7 @@ extension LocalChange {
         case Delete = 0
         case Create = 1
         case Update = 2
+        case NoChange = 3
     }
     
     @NSManaged public var changeType: ChangeType

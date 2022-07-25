@@ -48,14 +48,43 @@
             case ChangeTypeUpdate:
                 [self syncUpdateToParse:event];
                 break;
+            case ChangeTypeNoChange:
+                break;
         }
     } else {
-        LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
-        localChange.eventParseID = event.parseObjectId;
-        localChange.eventUUID = event.objectUUID;
-        localChange.changeType = action;
+        ChangeType prevChange = ChangeTypeNoChange;
+        if (action == ChangeTypeDelete || action == ChangeTypeUpdate) {
+            prevChange = [self removelocalChangeWithUUID:event.objectUUID];
+        }
+        
+        if (action == ChangeTypeUpdate && prevChange == ChangeTypeCreate) {
+            [self addLocalChangeWithEvent:event action:ChangeTypeCreate];
+        } else {
+            [self addLocalChangeWithEvent:event action:action];
+        }
+    }
+}
+
+- (ChangeType)removelocalChangeWithUUID:(NSUUID *)eventUUID {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
+    request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", eventUUID];
+    NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:request error:nil];
+    ChangeType prevAction = ChangeTypeNoChange;
+    if (localChanges.count != 0) {
+        prevAction = localChanges[0].changeType;
+        [self.context deleteObject:localChanges[0]];
         [self.context save:nil];
     }
+    return prevAction;
+}
+
+- (void)addLocalChangeWithEvent:(Event *)event
+                         action:(ChangeType)action {
+    LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
+    localChange.eventParseID = event.parseObjectId;
+    localChange.eventUUID = event.objectUUID;
+    localChange.changeType = action;
+    [self.context save:nil];
 }
 
 - (void)syncNewEventToParse:(Event *)event {
