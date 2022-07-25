@@ -48,9 +48,9 @@
     [self.delegate remoteEventsDidChange];
 }
 
-- (void)deleteEvent:(nonnull Event *)event
+- (void)deleteEvent:(nonnull NSString *)eventID
                          completion:(RemoteEventChangeCompletion)completion {
-    EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
+    EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:eventID];
     if (!deletingEvent) {
         completion(false, @"Event was not found in Apple calendar.");
     } else {

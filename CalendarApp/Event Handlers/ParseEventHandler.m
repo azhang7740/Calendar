@@ -37,7 +37,7 @@
 }
 
 - (void)queryEventsOnDate:(NSDate *)date
-                   completion:(EventQueryCompletion)completion {
+               completion:(EventQueryCompletion)completion {
     PFUser *currentUser = [PFUser currentUser];
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
     
@@ -70,9 +70,10 @@
 }
 
 - (void)updateEvent:(Event *)event
-                        completion:(RemoteEventChangeCompletion)completion {
+         completion:(RemoteEventChangeCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    [query whereKey:@"objectUUID" equalTo:[event.objectUUID UUIDString]];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
             completion(false, @"Could not find the event.");
         } else {
@@ -93,10 +94,11 @@
     }];
 }
 
-- (void)deleteEvent:(Event *)event
-                        completion:(RemoteEventChangeCompletion)completion {
+- (void)deleteEvent:(NSString *)eventID
+         completion:(RemoteEventChangeCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query getObjectInBackgroundWithId:event.parseObjectId block:^(PFObject * _Nullable object, NSError * _Nullable error) {
+    [query whereKey:@"objectUUID" equalTo:eventID];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
             completion(false, @"Could not find the event.");
         } else {

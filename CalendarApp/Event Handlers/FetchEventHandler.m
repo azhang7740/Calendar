@@ -28,9 +28,9 @@
     return self;
 }
 
-- (void)deleteEvent:(nonnull Event *)event
+- (void)deleteEvent:(nonnull NSString *)eventID
          completion:(nonnull RemoteEventChangeCompletion)completion {
-    [self.cdEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.cdEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             completion(false, error);
         } else {
@@ -38,7 +38,7 @@
         }
     }];
     
-    [self.eventSyncHandler didChangeEvent:event action:ChangeTypeDelete];
+    [self.eventSyncHandler didDeleteEvent:[[NSUUID alloc] initWithUUIDString:eventID]];
 }
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
@@ -67,6 +67,7 @@
 
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(nonnull RemoteEventChangeCompletion)completion {
+    [self.eventSyncHandler didChangeEvent:newEvent action:ChangeTypeCreate];
     [self.cdEventHandler uploadWithEvent:newEvent completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             completion(false, error);
@@ -74,8 +75,6 @@
             completion (true, nil);
         }
     }];
-    
-    [self.eventSyncHandler didChangeEvent:newEvent action:ChangeTypeCreate];
 }
 
 @end

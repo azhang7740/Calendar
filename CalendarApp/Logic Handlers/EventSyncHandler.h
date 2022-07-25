@@ -14,6 +14,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didChangeEvent:(Event *)event
                 action:(ChangeType)action;
+- (void)didDeleteEvent:(NSUUID *)eventID;
 
 @end
 

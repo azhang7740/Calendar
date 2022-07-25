@@ -11,6 +11,7 @@ import Network
 @objc
 public protocol NetworkChangeDelegate {
     func didChangeOnline();
+    func didChangeOffline();
 }
 
 @objcMembers
@@ -27,6 +28,7 @@ class NetworkHandler : NSObject {
                 self?.delegate?.didChangeOnline()
                 self?.isOnline = true;
             } else {
+                self?.delegate?.didChangeOffline()
                 self?.isOnline = false
             }
         }
