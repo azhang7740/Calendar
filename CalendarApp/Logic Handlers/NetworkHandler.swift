@@ -29,8 +29,4 @@ class NetworkHandler : NSObject {
     public func stopMonitoring() {
         monitor.cancel()
     }
-    
-    func test() {
-        
-    }
 }
