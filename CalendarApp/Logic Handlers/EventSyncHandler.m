@@ -8,12 +8,13 @@
 #import "EventSyncHandler.h"
 #import "CoreDataEventHandler.h"
 #import "ParseEventHandler.h"
+#import "AppDelegate.h"
 
 @interface EventSyncHandler () <NetworkChangeDelegate>
 
-@property (nonatomic) CoreDataEventHandler *cdEventHandler;
 @property (nonatomic) ParseEventHandler *parseEventHandler;
 @property (nonatomic) NetworkHandler *networkHandler;
+@property (nonatomic) NSManagedObjectContext *context;
 
 @end
 
@@ -21,7 +22,7 @@
 
 - (instancetype)init {
     if ((self = [super init])) {
-        self.cdEventHandler = [[CoreDataEventHandler alloc] init];
+        self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         
         self.networkHandler = [[NetworkHandler alloc] init];
@@ -49,7 +50,11 @@
                 break;
         }
     } else {
-        
+        LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
+        localChange.eventParseID = event.parseObjectId;
+        localChange.eventUUID = event.objectUUID;
+        localChange.changeType = action;
+        [self.context save:nil];
     }
 }
 

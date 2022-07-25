@@ -33,8 +33,6 @@
     [self.cdEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         
     }];
-    
-    
 }
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
