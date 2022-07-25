@@ -14,7 +14,9 @@
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="LocalChange" representedClassName="LocalChange" syncable="YES" codeGenerationType="class"/>
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="209"/>
+        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="29"/>
     </elements>
 </model>
