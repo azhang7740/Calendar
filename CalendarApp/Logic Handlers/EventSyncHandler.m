@@ -59,7 +59,7 @@
         
         if (action == ChangeTypeUpdate && prevChange == ChangeTypeCreate) {
             [self addLocalChangeWithEvent:event action:ChangeTypeCreate];
-        } else {
+        } else if (!(action == ChangeTypeDelete && prevChange == ChangeTypeCreate)){
             [self addLocalChangeWithEvent:event action:action];
         }
     }
