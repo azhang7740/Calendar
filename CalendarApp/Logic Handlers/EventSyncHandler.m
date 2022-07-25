@@ -13,6 +13,7 @@
 @interface EventSyncHandler () <NetworkChangeDelegate>
 
 @property (nonatomic) ParseEventHandler *parseEventHandler;
+@property (nonatomic) CoreDataEventHandler *cdEventHandler;
 @property (nonatomic) NetworkHandler *networkHandler;
 @property (nonatomic) NSManagedObjectContext *context;
 
@@ -24,6 +25,7 @@
     if ((self = [super init])) {
         self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
+        self.cdEventHandler = [[CoreDataEventHandler alloc] init];
         
         self.networkHandler = [[NetworkHandler alloc] init];
         [self.networkHandler startMonitoring];
@@ -32,29 +34,38 @@
 }
 
 - (void)didChangeOnline {
-    // TODO: Sync
+    NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
+    for (LocalChange *change in localChanges) {
+        Event *event = [self.cdEventHandler queryEventFromID:change.eventUUID];
+        [self syncEventToParse:event action:change.changeType];
+    }
+}
+
+- (void)syncEventToParse:(Event *)event
+                  action:(ChangeType)action {
+    switch (action) {
+        case ChangeTypeCreate:
+            [self syncNewEventToParse:event];
+            break;
+        case ChangeTypeDelete:
+            [self syncDeleteToParse:event];
+            break;
+        case ChangeTypeUpdate:
+            [self syncUpdateToParse:event];
+            break;
+        case ChangeTypeNoChange:
+            break;
+    }
 }
 
 - (void)didChangeEvent:(Event *)event
                 action:(ChangeType)action {
     if (self.networkHandler.isOnline) {
-        switch (action) {
-            case ChangeTypeCreate:
-                [self syncNewEventToParse:event];
-                break;
-            case ChangeTypeDelete:
-                [self syncDeleteToParse:event];
-                break;
-            case ChangeTypeUpdate:
-                [self syncUpdateToParse:event];
-                break;
-            case ChangeTypeNoChange:
-                break;
-        }
+        [self syncEventToParse:event action:action];
     } else {
         ChangeType prevChange = ChangeTypeNoChange;
         if (action == ChangeTypeDelete || action == ChangeTypeUpdate) {
-            prevChange = [self removelocalChangeWithUUID:event.objectUUID];
+            prevChange = [self removeLocalChangeWithUUID:event.objectUUID];
         }
         
         if (action == ChangeTypeUpdate && prevChange == ChangeTypeCreate) {
@@ -62,10 +73,11 @@
         } else if (!(action == ChangeTypeDelete && prevChange == ChangeTypeCreate)){
             [self addLocalChangeWithEvent:event action:action];
         }
+        [self.context save:nil];
     }
 }
 
-- (ChangeType)removelocalChangeWithUUID:(NSUUID *)eventUUID {
+- (ChangeType)removeLocalChangeWithUUID:(NSUUID *)eventUUID {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
     request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", eventUUID];
     NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:request error:nil];
@@ -73,7 +85,6 @@
     if (localChanges.count != 0) {
         prevAction = localChanges[0].changeType;
         [self.context deleteObject:localChanges[0]];
-        [self.context save:nil];
     }
     return prevAction;
 }
@@ -84,7 +95,6 @@
     localChange.eventParseID = event.parseObjectId;
     localChange.eventUUID = event.objectUUID;
     localChange.changeType = action;
-    [self.context save:nil];
 }
 
 - (void)syncNewEventToParse:(Event *)event {

@@ -99,4 +99,16 @@
     remoteEvent.location = canonicalEvent.location;
 }
 
+- (Event *)queryEventFromID:(NSUUID *)eventID {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
+    request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", eventID];
+    NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:request error:nil];
+    if (cdEvents.count != 1) {
+        // TODO: Error handling
+        return nil;
+    }
+    CoreDataEventBuilder *builder = [[CoreDataEventBuilder alloc] init];
+    return [builder getEventFromCoreDataEvent:cdEvents[0]];
+}
+
 @end
