@@ -43,7 +43,32 @@
         return;
     }
     self.isSynced = true;
-    NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
+    if (![self.userData objectForKey:@"lastUpdated"]) {
+        // TODO: prompt user to query all and sync with all existing remote events
+        return;
+    }
+    [self.parseEventHandler queryEventsAfterUpdateDate:[self.userData objectForKey:@"lastUpdated"]
+                                            completion:^(BOOL success,
+                                                         NSMutableArray<Event *> * _Nullable events,
+                                                         NSDate * _Nullable updatedDate,
+                                                         NSString * _Nullable error) {
+        if (!success) {
+            // TODO: Error handling
+        } else {
+            NSMutableArray<LocalChange *> *localChanges = (NSMutableArray<LocalChange *> *)
+            [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
+            [self checkForConflicts:events withLocalChanges:localChanges];
+            [self syncLocalChanges:localChanges];
+        }
+    }];
+}
+
+- (void)checkForConflicts:(NSMutableArray<Event *> *)remoteEvents
+         withLocalChanges:(NSMutableArray<LocalChange *> *)localChanges {
+    
+}
+
+- (void)syncLocalChanges:(NSMutableArray<LocalChange *> *)localChanges {
     for (LocalChange *change in localChanges) {
         Event *event = [self.cdEventHandler queryEventFromID:change.eventUUID];
         [self syncEventToParse:event objectID:change.eventUUID action:change.changeType];

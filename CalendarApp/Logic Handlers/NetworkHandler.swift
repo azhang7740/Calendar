@@ -36,7 +36,7 @@ class NetworkHandler : NSObject {
                 self?.isOnline = false
             }
         }
-        let queue = DispatchQueue(label: "NewtorkHandler")
+        let queue = DispatchQueue(label: "NetworkHandler")
         monitor.start(queue: queue)
     }
     
