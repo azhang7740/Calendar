@@ -24,10 +24,10 @@
     return self;
 }
 
-- (void)deleteEvent:(nonnull NSString *)eventID
+- (void)deleteEvent:(nonnull Event *)event
          completion:(RemoteEventChangeCompletion)completion {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
-    request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", [[NSUUID alloc] initWithUUIDString:eventID]];
+    request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", [[NSUUID alloc] initWithUUIDString:event.objectUUID]];
     NSArray<CoreDataEvent *> *cdEvents = [self.context executeFetchRequest:request error:nil];
     if (cdEvents.count != 1) {
         completion(false, @"Something went wrong.");

@@ -16,13 +16,7 @@ extension LocalChange {
         return NSFetchRequest<LocalChange>(entityName: "LocalChange")
     }
 
-    @objc public enum ChangeType: Int32 {
-        case Delete = 0
-        case Create = 1
-        case Update = 2
-        case NoChange = 3
-    }
-    
-    @NSManaged public var changeType: ChangeType
-    @NSManaged public var eventUUID: UUID?
+    @NSManaged public var oldEvent: Event?
+    @NSManaged public var newEvent: Event?
+    @NSManaged public var timestamp: Date?
 }

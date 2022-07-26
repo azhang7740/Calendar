@@ -21,7 +21,7 @@ typedef void (^RemoteEventChangeCompletion)(BOOL success, NSString * _Nullable);
              completion:(RemoteEventChangeCompletion)completion;
 - (void)updateEvent:(Event *)event
          completion:(RemoteEventChangeCompletion)completion;
-- (void)deleteEvent:(NSString *)eventID
+- (void)deleteEvent:(Event *)event
          completion:(RemoteEventChangeCompletion)completion;
 
 @end

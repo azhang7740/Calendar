@@ -62,6 +62,8 @@
             NSArray<LocalChange *> *keptChanges = [self.conflictHandler resolveConflictsWithOnlineEvents:events offlineChanges:localChanges];
             [self syncLocalChanges:keptChanges];
             [self deleteAllLocalChanges];
+            [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
+            [self.userData synchronize];
         }
     }];
 }
@@ -74,10 +76,7 @@
 
 - (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
     for (LocalChange *change in localChanges) {
-        Event *event = [self.cdEventHandler queryEventFromID:change.eventUUID];
-        [self syncEventToParse:event objectID:change.eventUUID action:change.changeType];
-        [self.context deleteObject:change];
-        [self.context save:nil];
+        [self syncEventToParse:change.oldEvent updatedEvent:change.newEvent];
     }
 }
 
@@ -85,75 +84,31 @@
     self.isSynced = false;
 }
 
-- (void)syncEventToParse:(Event *)event
-                objectID:(NSUUID *)eventID
-                  action:(ChangeType)action {
-    switch (action) {
-        case ChangeTypeCreate:
-            [self syncNewEventToParse:event];
-            break;
-        case ChangeTypeDelete:
-            [self syncDeleteToParse:eventID];
-            break;
-        case ChangeTypeUpdate:
-            [self syncUpdateToParse:event];
-            break;
-        case ChangeTypeNoChange:
-            break;
-    }
-}
-
-- (void)didDeleteEvent:(NSUUID *)eventID {
-    if (self.networkHandler.isOnline) {
-        [self syncEventToParse:nil objectID:eventID action:ChangeTypeDelete];
+- (void)syncEventToParse:(Event *)oldEvent
+            updatedEvent:(Event *)newEvent {
+    if (!oldEvent) {
+        [self syncNewEventToParse:newEvent];
+    } else if (!newEvent) {
+        [self syncDeleteToParse:oldEvent];
     } else {
-        ChangeType prevChange = [self removeLocalChangeWithUUID:eventID];
-        if (prevChange != ChangeTypeCreate) {
-            [self addLocalChangeWithEventID:eventID action:ChangeTypeDelete];
-        }
-        [self.context save:nil];
+        [self syncUpdateToParse:newEvent];
     }
-    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
 }
 
-- (void)didChangeEvent:(Event *)event
-                action:(ChangeType)action {
+- (void)didChangeEvent:(Event *)oldEvent
+          updatedEvent:(Event *)newEvent {
     if (self.networkHandler.isOnline) {
-        [self syncEventToParse:event objectID:event.objectUUID action:action];
+        [self syncEventToParse:oldEvent updatedEvent:newEvent];
     } else {
-        ChangeType prevChange = ChangeTypeNoChange;
-        if (action == ChangeTypeUpdate) {
-            prevChange = [self removeLocalChangeWithUUID:event.objectUUID];
-        }
-        
-        if (action == ChangeTypeUpdate && prevChange == ChangeTypeCreate) {
-            [self addLocalChangeWithEventID:event.objectUUID action:ChangeTypeCreate];
-        } else {
-            [self addLocalChangeWithEventID:event.objectUUID action:action];
-        }
-        [self.context save:nil];
+        [self saveNewLocalChange:oldEvent updatedEvent:newEvent];
     }
-    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
 }
 
-- (ChangeType)removeLocalChangeWithUUID:(NSUUID *)eventUUID {
-    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
-    request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", eventUUID];
-    NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:request error:nil];
-    ChangeType prevAction = ChangeTypeNoChange;
-    if (localChanges.count != 0) {
-        prevAction = localChanges[0].changeType;
-        [self.context deleteObject:localChanges[0]];
-    }
-    return prevAction;
+- (void)saveNewLocalChange:(Event *)oldEvent
+              updatedEvent:(Event *)newEvent {
+    [self.context save:nil];
 }
 
-- (void)addLocalChangeWithEventID:(NSUUID *)eventID
-                           action:(ChangeType)action {
-    LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
-    localChange.eventUUID = eventID;
-    localChange.changeType = action;
-}
 
 - (void)syncNewEventToParse:(Event *)event {
     [self.parseEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
@@ -163,8 +118,8 @@
     }];
 }
 
-- (void)syncDeleteToParse:(NSUUID *)eventID {
-    [self.parseEventHandler deleteEvent:[eventID UUIDString] completion:^(BOOL success, NSString * _Nullable error) {
+- (void)syncDeleteToParse:(Event *)event {
+    [self.parseEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         }
