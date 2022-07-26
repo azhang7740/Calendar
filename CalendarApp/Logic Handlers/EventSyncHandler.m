@@ -15,8 +15,10 @@
 @property (nonatomic) ParseEventHandler *parseEventHandler;
 @property (nonatomic) CoreDataEventHandler *cdEventHandler;
 @property (nonatomic) NetworkHandler *networkHandler;
-@property (nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) BOOL isSynced;
+
+@property (nonatomic) NSManagedObjectContext *context;
+@property (nonatomic) NSUserDefaults *userData;
 
 @end
 
@@ -27,6 +29,7 @@
         self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.cdEventHandler = [[CoreDataEventHandler alloc] init];
+        self.userData = NSUserDefaults.standardUserDefaults;
         
         self.networkHandler = [[NetworkHandler alloc] init];
         self.networkHandler.delegate = self;
@@ -81,6 +84,7 @@
         }
         [self.context save:nil];
     }
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
 }
 
 - (void)didChangeEvent:(Event *)event
@@ -100,6 +104,7 @@
         }
         [self.context save:nil];
     }
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
 }
 
 - (ChangeType)removeLocalChangeWithUUID:(NSUUID *)eventUUID {

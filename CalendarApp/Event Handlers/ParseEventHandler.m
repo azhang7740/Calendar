@@ -64,7 +64,30 @@
             NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
             completion(true, queriedEvents, midnight, nil);
         } else {
-            completion(false, nil, nil, @"Failed to query posts.");
+            completion(false, nil, nil, @"Failed to query events.");
+        }
+    }];
+}
+
+- (void)queryEventsAfterUpdateDate:(NSDate *)date
+                        completion:(EventQueryCompletion)completion {
+    PFUser *currentUser = [PFUser currentUser];
+    ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    [query orderByAscending:@"updatedAt"];
+    [query includeKey:@"author"];
+    [query includeKey:@"createdAt"];
+    [query includeKey:@"updatedAt"];
+    
+    [query whereKey:@"author" equalTo:currentUser];
+    [query whereKey:@"updatedAt" greaterThan:date];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
+        if (parseEvents) {
+            NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
+            completion(true, queriedEvents, date, nil);
+        } else {
+            completion(false, nil, nil, @"Failed to query events.");
         }
     }];
 }
