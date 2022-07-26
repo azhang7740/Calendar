@@ -22,7 +22,7 @@ class CalendarEventHandler {
         return dateToCalendarKitEvents[midnight] ?? []
     }
     
-    func addNewEvent(_ event:CalendarApp.Event) {
+    func addNewEvent(_ event: CalendarApp.Event) {
         var midnight = calendar.startOfDay(for: event.startDate)
         let endMidnight = calendar.startOfDay(for: event.endDate)
         var dateComponents = DateComponents()
@@ -62,7 +62,7 @@ class CalendarEventHandler {
         }
     }
     
-    func addEventsFromArray(_ events:[CalendarApp.Event], _ date: Date) {
+    func addEventsFromArray(_ events: [CalendarApp.Event], _ date: Date) {
         let midnight = calendar.startOfDay(for: date)
         let calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         dateToCalendarKitEvents[midnight] = calendarEvents

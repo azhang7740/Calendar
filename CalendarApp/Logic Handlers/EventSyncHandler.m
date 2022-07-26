@@ -9,6 +9,7 @@
 #import "CoreDataEventHandler.h"
 #import "ParseEventHandler.h"
 #import "AppDelegate.h"
+#import "CalendarApp-Swift.h"
 
 @interface EventSyncHandler () <NetworkChangeDelegate>
 
@@ -19,6 +20,7 @@
 
 @property (nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) NSUserDefaults *userData;
+@property (nonatomic) SyncConflictHandler *conflictHandler;
 
 @end
 
@@ -31,6 +33,7 @@
         self.cdEventHandler = [[CoreDataEventHandler alloc] init];
         self.userData = NSUserDefaults.standardUserDefaults;
         
+        self.conflictHandler = [[SyncConflictHandler alloc] init];
         self.networkHandler = [[NetworkHandler alloc] init];
         self.networkHandler.delegate = self;
         [self.networkHandler startMonitoring];
@@ -55,20 +58,21 @@
         if (!success) {
             // TODO: Error handling
         } else {
-            NSMutableArray<LocalChange *> *localChanges = (NSMutableArray<LocalChange *> *)
-            [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
-            [self checkForConflicts:events withLocalChanges:localChanges];
-            [self syncLocalChanges:localChanges];
+            NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
+            NSArray<LocalChange *> *keptChanges = [self.conflictHandler resolveConflictsWithOnlineEvents:events offlineChanges:localChanges];
+            [self syncLocalChanges:keptChanges];
+            [self deleteAllLocalChanges];
         }
     }];
 }
 
-- (void)checkForConflicts:(NSMutableArray<Event *> *)remoteEvents
-         withLocalChanges:(NSMutableArray<LocalChange *> *)localChanges {
-    
+- (void)deleteAllLocalChanges {
+    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:LocalChange.fetchRequest];
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.persistentStoreCoordinator;
+    [persistentStoreCoordinator executeRequest:delete withContext:self.context error:nil];
 }
 
-- (void)syncLocalChanges:(NSMutableArray<LocalChange *> *)localChanges {
+- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
     for (LocalChange *change in localChanges) {
         Event *event = [self.cdEventHandler queryEventFromID:change.eventUUID];
         [self syncEventToParse:event objectID:change.eventUUID action:change.changeType];
