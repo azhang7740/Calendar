@@ -16,11 +16,10 @@
     </entity>
     <entity name="LocalChange" representedClassName="LocalChange" syncable="YES">
         <attribute name="changeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="eventParseID" optional="YES" attributeType="String"/>
         <attribute name="eventUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="209"/>
-        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="74"/>
+        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="59"/>
     </elements>
 </model>

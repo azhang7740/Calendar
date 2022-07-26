@@ -25,6 +25,4 @@ extension LocalChange {
     
     @NSManaged public var changeType: ChangeType
     @NSManaged public var eventUUID: UUID?
-    @NSManaged public var eventParseID: String?
-
 }
