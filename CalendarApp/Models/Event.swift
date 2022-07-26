@@ -11,7 +11,6 @@ import CalendarKit
 @objcMembers
 public class Event : NSObject, NSSecureCoding {
     public static var supportsSecureCoding = true
-    public var parseObjectId: String?
     public var ekEventID: String?
     public var objectUUID = UUID()
     public var updatedAt: Date?
@@ -34,7 +33,6 @@ public class Event : NSObject, NSSecureCoding {
     }
     
     public func encode(with coder: NSCoder) {
-        coder.encode(parseObjectId, forKey: "parseObjectId")
         coder.encode(ekEventID, forKey: "ekEventID")
         coder.encode(objectUUID, forKey: "objectUUID")
         coder.encode(updatedAt, forKey: "updatedAt")
@@ -54,7 +52,6 @@ public class Event : NSObject, NSSecureCoding {
     public required init?(coder: NSCoder) {
         super.init()
         
-        parseObjectId = coder.decodeObject(of: NSString.self, forKey: "parseObjectId") as String? ?? ""
         ekEventID = coder.decodeObject(of: NSString.self, forKey: "ekEventID") as String? ?? ""
         objectUUID = coder.decodeObject(of: NSUUID.self, forKey: "objectUUID") as UUID? ?? UUID()
         updatedAt = coder.decodeObject(of: NSDate.self, forKey: "updatedAt") as Date? ?? Date()
@@ -70,6 +67,23 @@ public class Event : NSObject, NSSecureCoding {
         isAllDay = coder.decodeBool(forKey: "isAllDay")
 
         color = coder.decodeObject(of: UIColor.self, forKey: "color") as UIColor? ?? SystemColors.systemBlue
+    }
+    
+    public required init(originalEvent: Event) {
+        ekEventID = originalEvent.ekEventID;
+        objectUUID = originalEvent.objectUUID;
+        updatedAt = originalEvent.updatedAt;
+        createdAt = originalEvent.createdAt;
+        
+        eventTitle = originalEvent.eventTitle;
+        authorUsername = originalEvent.authorUsername;
+        eventDescription = originalEvent.eventDescription;
+        location = originalEvent.location;
+        
+        startDate = originalEvent.startDate;
+        endDate = originalEvent.endDate;
+        isAllDay = originalEvent.isAllDay;
+        color = originalEvent.color;
     }
 }
 
@@ -128,7 +142,6 @@ extension Event : EventDescriptor {
     
     public func makeEditable() -> Self {
         let cloned = Event()
-        cloned.parseObjectId = parseObjectId
         cloned.objectUUID = objectUUID
         cloned.updatedAt = updatedAt
         cloned.createdAt = createdAt

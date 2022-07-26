@@ -17,18 +17,18 @@
 - (void)uploadWithEvent:(Event *)newEvent
              completion:(RemoteEventChangeCompletion)completion {
     ParseEvent *newParseEvent = [[ParseEvent alloc] init];
-    newParseEvent.objectUUID = [newEvent.objectUUID UUIDString];
-    newParseEvent.eventTitle = newEvent.eventTitle;
+    Event *uploadEvent = [[Event alloc] initWithOriginalEvent:newEvent];
+    newParseEvent.objectUUID = [uploadEvent.objectUUID UUIDString];
+    newParseEvent.eventTitle = uploadEvent.eventTitle;
     newParseEvent.author = [PFUser currentUser];
     
-    newParseEvent.eventDescription = newEvent.eventDescription;
-    newParseEvent.location = newEvent.location;
-    newParseEvent.startDate = newEvent.startDate;
-    newParseEvent.endDate = newEvent.endDate;
+    newParseEvent.eventDescription = uploadEvent.eventDescription;
+    newParseEvent.location = uploadEvent.location;
+    newParseEvent.startDate = uploadEvent.startDate;
+    newParseEvent.endDate = uploadEvent.endDate;
     
     [newParseEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
-            newEvent.parseObjectId = newParseEvent.objectId;
             completion(true, nil);
         } else {
             completion(true, @"Failed to upload to Parse.");
@@ -95,17 +95,17 @@
 - (void)updateEvent:(Event *)event
          completion:(RemoteEventChangeCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query whereKey:@"objectUUID" equalTo:[event.objectUUID UUIDString]];
+    Event *uploadEvent = [[Event alloc] initWithOriginalEvent:event];
+    [query whereKey:@"objectUUID" equalTo:[uploadEvent.objectUUID UUIDString]];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
             completion(false, @"Could not find the event.");
         } else {
-            object[@"eventTitle"] = event.eventTitle;
-            object[@"eventDescription"] = event.eventDescription;
-            object[@"location"] = event.location;
-            object[@"startDate"] = event.startDate;
-            object[@"endDate"] = event.endDate;
-            event.updatedAt = [NSDate date];
+            object[@"eventTitle"] = uploadEvent.eventTitle;
+            object[@"eventDescription"] = uploadEvent.eventDescription;
+            object[@"location"] = uploadEvent.location;
+            object[@"startDate"] = uploadEvent.startDate;
+            object[@"endDate"] = uploadEvent.endDate;
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (!succeeded) {
                     completion(false, @"Could not upload to Parse successfully.");

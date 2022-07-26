@@ -31,6 +31,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
 }
 
+- (instancetype)init {
+    if ((self = [super init])) {
+        [EventTransformer registerTransformer];
+    }
+    return self;
+}
+
 
 #pragma mark - UISceneSession lifecycle
 
@@ -45,7 +52,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 @synthesize persistentContainer = _persistentContainer;
 
 - (NSPersistentContainer *)persistentContainer {
-    [EventTransformer registerTransformer];
     @synchronized (self) {
         if (_persistentContainer == nil) {
             _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"CalendarApp"];

@@ -88,7 +88,6 @@
     remoteEvent.eventTitle = canonicalEvent.eventTitle;
     remoteEvent.authorUsername = canonicalEvent.authorUsername;
     remoteEvent.ekEventID = canonicalEvent.ekEventID;
-    remoteEvent.parseID = remoteEvent.parseID;
     remoteEvent.updatedAt = canonicalEvent.updatedAt;
     remoteEvent.createdAt = canonicalEvent.createdAt;
     

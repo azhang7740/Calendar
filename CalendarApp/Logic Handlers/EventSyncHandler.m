@@ -65,7 +65,6 @@
             [self syncLocalChanges:keptChanges];
             [self deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
-            [self.userData synchronize];
         }
     }];
 }
@@ -110,8 +109,12 @@
               updatedEvent:(Event *)newEvent {
     LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
     localChange.timestamp = [NSDate date];
-    localChange.oldEvent = oldEvent;
-    localChange.newEvent = newEvent;
+    if (oldEvent) {
+        localChange.oldEvent = [[Event alloc] initWithOriginalEvent:oldEvent];
+    }
+    if (newEvent) {
+        localChange.newEvent = [[Event alloc] initWithOriginalEvent:newEvent];
+    }
     [self.context save:nil];
 }
 

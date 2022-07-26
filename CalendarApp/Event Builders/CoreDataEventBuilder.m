@@ -15,7 +15,6 @@
         !coreDataEvent.updatedAt) {
         return nil;
     }
-    canonicalEvent.parseObjectId = coreDataEvent.parseID;
     canonicalEvent.authorUsername = coreDataEvent.authorUsername;
     canonicalEvent.createdAt = coreDataEvent.createdAt;
     canonicalEvent.updatedAt = coreDataEvent.updatedAt;
