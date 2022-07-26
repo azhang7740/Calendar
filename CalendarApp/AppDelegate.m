@@ -7,6 +7,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import "CalendarApp-Swift.h"
 
 @interface AppDelegate ()
 
@@ -44,6 +45,7 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 @synthesize persistentContainer = _persistentContainer;
 
 - (NSPersistentContainer *)persistentContainer {
+    [EventTransformer registerTransformer];
     @synchronized (self) {
         if (_persistentContainer == nil) {
             _persistentContainer = [[NSPersistentContainer alloc] initWithName:@"CalendarApp"];

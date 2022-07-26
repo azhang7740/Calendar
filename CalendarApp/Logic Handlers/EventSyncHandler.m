@@ -48,6 +48,8 @@
     self.isSynced = true;
     if (![self.userData objectForKey:@"lastUpdated"]) {
         // TODO: prompt user to query all and sync with all existing remote events
+        [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
+        [self.userData synchronize];
         return;
     }
     [self.parseEventHandler queryEventsAfterUpdateDate:[self.userData objectForKey:@"lastUpdated"]
@@ -106,6 +108,10 @@
 
 - (void)saveNewLocalChange:(Event *)oldEvent
               updatedEvent:(Event *)newEvent {
+    LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
+    localChange.timestamp = [NSDate date];
+    localChange.oldEvent = oldEvent;
+    localChange.newEvent = newEvent;
     [self.context save:nil];
 }
 

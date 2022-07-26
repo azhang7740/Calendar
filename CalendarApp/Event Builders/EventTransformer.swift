@@ -16,7 +16,7 @@ class EventTransformer : NSSecureUnarchiveFromDataTransformer {
     }
     
     /// Registers the transformer.
-    public static func register() {
+    @objc public static func registerTransformer() {
         let transformer = EventTransformer()
         ValueTransformer.setValueTransformer(transformer, forName: name)
     }
