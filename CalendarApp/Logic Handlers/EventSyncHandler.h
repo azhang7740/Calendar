@@ -12,8 +12,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface EventSyncHandler : NSObject
 
-- (void)didChangeEvent:(Event *)oldEvent
-          updatedEvent:(Event *)newEvent;
+- (void)didChangeEvent:(Event * _Nullable)oldEvent
+          updatedEvent:(Event * _Nullable)newEvent;
 
 @end
 

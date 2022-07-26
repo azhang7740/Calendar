@@ -35,6 +35,7 @@
             completion(false, error);
         } else {
             completion (true, nil);
+            [self.eventSyncHandler didChangeEvent:event updatedEvent:nil];
         }
     }];
 }
@@ -52,11 +53,13 @@
 
 - (void)updateEvent:(nonnull Event *)event
          completion:(nonnull RemoteEventChangeCompletion)completion {
+    Event *oldEvent = [self getDeepCopyOf:event];
     [self.cdEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             completion(false, error);
         } else {
             completion (true, nil);
+            [self.eventSyncHandler didChangeEvent:oldEvent updatedEvent:event];
         }
     }];
 }
@@ -68,8 +71,30 @@
             completion(false, error);
         } else {
             completion (true, nil);
+            [self.eventSyncHandler didChangeEvent:nil updatedEvent:newEvent];
         }
     }];
+}
+
+- (Event *)getDeepCopyOf:(Event *)originalEvent {
+    Event *newEvent = [[Event alloc] init];
+    newEvent.parseObjectId = originalEvent.parseObjectId;
+    newEvent.ekEventID = originalEvent.ekEventID;
+    newEvent.objectUUID = originalEvent.objectUUID;
+    newEvent.updatedAt = originalEvent.updatedAt;
+    newEvent.createdAt = originalEvent.createdAt;
+    
+    newEvent.eventTitle = originalEvent.eventTitle;
+    newEvent.authorUsername = originalEvent.authorUsername;
+    newEvent.eventDescription = originalEvent.eventDescription;
+    newEvent.location = originalEvent.location;
+    
+    newEvent.startDate = originalEvent.startDate;
+    newEvent.endDate = originalEvent.endDate;
+    newEvent.isAllDay = originalEvent.isAllDay;
+    newEvent.color = originalEvent.color;
+    
+    return newEvent;
 }
 
 @end
