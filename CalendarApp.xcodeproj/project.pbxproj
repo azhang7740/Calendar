@@ -31,6 +31,12 @@
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
 		413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41422891A40E00D0EE6E /* NSDate+Midnight.m */; };
 		413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */; };
+		413F414B2891DB9C00D0EE6E /* ParseRevisionHistory.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F414A2891DB9C00D0EE6E /* ParseRevisionHistory.m */; };
+		413F414E2891DBDF00D0EE6E /* ParseChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F414D2891DBDF00D0EE6E /* ParseChange.m */; };
+		413F41512891DC4C00D0EE6E /* ParseArchivedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41502891DC4C00D0EE6E /* ParseArchivedEvent.m */; };
+		413F41532891DD1B00D0EE6E /* RemoteChange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413F41522891DD1B00D0EE6E /* RemoteChange.swift */; };
+		413F41552891E1F200D0EE6E /* EventSyncHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413F41542891E1F200D0EE6E /* EventSyncHandlerTests.swift */; };
+		41AC97DE2891E7E3000FF838 /* TestEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */; };
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* Event.swift */; };
 		41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F02887162B00030027 /* EKEventHandler.m */; };
@@ -118,6 +124,15 @@
 		413F41422891A40E00D0EE6E /* NSDate+Midnight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Midnight.m"; sourceTree = "<group>"; };
 		413F41452891BDEC00D0EE6E /* ParseChangeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeHandler.h; sourceTree = "<group>"; };
 		413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChangeHandler.m; sourceTree = "<group>"; };
+		413F41492891DB9C00D0EE6E /* ParseRevisionHistory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseRevisionHistory.h; sourceTree = "<group>"; };
+		413F414A2891DB9C00D0EE6E /* ParseRevisionHistory.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseRevisionHistory.m; sourceTree = "<group>"; };
+		413F414C2891DBDF00D0EE6E /* ParseChange.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChange.h; sourceTree = "<group>"; };
+		413F414D2891DBDF00D0EE6E /* ParseChange.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChange.m; sourceTree = "<group>"; };
+		413F414F2891DC4C00D0EE6E /* ParseArchivedEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseArchivedEvent.h; sourceTree = "<group>"; };
+		413F41502891DC4C00D0EE6E /* ParseArchivedEvent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseArchivedEvent.m; sourceTree = "<group>"; };
+		413F41522891DD1B00D0EE6E /* RemoteChange.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteChange.swift; sourceTree = "<group>"; };
+		413F41542891E1F200D0EE6E /* EventSyncHandlerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSyncHandlerTests.swift; sourceTree = "<group>"; };
+		41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4EC2885FDC800030027 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		41B7F4EF2887162B00030027 /* EKEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEventHandler.h; sourceTree = "<group>"; };
@@ -223,6 +238,7 @@
 		413DE5072874B39200CCF8E1 /* CalendarApp */ = {
 			isa = PBXGroup;
 			children = (
+				413F41482891DB8200D0EE6E /* Parse Models */,
 				41B7F54A2889AF0C00030027 /* Event Builders */,
 				41B7F4EE2887160100030027 /* Event Handlers */,
 				413F41442891BDC600D0EE6E /* Change Handlers */,
@@ -251,6 +267,8 @@
 				41B7F5462888A28700030027 /* CalendarEventHandlerTests.swift */,
 				41B7F5452888A28600030027 /* CalendarAppTests-Bridging-Header.h */,
 				41B7F5482888A79400030027 /* SampleEvents.swift */,
+				413F41542891E1F200D0EE6E /* EventSyncHandlerTests.swift */,
+				41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */,
 			);
 			path = CalendarAppTests;
 			sourceTree = "<group>";
@@ -298,10 +316,9 @@
 		413DE55528762F4200CCF8E1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				413F41522891DD1B00D0EE6E /* RemoteChange.swift */,
 				41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */,
 				41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */,
-				410A1026287749860023F523 /* ParseEvent.h */,
-				410A1027287749860023F523 /* ParseEvent.m */,
 				413F41412891A40E00D0EE6E /* NSDate+Midnight.h */,
 				413F41422891A40E00D0EE6E /* NSDate+Midnight.m */,
 				41B7F4EC2885FDC800030027 /* Event.swift */,
@@ -339,6 +356,21 @@
 				413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */,
 			);
 			path = "Change Handlers";
+			sourceTree = "<group>";
+		};
+		413F41482891DB8200D0EE6E /* Parse Models */ = {
+			isa = PBXGroup;
+			children = (
+				410A1026287749860023F523 /* ParseEvent.h */,
+				410A1027287749860023F523 /* ParseEvent.m */,
+				413F414F2891DC4C00D0EE6E /* ParseArchivedEvent.h */,
+				413F41502891DC4C00D0EE6E /* ParseArchivedEvent.m */,
+				413F41492891DB9C00D0EE6E /* ParseRevisionHistory.h */,
+				413F414A2891DB9C00D0EE6E /* ParseRevisionHistory.m */,
+				413F414C2891DBDF00D0EE6E /* ParseChange.h */,
+				413F414D2891DBDF00D0EE6E /* ParseChange.m */,
+			);
+			path = "Parse Models";
 			sourceTree = "<group>";
 		};
 		41B7F4EE2887160100030027 /* Event Handlers */ = {
@@ -647,6 +679,7 @@
 				41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */,
 				41B7F544288886DF00030027 /* CoreDataEventHandler.m in Sources */,
 				41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */,
+				413F41512891DC4C00D0EE6E /* ParseArchivedEvent.m in Sources */,
 				410A102E287797850023F523 /* ParseEventHandler.m in Sources */,
 				41B7F556288EF7DE00030027 /* NetworkHandler.swift in Sources */,
 				41B7F4ED2885FDC800030027 /* Event.swift in Sources */,
@@ -666,10 +699,13 @@
 				41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
+				413F414E2891DBDF00D0EE6E /* ParseChange.m in Sources */,
 				413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */,
 				41B7F53D288868E800030027 /* CalendarApp.xcdatamodeld in Sources */,
+				413F41532891DD1B00D0EE6E /* RemoteChange.swift in Sources */,
 				41B7F564288F14BD00030027 /* LocalChange+CoreDataClass.swift in Sources */,
 				410A1028287749860023F523 /* ParseEvent.m in Sources */,
+				413F414B2891DB9C00D0EE6E /* ParseRevisionHistory.m in Sources */,
 				413DE50D2874B39200CCF8E1 /* SceneDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -679,6 +715,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				41B7F5492888A79400030027 /* SampleEvents.swift in Sources */,
+				41AC97DE2891E7E3000FF838 /* TestEventHandler.swift in Sources */,
+				413F41552891E1F200D0EE6E /* EventSyncHandlerTests.swift in Sources */,
 				41B7F5472888A28700030027 /* CalendarEventHandlerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

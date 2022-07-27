@@ -11,4 +11,9 @@
 
 @implementation ParseChangeHandler
 
+- (void)queryChangesAfterUpdateDate:(NSDate *)date
+                         completion:(ChangeQueryCompletion)completion {
+    
+}
+
 @end

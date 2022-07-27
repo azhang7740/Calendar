@@ -8,12 +8,14 @@
 #import "EventSyncHandler.h"
 #import "CoreDataEventHandler.h"
 #import "ParseEventHandler.h"
+#import "ParseChangeHandler.h"
 #import "AppDelegate.h"
 #import "CalendarApp-Swift.h"
 
 @interface EventSyncHandler () <NetworkChangeDelegate>
 
-@property (nonatomic) ParseEventHandler *parseEventHandler;
+@property (nonatomic) id<EventHandler> parseEventHandler;
+@property (nonatomic) ParseChangeHandler *parseChangeHandler;
 @property (nonatomic) CoreDataEventHandler *coreDataEventHandler;
 @property (nonatomic) NetworkHandler *networkHandler;
 @property (nonatomic) BOOL isSynced;
@@ -29,6 +31,7 @@
     if ((self = [super init])) {
         self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
+        self.parseChangeHandler = [[ParseChangeHandler alloc] init];
         self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
         self.userData = NSUserDefaults.standardUserDefaults;
         
@@ -50,7 +53,8 @@
         [self.userData synchronize];
         return;
     }
-    [self.parseEventHandler queryEventsAfterUpdateDate:[self.userData objectForKey:@"lastUpdated"]
+    ParseEventHandler *handler = (ParseEventHandler *)self.parseEventHandler;
+    [handler queryEventsAfterUpdateDate:[self.userData objectForKey:@"lastUpdated"]
                                             completion:^(BOOL success,
                                                          NSMutableArray<Event *> * _Nullable events,
                                                          NSDate * _Nullable updatedDate,
@@ -59,7 +63,7 @@
             // TODO: Error handling
         } else {
             NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
-            
+
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] init];
             NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithOnlineEvents:events offlineChanges:localChanges];
             [self syncLocalChanges:keptChanges];
