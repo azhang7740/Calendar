@@ -77,7 +77,7 @@
 
 - (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
     for (LocalChange *change in localChanges) {
-        [self syncEventToParse:change.oldEvent updatedEvent:change.newEvent];
+        [self syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
     }
 }
 
@@ -113,7 +113,7 @@
         localChange.oldEvent = [[Event alloc] initWithOriginalEvent:oldEvent];
     }
     if (newEvent) {
-        localChange.newEvent = [[Event alloc] initWithOriginalEvent:newEvent];
+        localChange.updatedEvent = [[Event alloc] initWithOriginalEvent:newEvent];
     }
     [self.context save:nil];
 }

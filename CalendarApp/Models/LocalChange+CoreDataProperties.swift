@@ -17,6 +17,6 @@ extension LocalChange {
     }
 
     @NSManaged public var oldEvent: Event?
-    @NSManaged public var newEvent: Event?
+    @NSManaged public var updatedEvent: Event?
     @NSManaged public var timestamp: Date?
 }

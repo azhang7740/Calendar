@@ -14,9 +14,9 @@
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="LocalChange" representedClassName="LocalChange" syncable="YES">
-        <attribute name="newEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
         <attribute name="oldEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
     </entity>
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="194"/>
