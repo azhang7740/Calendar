@@ -14,13 +14,12 @@
 @interface EventSyncHandler () <NetworkChangeDelegate>
 
 @property (nonatomic) ParseEventHandler *parseEventHandler;
-@property (nonatomic) CoreDataEventHandler *cdEventHandler;
+@property (nonatomic) CoreDataEventHandler *coreDataEventHandler;
 @property (nonatomic) NetworkHandler *networkHandler;
 @property (nonatomic) BOOL isSynced;
 
 @property (nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) NSUserDefaults *userData;
-@property (nonatomic) SyncConflictHandler *conflictHandler;
 
 @end
 
@@ -30,10 +29,9 @@
     if ((self = [super init])) {
         self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
-        self.cdEventHandler = [[CoreDataEventHandler alloc] init];
+        self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
         self.userData = NSUserDefaults.standardUserDefaults;
         
-        self.conflictHandler = [[SyncConflictHandler alloc] init];
         self.networkHandler = [[NetworkHandler alloc] init];
         self.networkHandler.delegate = self;
         [self.networkHandler startMonitoring];
@@ -61,7 +59,9 @@
             // TODO: Error handling
         } else {
             NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
-            NSArray<LocalChange *> *keptChanges = [self.conflictHandler resolveConflictsWithOnlineEvents:events offlineChanges:localChanges];
+            
+            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] init];
+            NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithOnlineEvents:events offlineChanges:localChanges];
             [self syncLocalChanges:keptChanges];
             [self deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];

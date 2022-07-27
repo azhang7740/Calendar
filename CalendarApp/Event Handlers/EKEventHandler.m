@@ -8,6 +8,7 @@
 #import "EKEventHandler.h"
 #import <Eventkit/EventKit.h>
 #import "EKEventBuilder.h"
+#import "NSDate+Midnight.h"
 
 @interface EKEventHandler ()
 
@@ -66,14 +67,7 @@
 - (void)queryEventsOnDate:(nonnull NSDate *)date
                    completion:(EventQueryCompletion)completion {
     EKEventBuilder *builder = [[EKEventBuilder alloc] init];
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnight = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:date options:0];
-    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-    dayComponent.day = 1;
-    NSDate *nextDate = [calendar dateByAddingComponents:dayComponent toDate:midnight options:0];
-    
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", midnight, nextDate, midnight, midnight];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", date.midnight, date.nextDate, date.midnight, date.midnight];
     
     NSArray<EKEvent *> *events = [self.eventStore eventsMatchingPredicate:predicate];
     
@@ -81,7 +75,7 @@
         completion(false, nil, nil, @"Failed to retrieve calendar events.");
     } else {
         NSMutableArray<Event *> *newEvents = [builder getEventsFromEKEventArray:events];
-        completion(true, newEvents, midnight, nil);
+        completion(true, newEvents, date.midnight, nil);
     }
 }
 

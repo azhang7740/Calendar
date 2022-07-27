@@ -1,5 +1,5 @@
 //
-//  EventModel.swift
+//  Event.swift
 //  CalendarApp
 //
 //  Created by Angelina Zhang on 7/18/22.
@@ -130,14 +130,14 @@ extension Event : EventDescriptor {
         if (editedEvent != nil) {
             return .white
         }
-        return dynamicStandardTextColor()
+        return dynamicStandardTextColor
     }
     
     public var backgroundColor: UIColor {
         if (editedEvent != nil) {
             return color.withAlphaComponent(0.95)
         }
-        return dynamicStandardBackgroundColor()
+        return dynamicStandardBackgroundColor
     }
     
     public func makeEditable() -> Self {
@@ -164,29 +164,29 @@ extension Event : EventDescriptor {
     }
     
     /// Dynamic color that changes depending on the user interface style (dark / light)
-    private func dynamicStandardBackgroundColor() -> UIColor {
-      let light = backgroundColorForLightTheme(baseColor: color)
-      let dark = backgroundColorForDarkTheme()
+    private var dynamicStandardBackgroundColor: UIColor {
+      let light = backgroundColorForLightTheme
+      let dark = backgroundColorForDarkTheme
       return dynamicColor(light: light, dark: dark)
     }
     
     /// Dynamic color that changes depending on the user interface style (dark / light)
-    private func dynamicStandardTextColor() -> UIColor {
-      let light = textColorForLightTheme(baseColor: color)
+    private var dynamicStandardTextColor: UIColor {
+      let light = textColorForLightTheme
       return dynamicColor(light: light, dark: color)
     }
     
-    private func textColorForLightTheme(baseColor: UIColor) -> UIColor {
+    private var textColorForLightTheme: UIColor {
       var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-      baseColor.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+      color.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
       return UIColor(hue: h, saturation: s, brightness: b * 0.4, alpha: a)
     }
     
-    private func backgroundColorForLightTheme(baseColor: UIColor) -> UIColor {
-      baseColor.withAlphaComponent(0.3)
+    private var backgroundColorForLightTheme: UIColor {
+      return color.withAlphaComponent(0.3)
     }
     
-    private func backgroundColorForDarkTheme() -> UIColor {
+    private var backgroundColorForDarkTheme: UIColor {
       var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
       color.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
       return UIColor(hue: h, saturation: s, brightness: b * 0.4, alpha: a * 0.8)

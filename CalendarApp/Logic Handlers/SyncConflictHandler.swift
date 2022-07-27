@@ -9,8 +9,11 @@ import Foundation
 
 @objcMembers
 class SyncConflictHandler : NSObject {
-    func resolveConflicts(onlineEvents remoteEvents: [Event],
+    private var keptChanges = [LocalChange]()
+    
+    func getChangesToSync(onlineEvents remoteEvents: [Event],
                           offlineChanges localChanges: [LocalChange]) -> [LocalChange] {
-        return localChanges
+        keptChanges = localChanges
+        return keptChanges
     }
 }

@@ -28,7 +28,7 @@ class CalendarEventHandler {
         var dateComponents = DateComponents()
         dateComponents.day = 1
         
-        while (midnight <= endMidnight) {
+        while midnight <= endMidnight {
             if var calendarEvents = dateToCalendarKitEvents[midnight]  {
                 if (fetchedDates.contains(midnight)) {
                     calendarEvents.append(event)
@@ -48,7 +48,7 @@ class CalendarEventHandler {
         var dateComponents = DateComponents()
         dateComponents.day = 1
         
-        while (midnight <= endMidnight) {
+        while midnight <= endMidnight {
             if var calendarEvents = dateToCalendarKitEvents[midnight]  {
                 if (!fetchedDates.contains(midnight)) {
                     calendarEvents.append(event)
@@ -82,8 +82,9 @@ class CalendarEventHandler {
         var startMidnight = calendar.startOfDay(for: startDate)
         var dateComponents = DateComponents()
         dateComponents.day = 1
-        while (startMidnight <= endDate) {
-            if var calendarKitEvents = dateToCalendarKitEvents[startMidnight], let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
+        while startMidnight <= endDate {
+            if var calendarKitEvents = dateToCalendarKitEvents[startMidnight],
+                let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
                 calendarKitEvents.remove(at: eventIndex)
                 dateToCalendarKitEvents[startMidnight] = calendarKitEvents
             }

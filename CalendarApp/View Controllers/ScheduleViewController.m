@@ -12,6 +12,7 @@
 #import "CalendarApp-Swift.h"
 #import "AuthenticationHandler.h"
 #import "FetchEventHandler.h"
+#import "NSDate+Midnight.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
@@ -92,11 +93,7 @@
 - (void)didUpdateEvent:(Event *)event
      originalStartDate:(NSDate *)startDate
        originalEndDate:(NSDate *)endDate {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:startDate options:0];
-    NSDate *midnightEnd = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:endDate options:0];
-    [self.scheduleView updateCalendarEvent:event originalStartDate:midnightStart originalEndDate:midnightEnd];
+    [self.scheduleView updateCalendarEvent:event originalStartDate:startDate.midnight originalEndDate:endDate.midnight];
 }
 
 - (void)didTapCancel {
