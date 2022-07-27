@@ -30,6 +30,7 @@
 		413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoList.storyboard */; };
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
 		413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41422891A40E00D0EE6E /* NSDate+Midnight.m */; };
+		413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */; };
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* Event.swift */; };
 		41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4F02887162B00030027 /* EKEventHandler.m */; };
@@ -115,6 +116,8 @@
 		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		413F41412891A40E00D0EE6E /* NSDate+Midnight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Midnight.h"; sourceTree = "<group>"; };
 		413F41422891A40E00D0EE6E /* NSDate+Midnight.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Midnight.m"; sourceTree = "<group>"; };
+		413F41452891BDEC00D0EE6E /* ParseChangeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeHandler.h; sourceTree = "<group>"; };
+		413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChangeHandler.m; sourceTree = "<group>"; };
 		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4EC2885FDC800030027 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		41B7F4EF2887162B00030027 /* EKEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EKEventHandler.h; sourceTree = "<group>"; };
@@ -222,6 +225,7 @@
 			children = (
 				41B7F54A2889AF0C00030027 /* Event Builders */,
 				41B7F4EE2887160100030027 /* Event Handlers */,
+				413F41442891BDC600D0EE6E /* Change Handlers */,
 				413DE55628762F5200CCF8E1 /* Parse Handlers */,
 				412D3A4D287E333E0023C9AA /* Logic Handlers */,
 				413DE5572876349A00CCF8E1 /* Views */,
@@ -326,6 +330,15 @@
 				412D3A55287F394D0023C9AA /* DetailsView.m */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		413F41442891BDC600D0EE6E /* Change Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				413F41452891BDEC00D0EE6E /* ParseChangeHandler.h */,
+				413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */,
+			);
+			path = "Change Handlers";
 			sourceTree = "<group>";
 		};
 		41B7F4EE2887160100030027 /* Event Handlers */ = {
@@ -640,6 +653,7 @@
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				41B7F54F2889AF5800030027 /* CoreDataEventBuilder.m in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
+				413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */,
 				41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
 				41B7F56E28906C3800030027 /* EventTransformer.swift in Sources */,
