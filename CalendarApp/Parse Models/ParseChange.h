@@ -7,10 +7,20 @@
 
 #import <Foundation/Foundation.h>
 #import <Parse/Parse.h>
+#import "ParseArchivedEvent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface ParseChange : PFObject<PFSubclassing>
+
+@property (nonatomic) NSString *objectId;
+@property (nonatomic) NSString *objectUUID;
+@property (nonatomic) NSDate *updatedAt;
+@property (nonatomic) NSDate *createdAt;
+
+@property (nonatomic) NSDate *timestamp;
+@property (nonatomic) ParseArchivedEvent *oldEvent;
+@property (nonatomic) ParseArchivedEvent *updatedEvent;
 
 @end
 

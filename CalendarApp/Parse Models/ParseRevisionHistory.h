@@ -12,6 +12,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ParseRevisionHistory : PFObject<PFSubclassing>
 
+@property (nonatomic) NSString *objectId;
+@property (nonatomic) NSString *objectUUID;
+@property (nonatomic) NSDate *updatedAt;
+@property (nonatomic) NSDate *createdAt;
+
+@property (nonatomic) NSDate *mostRecentUpdate;
+@property (nonatomic) PFRelation *remoteChanges;
+
 @end
 
 NS_ASSUME_NONNULL_END

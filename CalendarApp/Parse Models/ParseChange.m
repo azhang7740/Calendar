@@ -9,6 +9,15 @@
 
 @implementation ParseChange
 
+@dynamic objectId;
+@dynamic objectUUID;
+@dynamic updatedAt;
+@dynamic createdAt;
+
+@dynamic timestamp;
+@dynamic oldEvent;
+@dynamic updatedEvent;
+
 + (nonnull NSString *)parseClassName {
     return @"RemoteChange";
 }
