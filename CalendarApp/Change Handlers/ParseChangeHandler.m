@@ -112,12 +112,9 @@
 - (void)addNewParseChange:(RemoteChange *)remoteChange
                completion:(ChangeActionCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
-    NSString *eventUUID = remoteChange.oldEvent ?
-    [remoteChange.oldEvent.objectUUID UUIDString] :
-    [remoteChange.updatedEvent.objectUUID UUIDString];
     [query includeKey:@"remoteChanges"];
     [query includeKey:@"mostRecentUpdate"];
-    [query whereKey:@"objectUUID" equalTo:eventUUID];
+    [query whereKey:@"objectUUID" equalTo:remoteChange.objectUUID];
     ParseRevisionHistory *history = [query getFirstObject];
     
     if (!history) {
@@ -140,7 +137,9 @@
 
 - (ParseChange *)getParseChangeFromRemoteChange:(RemoteChange *)remoteChange {
     ParseChange *parseChange = [[ParseChange alloc] init];
-//    parseChange.objectUUID = remoteChange.
+    parseChange.objectUUID = [remoteChange.objectUUID UUIDString];
+    parseChange.oldEvent = [self getArchivedEventFromEvent:remoteChange.oldEvent];
+    parseChange.updatedEvent = [self getArchivedEventFromEvent:remoteChange.updatedEvent];
     
     return parseChange;
 }
