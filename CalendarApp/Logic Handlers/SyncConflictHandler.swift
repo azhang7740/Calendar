@@ -11,7 +11,7 @@ import Foundation
 class SyncConflictHandler : NSObject {
     private var keptChanges = [LocalChange]()
     
-    func getChangesToSync(revisionHistory: RecentRevisionHistory,
+    func getChangesToSync(revisionHistories: [RecentRevisionHistory],
                           localChanges: [LocalChange]) -> [LocalChange] {
         keptChanges = localChanges
         return keptChanges

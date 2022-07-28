@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 @class RecentRevisionHistory;
 
 typedef void (^ChangeQueryCompletion)(BOOL success,
-                                      RecentRevisionHistory * _Nullable revisionHistory,
+                                      NSMutableArray <RecentRevisionHistory *> * _Nullable revisionHistories,
                                       NSString * _Nullable error);
 
 @interface ParseChangeHandler : NSObject
