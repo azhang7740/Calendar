@@ -8,7 +8,9 @@
 #import <Foundation/Foundation.h>
 
 NS_ASSUME_NONNULL_BEGIN
+
 @class Event;
+
 @interface EventSyncHandler : NSObject
 
 - (void)didChangeEvent:(Event * _Nullable)oldEvent

@@ -10,8 +10,12 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @class Event;
-typedef void (^EventQueryCompletion)(BOOL success, NSMutableArray<Event *> * _Nullable, NSDate * _Nullable, NSString * _Nullable);
-typedef void (^RemoteEventChangeCompletion)(BOOL success, NSString * _Nullable);
+typedef void (^EventQueryCompletion)(BOOL success,
+                                     NSMutableArray<Event *> * _Nullable events,
+                                     NSDate * _Nullable date,
+                                     NSString * _Nullable error);
+typedef void (^RemoteEventChangeCompletion)(BOOL success,
+                                            NSString * _Nullable error);
 
 @protocol EventHandler
 

@@ -47,25 +47,24 @@
         return;
     }
     self.isSynced = true;
-    if (![self.userData objectForKey:@"lastUpdated"]) {
+    NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
+    if (!lastUpdated) {
         // TODO: prompt user to query all and sync with all existing remote events
         [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         [self.userData synchronize];
         return;
     }
-    ParseEventHandler *handler = (ParseEventHandler *)self.parseEventHandler;
-    [handler queryEventsAfterUpdateDate:[self.userData objectForKey:@"lastUpdated"]
-                                            completion:^(BOOL success,
-                                                         NSMutableArray<Event *> * _Nullable events,
-                                                         NSDate * _Nullable updatedDate,
-                                                         NSString * _Nullable error) {
+    [self.parseChangeHandler queryChangesAfterUpdateDate:lastUpdated
+                                              completion:^(BOOL success,
+                                                           RecentRevisionHistory * _Nullable revisionHistory,
+                                                           NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         } else {
             NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
 
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] init];
-            NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithOnlineEvents:events offlineChanges:localChanges];
+            NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithRevisionHistory:revisionHistory localChanges:localChanges];
             [self syncLocalChanges:keptChanges];
             [self deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];

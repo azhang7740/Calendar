@@ -54,6 +54,7 @@
 		41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */; };
 		41B7F56E28906C3800030027 /* EventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56D28906C3800030027 /* EventTransformer.swift */; };
 		41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */; };
+		41D17EDD28921A3400EE4EEE /* RecentRevisionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDC28921A3400EE4EEE /* RecentRevisionHistory.swift */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
@@ -160,6 +161,7 @@
 		41B7F56D28906C3800030027 /* EventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTransformer.swift; sourceTree = "<group>"; };
 		41D17ED928920B1600EE4EEE /* ParseChangeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeBuilder.h; sourceTree = "<group>"; };
 		41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChangeBuilder.m; sourceTree = "<group>"; };
+		41D17EDC28921A3400EE4EEE /* RecentRevisionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentRevisionHistory.swift; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
 		41E2CF6C2880CBC50077F173 /* CalendarApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CalendarApp-Bridging-Header.h"; sourceTree = "<group>"; };
 		41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DailyCalendarViewController.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 			isa = PBXGroup;
 			children = (
 				413F41522891DD1B00D0EE6E /* RemoteChange.swift */,
+				41D17EDC28921A3400EE4EEE /* RecentRevisionHistory.swift */,
 				41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */,
 				41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */,
 				413F41412891A40E00D0EE6E /* NSDate+Midnight.h */,
@@ -678,6 +681,7 @@
 			files = (
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
+				41D17EDD28921A3400EE4EEE /* RecentRevisionHistory.swift in Sources */,
 				41B7F554288B5DD600030027 /* EventSyncHandler.m in Sources */,
 				41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
