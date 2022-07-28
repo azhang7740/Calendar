@@ -19,4 +19,5 @@ extension LocalChange {
     @NSManaged public var oldEvent: Event?
     @NSManaged public var updatedEvent: Event?
     @NSManaged public var timestamp: Date?
+    @NSManaged public var eventUUID: UUID?
 }

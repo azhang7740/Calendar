@@ -115,37 +115,49 @@
 
 - (void)saveNewLocalChange:(Event *)oldEvent
               updatedEvent:(Event *)newEvent {
-    LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
-    localChange.timestamp = [NSDate date];
-    localChange.oldEvent = (oldEvent) ? [[Event alloc] initWithOriginalEvent:oldEvent] : nil;
-    localChange.updatedEvent = (newEvent) ? [[Event alloc] initWithOriginalEvent:newEvent] : nil;
     if (!newEvent) {
-        [self didOfflineDelete:oldEvent];
+        [self didOfflineDelete:oldEvent completion:^(Event *oldEvent) {
+            [self saveLocalChange:oldEvent updatedEvent:nil];
+        }];
     } else if (oldEvent) {
-        [self didOfflineUpdate:newEvent change:localChange];
+        oldEvent = ([self didOfflineUpdate:newEvent]) ? nil : oldEvent;
+        [self saveLocalChange:oldEvent updatedEvent:newEvent];
+    } else {
+        [self saveLocalChange:oldEvent updatedEvent:newEvent];
     }
     
     [self.context save:nil];
 }
 
-- (void)didOfflineDelete:(Event *)event {
+- (void)saveLocalChange:(Event *)oldEvent
+                    updatedEvent:(Event *)newEvent {
+    LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
+    localChange.timestamp = [NSDate date];
+    localChange.oldEvent = (oldEvent) ? [[Event alloc] initWithOriginalEvent:oldEvent] : nil;
+    localChange.updatedEvent = (newEvent) ? [[Event alloc] initWithOriginalEvent:newEvent] : nil;
+    localChange.eventUUID = (oldEvent) ? oldEvent.objectUUID : newEvent.objectUUID;
+}
+
+- (void)didOfflineDelete:(Event *)event
+              completion:(void (^ _Nonnull)(Event *oldEvent))completion {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
     request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", event.objectUUID];
     NSArray<LocalChange *> *matchingChanges = [self.context executeFetchRequest:request error:nil];
     for (LocalChange *localChange in matchingChanges) {
         [self.context deleteObject:localChange];
     }
+    completion(event);
 }
 
-- (void)didOfflineUpdate:(Event *)event
-                  change:(LocalChange *)change {
+- (BOOL)didOfflineUpdate:(Event *)event {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
     request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", event.objectUUID];
     NSArray<LocalChange *> *matchingChanges = [self.context executeFetchRequest:request error:nil];
-    if (matchingChanges.count == 1 && !matchingChanges[0].updatedEvent) {
-        change.oldEvent = nil;
+    if (matchingChanges.count == 1 && !matchingChanges[0].oldEvent) {
         [self.context deleteObject:matchingChanges[0]];
+        return true;
     }
+    return false;
 }
 
 - (void)syncNewEventToParse:(Event *)event
