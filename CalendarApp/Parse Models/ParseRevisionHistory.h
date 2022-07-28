@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSDate *createdAt;
 
 @property (nonatomic) NSDate *mostRecentUpdate;
-@property (nonatomic) PFRelation *remoteChanges;
+@property (readonly, nonatomic) PFRelation *remoteChanges;
 
 @end
 

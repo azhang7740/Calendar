@@ -9,6 +9,19 @@
 
 @implementation ParseArchivedEvent
 
+@dynamic objectId;
+@dynamic objectUUID;
+@dynamic updatedAt;
+@dynamic createdAt;
+
+@dynamic eventTitle;
+@dynamic author;
+@dynamic eventDescription;
+@dynamic location;
+
+@dynamic startDate;
+@dynamic endDate;
+
 + (nonnull NSString *)parseClassName {
     return @"ArchivedEvent";
 }

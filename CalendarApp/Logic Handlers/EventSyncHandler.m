@@ -90,6 +90,7 @@
     RemoteChange *newChange = [[RemoteChange alloc] init];
     newChange.oldEvent = oldEvent;
     newChange.updatedEvent = newEvent;
+    newChange.timestamp = [NSDate date];
     
     if (newChange.changeType == ChangeTypeCreate) {
         [self syncNewEventToParse:newEvent

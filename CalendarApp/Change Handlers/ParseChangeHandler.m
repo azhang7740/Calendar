@@ -48,7 +48,8 @@
             completion(false, @"Something went wrong");
         } else {
             ParseRevisionHistory *history = (ParseRevisionHistory *)object;
-            PFQuery *queryChanges = [history.remoteChanges query];
+            PFRelation *changesRelation = [history relationForKey:@"remoteChanges"];
+            PFQuery *queryChanges = [changesRelation query];
             [queryChanges setLimit:100];
             [queryChanges includeKey:@"oldEvent"];
             [queryChanges includeKey:@"newEvent"];
@@ -58,6 +59,7 @@
                 changes = [queryChanges findObjects];
                 [self deleteParseChangesFromArray:changes];
             }
+            [history deleteInBackground];
             completion(true, nil);
         }
     }];
@@ -114,7 +116,7 @@
     PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
     [query includeKey:@"remoteChanges"];
     [query includeKey:@"mostRecentUpdate"];
-    [query whereKey:@"objectUUID" equalTo:remoteChange.objectUUID];
+    [query whereKey:@"objectUUID" equalTo:[remoteChange.objectUUID UUIDString]];
     ParseRevisionHistory *history = [query getFirstObject];
     
     if (!history) {
@@ -122,15 +124,23 @@
         return;
     }
     
-    [history.remoteChanges addObject:[self getParseChangeFromRemoteChange:remoteChange]];
-    history.mostRecentUpdate = ([history.mostRecentUpdate compare:remoteChange.timestamp]
-                                == NSOrderedAscending) ?
-    remoteChange.timestamp : history.mostRecentUpdate;
-    [history saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+    ParseChange *change = [self getParseChangeFromRemoteChange:remoteChange];
+    [change saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
-            completion(true, nil);
+            PFRelation *changesRelation = [history relationForKey:@"remoteChanges"];
+            [changesRelation addObject:change];
+            history.mostRecentUpdate = ([history.mostRecentUpdate compare:remoteChange.timestamp]
+                                        == NSOrderedAscending) ?
+            remoteChange.timestamp : history.mostRecentUpdate;
+            [history saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                if (succeeded) {
+                    completion(true, nil);
+                } else {
+                    completion(false, @"Something went wrong.");
+                }
+            }];
         } else {
-            completion(false, @"Something went wrong.");
+            completion(false, @"Failed to save.");
         }
     }];
 }
@@ -138,8 +148,12 @@
 - (ParseChange *)getParseChangeFromRemoteChange:(RemoteChange *)remoteChange {
     ParseChange *parseChange = [[ParseChange alloc] init];
     parseChange.objectUUID = [remoteChange.objectUUID UUIDString];
-    parseChange.oldEvent = [self getArchivedEventFromEvent:remoteChange.oldEvent];
-    parseChange.updatedEvent = [self getArchivedEventFromEvent:remoteChange.updatedEvent];
+    parseChange.timestamp = remoteChange.timestamp;
+    
+    parseChange.oldEvent = (remoteChange.oldEvent) ?
+    [self getArchivedEventFromEvent:remoteChange.oldEvent] : nil;
+    parseChange.updatedEvent = (remoteChange.updatedEvent) ?
+    [self getArchivedEventFromEvent:remoteChange.updatedEvent] : nil;
     
     return parseChange;
 }
