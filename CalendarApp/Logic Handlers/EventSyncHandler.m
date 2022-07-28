@@ -87,7 +87,7 @@
 
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {
-    // create new revision history
+    // create new revision history + changes
     if (!oldEvent) {
         [self syncNewEventToParse:newEvent];
     } else if (!newEvent) {

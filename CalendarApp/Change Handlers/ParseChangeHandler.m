@@ -39,7 +39,28 @@
 
 - (void)deleteRevisionHistory:(NSUUID *)eventID
                    completion:(ChangeActionCompletion)completion {
-    
+    PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
+    [query includeKey:@"remoteChanges"];
+    [query whereKey:@"objectUUID" equalTo:[eventID UUIDString]];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object,
+                                                 NSError * _Nullable error) {
+        if (error) {
+            completion(false, @"Something went wrong");
+        } else {
+            ParseRevisionHistory *history = (ParseRevisionHistory *)object;
+            PFQuery *queryChanges = [history.remoteChanges query];
+            [queryChanges setLimit:100];
+            [queryChanges includeKey:@"oldEvent"];
+            [queryChanges includeKey:@"newEvent"];
+            NSArray<ParseChange *> *changes = [queryChanges findObjects];
+            [self deleteParseChangesFromArray:changes];
+            while (changes.count == 100) {
+                changes = [queryChanges findObjects];
+                [self deleteParseChangesFromArray:changes];
+            }
+            completion(true, nil);
+        }
+    }];
 }
 
 - (ParseChange *)queryParseChange:(NSString *)changeID {
@@ -50,11 +71,12 @@
     return change;
 }
 
-- (void)deleteParseChangeSynchronously:(NSString *)changeID {
-    ParseChange *change = [self queryParseChange:changeID];
-    [change.oldEvent delete];
-    [change.updatedEvent delete];
-    [change delete];
+- (void)deleteParseChangesFromArray:(NSArray<ParseChange *> *)changes {
+    for (ParseChange *change in changes) {
+        [change.oldEvent delete];
+        [change.updatedEvent delete];
+        [change delete];
+    }
 }
 
 - (void)deleteParseChange:(NSString *)changeID
