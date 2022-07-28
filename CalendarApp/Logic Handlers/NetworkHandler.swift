@@ -16,7 +16,7 @@ public protocol NetworkChangeDelegate {
 
 @objcMembers
 class NetworkHandler : NSObject {
-    public var delegate : NetworkChangeDelegate?
+    public weak var delegate : NetworkChangeDelegate?
     public var isOnline = false
     private let monitor = NWPathMonitor()
     private var status : NWPath.Status = .requiresConnection

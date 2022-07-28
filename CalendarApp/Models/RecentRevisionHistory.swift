@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+@objcMembers
 class RecentRevisionHistory: NSObject {
     public var objectUUID: UUID?
     public var remoteChanges = [RemoteChange]()
