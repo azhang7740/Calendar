@@ -6,7 +6,6 @@
 //
 
 #import "EventSyncHandler.h"
-#import "CoreDataEventHandler.h"
 #import "ParseEventHandler.h"
 #import "ParseChangeHandler.h"
 #import "AppDelegate.h"
@@ -16,7 +15,6 @@
 
 @property (nonatomic) id<EventHandler> parseEventHandler;
 @property (nonatomic) ParseChangeHandler *parseChangeHandler;
-@property (nonatomic) CoreDataEventHandler *coreDataEventHandler;
 @property (nonatomic) NetworkHandler *networkHandler;
 @property (nonatomic) BOOL isSynced;
 
@@ -32,7 +30,6 @@
         self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.parseChangeHandler = [[ParseChangeHandler alloc] init];
-        self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
         self.userData = NSUserDefaults.standardUserDefaults;
         
         self.networkHandler = [[NetworkHandler alloc] init];
@@ -90,6 +87,7 @@
 
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {
+    // create new revision history
     if (!oldEvent) {
         [self syncNewEventToParse:newEvent];
     } else if (!newEvent) {
