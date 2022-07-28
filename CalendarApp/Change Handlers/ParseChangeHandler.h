@@ -26,6 +26,9 @@ typedef void (^ChangeActionCompletion)(BOOL success,
                    completion:(ChangeActionCompletion)completion;
 - (void)deleteParseChange:(NSString *)changeID
                completion:(ChangeActionCompletion)completion;
+- (void)addNewRevisionHistory:(NSUUID *)eventID
+                       change:(RemoteChange *)change
+                   completion:(ChangeActionCompletion)completion;
 - (void)addNewParseChange:(RemoteChange *)remoteChange
                completion:(ChangeActionCompletion)completion;
 

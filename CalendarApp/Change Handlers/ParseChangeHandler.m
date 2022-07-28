@@ -93,9 +93,55 @@
     }];
 }
 
+- (void)addNewRevisionHistory:(NSUUID *)eventID
+                       change:(RemoteChange *)change
+                   completion:(ChangeActionCompletion)completion {
+    ParseRevisionHistory *history = [[ParseRevisionHistory alloc] init];
+    history.objectUUID = [eventID UUIDString];
+    history.mostRecentUpdate = change.timestamp;
+    [history save];
+    [self addNewParseChange:change completion:^(BOOL success, NSString * _Nullable error) {
+        if (error) {
+            completion(false, @"Something went wrong.");
+        } else {
+            completion(true, nil);
+        }
+    }];
+}
+
 - (void)addNewParseChange:(RemoteChange *)remoteChange
                completion:(ChangeActionCompletion)completion {
+    PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
+    NSString *eventUUID = remoteChange.oldEvent ?
+    [remoteChange.oldEvent.objectUUID UUIDString] :
+    [remoteChange.updatedEvent.objectUUID UUIDString];
+    [query includeKey:@"remoteChanges"];
+    [query includeKey:@"mostRecentUpdate"];
+    [query whereKey:@"objectUUID" equalTo:eventUUID];
+    ParseRevisionHistory *history = [query getFirstObject];
     
+    if (!history) {
+        completion(false, @"RevisionHistory not found.");
+        return;
+    }
+    
+    [history.remoteChanges addObject:[self getParseChangeFromRemoteChange:remoteChange]];
+    history.mostRecentUpdate = ([history.mostRecentUpdate compare:remoteChange.timestamp]
+                                == NSOrderedAscending) ?
+    remoteChange.timestamp : history.mostRecentUpdate;
+    [history saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (succeeded) {
+            completion(true, nil);
+        } else {
+            completion(false, @"Something went wrong.");
+        }
+    }];
+}
+
+- (ParseChange *)getParseChangeFromRemoteChange:(RemoteChange *)remoteChange {
+    ParseChange *parseChange = [[ParseChange alloc] init];
+    
+    return parseChange;
 }
 
 @end
