@@ -140,8 +140,23 @@
 
 - (ParseChange *)getParseChangeFromRemoteChange:(RemoteChange *)remoteChange {
     ParseChange *parseChange = [[ParseChange alloc] init];
+//    parseChange.objectUUID = remoteChange.
     
     return parseChange;
+}
+
+- (ParseArchivedEvent *)getArchivedEventFromEvent:(Event *)uploadEvent {
+    ParseArchivedEvent *archivedEvent = [[ParseArchivedEvent alloc] init];
+    archivedEvent.objectUUID = [uploadEvent.objectUUID UUIDString];
+    archivedEvent.eventTitle = uploadEvent.eventTitle;
+    archivedEvent.author = [PFUser currentUser];
+    
+    archivedEvent.eventDescription = uploadEvent.eventDescription;
+    archivedEvent.location = uploadEvent.location;
+    archivedEvent.startDate = uploadEvent.startDate;
+    archivedEvent.endDate = uploadEvent.endDate;
+    
+    return archivedEvent;
 }
 
 @end
