@@ -87,13 +87,19 @@
 
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {
-    // create new revision history + changes
-    if (!oldEvent) {
-        [self syncNewEventToParse:newEvent];
-    } else if (!newEvent) {
-        [self syncDeleteToParse:oldEvent];
+    RemoteChange *newChange = [[RemoteChange alloc] init];
+    newChange.oldEvent = oldEvent;
+    newChange.updatedEvent = newEvent;
+    
+    if (newChange.changeType == ChangeTypeCreate) {
+        [self syncNewEventToParse:newEvent
+                     remoteChange:newChange];
+    } else if (newChange.changeType == ChangeTypeDelete) {
+        [self syncDeleteToParse:oldEvent
+                   remoteChange:newChange];
     } else {
-        [self syncUpdateToParse:newEvent];
+        [self syncUpdateToParse:newEvent
+                   remoteChange:newChange];
     }
 }
 
@@ -110,36 +116,82 @@
               updatedEvent:(Event *)newEvent {
     LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
     localChange.timestamp = [NSDate date];
-    if (oldEvent) {
-        localChange.oldEvent = [[Event alloc] initWithOriginalEvent:oldEvent];
+    localChange.oldEvent = (oldEvent) ? [[Event alloc] initWithOriginalEvent:oldEvent] : nil;
+    localChange.updatedEvent = (newEvent) ? [[Event alloc] initWithOriginalEvent:newEvent] : nil;
+    if (!newEvent) {
+        [self didOfflineDelete:oldEvent];
+    } else if (oldEvent) {
+        [self didOfflineUpdate:newEvent change:localChange];
     }
-    if (newEvent) {
-        localChange.updatedEvent = [[Event alloc] initWithOriginalEvent:newEvent];
-    }
+    
     [self.context save:nil];
 }
 
+- (void)didOfflineDelete:(Event *)event {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
+    request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", event.objectUUID];
+    NSArray<LocalChange *> *matchingChanges = [self.context executeFetchRequest:request error:nil];
+    for (LocalChange *localChange in matchingChanges) {
+        [self.context deleteObject:localChange];
+    }
+}
 
-- (void)syncNewEventToParse:(Event *)event {
+- (void)didOfflineUpdate:(Event *)event
+                  change:(LocalChange *)change {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
+    request.predicate = [NSPredicate predicateWithFormat:@"eventUUID == %@", event.objectUUID];
+    NSArray<LocalChange *> *matchingChanges = [self.context executeFetchRequest:request error:nil];
+    if (matchingChanges.count == 1 && !matchingChanges[0].updatedEvent) {
+        change.oldEvent = nil;
+        [self.context deleteObject:matchingChanges[0]];
+    }
+}
+
+- (void)syncNewEventToParse:(Event *)event
+               remoteChange:(RemoteChange *)newChange {
     [self.parseEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
+        } else {
+            [self.parseChangeHandler addNewRevisionHistory:newChange.objectUUID
+                                                    change:newChange
+                                                completion:^(BOOL success, NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: save as local change?
+                }
+            }];
         }
     }];
 }
 
-- (void)syncDeleteToParse:(Event *)event {
+- (void)syncDeleteToParse:(Event *)event
+             remoteChange:(RemoteChange *)newChange{
     [self.parseEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
+        } else {
+            [self.parseChangeHandler deleteRevisionHistory:newChange.objectUUID
+                                                completion:^(BOOL success, NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: save as local change?
+                }
+            }];
         }
     }];
 }
 
-- (void)syncUpdateToParse:(Event *)event {
+- (void)syncUpdateToParse:(Event *)event
+             remoteChange:(RemoteChange *)newChange{
     [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
+        } else {
+            [self.parseChangeHandler addNewParseChange:newChange
+                                            completion:^(BOOL success, NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: save as local change?
+                }
+            }];
         }
     }];
 }
