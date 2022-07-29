@@ -29,9 +29,8 @@
         return nil;
     }
     
-    RemoteChange *remoteChange = [[RemoteChange alloc] init];
+    RemoteChange *remoteChange = [[RemoteChange alloc] initWithChangeDate:parseChange.timestamp];
     remoteChange.parseID = parseChange.objectId;
-    remoteChange.timestamp = parseChange.timestamp;
     
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
     remoteChange.oldEvent = [builder getEventFromParseEvent:parseChange.oldEvent];

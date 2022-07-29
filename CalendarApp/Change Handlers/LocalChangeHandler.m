@@ -34,12 +34,6 @@
     [persistentStoreCoordinator executeRequest:delete withContext:self.context error:nil];
 }
 
-- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
-    for (LocalChange *change in localChanges) {
-        [self.delegate syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
-    }
-}
-
 - (void)saveNewLocalChange:(Event *)oldEvent
               updatedEvent:(Event *)newEvent {
     if (!newEvent) {

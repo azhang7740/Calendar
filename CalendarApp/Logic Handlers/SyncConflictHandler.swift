@@ -7,8 +7,16 @@
 
 import Foundation
 
+@objc
+public protocol SyncRemoteChangesDelegate {
+    func deletedEventOnRemote()
+    func updatedEventOnRemote()
+    func createdEventOnRemote()
+}
+
 @objcMembers
 class SyncConflictHandler : NSObject {
+    weak var delegate: SyncRemoteChangesDelegate?
     private var keptChanges = [LocalChange]()
     private var revisionHistories: [RecentRevisionHistory]
     
@@ -29,6 +37,37 @@ class SyncConflictHandler : NSObject {
         }
         
         return keptChanges
+    }
+    
+    private func resolveUpdateConflicts() {
+        for history in revisionHistories {
+            if history.remoteChanges.isEmpty {
+                addAllLocalChanges(localChanges: history.localChanges)
+            } else if history.localChanges.isEmpty {
+                syncMostRecentRemote(remoteChanges: history.remoteChanges)
+            } else {
+                
+            }
+        }
+    }
+    
+    private func addAllLocalChanges(localChanges: [LocalChange]) {
+        for change in localChanges {
+            keptChanges.append(change)
+        }
+    }
+    
+    private func syncMostRecentRemote(remoteChanges: [RemoteChange]) {
+        guard let mostRecentChange = remoteChanges.max(by: { $0.timestamp < $1.timestamp }) else {
+            return
+        }
+        if (mostRecentChange.oldEvent == nil) {
+            delegate?.createdEventOnRemote()
+        } else if (mostRecentChange.updatedEvent == nil) {
+            delegate?.deletedEventOnRemote()
+        } else {
+            delegate?.updatedEventOnRemote()
+        }
     }
     
     private func addUpdate(localChange: LocalChange) {

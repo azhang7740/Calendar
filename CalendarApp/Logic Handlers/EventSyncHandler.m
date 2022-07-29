@@ -12,7 +12,7 @@
 #import "LocalChangeHandler.h"
 #import "CalendarApp-Swift.h"
 
-@interface EventSyncHandler () <NetworkChangeDelegate, LocalChangeDelegate>
+@interface EventSyncHandler () <NetworkChangeDelegate>
 
 @property (nonatomic) id<EventHandler> parseEventHandler;
 @property (nonatomic) id<RemoteChangeHandler> parseChangeHandler;
@@ -31,7 +31,6 @@
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.parseChangeHandler = [[ParseChangeHandler alloc] init];
         self.localChangeHandler = [[LocalChangeHandler alloc] init];
-        self.localChangeHandler.delegate = self;
         self.userData = NSUserDefaults.standardUserDefaults;
         
         self.networkHandler = [[NetworkHandler alloc] init];
@@ -64,7 +63,7 @@
 
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
             NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithRevisionHistories:revisionHistories localChanges:localChanges];
-            [self.localChangeHandler syncLocalChanges:keptChanges];
+            [self syncLocalChanges:keptChanges];
             [self.localChangeHandler deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
@@ -75,12 +74,17 @@
     self.isSynced = false;
 }
 
+- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
+    for (LocalChange *change in localChanges) {
+        [self syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
+    }
+}
+
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {
-    RemoteChange *newChange = [[RemoteChange alloc] init];
+    RemoteChange *newChange = [[RemoteChange alloc] initWithChangeDate:[NSDate date]];
     newChange.oldEvent = oldEvent;
     newChange.updatedEvent = newEvent;
-    newChange.timestamp = [NSDate date];
     
     if (newChange.changeType == ChangeTypeCreate) {
         [self syncNewEventToParse:newEvent
