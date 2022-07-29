@@ -12,7 +12,7 @@
 #import "LocalChangeHandler.h"
 #import "CalendarApp-Swift.h"
 
-@interface EventSyncHandler () <NetworkChangeDelegate>
+@interface EventSyncHandler () <NetworkChangeDelegate, LocalChangeDelegate>
 
 @property (nonatomic) id<EventHandler> parseEventHandler;
 @property (nonatomic) id<RemoteChangeHandler> parseChangeHandler;
@@ -31,6 +31,7 @@
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.parseChangeHandler = [[ParseChangeHandler alloc] init];
         self.localChangeHandler = [[LocalChangeHandler alloc] init];
+        self.localChangeHandler.delegate = self;
         self.userData = NSUserDefaults.standardUserDefaults;
         
         self.networkHandler = [[NetworkHandler alloc] init];
