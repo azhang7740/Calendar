@@ -11,6 +11,7 @@ import XCTest
 class EventSyncHandlerTests: XCTestCase {
     var handler: EventSyncHandler!
     var parseHandler: TestEventHandler!
+    var changeHandler: TestRemoteChangeHandler!
     
     override func setUp() {
         super.setUp()
@@ -18,11 +19,15 @@ class EventSyncHandlerTests: XCTestCase {
         handler = EventSyncHandler()
         parseHandler = TestEventHandler()
         handler.parseEventHandler = parseHandler
+        
+        changeHandler = TestRemoteChangeHandler()
+        handler.parseChangeHandler = changeHandler
     }
     
     override func tearDown() {
         handler = nil
         parseHandler = nil
+        changeHandler = nil
         
         super.tearDown()
     }

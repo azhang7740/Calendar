@@ -18,7 +18,7 @@ typedef void (^ChangeQueryCompletion)(BOOL success,
 typedef void (^ChangeActionCompletion)(BOOL success,
                                       NSString * _Nullable error);
 
-@interface ParseChangeHandler : NSObject
+@protocol RemoteChangeHandler
 
 - (void)queryChangesAfterUpdateDate:(NSDate *)date
                          completion:(ChangeQueryCompletion)completion;
@@ -31,6 +31,10 @@ typedef void (^ChangeActionCompletion)(BOOL success,
                    completion:(ChangeActionCompletion)completion;
 - (void)addNewParseChange:(RemoteChange *)remoteChange
                completion:(ChangeActionCompletion)completion;
+
+@end
+
+@interface ParseChangeHandler : NSObject <RemoteChangeHandler>
 
 @end
 
