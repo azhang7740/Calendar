@@ -62,7 +62,7 @@
         } else {
             NSArray<LocalChange *> *localChanges = [self.localChangeHandler fetchAllLocalChanges];
 
-            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] init];
+            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
             NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithRevisionHistories:revisionHistories localChanges:localChanges];
             [self.localChangeHandler syncLocalChanges:keptChanges];
             [self.localChangeHandler deleteAllLocalChanges];
