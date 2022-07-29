@@ -60,9 +60,9 @@
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
 		41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF7B2880DE930077F173 /* ScheduleViewController.m */; };
-		9ABC58D574AD5DE147CC020D /* libPods-CalendarTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */; };
-		A9F8029960C8174E0677EDC8 /* libPods-Calendar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 428F343F06B776A65B2D51DE /* libPods-Calendar.a */; };
-		E102A5E6C44E47B4940A94BB /* libPods-Calendar-CalendarUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B57BE2F214487C13945C1F83 /* libPods-Calendar-CalendarUITests.a */; };
+		D0AA35CB9107C2559171CC34 /* libPods-CalendarApp-CalendarAppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633B55E3DEF7AC08BA63816 /* libPods-CalendarApp-CalendarAppUITests.a */; };
+		DF20BF322935DA0B246A299A /* libPods-CalendarAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 098709094717F22ED0142810 /* libPods-CalendarAppTests.a */; };
+		DF61EBD7D1CA57ECC4BD7B4C /* libPods-CalendarApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D96919343321A6FD4A4A87BD /* libPods-CalendarApp.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,7 +83,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		409A67BDEC49EFADE60844D5 /* Pods-CalendarTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarTests.debug.xcconfig"; path = "Target Support Files/Pods-CalendarTests/Pods-CalendarTests.debug.xcconfig"; sourceTree = "<group>"; };
+		010C478FA363963883513B4E /* Pods-CalendarApp-CalendarAppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp-CalendarAppUITests.debug.xcconfig"; path = "Target Support Files/Pods-CalendarApp-CalendarAppUITests/Pods-CalendarApp-CalendarAppUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		098709094717F22ED0142810 /* libPods-CalendarAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CalendarAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		410A101828764D5C0023F523 /* Compose.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Compose.storyboard; sourceTree = "<group>"; };
 		410A101A287659E40023F523 /* ComposeViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ComposeViewController.h; sourceTree = "<group>"; };
 		410A101B287659E40023F523 /* ComposeViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ComposeViewController.m; sourceTree = "<group>"; };
@@ -171,14 +172,13 @@
 		41E2CF782880DE500077F173 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
 		41E2CF7A2880DE930077F173 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
 		41E2CF7B2880DE930077F173 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
-		428F343F06B776A65B2D51DE /* libPods-Calendar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calendar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CalendarTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		504796EDD91AE659F6D184A1 /* Pods-Calendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar.release.xcconfig"; path = "Target Support Files/Pods-Calendar/Pods-Calendar.release.xcconfig"; sourceTree = "<group>"; };
-		5673277F7B796588BB2960DF /* Pods-Calendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar.debug.xcconfig"; path = "Target Support Files/Pods-Calendar/Pods-Calendar.debug.xcconfig"; sourceTree = "<group>"; };
-		74B456A65A3976A8B730423D /* Pods-Calendar-CalendarUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar-CalendarUITests.debug.xcconfig"; path = "Target Support Files/Pods-Calendar-CalendarUITests/Pods-Calendar-CalendarUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		A6C562733995A14A0194FD62 /* Pods-CalendarTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarTests.release.xcconfig"; path = "Target Support Files/Pods-CalendarTests/Pods-CalendarTests.release.xcconfig"; sourceTree = "<group>"; };
-		B4160B553E899F99AE6F60C2 /* Pods-Calendar-CalendarUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Calendar-CalendarUITests.release.xcconfig"; path = "Target Support Files/Pods-Calendar-CalendarUITests/Pods-Calendar-CalendarUITests.release.xcconfig"; sourceTree = "<group>"; };
-		B57BE2F214487C13945C1F83 /* libPods-Calendar-CalendarUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Calendar-CalendarUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6720ECC35A2267B0C1169EC5 /* Pods-CalendarAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.release.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		867CA3B7D8BFAE5D63E3831C /* Pods-CalendarApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp.debug.xcconfig"; path = "Target Support Files/Pods-CalendarApp/Pods-CalendarApp.debug.xcconfig"; sourceTree = "<group>"; };
+		9608745C3DDEC7A8339FB4E3 /* Pods-CalendarAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.debug.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9633B55E3DEF7AC08BA63816 /* libPods-CalendarApp-CalendarAppUITests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CalendarApp-CalendarAppUITests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D1435010F7F8F25E453A119F /* Pods-CalendarApp-CalendarAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp-CalendarAppUITests.release.xcconfig"; path = "Target Support Files/Pods-CalendarApp-CalendarAppUITests/Pods-CalendarApp-CalendarAppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		D96919343321A6FD4A4A87BD /* libPods-CalendarApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CalendarApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFC2E22218EE3DCC38E1143F /* Pods-CalendarApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp.release.xcconfig"; path = "Target Support Files/Pods-CalendarApp/Pods-CalendarApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -186,7 +186,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9F8029960C8174E0677EDC8 /* libPods-Calendar.a in Frameworks */,
+				DF61EBD7D1CA57ECC4BD7B4C /* libPods-CalendarApp.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -194,7 +194,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ABC58D574AD5DE147CC020D /* libPods-CalendarTests.a in Frameworks */,
+				DF20BF322935DA0B246A299A /* libPods-CalendarAppTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -202,7 +202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E102A5E6C44E47B4940A94BB /* libPods-Calendar-CalendarUITests.a in Frameworks */,
+				D0AA35CB9107C2559171CC34 /* libPods-CalendarApp-CalendarAppUITests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,12 +419,12 @@
 		F795144D40A42030DEA6F66C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5673277F7B796588BB2960DF /* Pods-Calendar.debug.xcconfig */,
-				504796EDD91AE659F6D184A1 /* Pods-Calendar.release.xcconfig */,
-				74B456A65A3976A8B730423D /* Pods-Calendar-CalendarUITests.debug.xcconfig */,
-				B4160B553E899F99AE6F60C2 /* Pods-Calendar-CalendarUITests.release.xcconfig */,
-				409A67BDEC49EFADE60844D5 /* Pods-CalendarTests.debug.xcconfig */,
-				A6C562733995A14A0194FD62 /* Pods-CalendarTests.release.xcconfig */,
+				867CA3B7D8BFAE5D63E3831C /* Pods-CalendarApp.debug.xcconfig */,
+				FFC2E22218EE3DCC38E1143F /* Pods-CalendarApp.release.xcconfig */,
+				010C478FA363963883513B4E /* Pods-CalendarApp-CalendarAppUITests.debug.xcconfig */,
+				D1435010F7F8F25E453A119F /* Pods-CalendarApp-CalendarAppUITests.release.xcconfig */,
+				9608745C3DDEC7A8339FB4E3 /* Pods-CalendarAppTests.debug.xcconfig */,
+				6720ECC35A2267B0C1169EC5 /* Pods-CalendarAppTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -432,9 +432,9 @@
 		F92209D9A5C440EB4A736AE2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				428F343F06B776A65B2D51DE /* libPods-Calendar.a */,
-				B57BE2F214487C13945C1F83 /* libPods-Calendar-CalendarUITests.a */,
-				470694E230CC0AE8EE7A2149 /* libPods-CalendarTests.a */,
+				D96919343321A6FD4A4A87BD /* libPods-CalendarApp.a */,
+				9633B55E3DEF7AC08BA63816 /* libPods-CalendarApp-CalendarAppUITests.a */,
+				098709094717F22ED0142810 /* libPods-CalendarAppTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -583,15 +583,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar/Pods-Calendar-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-CalendarApp/Pods-CalendarApp-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar/Pods-Calendar-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-CalendarApp/Pods-CalendarApp-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calendar/Pods-Calendar-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CalendarApp/Pods-CalendarApp-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		6FBD6B7FD60FA2BDB6CD7378 /* [CP] Check Pods Manifest.lock */ = {
@@ -609,7 +609,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Calendar-CalendarUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-CalendarApp-CalendarAppUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -631,7 +631,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Calendar-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-CalendarApp-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -644,15 +644,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar-CalendarUITests/Pods-Calendar-CalendarUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-CalendarApp-CalendarAppUITests/Pods-CalendarApp-CalendarAppUITests-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Calendar-CalendarUITests/Pods-Calendar-CalendarUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-CalendarApp-CalendarAppUITests/Pods-CalendarApp-CalendarAppUITests-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Calendar-CalendarUITests/Pods-Calendar-CalendarUITests-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CalendarApp-CalendarAppUITests/Pods-CalendarApp-CalendarAppUITests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FB132986D7187974614ADBF7 /* [CP] Check Pods Manifest.lock */ = {
@@ -670,7 +670,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-CalendarTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-CalendarAppTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -893,7 +893,7 @@
 		};
 		413DE5352874B39400CCF8E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5673277F7B796588BB2960DF /* Pods-Calendar.debug.xcconfig */;
+			baseConfigurationReference = 867CA3B7D8BFAE5D63E3831C /* Pods-CalendarApp.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -927,7 +927,7 @@
 		};
 		413DE5362874B39400CCF8E1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 504796EDD91AE659F6D184A1 /* Pods-Calendar.release.xcconfig */;
+			baseConfigurationReference = FFC2E22218EE3DCC38E1143F /* Pods-CalendarApp.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -960,7 +960,7 @@
 		};
 		413DE5382874B39400CCF8E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 409A67BDEC49EFADE60844D5 /* Pods-CalendarTests.debug.xcconfig */;
+			baseConfigurationReference = 9608745C3DDEC7A8339FB4E3 /* Pods-CalendarAppTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -989,7 +989,7 @@
 		};
 		413DE5392874B39400CCF8E1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A6C562733995A14A0194FD62 /* Pods-CalendarTests.release.xcconfig */;
+			baseConfigurationReference = 6720ECC35A2267B0C1169EC5 /* Pods-CalendarAppTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1017,7 +1017,7 @@
 		};
 		413DE53B2874B39400CCF8E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 74B456A65A3976A8B730423D /* Pods-Calendar-CalendarUITests.debug.xcconfig */;
+			baseConfigurationReference = 010C478FA363963883513B4E /* Pods-CalendarApp-CalendarAppUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1035,7 +1035,7 @@
 		};
 		413DE53C2874B39400CCF8E1 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B4160B553E899F99AE6F60C2 /* Pods-Calendar-CalendarUITests.release.xcconfig */;
+			baseConfigurationReference = D1435010F7F8F25E453A119F /* Pods-CalendarApp-CalendarAppUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
