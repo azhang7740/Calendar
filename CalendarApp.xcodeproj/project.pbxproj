@@ -156,8 +156,8 @@
 		41B7F555288EF7DE00030027 /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
 		41B7F557288EFF7900030027 /* FetchEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FetchEventHandler.h; sourceTree = "<group>"; };
 		41B7F558288EFF7900030027 /* FetchEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FetchEventHandler.m; sourceTree = "<group>"; };
-		41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LocalChange+CoreDataClass.swift"; path = "/Users/angelinaz/Projects/CalendarApp/CalendarApp/Models/LocalChange+CoreDataClass.swift"; sourceTree = "<absolute>"; };
-		41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "LocalChange+CoreDataProperties.swift"; path = "/Users/angelinaz/Projects/CalendarApp/CalendarApp/Models/LocalChange+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalChange+CoreDataClass.swift"; sourceTree = "<group>"; };
+		41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalChange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncConflictHandler.swift; sourceTree = "<group>"; };
 		41B7F56D28906C3800030027 /* EventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTransformer.swift; sourceTree = "<group>"; };
 		41D17ED928920B1600EE4EEE /* ParseChangeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeBuilder.h; sourceTree = "<group>"; };
