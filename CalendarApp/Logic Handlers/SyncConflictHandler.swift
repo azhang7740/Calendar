@@ -36,19 +36,25 @@ class SyncConflictHandler : NSObject {
             }
         }
         
+        resolveConflicts()
+        
         return keptChanges
     }
     
-    private func resolveUpdateConflicts() {
+    private func resolveConflicts() {
         for history in revisionHistories {
             if history.remoteChanges.isEmpty {
                 addAllLocalChanges(localChanges: history.localChanges)
             } else if history.localChanges.isEmpty {
                 syncMostRecentRemote(remoteChanges: history.remoteChanges)
             } else {
-                
+                resolveUpdateConflicts()
             }
         }
+    }
+    
+    private func resolveUpdateConflicts() {
+        
     }
     
     private func addAllLocalChanges(localChanges: [LocalChange]) {
