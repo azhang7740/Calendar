@@ -14,6 +14,7 @@ class RemoteChangeBuilder : NSObject, CreateRevisionDelegate {
     private var oldEvent: Event?
     private var newEvent: Event?
     private var timestamp: Date
+    private var eventID: UUID?
     
     public required init(firstEvent: Event?,
                          updatedEvent: Event?,
@@ -21,6 +22,19 @@ class RemoteChangeBuilder : NSObject, CreateRevisionDelegate {
         oldEvent = firstEvent
         newEvent = updatedEvent
         timestamp = updateDate
+    }
+    
+    public required init(eventUUID: UUID,
+                         updateDate: Date) {
+        timestamp = updateDate
+        eventID = eventUUID
+    }
+    
+    public func buildDeleteChangeFromEventID() -> RemoteChange {
+        let newRemoteChange = RemoteChange(updatedDate: timestamp)
+        newRemoteChange.changeType = .Delete
+        newRemoteChange.eventID = eventID
+        return newRemoteChange
     }
     
     public func buildRemoteChanges() -> Array<RemoteChange> {

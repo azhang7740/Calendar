@@ -81,15 +81,21 @@
     if (remoteChanges.count == 1 && remoteChanges[0].changeType == ChangeTypeCreate) {
         [self syncNewEventToParse:newEvent
                      remoteChange:remoteChanges[0]];
-    } else if (remoteChanges.count == 1 && remoteChanges[0].changeType == ChangeTypeDelete) {
-        [self syncDeleteToParse:oldEvent
-                   remoteChange:remoteChanges[0]];
     } else {
         [self syncUpdateToParse:newEvent];
         for (RemoteChange *change in remoteChanges) {
             [self syncRemoteChangeToParse:change];
         }
     }
+}
+
+- (void)didDeleteEvent:(NSUUID *)eventID {
+    RemoteChangeBuilder *builder = [[RemoteChangeBuilder alloc]
+                                    initWithEventUUID:eventID
+                                    updateDate:[NSDate date]];
+    RemoteChange *deleteChange = [builder buildDeleteChangeFromEventID];
+    [self syncDeleteToParse:[eventID UUIDString]
+               remoteChange:deleteChange];
 }
 
 - (void)didChangeEvent:(Event *)oldEvent
@@ -118,9 +124,9 @@
     }];
 }
 
-- (void)syncDeleteToParse:(Event *)event
+- (void)syncDeleteToParse:(NSString *)eventID
              remoteChange:(RemoteChange *)newChange{
-    [self.parseEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.parseEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         } else {

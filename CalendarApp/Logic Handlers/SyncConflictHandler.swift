@@ -14,7 +14,7 @@ public protocol SyncRemoteChangesDelegate {
     func createdEventOnRemote(eventID: UUID)
     
     func syncNewEventToParse(event: Event, remoteChange: RemoteChange)
-    func syncDeleteToParse(event: Event, remoteChange: RemoteChange)
+    func syncDeleteToParse(event: String, remoteChange: RemoteChange)
     func syncUpdateToParse(event: Event)
     func syncRemoteChangeToParse(remoteChange: RemoteChange)
 }
@@ -68,6 +68,21 @@ class SyncConflictHandler : NSObject {
             } else {
                 changeFieldMap[change.changeField] = index
             }
+        }
+    }
+    
+    private func deleteEvent(change: Revision) {
+        if let remoteDelete = change as? RemoteChange {
+            guard let eventUUID = remoteDelete.eventID else {
+                return
+            }
+            delegate?.deletedEventOnRemote(eventID: eventUUID)
+        } else if let localDelete = change as? LocalChange {
+            guard let eventID = localDelete.eventID else {
+                return
+            }
+            delegate?.syncDeleteToParse(event: eventID.uuidString,
+                                        remoteChange: getRemoteChange(localChange: localDelete))
         }
     }
     

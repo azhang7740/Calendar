@@ -87,10 +87,10 @@
     }];
 }
 
-- (void)deleteEvent:(Event *)event
+- (void)deleteEvent:(NSString *)eventID
          completion:(RemoteEventChangeCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query whereKey:@"objectUUID" equalTo:[event.objectUUID UUIDString]];
+    [query whereKey:@"objectUUID" equalTo:eventID];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
             completion(false, @"Could not find the event.");
