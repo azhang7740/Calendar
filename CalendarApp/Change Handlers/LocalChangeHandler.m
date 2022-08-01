@@ -28,6 +28,24 @@
     return [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
 }
 
+- (NSArray<LocalChange *> *)fetchLocalChangesForEvent:(NSUUID *)eventID {
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
+    request.predicate = [NSPredicate predicateWithFormat:@"eventID == %@", eventID];
+    return [self.context executeFetchRequest:request error:nil];;
+}
+
+- (void)deleteLocalChange:(LocalChange *)change {
+    [self.context deleteObject:change];
+    [self.context save:nil];
+}
+
+- (void)deleteLocalChangeWithArray:(NSArray<LocalChange *> *)changes {
+    for (LocalChange *change in changes) {
+        [self.context deleteObject:change];
+    }
+    [self.context save:nil];
+}
+
 - (void)deleteAllLocalChanges {
     NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:LocalChange.fetchRequest];
     NSPersistentStoreCoordinator *persistentStoreCoordinator = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.persistentStoreCoordinator;

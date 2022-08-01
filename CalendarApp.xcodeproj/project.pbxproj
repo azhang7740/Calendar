@@ -39,7 +39,6 @@
 		41404AEB28944C0B00760287 /* TestRemoteChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AEA28944C0B00760287 /* TestRemoteChangeHandler.swift */; };
 		41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41404AED2894582C00760287 /* LocalChangeHandler.m */; };
 		41404AF02894CD7200760287 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AEF2894CD7200760287 /* Revision.swift */; };
-		41404AF22894D20200760287 /* RecentRevisionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF12894D20200760287 /* RecentRevisionHistory.swift */; };
 		41404AF42894FA1E00760287 /* UpdateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF32894FA1E00760287 /* UpdateBuilder.swift */; };
 		41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF72896E21700760287 /* RemoteChangeBuilder.swift */; };
 		41404AFA2896E22200760287 /* LocalChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF92896E22200760287 /* LocalChangeBuilder.swift */; };
@@ -145,7 +144,6 @@
 		41404AEC2894582C00760287 /* LocalChangeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalChangeHandler.h; sourceTree = "<group>"; };
 		41404AED2894582C00760287 /* LocalChangeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalChangeHandler.m; sourceTree = "<group>"; };
 		41404AEF2894CD7200760287 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
-		41404AF12894D20200760287 /* RecentRevisionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentRevisionHistory.swift; sourceTree = "<group>"; };
 		41404AF32894FA1E00760287 /* UpdateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBuilder.swift; sourceTree = "<group>"; };
 		41404AF72896E21700760287 /* RemoteChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteChangeBuilder.swift; sourceTree = "<group>"; };
 		41404AF92896E22200760287 /* LocalChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChangeBuilder.swift; sourceTree = "<group>"; };
@@ -225,9 +223,9 @@
 			children = (
 				41B7F552288B5DD600030027 /* EventSyncHandler.h */,
 				41B7F553288B5DD600030027 /* EventSyncHandler.m */,
-				41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */,
-				41B7F555288EF7DE00030027 /* NetworkHandler.swift */,
 				41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */,
+				41B7F555288EF7DE00030027 /* NetworkHandler.swift */,
+				41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */,
 			);
 			path = "Logic Handlers";
 			sourceTree = "<group>";
@@ -338,7 +336,6 @@
 			children = (
 				41404AEF2894CD7200760287 /* Revision.swift */,
 				413F41522891DD1B00D0EE6E /* RemoteChange.swift */,
-				41404AF12894D20200760287 /* RecentRevisionHistory.swift */,
 				41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */,
 				41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */,
 				413F41412891A40E00D0EE6E /* NSDate+Midnight.h */,
@@ -729,7 +726,6 @@
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
-				41404AF22894D20200760287 /* RecentRevisionHistory.swift in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
 				41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,

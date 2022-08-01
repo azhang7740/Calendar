@@ -11,7 +11,7 @@
 
 @implementation ParseRevisionBuilder
 
-- (RecentRevisionHistory *)getRevisionfromParseRevision:(ParseRevisionHistory *)parseRevision
+- (NSArray<RemoteChange *> *)getRevisionfromParseRevision:(ParseRevisionHistory *)parseRevision
                                        mostRecentUpdate:(NSDate *)date {
     PFQuery *remoteChangeQuery = [parseRevision.remoteChanges query];
     [remoteChangeQuery includeKey:@"objectId"];
@@ -26,18 +26,14 @@
     ParseChangeBuilder *builder = [[ParseChangeBuilder alloc] init];
     NSArray<RemoteChange *> *remoteChanges = [builder getChangeFromParseChangeArray:[remoteChangeQuery findObjects]];
     
-    RecentRevisionHistory *newRevision = [[RecentRevisionHistory alloc] init];
-    newRevision.objectUUID = [[NSUUID alloc] initWithUUIDString:parseRevision.objectId];
-    newRevision.remoteChanges = remoteChanges;
-    
-    return newRevision;
+    return remoteChanges;
 }
 
-- (NSMutableArray<RecentRevisionHistory *> *)getRevisionsFromParseRevisionArray:(NSArray<ParseRevisionHistory *> *)parseRevisions
+- (NSMutableArray<NSArray<RemoteChange *> *> *)getRevisionsFromParseRevisionArray:(NSArray<ParseRevisionHistory *> *)parseRevisions
                                                                mostRecentUpdate:(NSDate *)date {
-    NSMutableArray<RecentRevisionHistory *> *canonicalRevisions = [[NSMutableArray alloc] init];
+    NSMutableArray<NSArray<RemoteChange *> *> *canonicalRevisions = [[NSMutableArray alloc] init];
     for (ParseRevisionHistory *revisionHistory in parseRevisions) {
-        RecentRevisionHistory *newRevision = [self getRevisionfromParseRevision:revisionHistory
+        NSArray<RemoteChange *> *newRevision = [self getRevisionfromParseRevision:revisionHistory
                                                                mostRecentUpdate:date];
         [canonicalRevisions addObject:newRevision];
     }

@@ -14,7 +14,10 @@ NS_ASSUME_NONNULL_BEGIN
 @interface LocalChangeHandler : NSObject
 
 - (NSArray<LocalChange *> *)fetchAllLocalChanges;
+- (NSArray<LocalChange *> *)fetchLocalChangesForEvent:(NSUUID *)eventID;
 - (void)deleteAllLocalChanges;
+- (void)deleteLocalChange:(LocalChange *)change;
+- (void)deleteLocalChangeWithArray:(NSArray<LocalChange *> *)changes;
 - (void)saveNewLocalChange:(Event *)oldEvent
               updatedEvent:(Event *)newEvent;
 

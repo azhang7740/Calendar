@@ -29,8 +29,7 @@
             completion(false, nil, @"Something went wrong.");
         } else {
             ParseRevisionBuilder *builder = [[ParseRevisionBuilder alloc] init];
-            NSMutableArray<RecentRevisionHistory *> *recentRevisions =
-            (NSMutableArray<RecentRevisionHistory *> *)
+            NSMutableArray<NSArray<RemoteChange *> *> *recentRevisions =
             [builder getRevisionsFromParseRevisionArray:revisionHistories mostRecentUpdate:date];
             completion(true, recentRevisions, nil);
         }

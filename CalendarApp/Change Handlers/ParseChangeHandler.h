@@ -9,11 +9,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@class RecentRevisionHistory;
 @class RemoteChange;
 
 typedef void (^ChangeQueryCompletion)(BOOL success,
-                                      NSMutableArray <RecentRevisionHistory *> * _Nullable revisionHistories,
+                                      NSMutableArray <NSArray<RemoteChange *> *> * _Nullable revisionHistories,
                                       NSString * _Nullable error);
 typedef void (^ChangeActionCompletion)(BOOL success,
                                       NSString * _Nullable error);

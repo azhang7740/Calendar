@@ -13,9 +13,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ParseRevisionBuilder : NSObject
 
-- (RecentRevisionHistory *)getRevisionfromParseRevision:(ParseRevisionHistory *)parseRevision
+- (NSArray<RemoteChange *> *)getRevisionfromParseRevision:(ParseRevisionHistory *)parseRevision
                                        mostRecentUpdate:(NSDate *)date;
-- (NSMutableArray<RecentRevisionHistory *> *)getRevisionsFromParseRevisionArray:(NSArray<ParseRevisionHistory *> *)parseRevisions
+- (NSMutableArray<NSArray<RemoteChange *> *> *)getRevisionsFromParseRevisionArray:(NSArray<ParseRevisionHistory *> *)parseRevisions
                                                                mostRecentUpdate:(NSDate *)date;
 
 @end

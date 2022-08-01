@@ -54,15 +54,13 @@
     }
     [self.parseChangeHandler queryChangesAfterUpdateDate:lastUpdated
                                               completion:^(BOOL success,
-                                                           NSMutableArray <RecentRevisionHistory *> * _Nullable revisionHistories,
+                                                           NSMutableArray <NSArray<RemoteChange *> *> * _Nullable revisionHistories,
                                                            NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         } else {
-            NSArray<LocalChange *> *localChanges = [self.localChangeHandler fetchAllLocalChanges];
-
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
-            [conflictHandler getChangesToSyncWithRevisionHistories:revisionHistories localChanges:localChanges];
+            [conflictHandler syncChanges];
             [self.localChangeHandler deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }

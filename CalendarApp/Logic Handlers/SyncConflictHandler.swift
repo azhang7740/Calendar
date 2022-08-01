@@ -9,80 +9,74 @@ import Foundation
 
 @objc
 public protocol SyncRemoteChangesDelegate {
-    func deletedEventOnRemote()
-    func updatedEventOnRemote()
-    func createdEventOnRemote()
+    func deletedEventOnRemote(event: Event)
+    func updatedEventOnRemote(event: Event)
+    func createdEventOnRemote(event: Event)
 }
 
 @objcMembers
 class SyncConflictHandler : NSObject {
     weak var delegate: SyncRemoteChangesDelegate?
-    private var revisionHistories: [RecentRevisionHistory]
+    private var revisionHistories: [[Revision]]
+    private let localChangeHandler = LocalChangeHandler()
+    private let parseChangeHandler = ParseChangeHandler()
     
-    init(histories: [RecentRevisionHistory]) {
+    init(histories: [[RemoteChange]]) {
         revisionHistories = histories
     }
     
-    func getChangesToSync(revisionHistories: [RecentRevisionHistory],
-                          localChanges: [LocalChange]) {
-        for change in localChanges {
-            switch (change.changeType) {
-            case .Delete:
-                deleteEvent(localChange: change)
-                break;
-            case .Create:
-                createEvent(localChange: change)
-                break;
-            case .Update:
-                addUpdate(localChange: change)
-                break;
-            case .NoChange:
-                break;
-            }
-        }
+    func syncChanges() {
         
-        resolveConflicts()
     }
     
-    private func resolveConflicts() {
-        for history in revisionHistories {
-            if history.remoteChanges.isEmpty {
-                addAllLocalChanges(localChanges: history.localChanges)
-            } else if history.localChanges.isEmpty {
-                syncMostRecentRemote(remoteChanges: history.remoteChanges)
+    private func addLocalChanges() {
+        for historyIndex in 0...revisionHistories.count - 1 {
+            guard let eventID = revisionHistories[historyIndex][0].eventID else {
+                break
+            }
+            revisionHistories[historyIndex].append(contentsOf: localChangeHandler.fetchLocalChanges(forEvent: eventID))
+            revisionHistories[historyIndex].sort(by: { $0.timestamp < $1.timestamp })
+        }
+    }
+    
+    private func checkChanges() {
+        for eventHistory in revisionHistories {
+            if eventHistory.count == 1 &&
+                eventHistory[0].changeType == .Create {
+                // create action
+            } else if eventHistory.count == 1 &&
+                        eventHistory[0].changeType == .Delete {
+                // delete action
             } else {
-                resolveUpdateConflicts()
+                processUpdateChanges(eventChanges: eventHistory)
             }
         }
     }
     
-    private func resolveUpdateConflicts() {
-        
+    private func processUpdateChanges(eventChanges: [Revision]) {
+        var changeFieldMap = [ChangeField: Int]()
+        for (index, change) in eventChanges.enumerated() {
+            if let previousChangeIndex = changeFieldMap[change.changeField] {
+                deletePreviousRevision(change: eventChanges[previousChangeIndex])
+                changeFieldMap[change.changeField] = index
+            } else {
+                changeFieldMap[change.changeField] = index
+            }
+        }
     }
     
-    private func addAllLocalChanges(localChanges: [LocalChange]) {
-        
-    }
-    
-    private func syncMostRecentRemote(remoteChanges: [RemoteChange]) {
-
-    }
-    
-    private func addUpdate(localChange: LocalChange) {
-        
-    }
-    
-    private func deleteEvent(localChange: LocalChange) {
-        
-    }
-    
-    private func createEvent(localChange: LocalChange) {
-
-    }
-    
-    private func getIndex(eventID: UUID) -> Int? {
-        revisionHistories.enumerated().first { element in
-            element.element.objectUUID == eventID
-        }?.offset
+    private func deletePreviousRevision(change: Revision) {
+        if let remoteChange = change as? RemoteChange {
+            guard let parseID = remoteChange.parseID else {
+                return
+            }
+            parseChangeHandler.deleteParseChange(parseID) { success, error in
+                if (!success) {
+                    // TODO: error handling
+                }
+            }
+        } else if let localChange = change as? LocalChange {
+            localChangeHandler.delete(localChange)
+        }
     }
 }
