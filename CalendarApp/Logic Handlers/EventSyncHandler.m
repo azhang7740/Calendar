@@ -62,8 +62,8 @@
             NSArray<LocalChange *> *localChanges = [self.localChangeHandler fetchAllLocalChanges];
 
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
-            NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithRevisionHistories:revisionHistories localChanges:localChanges];
-            [self syncLocalChanges:keptChanges];
+            [conflictHandler getChangesToSyncWithRevisionHistories:revisionHistories localChanges:localChanges];
+//            [self syncLocalChanges:keptChanges];
             [self.localChangeHandler deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
@@ -74,27 +74,30 @@
     self.isSynced = false;
 }
 
-- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
-    for (LocalChange *change in localChanges) {
-        [self syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
-    }
-}
+//- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
+//    for (LocalChange *change in localChanges) {
+//        [self syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
+//    }
+//}
 
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {
-    RemoteChange *newChange = [[RemoteChange alloc] initWithChangeDate:[NSDate date]];
-    newChange.oldEvent = oldEvent;
-    newChange.updatedEvent = newEvent;
+    RemoteChangeBuilder *builder = [[RemoteChangeBuilder alloc] initWithFirstEvent:oldEvent
+                                                                      updatedEvent:newEvent
+                                                                        updateDate:[NSDate date]];
+    NSArray<RemoteChange *> *remoteChanges = [builder buildRemoteChanges];
     
-    if (newChange.changeType == ChangeTypeCreate) {
+    if (remoteChanges.count == 1 && remoteChanges[0].changeType == ChangeTypeCreate) {
         [self syncNewEventToParse:newEvent
-                     remoteChange:newChange];
-    } else if (newChange.changeType == ChangeTypeDelete) {
+                     remoteChange:remoteChanges[0]];
+    } else if (remoteChanges.count == 1 && remoteChanges[0].changeType == ChangeTypeDelete) {
         [self syncDeleteToParse:oldEvent
-                   remoteChange:newChange];
+                   remoteChange:remoteChanges[0]];
     } else {
-        [self syncUpdateToParse:newEvent
-                   remoteChange:newChange];
+        [self syncUpdateToParse:newEvent];
+        for (RemoteChange *change in remoteChanges) {
+            [self syncRemoteChangeToParse:change];
+        }
     }
 }
 
@@ -113,7 +116,7 @@
         if (!success) {
             // TODO: Error handling
         } else {
-            [self.parseChangeHandler addNewRevisionHistory:newChange.objectUUID
+            [self.parseChangeHandler addNewRevisionHistory:newChange.eventID
                                                     change:newChange
                                                 completion:^(BOOL success, NSString * _Nullable error) {
                 if (!success) {
@@ -130,7 +133,7 @@
         if (!success) {
             // TODO: Error handling
         } else {
-            [self.parseChangeHandler deleteRevisionHistory:newChange.objectUUID
+            [self.parseChangeHandler deleteRevisionHistory:newChange.eventID
                                                 completion:^(BOOL success, NSString * _Nullable error) {
                 if (!success) {
                     // TODO: save as local change?
@@ -140,18 +143,19 @@
     }];
 }
 
-- (void)syncUpdateToParse:(Event *)event
-             remoteChange:(RemoteChange *)newChange{
+- (void)syncUpdateToParse:(Event *)event {
     [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
-        } else {
-            [self.parseChangeHandler addNewParseChange:newChange
-                                            completion:^(BOOL success, NSString * _Nullable error) {
-                if (!success) {
-                    // TODO: save as local change?
-                }
-            }];
+        }
+    }];
+}
+
+- (void)syncRemoteChangeToParse:(RemoteChange *)newChange {
+    [self.parseChangeHandler addNewParseChange:newChange
+                                    completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: save as local change?
         }
     }];
 }

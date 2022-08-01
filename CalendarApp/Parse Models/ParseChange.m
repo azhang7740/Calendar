@@ -15,8 +15,9 @@
 @dynamic createdAt;
 
 @dynamic timestamp;
-@dynamic oldEvent;
-@dynamic updatedEvent;
+@dynamic changeType;
+@dynamic changeField;
+@dynamic updatedField;
 
 + (nonnull NSString *)parseClassName {
     return @"RemoteChange";

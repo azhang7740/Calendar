@@ -16,8 +16,10 @@
     PFQuery *remoteChangeQuery = [parseRevision.remoteChanges query];
     [remoteChangeQuery includeKey:@"objectId"];
     [remoteChangeQuery includeKey:@"timestamp"];
-    [remoteChangeQuery includeKey:@"oldEvent"];
-    [remoteChangeQuery includeKey:@"updatedEvent"];
+    [remoteChangeQuery includeKey:@"changeType"];
+    [remoteChangeQuery includeKey:@"changeField"];
+    [remoteChangeQuery includeKey:@"updatedField"];
+    [remoteChangeQuery includeKey:@"objectUUID"];
     [remoteChangeQuery orderByAscending:@"timestamp"];
     [remoteChangeQuery whereKey:@"updatedEvent" greaterThan:date];
     

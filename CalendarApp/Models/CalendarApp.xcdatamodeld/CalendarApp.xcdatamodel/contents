@@ -14,13 +14,14 @@
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
     <entity name="LocalChange" representedClassName="LocalChange" syncable="YES">
-        <attribute name="eventUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="oldEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
+        <attribute name="changeField" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="changeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="eventID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="updatedEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
+        <attribute name="updatedField" optional="YES" attributeType="String"/>
     </entity>
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="194"/>
-        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="89"/>
+        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="104"/>
     </elements>
 </model>

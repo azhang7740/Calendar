@@ -19,8 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) NSDate *createdAt;
 
 @property (nonatomic) NSDate *timestamp;
-@property (nonatomic) ParseArchivedEvent *oldEvent;
-@property (nonatomic) ParseArchivedEvent *updatedEvent;
+@property (nonatomic) NSNumber *changeType;
+@property (nonatomic) NSNumber *changeField;
+@property (nonatomic) NSString * updatedField;
 
 @end
 

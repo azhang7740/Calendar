@@ -12,6 +12,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface FetchEventHandler : NSObject <EventHandler>
 
+- (void)updateEvent:(Event *)oldEvent
+           newEvent:(Event *)updatedEvent
+         completion:(RemoteEventChangeCompletion)completion;
+
 @end
 
 NS_ASSUME_NONNULL_END

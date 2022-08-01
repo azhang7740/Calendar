@@ -38,6 +38,11 @@
 		413F41552891E1F200D0EE6E /* EventSyncHandlerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 413F41542891E1F200D0EE6E /* EventSyncHandlerTests.swift */; };
 		41404AEB28944C0B00760287 /* TestRemoteChangeHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AEA28944C0B00760287 /* TestRemoteChangeHandler.swift */; };
 		41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 41404AED2894582C00760287 /* LocalChangeHandler.m */; };
+		41404AF02894CD7200760287 /* Revision.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AEF2894CD7200760287 /* Revision.swift */; };
+		41404AF22894D20200760287 /* RecentRevisionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF12894D20200760287 /* RecentRevisionHistory.swift */; };
+		41404AF42894FA1E00760287 /* UpdateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF32894FA1E00760287 /* UpdateBuilder.swift */; };
+		41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF72896E21700760287 /* RemoteChangeBuilder.swift */; };
+		41404AFA2896E22200760287 /* LocalChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF92896E22200760287 /* LocalChangeBuilder.swift */; };
 		41AC97DE2891E7E3000FF838 /* TestEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */; };
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* Event.swift */; };
@@ -56,7 +61,6 @@
 		41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */; };
 		41B7F56E28906C3800030027 /* EventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56D28906C3800030027 /* EventTransformer.swift */; };
 		41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */; };
-		41D17EDD28921A3400EE4EEE /* RecentRevisionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDC28921A3400EE4EEE /* RecentRevisionHistory.swift */; };
 		41D17EE02892254300EE4EEE /* ParseRevisionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDF2892254300EE4EEE /* ParseRevisionBuilder.m */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
@@ -141,6 +145,11 @@
 		41404AEA28944C0B00760287 /* TestRemoteChangeHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRemoteChangeHandler.swift; sourceTree = "<group>"; };
 		41404AEC2894582C00760287 /* LocalChangeHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalChangeHandler.h; sourceTree = "<group>"; };
 		41404AED2894582C00760287 /* LocalChangeHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocalChangeHandler.m; sourceTree = "<group>"; };
+		41404AEF2894CD7200760287 /* Revision.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Revision.swift; sourceTree = "<group>"; };
+		41404AF12894D20200760287 /* RecentRevisionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentRevisionHistory.swift; sourceTree = "<group>"; };
+		41404AF32894FA1E00760287 /* UpdateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBuilder.swift; sourceTree = "<group>"; };
+		41404AF72896E21700760287 /* RemoteChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteChangeBuilder.swift; sourceTree = "<group>"; };
+		41404AF92896E22200760287 /* LocalChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChangeBuilder.swift; sourceTree = "<group>"; };
 		41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4EC2885FDC800030027 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -168,7 +177,6 @@
 		41B7F56D28906C3800030027 /* EventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTransformer.swift; sourceTree = "<group>"; };
 		41D17ED928920B1600EE4EEE /* ParseChangeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeBuilder.h; sourceTree = "<group>"; };
 		41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChangeBuilder.m; sourceTree = "<group>"; };
-		41D17EDC28921A3400EE4EEE /* RecentRevisionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentRevisionHistory.swift; sourceTree = "<group>"; };
 		41D17EDE2892254300EE4EEE /* ParseRevisionBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseRevisionBuilder.h; sourceTree = "<group>"; };
 		41D17EDF2892254300EE4EEE /* ParseRevisionBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseRevisionBuilder.m; sourceTree = "<group>"; };
 		41E2CF632880C9A20077F173 /* Keys.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Keys.plist; sourceTree = "<group>"; };
@@ -330,8 +338,9 @@
 		413DE55528762F4200CCF8E1 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				41404AEF2894CD7200760287 /* Revision.swift */,
 				413F41522891DD1B00D0EE6E /* RemoteChange.swift */,
-				41D17EDC28921A3400EE4EEE /* RecentRevisionHistory.swift */,
+				41404AF12894D20200760287 /* RecentRevisionHistory.swift */,
 				41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */,
 				41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */,
 				413F41412891A40E00D0EE6E /* NSDate+Midnight.h */,
@@ -375,6 +384,9 @@
 				41D17EDF2892254300EE4EEE /* ParseRevisionBuilder.m */,
 				41404AEC2894582C00760287 /* LocalChangeHandler.h */,
 				41404AED2894582C00760287 /* LocalChangeHandler.m */,
+				41404AF72896E21700760287 /* RemoteChangeBuilder.swift */,
+				41404AF92896E22200760287 /* LocalChangeBuilder.swift */,
+				41404AF32894FA1E00760287 /* UpdateBuilder.swift */,
 			);
 			path = "Change Handlers";
 			sourceTree = "<group>";
@@ -694,11 +706,11 @@
 			files = (
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
-				41D17EDD28921A3400EE4EEE /* RecentRevisionHistory.swift in Sources */,
 				41B7F554288B5DD600030027 /* EventSyncHandler.m in Sources */,
 				41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
 				41B7F559288EFF7900030027 /* FetchEventHandler.m in Sources */,
+				41404AF02894CD7200760287 /* Revision.swift in Sources */,
 				41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */,
 				41B7F544288886DF00030027 /* CoreDataEventHandler.m in Sources */,
 				41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */,
@@ -708,6 +720,7 @@
 				41B7F4ED2885FDC800030027 /* Event.swift in Sources */,
 				410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */,
 				41B7F54F2889AF5800030027 /* CoreDataEventBuilder.m in Sources */,
+				41404AFA2896E22200760287 /* LocalChangeBuilder.swift in Sources */,
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */,
 				41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */,
@@ -716,14 +729,17 @@
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
+				41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
+				41404AF22894D20200760287 /* RecentRevisionHistory.swift in Sources */,
 				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
 				41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				413F414E2891DBDF00D0EE6E /* ParseChange.m in Sources */,
+				41404AF42894FA1E00760287 /* UpdateBuilder.swift in Sources */,
 				413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */,
 				41B7F53D288868E800030027 /* CalendarApp.xcdatamodeld in Sources */,
 				413F41532891DD1B00D0EE6E /* RemoteChange.swift in Sources */,

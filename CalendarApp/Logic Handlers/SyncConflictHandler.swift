@@ -17,7 +17,6 @@ public protocol SyncRemoteChangesDelegate {
 @objcMembers
 class SyncConflictHandler : NSObject {
     weak var delegate: SyncRemoteChangesDelegate?
-    private var keptChanges = [LocalChange]()
     private var revisionHistories: [RecentRevisionHistory]
     
     init(histories: [RecentRevisionHistory]) {
@@ -25,20 +24,24 @@ class SyncConflictHandler : NSObject {
     }
     
     func getChangesToSync(revisionHistories: [RecentRevisionHistory],
-                          localChanges: [LocalChange]) -> [LocalChange] {
+                          localChanges: [LocalChange]) {
         for change in localChanges {
-            if change.oldEvent == nil {
-                createEvent(localChange: change)
-            } else if change.updatedEvent == nil {
+            switch (change.changeType) {
+            case .Delete:
                 deleteEvent(localChange: change)
-            } else {
+                break;
+            case .Create:
+                createEvent(localChange: change)
+                break;
+            case .Update:
                 addUpdate(localChange: change)
+                break;
+            case .NoChange:
+                break;
             }
         }
         
         resolveConflicts()
-        
-        return keptChanges
     }
     
     private func resolveConflicts() {
@@ -58,43 +61,23 @@ class SyncConflictHandler : NSObject {
     }
     
     private func addAllLocalChanges(localChanges: [LocalChange]) {
-        for change in localChanges {
-            keptChanges.append(change)
-        }
+        
     }
     
     private func syncMostRecentRemote(remoteChanges: [RemoteChange]) {
-        guard let mostRecentChange = remoteChanges.max(by: { $0.timestamp < $1.timestamp }) else {
-            return
-        }
-        if (mostRecentChange.oldEvent == nil) {
-            delegate?.createdEventOnRemote()
-        } else if (mostRecentChange.updatedEvent == nil) {
-            delegate?.deletedEventOnRemote()
-        } else {
-            delegate?.updatedEventOnRemote()
-        }
+
     }
     
     private func addUpdate(localChange: LocalChange) {
-        guard let oldEvent = localChange.oldEvent,
-              let index = getIndex(eventID: oldEvent.objectUUID) else {
-            return
-        }
-        revisionHistories[index].localChanges.append(localChange)
+        
     }
     
     private func deleteEvent(localChange: LocalChange) {
-        guard let oldEvent = localChange.oldEvent,
-              let index = getIndex(eventID: oldEvent.objectUUID) else {
-            return
-        }
-        revisionHistories.remove(at: index)
-        keptChanges.append(localChange)
+        
     }
     
     private func createEvent(localChange: LocalChange) {
-        keptChanges.append(localChange)
+
     }
     
     private func getIndex(eventID: UUID) -> Int? {

@@ -64,6 +64,19 @@
     }];
 }
 
+- (void)updateEvent:(Event *)oldEvent
+           newEvent:(Event *)updatedEvent
+         completion:(RemoteEventChangeCompletion)completion {
+    [self.coreDataEventHandler updateEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            completion(false, error);
+        } else {
+            completion (true, nil);
+            [self.eventSyncHandler didChangeEvent:oldEvent updatedEvent:updatedEvent];
+        }
+    }];
+}
+
 - (void)uploadWithEvent:(nonnull Event *)newEvent
              completion:(nonnull RemoteEventChangeCompletion)completion {
     [self.coreDataEventHandler uploadWithEvent:newEvent completion:^(BOOL success, NSString * _Nullable error) {

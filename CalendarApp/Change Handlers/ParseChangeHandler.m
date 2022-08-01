@@ -45,53 +45,44 @@
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object,
                                                  NSError * _Nullable error) {
         if (error) {
-            completion(false, @"Something went wrong");
-        } else {
-            ParseRevisionHistory *history = (ParseRevisionHistory *)object;
-            PFRelation *changesRelation = [history relationForKey:@"remoteChanges"];
-            PFQuery *queryChanges = [changesRelation query];
-            [queryChanges setLimit:100];
-            [queryChanges includeKey:@"oldEvent"];
-            [queryChanges includeKey:@"newEvent"];
-            NSArray<ParseChange *> *changes = [queryChanges findObjects];
-            [self deleteParseChangesFromArray:changes];
-            while (changes.count == 100) {
-                changes = [queryChanges findObjects];
-                [self deleteParseChangesFromArray:changes];
+            completion(false, @"Couldn't find RevisionHistory.");
+            return;
+        }
+        ParseRevisionHistory *history = (ParseRevisionHistory *)object;
+        PFRelation *changesRelation = [history relationForKey:@"remoteChanges"];
+        PFQuery *queryChanges = [changesRelation query];
+        [queryChanges setLimit:10];
+        [queryChanges findObjectsInBackgroundWithBlock:^(NSArray<ParseChange *> * _Nullable changes,
+                                                         NSError * _Nullable error) {
+            if (error) {
+                completion(false, @"Couldn't query RemoteChanges.");
+                return;
             }
+            [self deleteParseChangesFromArray:changes];
             [history deleteInBackground];
             completion(true, nil);
-        }
+        }];
     }];
-}
-
-- (ParseChange *)queryParseChange:(NSString *)changeID {
-    PFQuery *query = [PFQuery queryWithClassName:@"RemoteChange"];
-    [query includeKey:@"oldEvent"];
-    [query includeKey:@"newEvent"];
-    ParseChange *change = [query getObjectWithId:changeID];
-    return change;
 }
 
 - (void)deleteParseChangesFromArray:(NSArray<ParseChange *> *)changes {
     for (ParseChange *change in changes) {
-        [change.oldEvent delete];
-        [change.updatedEvent delete];
-        [change delete];
+        [change deleteInBackground];
     }
 }
 
 - (void)deleteParseChange:(NSString *)changeID
                completion:(ChangeActionCompletion)completion {
-    ParseChange *change = [self queryParseChange:changeID];
-    [change.oldEvent delete];
-    [change.updatedEvent delete];
-    [change deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (!succeeded) {
-            completion(false, @"Something went wrong.");
-        } else {
-            completion(true, nil);
-        }
+    PFQuery *query = [PFQuery queryWithClassName:@"RemoteChange"];
+    [query whereKey:@"objectId" equalTo:changeID];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+            if (!succeeded) {
+                completion(false, @"Something went wrong.");
+            } else {
+                completion(true, nil);
+            }
+        }];
     }];
 }
 
@@ -101,13 +92,18 @@
     ParseRevisionHistory *history = [[ParseRevisionHistory alloc] init];
     history.objectUUID = [eventID UUIDString];
     history.mostRecentUpdate = change.timestamp;
-    [history save];
-    [self addNewParseChange:change completion:^(BOOL success, NSString * _Nullable error) {
-        if (error) {
-            completion(false, @"Something went wrong.");
-        } else {
-            completion(true, nil);
+    [history saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+        if (!succeeded) {
+            completion(false, @"RevisionHistory was not saved.");
+            return;
         }
+        [self addNewParseChange:change completion:^(BOOL success, NSString * _Nullable error) {
+            if (error) {
+                completion(false, error);
+            } else {
+                completion(true, nil);
+            }
+        }];
     }];
 }
 
@@ -116,60 +112,60 @@
     PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
     [query includeKey:@"remoteChanges"];
     [query includeKey:@"mostRecentUpdate"];
-    [query whereKey:@"objectUUID" equalTo:[remoteChange.objectUUID UUIDString]];
-    ParseRevisionHistory *history = [query getFirstObject];
-    
-    if (!history) {
-        completion(false, @"RevisionHistory not found.");
-        return;
-    }
-    
-    ParseChange *change = [self getParseChangeFromRemoteChange:remoteChange];
-    [change saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
-        if (succeeded) {
-            PFRelation *changesRelation = [history relationForKey:@"remoteChanges"];
-            [changesRelation addObject:change];
-            history.mostRecentUpdate = ([history.mostRecentUpdate compare:remoteChange.timestamp]
-                                        == NSOrderedAscending) ?
-            remoteChange.timestamp : history.mostRecentUpdate;
-            [history saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+    [query whereKey:@"objectUUID" equalTo:[remoteChange.eventID UUIDString]];
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
+        if (error) {
+            completion(false, @"Couldn't find RevisionHistory.");
+            return;
+        }
+        ParseRevisionHistory *history = (ParseRevisionHistory *)object;
+        PFRelation *changesRelation = [history relationForKey:@"remoteChanges"];
+        PFQuery *changeQuery = [changesRelation query];
+        [changeQuery includeKey:@"changeField"];
+        
+        NSNumber *changeNumber = [[NSNumber alloc] initWithInt:(int)remoteChange.changeField];
+        [changeQuery whereKey:@"changeField" equalTo:changeNumber];
+        [changeQuery findObjectsInBackgroundWithBlock:^(NSArray<ParseChange *> * _Nullable parseChanges,
+                                                        NSError * _Nullable error) {
+            if (error) {
+                completion(false, @"Couldn't query teh changes.");
+            } else if (parseChanges.count != 0) {
+                for (ParseChange *parseChange in parseChanges) {
+                    [parseChange deleteInBackground];
+                }
+            }
+            ParseChange *change = [self getParseChangeFromRemoteChange:remoteChange];
+            [change saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (succeeded) {
-                    completion(true, nil);
+                    [changesRelation addObject:change];
+                    history.mostRecentUpdate = ([history.mostRecentUpdate compare:remoteChange.timestamp]
+                                                == NSOrderedAscending) ?
+                    remoteChange.timestamp : history.mostRecentUpdate;
+                    [history saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
+                        if (succeeded) {
+                            completion(true, nil);
+                        } else {
+                            completion(false, @"Something went wrong.");
+                        }
+                    }];
                 } else {
-                    completion(false, @"Something went wrong.");
+                    completion(false, @"Failed to save.");
                 }
             }];
-        } else {
-            completion(false, @"Failed to save.");
-        }
+        }];
     }];
 }
 
 - (ParseChange *)getParseChangeFromRemoteChange:(RemoteChange *)remoteChange {
     ParseChange *parseChange = [[ParseChange alloc] init];
-    parseChange.objectUUID = [remoteChange.objectUUID UUIDString];
-    parseChange.timestamp = remoteChange.timestamp;
     
-    parseChange.oldEvent = (remoteChange.oldEvent) ?
-    [self getArchivedEventFromEvent:remoteChange.oldEvent] : nil;
-    parseChange.updatedEvent = (remoteChange.updatedEvent) ?
-    [self getArchivedEventFromEvent:remoteChange.updatedEvent] : nil;
+    parseChange.objectUUID = [remoteChange.eventID UUIDString];
+    parseChange.timestamp = remoteChange.timestamp;
+    parseChange.changeType = [[NSNumber alloc] initWithInt:(int)remoteChange.changeType];
+    parseChange.changeField = [[NSNumber alloc] initWithInt:(int)remoteChange.changeField];
+    parseChange.updatedField = remoteChange.updatedField;
     
     return parseChange;
-}
-
-- (ParseArchivedEvent *)getArchivedEventFromEvent:(Event *)uploadEvent {
-    ParseArchivedEvent *archivedEvent = [[ParseArchivedEvent alloc] init];
-    archivedEvent.objectUUID = [uploadEvent.objectUUID UUIDString];
-    archivedEvent.eventTitle = uploadEvent.eventTitle;
-    archivedEvent.author = [PFUser currentUser];
-    
-    archivedEvent.eventDescription = uploadEvent.eventDescription;
-    archivedEvent.location = uploadEvent.location;
-    archivedEvent.startDate = uploadEvent.startDate;
-    archivedEvent.endDate = uploadEvent.endDate;
-    
-    return archivedEvent;
 }
 
 @end

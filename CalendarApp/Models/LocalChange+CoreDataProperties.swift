@@ -15,9 +15,10 @@ extension LocalChange {
     @nonobjc public class func fetchRequest() -> NSFetchRequest<LocalChange> {
         return NSFetchRequest<LocalChange>(entityName: "LocalChange")
     }
-
-    @NSManaged public var oldEvent: Event?
-    @NSManaged public var updatedEvent: Event?
-    @NSManaged public var timestamp: Date?
-    @NSManaged public var eventUUID: UUID?
+    
+    @NSManaged public var eventID: UUID?
+    @NSManaged public var timestamp: Date
+    @NSManaged public var changeType: ChangeType
+    @NSManaged public var changeField: ChangeField
+    @NSManaged public var updatedField: String?
 }

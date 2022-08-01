@@ -90,10 +90,11 @@
     [self.scheduleView deleteCalendarEvent:event];
 }
 
-- (void)didUpdateEvent:(Event *)event
-     originalStartDate:(NSDate *)startDate
-       originalEndDate:(NSDate *)endDate {
-    [self.scheduleView updateCalendarEvent:event originalStartDate:startDate.midnight originalEndDate:endDate.midnight];
+- (void)didUpdateEvent:(Event *)oldEvent
+              newEvent:(Event *)updatedEvent {
+    [self.scheduleView updateCalendarEvent:updatedEvent
+                         originalStartDate:oldEvent.startDate.midnight
+                           originalEndDate:oldEvent.startDate.midnight];
 }
 
 - (void)didTapCancel {
@@ -116,16 +117,15 @@
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
-- (void)didTapChangeEvent:(Event *)event
-        originalStartDate:(NSDate *)startDate
-          originalEndDate:(NSDate *)endDate {
+- (void)didTapChangeEvent:(Event *)oldEvent
+                 newEvent:(Event *)updatedEvent {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.eventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.eventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {
-            self.objectIDToEvents[event.objectUUID] = event;
-            [self.scheduleView addEvent:event];
+            self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
+            [self.scheduleView addEvent:updatedEvent];
         }
     }];
 }

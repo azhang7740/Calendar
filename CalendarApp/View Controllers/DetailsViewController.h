@@ -14,9 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didTapClose;
 - (void)didDeleteEvent:(Event *)event;
-- (void)didUpdateEvent:(Event *)event
-     originalStartDate:(NSDate *)startDate
-       originalEndDate:(NSDate *)endDate;
+- (void)didUpdateEvent:(Event *)oldEvent
+              newEvent:(Event *)updatedEvent;
 
 @end
 

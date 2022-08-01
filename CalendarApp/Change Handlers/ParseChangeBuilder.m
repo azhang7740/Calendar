@@ -22,19 +22,21 @@
         return nil;
     }
     
-    if ((parseChange.oldEvent &&
-         ![parseChange.oldEvent isKindOfClass:ParseChange.class]) ||
-        (parseChange.updatedEvent &&
-         ![parseChange.updatedEvent isKindOfClass:ParseChange.class])) {
+    if ([parseChange.changeType intValue] > 3 ||
+        [parseChange.changeType intValue] < 1) {
         return nil;
     }
     
-    RemoteChange *remoteChange = [[RemoteChange alloc] initWithChangeDate:parseChange.timestamp];
-    remoteChange.parseID = parseChange.objectId;
+    if ([parseChange.changeField intValue] > 5 ||
+        [parseChange.changeField intValue] < 1) {
+        return nil;
+    }
     
-    ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
-    remoteChange.oldEvent = [builder getEventFromParseEvent:parseChange.oldEvent];
-    remoteChange.updatedEvent = [builder getEventFromParseEvent:parseChange.updatedEvent];
+    RemoteChange *remoteChange = [[RemoteChange alloc] initWithUpdatedDate:parseChange.timestamp];
+    remoteChange.parseID = parseChange.objectId;
+    remoteChange.changeType = [parseChange.changeType intValue];
+    remoteChange.changeField = [parseChange.changeField intValue];
+    remoteChange.updatedField = remoteChange.updatedField;
     
     return remoteChange;
 }
