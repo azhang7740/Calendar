@@ -52,7 +52,7 @@ class SyncConflictHandler : NSObject {
                 createNewEvent(change: eventHistory[0])
             } else if eventHistory.count == 1 &&
                         eventHistory[0].changeType == .Delete {
-                // delete action
+                deleteEvent(change: eventHistory[0])
             } else {
                 processUpdateChanges(eventChanges: eventHistory)
             }
@@ -60,6 +60,10 @@ class SyncConflictHandler : NSObject {
     }
     
     private func processUpdateChanges(eventChanges: [Revision]) {
+        guard let eventID = eventChanges[0].eventID else {
+            return
+        }
+        var event = coreDataEventHandler.queryEvent(from: eventID)
         var changeFieldMap = [ChangeField: Int]()
         for (index, change) in eventChanges.enumerated() {
             if let previousChangeIndex = changeFieldMap[change.changeField] {
@@ -68,7 +72,39 @@ class SyncConflictHandler : NSObject {
             } else {
                 changeFieldMap[change.changeField] = index
             }
+            event = applyChange(event: event, change: change)
         }
+    }
+    
+    private func applyChange(event: Event, change: Revision) -> Event {
+        let newEvent = Event(originalEvent: event)
+        guard let updatedField = change.updatedField else {
+            return newEvent
+        }
+        
+        switch change.changeField {
+        case .None:
+            break
+        case .Title:
+            newEvent.eventTitle = updatedField
+            break
+        case .Description:
+            newEvent.eventDescription = updatedField
+            break
+        case .Location:
+            newEvent.location = updatedField
+            break
+        case .StartDate:
+            let formatter = ISO8601DateFormatter()
+            newEvent.startDate = formatter.date(from: updatedField) ?? newEvent.startDate
+            break
+        case .EndDate:
+            let formatter = ISO8601DateFormatter()
+            newEvent.endDate = formatter.date(from: updatedField) ?? newEvent.endDate
+            break
+        }
+        
+        return newEvent
     }
     
     private func deleteEvent(change: Revision) {
