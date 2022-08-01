@@ -9,9 +9,14 @@ import Foundation
 
 @objc
 public protocol SyncRemoteChangesDelegate {
-    func deletedEventOnRemote(event: Event)
-    func updatedEventOnRemote(event: Event)
-    func createdEventOnRemote(event: Event)
+    func deletedEventOnRemote(eventID: UUID)
+    func updatedEventOnRemote(eventID: UUID)
+    func createdEventOnRemote(eventID: UUID)
+    
+    func syncNewEventToParse(event: Event, remoteChange: RemoteChange)
+    func syncDeleteToParse(event: Event, remoteChange: RemoteChange)
+    func syncUpdateToParse(event: Event)
+    func syncRemoteChangeToParse(remoteChange: RemoteChange)
 }
 
 @objcMembers
@@ -20,6 +25,7 @@ class SyncConflictHandler : NSObject {
     private var revisionHistories: [[Revision]]
     private let localChangeHandler = LocalChangeHandler()
     private let parseChangeHandler = ParseChangeHandler()
+    private let coreDataEventHandler = CoreDataEventHandler()
     
     init(histories: [[RemoteChange]]) {
         revisionHistories = histories
@@ -43,7 +49,7 @@ class SyncConflictHandler : NSObject {
         for eventHistory in revisionHistories {
             if eventHistory.count == 1 &&
                 eventHistory[0].changeType == .Create {
-                // create action
+                createNewEvent(change: eventHistory[0])
             } else if eventHistory.count == 1 &&
                         eventHistory[0].changeType == .Delete {
                 // delete action
@@ -65,6 +71,21 @@ class SyncConflictHandler : NSObject {
         }
     }
     
+    private func createNewEvent(change: Revision) {
+        if let remoteCreate = change as? RemoteChange {
+            guard let eventUUID = remoteCreate.eventID else {
+                return
+            }
+            delegate?.createdEventOnRemote(eventID: eventUUID)
+        } else if let localCreate = change as? LocalChange {
+            guard let eventID = localCreate.eventID else {
+                return
+            }
+            let event = coreDataEventHandler.queryEvent(from: eventID)
+            delegate?.syncNewEventToParse(event: event, remoteChange: getRemoteChange(localChange: localCreate))
+        }
+    }
+    
     private func deletePreviousRevision(change: Revision) {
         if let remoteChange = change as? RemoteChange {
             guard let parseID = remoteChange.parseID else {
@@ -78,5 +99,15 @@ class SyncConflictHandler : NSObject {
         } else if let localChange = change as? LocalChange {
             localChangeHandler.delete(localChange)
         }
+    }
+    
+    private func getRemoteChange(localChange: LocalChange) -> RemoteChange {
+        let remoteChange = RemoteChange(updatedDate: localChange.timestamp)
+        remoteChange.eventID = localChange.eventID
+        remoteChange.changeType = localChange.changeType
+        remoteChange.changeField = localChange.changeField
+        remoteChange.updatedField = localChange.updatedField
+        
+        return remoteChange
     }
 }
