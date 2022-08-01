@@ -382,8 +382,8 @@
 				41D17EDF2892254300EE4EEE /* ParseRevisionBuilder.m */,
 				41404AEC2894582C00760287 /* LocalChangeHandler.h */,
 				41404AED2894582C00760287 /* LocalChangeHandler.m */,
-				41404AF72896E21700760287 /* RemoteChangeBuilder.swift */,
 				41404AF92896E22200760287 /* LocalChangeBuilder.swift */,
+				41404AF72896E21700760287 /* RemoteChangeBuilder.swift */,
 				41404AF32894FA1E00760287 /* UpdateBuilder.swift */,
 			);
 			path = "Change Handlers";

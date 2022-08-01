@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 #import "CalendarApp-Swift.h"
 
-@interface LocalChangeHandler ()
+@interface LocalChangeHandler () <LocalChangeBuildDelegate>
 
 @property (nonatomic) NSManagedObjectContext *context;
 
@@ -39,22 +39,21 @@
     LocalChangeBuilder *builder = [[LocalChangeBuilder alloc] initWithFirstEvent:oldEvent
                                                                     updatedEvent:newEvent
                                                                       updateDate:[NSDate date]
-                                                                  managedContext:self.context];
+                                                                  managedContext:self.context
+                                                             localChangeDelegate:self];
     [builder saveLocalChanges];
 }
 
-- (void)didOfflineDelete:(Event *)event
-              completion:(void (^ _Nonnull)(Event *oldEvent))completion {
+- (void)didOfflineDeleteWithEvent:(Event *)event {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
     request.predicate = [NSPredicate predicateWithFormat:@"eventID == %@", event.objectUUID];
     NSArray<LocalChange *> *matchingChanges = [self.context executeFetchRequest:request error:nil];
     for (LocalChange *localChange in matchingChanges) {
         [self.context deleteObject:localChange];
     }
-    completion(event);
 }
 
-- (BOOL)didOfflineUpdate:(Event *)event {
+- (BOOL)wasAlreadyCreatedWithEvent:(Event *)event {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"LocalChange"];
     request.predicate = [NSPredicate predicateWithFormat:@"eventID == %@", event.objectUUID];
     NSArray<LocalChange *> *matchingChanges = [self.context executeFetchRequest:request error:nil];
@@ -62,7 +61,7 @@
         matchingChanges[0].changeType == ChangeTypeCreate) {
         [self.context deleteObject:matchingChanges[0]];
         return true;
-    }
+    } 
     return false;
 }
 

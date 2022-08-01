@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 @objc protocol CreateRevisionDelegate {
-    func createUpdateRevision() -> Revision
+    func createUpdateRevision(changeField: ChangeField) -> Revision
 }
 
 @objcMembers
@@ -52,7 +52,7 @@ class UpdateBuilder : NSObject {
     
     private func checkTitleChange() {
         if oldEvent.eventTitle != newEvent.eventTitle {
-            let revision = delegate.createUpdateRevision()
+            let revision = delegate.createUpdateRevision(changeField: .Title)
             revision.changeField = .Title
             revision.updatedField = newEvent.eventTitle
         }
@@ -60,7 +60,7 @@ class UpdateBuilder : NSObject {
     
     private func checkDescriptionChange() {
         if oldEvent.eventDescription != newEvent.eventDescription {
-            let revision = delegate.createUpdateRevision()
+            let revision = delegate.createUpdateRevision(changeField: .Description)
             revision.changeField = .Description
             revision.updatedField = newEvent.eventDescription
         }
@@ -68,7 +68,7 @@ class UpdateBuilder : NSObject {
     
     private func checkLocationChange() {
         if oldEvent.location != newEvent.location {
-            let revision = delegate.createUpdateRevision()
+            let revision = delegate.createUpdateRevision(changeField: .Location)
             revision.changeField = .Location
             revision.updatedField = newEvent.location
         }
@@ -76,7 +76,7 @@ class UpdateBuilder : NSObject {
     
     private func checkStartDateChange() {
         if oldEvent.startDate != newEvent.startDate {
-            let revision = delegate.createUpdateRevision()
+            let revision = delegate.createUpdateRevision(changeField: .StartDate)
             revision.changeField = .StartDate
             let formatter = ISO8601DateFormatter()
             revision.updatedField = formatter.string(from: newEvent.startDate)
@@ -85,7 +85,7 @@ class UpdateBuilder : NSObject {
     
     private func checkEndDateChange() {
         if oldEvent.endDate != newEvent.endDate {
-            let revision = delegate.createUpdateRevision()
+            let revision = delegate.createUpdateRevision(changeField: .EndDate)
             revision.changeField = .EndDate
             let formatter = ISO8601DateFormatter()
             revision.updatedField = formatter.string(from: newEvent.endDate)

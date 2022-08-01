@@ -13,7 +13,7 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol ComposeViewControllerDelegate
 
 - (void)didTapCancel;
-- (void) didTapChangeEvent:(Event *)oldEvent
+- (void) didTapChangeEvent:(Event * _Nullable )oldEvent
                   newEvent:(Event *)updatedEvent;
 
 @end

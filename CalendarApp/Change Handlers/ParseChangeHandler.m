@@ -128,7 +128,7 @@
         [changeQuery findObjectsInBackgroundWithBlock:^(NSArray<ParseChange *> * _Nullable parseChanges,
                                                         NSError * _Nullable error) {
             if (error) {
-                completion(false, @"Couldn't query teh changes.");
+                completion(false, @"Couldn't query the changes.");
             } else if (parseChanges.count != 0) {
                 for (ParseChange *parseChange in parseChanges) {
                     [parseChange deleteInBackground];

@@ -43,7 +43,7 @@ class RemoteChangeBuilder : NSObject, CreateRevisionDelegate {
         return allChanges
     }
     
-    func createUpdateRevision() -> Revision {
+    func createUpdateRevision(changeField: ChangeField) -> Revision {
         let newRemoteChange = createRemoteChange()
         newRemoteChange.changeType = .Update
         return newRemoteChange
