@@ -43,12 +43,16 @@ class SyncConflictHandler : NSObject {
         for change in changes {
             if change.changeType == .Create {
                 guard let eventID = change.eventID,
-                      let event = coreDataEventHandler.queryEvent(from: eventID)else {
+                      let event = coreDataEventHandler.queryEvent(from: eventID) else {
                     break
                 }
                 delegate?.syncNewEventToParse(event: event, remoteChange: getRemoteChange(localChange: change))
             } else if (change.changeType == .Delete) {
-                // sync deletes with parse
+                guard let eventID = change.eventID else {
+                    break
+                }
+                delegate?.syncDeleteToParse(event: eventID.uuidString,
+                                            remoteChange: getRemoteChange(localChange: change))
             }
         }
     }
@@ -68,10 +72,12 @@ class SyncConflictHandler : NSObject {
     
     private func checkChanges() {
         for eventHistory in revisionHistories {
-            if eventHistory.count == 1 &&
+            if let eventID = eventHistory[0].eventID,
+                eventHistory.count == 1 &&
                 eventHistory[0].changeType == .Create {
-                // check if exists in core data
-                createNewEvent(change: eventHistory[0])
+                if coreDataEventHandler.queryEvent(from: eventID) == nil {
+                    createNewEvent(change: eventHistory[0])
+                }
             } else if eventHistory.count == 1 &&
                         eventHistory[0].changeType == .Delete {
                 deleteEvent(change: eventHistory[0])
