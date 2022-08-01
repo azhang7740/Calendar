@@ -63,7 +63,6 @@
 
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
             [conflictHandler getChangesToSyncWithRevisionHistories:revisionHistories localChanges:localChanges];
-//            [self syncLocalChanges:keptChanges];
             [self.localChangeHandler deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
@@ -73,12 +72,6 @@
 - (void)didChangeOffline {
     self.isSynced = false;
 }
-
-//- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
-//    for (LocalChange *change in localChanges) {
-//        [self syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
-//    }
-//}
 
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {

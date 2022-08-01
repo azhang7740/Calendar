@@ -59,7 +59,6 @@
 		41B7F564288F14BD00030027 /* LocalChange+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */; };
 		41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */; };
 		41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */; };
-		41B7F56E28906C3800030027 /* EventTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56D28906C3800030027 /* EventTransformer.swift */; };
 		41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */; };
 		41D17EE02892254300EE4EEE /* ParseRevisionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDF2892254300EE4EEE /* ParseRevisionBuilder.m */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
@@ -174,7 +173,6 @@
 		41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalChange+CoreDataClass.swift"; sourceTree = "<group>"; };
 		41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalChange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncConflictHandler.swift; sourceTree = "<group>"; };
-		41B7F56D28906C3800030027 /* EventTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTransformer.swift; sourceTree = "<group>"; };
 		41D17ED928920B1600EE4EEE /* ParseChangeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeBuilder.h; sourceTree = "<group>"; };
 		41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChangeBuilder.m; sourceTree = "<group>"; };
 		41D17EDE2892254300EE4EEE /* ParseRevisionBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseRevisionBuilder.h; sourceTree = "<group>"; };
@@ -431,7 +429,6 @@
 				410A102A28774BE50023F523 /* ParseEventBuilder.m */,
 				41B7F54D2889AF5800030027 /* CoreDataEventBuilder.h */,
 				41B7F54E2889AF5800030027 /* CoreDataEventBuilder.m */,
-				41B7F56D28906C3800030027 /* EventTransformer.swift */,
 			);
 			path = "Event Builders";
 			sourceTree = "<group>";
@@ -725,7 +722,6 @@
 				413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */,
 				41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
-				41B7F56E28906C3800030027 /* EventTransformer.swift in Sources */,
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
