@@ -36,8 +36,9 @@
     }];
 }
 
-- (void)deleteRevisionHistory:(NSUUID *)eventID
-                   completion:(ChangeActionCompletion)completion {
+- (void)partiallyDeleteRevisionHistory:(NSUUID *)eventID
+                          remoteChange:(RemoteChange *)change
+                            completion:(ChangeActionCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
     [query includeKey:@"remoteChanges"];
     [query whereKey:@"objectUUID" equalTo:[eventID UUIDString]];
@@ -58,8 +59,13 @@
                 return;
             }
             [self deleteParseChangesFromArray:changes];
-            [history deleteInBackground];
-            completion(true, nil);
+            [self addNewParseChange:change completion:^(BOOL success, NSString * _Nullable error) {
+                if (error) {
+                    completion(false, error);
+                } else {
+                    completion(true, nil);
+                }
+            }];
         }];
     }];
 }

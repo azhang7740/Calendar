@@ -125,13 +125,14 @@
 }
 
 - (void)syncDeleteToParseWithEvent:(NSString *)eventID
-                      remoteChange:(RemoteChange *)newChange{
+                      remoteChange:(RemoteChange *)newChange {
     [self.parseEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         } else {
-            [self.parseChangeHandler deleteRevisionHistory:newChange.eventID
-                                                completion:^(BOOL success, NSString * _Nullable error) {
+            [self.parseChangeHandler partiallyDeleteRevisionHistory:newChange.eventID
+                                                       remoteChange:newChange
+                                                         completion:^(BOOL success, NSString * _Nullable error) {
                 if (!success) {
                     // TODO: save as local change?
                 }
