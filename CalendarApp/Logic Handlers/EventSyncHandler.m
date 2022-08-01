@@ -7,6 +7,7 @@
 
 #import "EventSyncHandler.h"
 #import "ParseEventHandler.h"
+#import "CoreDataEventHandler.h"
 
 #import "ParseChangeHandler.h"
 #import "LocalChangeHandler.h"
@@ -15,6 +16,7 @@
 @interface EventSyncHandler () <NetworkChangeDelegate, SyncChangesDelegate>
 
 @property (nonatomic) id<EventHandler> parseEventHandler;
+@property (nonatomic) id<EventHandler> coreDataEventHandler;
 @property (nonatomic) id<RemoteChangeHandler> parseChangeHandler;
 @property (nonatomic) LocalChangeHandler *localChangeHandler;
 
@@ -30,6 +32,7 @@
     if ((self = [super init])) {
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.parseChangeHandler = [[ParseChangeHandler alloc] init];
+        self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
         self.localChangeHandler = [[LocalChangeHandler alloc] init];
         self.userData = NSUserDefaults.standardUserDefaults;
         
@@ -159,15 +162,40 @@
 }
 
 - (void)createdEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
-    
+    [(ParseEventHandler *)self.parseEventHandler queryEventFromID:eventID
+                                                       completion:^(BOOL success, Event * _Nullable event, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: error handling
+        } else {
+            [self.coreDataEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: error handling
+                } else {
+                    // reload data
+                }
+            }];
+        }
+    }];
 }
 
 - (void)deletedEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
-    
+    [self.coreDataEventHandler deleteEvent:[eventID UUIDString] completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: error handling
+        } else {
+            // reload data
+        }
+    }];
 }
 
 - (void)updatedEventOnRemoteWithEvent:(Event * _Nonnull)event {
-    
+    [self.coreDataEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: Error handling
+        } else {
+            // reload data
+        }
+    }];
 }
 
 @end
