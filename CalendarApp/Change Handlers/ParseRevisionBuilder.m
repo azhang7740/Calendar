@@ -13,7 +13,8 @@
 
 - (NSArray<RemoteChange *> *)getRevisionfromParseRevision:(ParseRevisionHistory *)parseRevision
                                        mostRecentUpdate:(NSDate *)date {
-    PFQuery *remoteChangeQuery = [parseRevision.remoteChanges query];
+    PFRelation *changesRelation = [parseRevision relationForKey:@"remoteChanges"];
+    PFQuery *remoteChangeQuery = [changesRelation query];
     [remoteChangeQuery includeKey:@"objectId"];
     [remoteChangeQuery includeKey:@"timestamp"];
     [remoteChangeQuery includeKey:@"changeType"];
@@ -21,10 +22,11 @@
     [remoteChangeQuery includeKey:@"updatedField"];
     [remoteChangeQuery includeKey:@"objectUUID"];
     [remoteChangeQuery orderByAscending:@"timestamp"];
-    [remoteChangeQuery whereKey:@"updatedEvent" greaterThan:date];
+    [remoteChangeQuery whereKey:@"timestamp" greaterThan:date];
     
     ParseChangeBuilder *builder = [[ParseChangeBuilder alloc] init];
-    NSArray<RemoteChange *> *remoteChanges = [builder getChangeFromParseChangeArray:[remoteChangeQuery findObjects]];
+    NSArray<ParseChange *> *parseChanges = [remoteChangeQuery findObjects];
+    NSArray<RemoteChange *> *remoteChanges = [builder getChangeFromParseChangeArray:parseChanges];
     
     return remoteChanges;
 }

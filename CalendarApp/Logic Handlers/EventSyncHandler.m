@@ -12,7 +12,7 @@
 #import "LocalChangeHandler.h"
 #import "CalendarApp-Swift.h"
 
-@interface EventSyncHandler () <NetworkChangeDelegate>
+@interface EventSyncHandler () <NetworkChangeDelegate, SyncChangesDelegate>
 
 @property (nonatomic) id<EventHandler> parseEventHandler;
 @property (nonatomic) id<RemoteChangeHandler> parseChangeHandler;
@@ -60,8 +60,8 @@
             // TODO: Error handling
         } else {
             SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
+            conflictHandler.delegate = self;
             [conflictHandler syncChanges];
-            [self.localChangeHandler deleteAllLocalChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
     }];
@@ -79,12 +79,12 @@
     NSArray<RemoteChange *> *remoteChanges = [builder buildRemoteChanges];
     
     if (remoteChanges.count == 1 && remoteChanges[0].changeType == ChangeTypeCreate) {
-        [self syncNewEventToParse:newEvent
-                     remoteChange:remoteChanges[0]];
+        [self syncNewEventToParseWithEvent:newEvent
+                              remoteChange:remoteChanges[0]];
     } else {
-        [self syncUpdateToParse:newEvent];
+        [self syncUpdateToParseWithEvent:newEvent];
         for (RemoteChange *change in remoteChanges) {
-            [self syncRemoteChangeToParse:change];
+            [self syncRemoteChangeToParseWithRemoteChange:change];
         }
     }
 }
@@ -94,8 +94,8 @@
                                     initWithEventUUID:eventID
                                     updateDate:[NSDate date]];
     RemoteChange *deleteChange = [builder buildDeleteChangeFromEventID];
-    [self syncDeleteToParse:[eventID UUIDString]
-               remoteChange:deleteChange];
+    [self syncDeleteToParseWithEvent:[eventID UUIDString]
+                        remoteChange:deleteChange];
 }
 
 - (void)didChangeEvent:(Event *)oldEvent
@@ -107,8 +107,8 @@
     }
 }
 
-- (void)syncNewEventToParse:(Event *)event
-               remoteChange:(RemoteChange *)newChange {
+- (void)syncNewEventToParseWithEvent:(Event *)event
+                        remoteChange:(RemoteChange *)newChange {
     [self.parseEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
@@ -124,8 +124,8 @@
     }];
 }
 
-- (void)syncDeleteToParse:(NSString *)eventID
-             remoteChange:(RemoteChange *)newChange{
+- (void)syncDeleteToParseWithEvent:(NSString *)eventID
+                      remoteChange:(RemoteChange *)newChange{
     [self.parseEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
@@ -140,7 +140,7 @@
     }];
 }
 
-- (void)syncUpdateToParse:(Event *)event {
+- (void)syncUpdateToParseWithEvent:(Event *)event {
     [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
@@ -148,13 +148,25 @@
     }];
 }
 
-- (void)syncRemoteChangeToParse:(RemoteChange *)newChange {
+- (void)syncRemoteChangeToParseWithRemoteChange:(RemoteChange *)newChange {
     [self.parseChangeHandler addNewParseChange:newChange
                                     completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: save as local change?
         }
     }];
+}
+
+- (void)createdEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
+    
+}
+
+- (void)deletedEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
+    
+}
+
+- (void)updatedEventOnRemoteWithEvent:(Event * _Nonnull)event {
+    
 }
 
 @end

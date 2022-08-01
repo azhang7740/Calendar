@@ -91,7 +91,7 @@
 }
 
 - (void)didTapDelete {
-    [self.eventHandler deleteEvent:self.event
+    [self.eventHandler deleteEvent:[self.event.objectUUID UUIDString]
                         completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
             [self.delegate didDeleteEvent:self.event];

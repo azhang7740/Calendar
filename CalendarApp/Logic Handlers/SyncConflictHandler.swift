@@ -8,9 +8,9 @@
 import Foundation
 
 @objc
-public protocol SyncRemoteChangesDelegate {
+public protocol SyncChangesDelegate {
     func deletedEventOnRemote(eventID: UUID)
-    func updatedEventOnRemote(eventID: UUID)
+    func updatedEventOnRemote(event: Event)
     func createdEventOnRemote(eventID: UUID)
     
     func syncNewEventToParse(event: Event, remoteChange: RemoteChange)
@@ -21,7 +21,7 @@ public protocol SyncRemoteChangesDelegate {
 
 @objcMembers
 class SyncConflictHandler : NSObject {
-    weak var delegate: SyncRemoteChangesDelegate?
+    weak var delegate: SyncChangesDelegate?
     private var revisionHistories: [[Revision]]
     private let localChangeHandler = LocalChangeHandler()
     private let parseChangeHandler = ParseChangeHandler()
@@ -32,10 +32,31 @@ class SyncConflictHandler : NSObject {
     }
     
     func syncChanges() {
-        
+        addLocalChanges()
+        checkChanges()
+        syncLocalCreatesDeletes()
+        localChangeHandler.deleteAllLocalChanges()
+    }
+    
+    private func syncLocalCreatesDeletes() {
+        let changes = localChangeHandler.fetchAllLocalChanges()
+        for change in changes {
+            if change.changeType == .Create {
+                guard let eventID = change.eventID,
+                      let event = coreDataEventHandler.queryEvent(from: eventID)else {
+                    break
+                }
+                delegate?.syncNewEventToParse(event: event, remoteChange: getRemoteChange(localChange: change))
+            } else if (change.changeType == .Delete) {
+                // sync deletes with parse
+            }
+        }
     }
     
     private func addLocalChanges() {
+        if (revisionHistories.count == 0) {
+            return
+        }
         for historyIndex in 0...revisionHistories.count - 1 {
             guard let eventID = revisionHistories[historyIndex][0].eventID else {
                 break
@@ -49,6 +70,7 @@ class SyncConflictHandler : NSObject {
         for eventHistory in revisionHistories {
             if eventHistory.count == 1 &&
                 eventHistory[0].changeType == .Create {
+                // check if exists in core data
                 createNewEvent(change: eventHistory[0])
             } else if eventHistory.count == 1 &&
                         eventHistory[0].changeType == .Delete {
@@ -60,10 +82,10 @@ class SyncConflictHandler : NSObject {
     }
     
     private func processUpdateChanges(eventChanges: [Revision]) {
-        guard let eventID = eventChanges[0].eventID else {
+        guard let eventID = eventChanges[0].eventID,
+              var event = coreDataEventHandler.queryEvent(from: eventID) else {
             return
         }
-        var event = coreDataEventHandler.queryEvent(from: eventID)
         var changeFieldMap = [ChangeField: Int]()
         for (index, change) in eventChanges.enumerated() {
             if let previousChangeIndex = changeFieldMap[change.changeField] {
@@ -73,6 +95,18 @@ class SyncConflictHandler : NSObject {
                 changeFieldMap[change.changeField] = index
             }
             event = applyChange(event: event, change: change)
+        }
+        delegate?.updatedEventOnRemote(event: event)
+        delegate?.syncUpdateToParse(event: event)
+        syncChangesToParse(eventChanges: eventChanges)
+    }
+    
+    private func syncChangesToParse(eventChanges: [Revision]) {
+        for change in eventChanges {
+            if let localChange = change as? LocalChange {
+                delegate?.syncRemoteChangeToParse(remoteChange: getRemoteChange(localChange: localChange))
+                localChangeHandler.delete(localChange)
+            }
         }
     }
     
@@ -129,10 +163,10 @@ class SyncConflictHandler : NSObject {
             }
             delegate?.createdEventOnRemote(eventID: eventUUID)
         } else if let localCreate = change as? LocalChange {
-            guard let eventID = localCreate.eventID else {
+            guard let eventID = localCreate.eventID,
+                  let event = coreDataEventHandler.queryEvent(from: eventID) else {
                 return
             }
-            let event = coreDataEventHandler.queryEvent(from: eventID)
             delegate?.syncNewEventToParse(event: event, remoteChange: getRemoteChange(localChange: localCreate))
         }
     }

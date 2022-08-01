@@ -12,7 +12,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface CoreDataEventHandler : NSObject <EventHandler>
 
-- (Event *)queryEventFromID:(NSUUID *)eventID;
+- (Event * _Nullable)queryEventFromID:(NSUUID *)eventID;
 
 @end
 

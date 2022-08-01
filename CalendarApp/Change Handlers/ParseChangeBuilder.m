@@ -28,7 +28,7 @@
     }
     
     if ([parseChange.changeField intValue] > 5 ||
-        [parseChange.changeField intValue] < 1) {
+        [parseChange.changeField intValue] < 0) {
         return nil;
     }
     
@@ -36,15 +36,19 @@
     remoteChange.parseID = parseChange.objectId;
     remoteChange.changeType = [parseChange.changeType intValue];
     remoteChange.changeField = [parseChange.changeField intValue];
-    remoteChange.updatedField = remoteChange.updatedField;
+    remoteChange.updatedField = parseChange.updatedField;
+    remoteChange.eventID = [[NSUUID alloc] initWithUUIDString:parseChange.objectUUID];
     
     return remoteChange;
 }
 
 - (NSMutableArray<RemoteChange *> *)getChangeFromParseChangeArray:(NSArray<ParseChange *> *)parseChanges {
-    NSMutableArray<RemoteChange *> *remoteChanges;
+    NSMutableArray<RemoteChange *> *remoteChanges = [[NSMutableArray alloc] init];
     for (ParseChange *parseChange in parseChanges) {
-        [remoteChanges addObject:[self getChangeFromParseChange:parseChange]];
+        RemoteChange *change = [self getChangeFromParseChange:parseChange];
+        if (change) {
+            [remoteChanges addObject:[self getChangeFromParseChange:parseChange]];
+        }
     }
     return remoteChanges;
 }
