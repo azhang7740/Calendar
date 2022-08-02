@@ -20,8 +20,16 @@
         <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="updatedField" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
+        <attribute name="createdAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="lastModified" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="noteID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="text" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+    </entity>
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="194"/>
         <element name="LocalChange" positionX="-45" positionY="90" width="128" height="104"/>
+        <element name="Note" positionX="-54" positionY="72" width="128" height="104"/>
     </elements>
 </model>
