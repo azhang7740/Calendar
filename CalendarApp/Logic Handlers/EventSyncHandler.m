@@ -52,7 +52,6 @@
     self.isSynced = true;
     NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
     if (!lastUpdated) {
-        // TODO: prompt user to query all and sync with all existing remote events
         NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         [calendar setTimeZone:[NSTimeZone systemTimeZone]];
         NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
@@ -75,7 +74,12 @@
 }
 
 - (void)didChangeOffline {
-    self.isSynced = false;
+    if (self.isSynced) {
+        self.isSynced = false;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate displayMessage:@"You're currently offline. All changes will be saved locally."];
+        });
+    }
 }
 
 - (void)syncEventToParse:(Event *)oldEvent

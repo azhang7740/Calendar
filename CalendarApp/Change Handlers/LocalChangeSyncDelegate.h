@@ -17,6 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)didUpdateEvent:(Event *)oldEvent
               newEvent:(Event *)updatedEvent;
 - (void)didCreateEvent:(Event *)newEvent;
+- (void)displayMessage:(NSString *)message;
 
 @end
 

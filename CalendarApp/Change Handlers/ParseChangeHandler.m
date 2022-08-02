@@ -22,6 +22,7 @@
     [query includeKey:@"mostRecentUpdate"];
     [query includeKey:@"objectUUID"];
     [query includeKey:@"remoteChanges"];
+    [query setLimit:500];
     
     [query findObjectsInBackgroundWithBlock:^(NSArray<ParseRevisionHistory *> * _Nullable revisionHistories,
                                               NSError * _Nullable error) {

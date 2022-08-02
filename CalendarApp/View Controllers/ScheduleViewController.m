@@ -51,7 +51,7 @@ RemoteEventUpdates>
     [[self.scheduleView.view.leftAnchor constraintEqualToAnchor:self.containerView.leftAnchor constant:0] setActive:true];
 }
 
-- (void)displayErrorMessage:(NSString *)message {
+- (void)displayMessage:(NSString *)message {
     self.rightPush.constant = 0;
     self.errorMessageLabel.text = message;
     [self.view layoutIfNeeded];
@@ -75,7 +75,7 @@ RemoteEventUpdates>
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
-    // TODO: error handling
+    [self displayMessage:errorMessage];
 }
 
 - (void)fetchEventsForDate:(NSDate *)date
