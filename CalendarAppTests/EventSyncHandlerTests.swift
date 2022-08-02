@@ -12,11 +12,13 @@ class EventSyncHandlerTests: XCTestCase {
     var handler: EventSyncHandler!
     var parseHandler: TestEventHandler!
     var changeHandler: TestRemoteChangeHandler!
+    var localChangeDelegate:LocalChangeSyncDelegate!
     
     override func setUp() {
         super.setUp()
         
-        handler = EventSyncHandler()
+        localChangeDelegate = TestLocalChangeDelegate()
+        handler = EventSyncHandler(localChangeDelegate)
         parseHandler = TestEventHandler()
         handler.parseEventHandler = parseHandler
         
@@ -25,6 +27,7 @@ class EventSyncHandlerTests: XCTestCase {
     }
     
     override func tearDown() {
+        localChangeDelegate = nil
         handler = nil
         parseHandler = nil
         changeHandler = nil

@@ -5,15 +5,15 @@
 //  Created by Angelina Zhang on 7/6/22.
 //
 
-#import "TodoViewController.h"
+#import "NotesViewController.h"
 
-@interface TodoViewController () <UITableViewDelegate, UITableViewDataSource>
+@interface NotesViewController () <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *taskTableView;
 
 @end
 
-@implementation TodoViewController
+@implementation NotesViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

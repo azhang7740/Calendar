@@ -26,7 +26,7 @@ class TestEventHandler: EventHandler {
         wasUpdateEventsCalled = true
     }
     
-    func delete(_ event: Event, completion: @escaping RemoteEventChangeCompletion) {
+    func deleteEvent(_ eventID: String, completion: @escaping RemoteEventChangeCompletion) {
         wasDeleteEventsCalled = true
     }
 }

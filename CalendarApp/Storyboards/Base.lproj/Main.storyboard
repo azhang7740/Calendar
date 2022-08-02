@@ -129,10 +129,10 @@
             </objects>
             <point key="canvasLocation" x="753.62318840579712" y="44.866071428571423"/>
         </scene>
-        <!--TodoList-->
+        <!--Notes-->
         <scene sceneID="JjU-dq-Sd5">
             <objects>
-                <viewControllerPlaceholder storyboardName="TodoList" id="2Zu-WM-Iil" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardName="Notes" id="2Zu-WM-Iil" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="0Tz-Wq-SDI"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y1h-YC-VQ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

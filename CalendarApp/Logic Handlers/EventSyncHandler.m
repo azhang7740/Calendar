@@ -23,6 +23,7 @@
 
 @property (nonatomic) NetworkHandler *networkHandler;
 @property (nonatomic) BOOL isSynced;
+@property (nonatomic) BOOL isOffline;
 @property (nonatomic) NSUserDefaults *userData;
 
 @end
@@ -42,17 +43,18 @@
         self.networkHandler.delegate = self;
         [self.networkHandler startMonitoring];
         
-        if (!self.networkHandler.isOnline) {
-            [self.delegate displayMessage:@"You're currently offline. All changes will be saved locally."];
-        }
+        self.isSynced = false;
+        self.isOffline = false;
     }
     return self;
 }
 
 - (void)didChangeOnline {
     if (self.isSynced) {
+        self.isOffline = false;
         return;
     }
+    self.isOffline = false;
     self.isSynced = true;
     NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
     if (!lastUpdated) {
@@ -78,8 +80,8 @@
 }
 
 - (void)didChangeOffline {
-    if (self.isSynced) {
-        self.isSynced = false;
+    if (!self.isOffline) {
+        self.isOffline = true;
         dispatch_async(dispatch_get_main_queue(), ^{
             [self.delegate displayMessage:@"You're currently offline. All changes will be saved locally."];
         });

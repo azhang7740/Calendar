@@ -14,6 +14,7 @@ class TestRemoteChangeHandler: RemoteChangeHandler {
     var wasDeleteChangeCalled = false
     var wasCreateRevisionCalled = false
     var wasCreateChangeCalled = false
+    var wasPartialDeleteCalled = false;
     
     func queryChanges(afterUpdate date: Date, completion: @escaping ChangeQueryCompletion) {
         wasQueryChangesCalled = true
@@ -33,5 +34,9 @@ class TestRemoteChangeHandler: RemoteChangeHandler {
     
     func addNewParseChange(_ remoteChange: RemoteChange, completion: @escaping ChangeActionCompletion) {
         wasCreateChangeCalled = true
+    }
+    
+    func partiallyDeleteRevisionHistory(_ eventID: UUID, remoteChange change: RemoteChange, completion: @escaping ChangeActionCompletion) {
+        wasPartialDeleteCalled = true
     }
 }

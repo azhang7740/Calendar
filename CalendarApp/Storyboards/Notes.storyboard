@@ -8,10 +8,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Todo View Controller-->
+        <!--Notes View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="TodoView" id="Y6W-OH-hqX" customClass="TodoViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TodoView" id="Y6W-OH-hqX" customClass="NotesViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -24,11 +24,11 @@
             </objects>
             <point key="canvasLocation" x="1000.0000000000001" y="115.84821428571428"/>
         </scene>
-        <!--To-Do-->
+        <!--Notes-->
         <scene sceneID="nvM-71-fE4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6Q1-Iu-qVr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="To-Do" image="book.closed" catalog="system" id="5b4-C8-EkK"/>
+                    <tabBarItem key="tabBarItem" title="Notes" image="book.closed" catalog="system" id="5b4-C8-EkK"/>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EbG-bS-XlV">
