@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 @objcMembers
-class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDataSource, ComposeNoteDelegate {
     @IBOutlet weak var notesTableView: UITableView!
     private var coreDataNoteHandler = CoreDataNoteHandler()
     private var notes = [Note]()
@@ -21,7 +21,15 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func onClickCompose(_ sender: Any) {
-
+        let storyboard = UIStoryboard(name: "ComposeNote", bundle: .main)
+        guard let composeNavigation = storyboard.instantiateViewController(withIdentifier: "ComposeNoteNavigation") as? UINavigationController else {
+            return
+        }
+        guard let composeView = composeNavigation.topViewController as? ComposeNoteViewController else {
+            return
+        }
+        composeView.delegate = self
+        self.present(composeNavigation, animated: true)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,5 +63,21 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
             dateFormatter.dateFormat = "M/d/yyyy"
         }
         return dateFormatter.string(from: modifiedDate)
+    }
+    
+    func didTapBack(note: Note) {
+        
+    }
+    
+    func didUpdateNote(note: Note) {
+        
+    }
+    
+    func didDelete(noteID: UUID) {
+        
+    }
+    
+    func didCreateNewNote(note: Note) {
+        
     }
 }

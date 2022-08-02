@@ -103,10 +103,6 @@ RemoteEventUpdates>
     [self presentViewController:detailsNavigationController animated:YES completion:nil];
 }
 
-- (void)didLongPressEvent:(NSUUID *)eventID {
-    
-}
-
 - (void)didLongPressTimeline:(NSDate *)date {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Compose" bundle:[NSBundle mainBundle]];
     UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
