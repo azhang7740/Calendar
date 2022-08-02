@@ -16,7 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (instancetype)new NS_UNAVAILABLE;
 - (instancetype)init NS_UNAVAILABLE;
 
-- (instancetype)init:(id<LocalChangeSyncDelegate>)delegate;
+- (instancetype)init:(id<LocalChangeSyncDelegate>)localChangeDelegate
+remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate;
 
 - (void)updateEvent:(Event *)oldEvent
            newEvent:(Event *)updatedEvent

@@ -11,9 +11,7 @@
 
 - (Event *)getEventFromEKEvent:(EKEvent *)ekEvent {
     Event *canonicalEvent = [[Event alloc] init];
-    if (!ekEvent.eventIdentifier ||
-        !ekEvent.lastModifiedDate ||
-        !ekEvent.creationDate) {
+    if (!ekEvent.eventIdentifier) {
         return nil;
     }
     
@@ -66,7 +64,9 @@
 - (NSMutableArray<Event *> *)getEventsFromEKEventArray:(NSArray<EKEvent *> *)ekEvents {
     NSMutableArray<Event *> *canonicalEvents = [[NSMutableArray alloc] init];
     for (EKEvent *event in ekEvents) {
-        [canonicalEvents addObject:[self getEventFromEKEvent:event]];
+        if (event) {
+            [canonicalEvents addObject:[self getEventFromEKEvent:event]];
+        }
     }
     return canonicalEvents;
 }

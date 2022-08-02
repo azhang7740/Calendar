@@ -15,7 +15,8 @@
 #import "NSDate+Midnight.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate,
-                                      ComposeViewControllerDelegate, LocalChangeSyncDelegate>
+                                      ComposeViewControllerDelegate, LocalChangeSyncDelegate,
+                                      RemoteEventUpdates>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
@@ -31,8 +32,20 @@
     
     self.scheduleView = [[DailyCalendarViewController alloc] init];
     self.scheduleView.controllerDelegate = self;
-    self.eventHandler = [[FetchEventHandler alloc] init:self];
+    self.eventHandler = [[FetchEventHandler alloc] init:self
+                                   remoteChangeDelegate:self];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
+    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
+    
+    [self addChildViewController:self.scheduleView];
+    [self.view addSubview:self.scheduleView.view];
+    [self.scheduleView didMoveToParentViewController:self];
+    self.scheduleView.view.frame = self.view.bounds;
+}
+
+- (void)remoteEventsDidChange {
+    self.scheduleView = [[DailyCalendarViewController alloc] init];
+    self.scheduleView.controllerDelegate = self;
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     
     [self addChildViewController:self.scheduleView];
