@@ -75,9 +75,4 @@ class CoreDataNoteHandler : NSObject {
         }
         return nil
     }
-    
-    private func update(coreDataNote: CoreDataNote,
-                        note: Note) {
-        
-    }
 }
