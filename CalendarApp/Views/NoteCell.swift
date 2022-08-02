@@ -9,8 +9,7 @@ import Foundation
 import UIKit
 
 class NoteCell : UITableViewCell {
-    public var noteID: UUID?
-    public var lastModified: Date?
-    public var title: String?
-    public var displayText: String?
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var lastModifiedLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!
 }

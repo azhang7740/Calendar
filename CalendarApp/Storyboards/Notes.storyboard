@@ -20,14 +20,14 @@
                                 <rect key="frame" x="0.0" y="160" width="414" height="653"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" rowHeight="161" id="Z1g-yj-1Zs">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" rowHeight="161" id="Z1g-yj-1Zs" customClass="NoteCell" customModule="CalendarApp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.5" width="414" height="161"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z1g-yj-1Zs" id="qT8-3r-C51">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="161"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lk5-4O-LUT">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lk5-4O-LUT">
                                                     <rect key="frame" x="30" y="21" width="354" height="93"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -62,6 +62,11 @@
                                                 <constraint firstItem="WYl-tR-EiS" firstAttribute="leading" secondItem="lk5-4O-LUT" secondAttribute="leading" id="zPK-7B-ns0"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="TeF-8q-VHu" id="kbY-Du-Z0t"/>
+                                            <outlet property="lastModifiedLabel" destination="WYl-tR-EiS" id="VEd-fh-8se"/>
+                                            <outlet property="titleLabel" destination="lk5-4O-LUT" id="j84-9a-5if"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
