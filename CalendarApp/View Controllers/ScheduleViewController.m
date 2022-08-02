@@ -15,13 +15,17 @@
 #import "NSDate+Midnight.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate,
-                                      ComposeViewControllerDelegate, LocalChangeSyncDelegate,
-                                      RemoteEventUpdates>
+ComposeViewControllerDelegate, LocalChangeSyncDelegate,
+RemoteEventUpdates>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) FetchEventHandler *eventHandler;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *push;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightPush;
+@property (weak, nonatomic) IBOutlet UILabel *errorMessageLabel;
 
 @end
 
@@ -37,10 +41,26 @@
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     
+    self.scheduleView.view.translatesAutoresizingMaskIntoConstraints = false;
     [self addChildViewController:self.scheduleView];
-    [self.view addSubview:self.scheduleView.view];
+    [self.containerView addSubview:self.scheduleView.view];
     [self.scheduleView didMoveToParentViewController:self];
-    self.scheduleView.view.frame = self.view.bounds;
+    [[self.scheduleView.view.topAnchor constraintEqualToAnchor:self.containerView.topAnchor constant:0] setActive:true];
+    [[self.scheduleView.view.bottomAnchor constraintEqualToAnchor:self.containerView.bottomAnchor constant:0] setActive:true];
+    [[self.scheduleView.view.rightAnchor constraintEqualToAnchor:self.containerView.rightAnchor constant:0] setActive:true];
+    [[self.scheduleView.view.leftAnchor constraintEqualToAnchor:self.containerView.leftAnchor constant:0] setActive:true];
+}
+
+- (void)displayErrorMessage:(NSString *)message {
+    self.rightPush.constant = 0;
+    self.errorMessageLabel.text = message;
+    [self.view layoutIfNeeded];
+    
+    [UIView animateWithDuration:2
+                     animations:^{
+        self.push.constant = 70;
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)remoteEventsDidChange {
@@ -84,7 +104,7 @@
 }
 
 - (void)didLongPressEvent:(NSUUID *)eventID {
-
+    
 }
 
 - (void)didLongPressTimeline:(NSDate *)date {
@@ -151,6 +171,16 @@
             self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
             [self.scheduleView addEvent:updatedEvent];
         }
+    }];
+}
+
+- (IBAction)didSwipeOnAlert:(id)sender {
+    [self.view layoutIfNeeded];
+    [UIView animateWithDuration:1
+                     animations:^{
+        self.rightPush.constant = 200;
+        self.push.constant = 0;
+        [self.view layoutIfNeeded];
     }];
 }
 
