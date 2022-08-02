@@ -41,6 +41,10 @@
         self.networkHandler = [[NetworkHandler alloc] init];
         self.networkHandler.delegate = self;
         [self.networkHandler startMonitoring];
+        
+        if (!self.networkHandler.isOnline) {
+            [self.delegate displayMessage:@"You're currently offline. All changes will be saved locally."];
+        }
     }
     return self;
 }
