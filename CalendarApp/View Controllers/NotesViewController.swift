@@ -13,6 +13,8 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     @IBOutlet weak var notesTableView: UITableView!
     private var coreDataNoteHandler = CoreDataNoteHandler()
     private var notes = [Note]()
+    var presentTransition: UIViewControllerAnimatedTransitioning?
+    var dismissTransition: UIViewControllerAnimatedTransitioning?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +31,16 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         composeView.delegate = self
-        self.present(composeNavigation, animated: true)
+        
+        presentTransition = RightToLeftTransition()
+        dismissTransition = LeftToRightTransition()
+        
+        composeNavigation.modalPresentationStyle = .custom
+        composeNavigation.transitioningDelegate = self
+        
+        present(composeNavigation, animated: true, completion: { [weak self] in
+            self?.presentTransition = nil
+        })
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -66,7 +77,9 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     func didTapBack(note: Note) {
-        
+        dismiss(animated: true) { [weak self] in
+            self?.dismissTransition = nil
+        }
     }
     
     func didUpdateNote(note: Note) {
@@ -79,5 +92,15 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     
     func didCreateNewNote(note: Note) {
         
+    }
+}
+
+extension NotesViewController: UIViewControllerTransitioningDelegate {
+    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return presentTransition
+    }
+
+    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        return dismissTransition
     }
 }

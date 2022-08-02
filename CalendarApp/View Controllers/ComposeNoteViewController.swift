@@ -14,7 +14,11 @@ protocol ComposeNoteDelegate: NSObject {
     func didCreateNewNote(note: Note);
 }
 
-class ComposeNoteViewController : UIViewController {
+class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFieldDelegate {
     public var note: Note?
     public weak var delegate: ComposeNoteDelegate?
+    
+    @IBAction func didTapBackButton(_ sender: Any) {
+        delegate?.didTapBack(note: note ?? Note())
+    }
 }

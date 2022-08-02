@@ -14,6 +14,10 @@ class Note : NSObject {
     public var text = ""
     public var title = "No title"
     
+    public required override init() {
+        super.init()
+    }
+    
     public required init(note: Note) {
         super.init()
         

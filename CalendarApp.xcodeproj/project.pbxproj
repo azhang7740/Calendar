@@ -71,6 +71,8 @@
 		41FDE0702899D1F10090AA93 /* CoreDataNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE06F2899D1F10090AA93 /* CoreDataNoteBuilder.swift */; };
 		41FDE0732899E00A0090AA93 /* ComposeNote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */; };
 		41FDE0752899E2280090AA93 /* ComposeNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0742899E2280090AA93 /* ComposeNoteViewController.swift */; };
+		41FDE0772899E7C50090AA93 /* RightToLeftTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0762899E7C50090AA93 /* RightToLeftTransition.swift */; };
+		41FDE07A2899E7E00090AA93 /* LeftToRightTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0792899E7E00090AA93 /* LeftToRightTransition.swift */; };
 		D0AA35CB9107C2559171CC34 /* libPods-CalendarApp-CalendarAppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633B55E3DEF7AC08BA63816 /* libPods-CalendarApp-CalendarAppUITests.a */; };
 		DF20BF322935DA0B246A299A /* libPods-CalendarAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 098709094717F22ED0142810 /* libPods-CalendarAppTests.a */; };
 		DF61EBD7D1CA57ECC4BD7B4C /* libPods-CalendarApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D96919343321A6FD4A4A87BD /* libPods-CalendarApp.a */; };
@@ -195,6 +197,8 @@
 		41FDE06F2899D1F10090AA93 /* CoreDataNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataNoteBuilder.swift; sourceTree = "<group>"; };
 		41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeNote.storyboard; sourceTree = "<group>"; };
 		41FDE0742899E2280090AA93 /* ComposeNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeNoteViewController.swift; sourceTree = "<group>"; };
+		41FDE0762899E7C50090AA93 /* RightToLeftTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightToLeftTransition.swift; sourceTree = "<group>"; };
+		41FDE0792899E7E00090AA93 /* LeftToRightTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftToRightTransition.swift; sourceTree = "<group>"; };
 		6720ECC35A2267B0C1169EC5 /* Pods-CalendarAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.release.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		867CA3B7D8BFAE5D63E3831C /* Pods-CalendarApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp.debug.xcconfig"; path = "Target Support Files/Pods-CalendarApp/Pods-CalendarApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9608745C3DDEC7A8339FB4E3 /* Pods-CalendarAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.debug.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 		413DE5072874B39200CCF8E1 /* CalendarApp */ = {
 			isa = PBXGroup;
 			children = (
+				41FDE0782899E7CF0090AA93 /* Transitions */,
 				41FDE06A2899CCB80090AA93 /* Note Handlers */,
 				413F41482891DB8200D0EE6E /* Parse Models */,
 				41B7F54A2889AF0C00030027 /* Event Builders */,
@@ -457,6 +462,15 @@
 				41FDE06F2899D1F10090AA93 /* CoreDataNoteBuilder.swift */,
 			);
 			path = "Note Handlers";
+			sourceTree = "<group>";
+		};
+		41FDE0782899E7CF0090AA93 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				41FDE0762899E7C50090AA93 /* RightToLeftTransition.swift */,
+				41FDE0792899E7E00090AA93 /* LeftToRightTransition.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 		F795144D40A42030DEA6F66C /* Pods */ = {
@@ -757,11 +771,13 @@
 				41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */,
+				41FDE0772899E7C50090AA93 /* RightToLeftTransition.swift in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */,
 				41FDE0702899D1F10090AA93 /* CoreDataNoteBuilder.swift in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
 				41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */,
+				41FDE07A2899E7E00090AA93 /* LeftToRightTransition.swift in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				41FDE0692899CBC20090AA93 /* NoteCell.swift in Sources */,
