@@ -11,6 +11,7 @@ import CoreData
 @objcMembers
 class CoreDataNoteHandler : NSObject {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private let noteBuilder = CoreDataNoteBuilder()
     
     func fetchNotes() -> [CoreDataNote] {
         do {
