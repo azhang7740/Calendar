@@ -20,6 +20,10 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         notes = coreDataNoteHandler.fetchNotes()
     }
     
+    @IBAction func onClickCompose(_ sender: Any) {
+
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notes.count
     }

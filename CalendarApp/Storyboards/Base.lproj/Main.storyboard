@@ -132,7 +132,7 @@
         <!--Notes-->
         <scene sceneID="JjU-dq-Sd5">
             <objects>
-                <viewControllerPlaceholder storyboardName="Notes" id="2Zu-WM-Iil" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="NotesView" storyboardName="Notes" id="2Zu-WM-Iil" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="0Tz-Wq-SDI"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y1h-YC-VQ0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

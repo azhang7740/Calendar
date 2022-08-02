@@ -11,7 +11,7 @@
         <!--Notes View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="TodoView" id="Y6W-OH-hqX" customClass="NotesViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotesView" id="Y6W-OH-hqX" customClass="NotesViewController" customModule="CalendarApp" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -88,7 +88,19 @@
                             <constraint firstItem="WiX-Pm-twA" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="xSM-Rq-7N7"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="mYU-6H-QXR"/>
+                    <navigationItem key="navigationItem" id="mYU-6H-QXR">
+                        <barButtonItem key="rightBarButtonItem" id="xgg-HO-bYd">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fGS-r6-CxO">
+                                <rect key="frame" x="373" y="11" width="21" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" image="plus" catalog="system"/>
+                                <connections>
+                                    <action selector="onClickCompose:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Czr-JM-F6A"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="notesTableView" destination="WiX-Pm-twA" id="A6F-X3-LnF"/>
                     </connections>
@@ -120,6 +132,7 @@
     </scenes>
     <resources>
         <image name="book.closed" catalog="system" width="115" height="128"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
