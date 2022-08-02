@@ -10,10 +10,12 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class FetchEventHandler;
+
 @protocol DetailsViewControllerDelegate
 
 - (void)didTapClose;
-- (void)didDeleteEvent:(Event *)event;
+- (void)didDeleteEventOnDetailView:(Event *)event;
 - (void)didUpdateEvent:(Event *)oldEvent
               newEvent:(Event *)updatedEvent;
 
@@ -22,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface DetailsViewController : UIViewController
 
 @property (weak, nonatomic) id<DetailsViewControllerDelegate> delegate;
+@property (nonatomic) FetchEventHandler *eventHandler;
 @property (nonatomic) Event *event;
 
 @end

@@ -18,6 +18,7 @@
 @property (nonatomic) id<EventHandler> parseEventHandler;
 @property (nonatomic) id<EventHandler> coreDataEventHandler;
 @property (nonatomic) id<RemoteChangeHandler> parseChangeHandler;
+@property (weak, nonatomic) id<LocalChangeSyncDelegate> delegate;
 @property (nonatomic) LocalChangeHandler *localChangeHandler;
 
 @property (nonatomic) NetworkHandler *networkHandler;
@@ -28,12 +29,13 @@
 
 @implementation EventSyncHandler
 
-- (instancetype)init {
+- (instancetype)init:(id<LocalChangeSyncDelegate>)localChangeDelegate {
     if ((self = [super init])) {
         self.parseEventHandler = [[ParseEventHandler alloc] init];
         self.parseChangeHandler = [[ParseChangeHandler alloc] init];
         self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
         self.localChangeHandler = [[LocalChangeHandler alloc] init];
+        self.delegate = localChangeDelegate;
         self.userData = NSUserDefaults.standardUserDefaults;
         
         self.networkHandler = [[NetworkHandler alloc] init];
@@ -163,15 +165,18 @@
 
 - (void)createdEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
     [(ParseEventHandler *)self.parseEventHandler queryEventFromID:eventID
-                                                       completion:^(BOOL success, Event * _Nullable event, NSString * _Nullable error) {
+                                                       completion:^(BOOL success,
+                                                                    Event * _Nullable event,
+                                                                    NSString * _Nullable error) {
         if (!success) {
             // TODO: error handling
         } else {
-            [self.coreDataEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+            [self.coreDataEventHandler uploadWithEvent:event completion:^(BOOL success,
+                                                                          NSString * _Nullable error) {
                 if (!success) {
                     // TODO: error handling
                 } else {
-                    // reload data
+                    [self.delegate didCreateEvent:event];
                 }
             }];
         }
@@ -179,21 +184,30 @@
 }
 
 - (void)deletedEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
-    [self.coreDataEventHandler deleteEvent:[eventID UUIDString] completion:^(BOOL success, NSString * _Nullable error) {
+    Event *deletingEvent = [(CoreDataEventHandler *)self.coreDataEventHandler queryEventFromID:eventID];
+    if (!deletingEvent) {
+        return;
+    }
+    [self.delegate didDeleteEvent:deletingEvent];
+    [self.coreDataEventHandler deleteEvent:[eventID UUIDString] completion:^(BOOL success,
+                                                                             NSString * _Nullable error) {
         if (!success) {
             // TODO: error handling
-        } else {
-            // reload data
         }
     }];
 }
 
 - (void)updatedEventOnRemoteWithEvent:(Event * _Nonnull)event {
-    [self.coreDataEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    Event *originalEvent = [(CoreDataEventHandler *)self.coreDataEventHandler queryEventFromID:event.objectUUID];
+    if (!originalEvent) {
+        return;
+    }
+    [self.coreDataEventHandler updateEvent:event completion:^(BOOL success,
+                                                              NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         } else {
-            // reload data
+            [self.delegate didUpdateEvent:originalEvent newEvent:event];
         }
     }];
 }

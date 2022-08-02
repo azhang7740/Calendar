@@ -14,7 +14,8 @@
 #import "FetchEventHandler.h"
 #import "NSDate+Midnight.h"
 
-@interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
+@interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate,
+                                      ComposeViewControllerDelegate, LocalChangeSyncDelegate>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
@@ -30,7 +31,7 @@
     
     self.scheduleView = [[DailyCalendarViewController alloc] init];
     self.scheduleView.controllerDelegate = self;
-    self.eventHandler = [[FetchEventHandler alloc] init];
+    self.eventHandler = [[FetchEventHandler alloc] init:self];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     
@@ -65,6 +66,7 @@
     DetailsViewController *detailsView = (DetailsViewController *)detailsNavigationController.topViewController;
     detailsView.event = self.objectIDToEvents[eventID];
     detailsView.delegate = self;
+    detailsView.eventHandler = self.eventHandler;
     [self presentViewController:detailsNavigationController animated:YES completion:nil];
 }
 
@@ -85,8 +87,12 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didDeleteEvent:(Event *)event {
+- (void)didDeleteEventOnDetailView:(Event *)event {
     [self dismissViewControllerAnimated:YES completion:nil];
+    [self.scheduleView deleteCalendarEvent:event];
+}
+
+- (void)didDeleteEvent:(Event *)event {
     [self.scheduleView deleteCalendarEvent:event];
 }
 
@@ -95,6 +101,11 @@
     [self.scheduleView updateCalendarEvent:updatedEvent
                          originalStartDate:oldEvent.startDate.midnight
                            originalEndDate:oldEvent.startDate.midnight];
+}
+
+- (void)didCreateEvent:(Event *)newEvent {
+    self.objectIDToEvents[newEvent.objectUUID] = newEvent;
+    [self.scheduleView addEvent:newEvent];
 }
 
 - (void)didTapCancel {

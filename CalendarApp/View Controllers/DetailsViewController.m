@@ -13,7 +13,6 @@
 @interface DetailsViewController () <DetailsViewDelegate, ComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet DetailsView *detailsView;
-@property (nonatomic) FetchEventHandler *eventHandler;
 
 @end
 
@@ -23,7 +22,6 @@
     [super viewDidLoad];
     
     self.detailsView.delegate = self;
-    self.eventHandler = [[FetchEventHandler alloc] init];
     [self updateDetailsView];
 }
 
@@ -94,7 +92,7 @@
     [self.eventHandler deleteEvent:[self.event.objectUUID UUIDString]
                         completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
-            [self.delegate didDeleteEvent:self.event];
+            [self.delegate didDeleteEventOnDetailView:self.event];
         } else {
             // TODO: error handling
         }

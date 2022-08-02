@@ -181,6 +181,7 @@
 		41E2CF782880DE500077F173 /* Schedule.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Schedule.storyboard; sourceTree = "<group>"; };
 		41E2CF7A2880DE930077F173 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
 		41E2CF7B2880DE930077F173 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
+		41FDE0602898A4560090AA93 /* LocalChangeSyncDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalChangeSyncDelegate.h; sourceTree = "<group>"; };
 		6720ECC35A2267B0C1169EC5 /* Pods-CalendarAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.release.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		867CA3B7D8BFAE5D63E3831C /* Pods-CalendarApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp.debug.xcconfig"; path = "Target Support Files/Pods-CalendarApp/Pods-CalendarApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9608745C3DDEC7A8339FB4E3 /* Pods-CalendarAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.debug.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -371,6 +372,7 @@
 		413F41442891BDC600D0EE6E /* Change Handlers */ = {
 			isa = PBXGroup;
 			children = (
+				41FDE0602898A4560090AA93 /* LocalChangeSyncDelegate.h */,
 				413F41452891BDEC00D0EE6E /* ParseChangeHandler.h */,
 				413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */,
 				41D17ED928920B1600EE4EEE /* ParseChangeBuilder.h */,

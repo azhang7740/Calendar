@@ -20,9 +20,9 @@
 
 @implementation FetchEventHandler
 
-- (instancetype)init {
+- (instancetype)init:(id<LocalChangeSyncDelegate>)delegate {
     if ((self = [super init])) {
-        self.eventSyncHandler = [[EventSyncHandler alloc] init];
+        self.eventSyncHandler = [[EventSyncHandler alloc] init:delegate];
         self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
     }
     return self;
