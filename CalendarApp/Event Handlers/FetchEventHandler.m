@@ -30,12 +30,12 @@
 
 - (void)deleteEvent:(nonnull NSString *)eventID
          completion:(nonnull RemoteEventChangeCompletion)completion {
+    [self.eventSyncHandler didDeleteEvent:[[NSUUID alloc] initWithUUIDString:eventID]];
     [self.coreDataEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             completion(false, error);
         } else {
             completion (true, nil);
-            [self.eventSyncHandler didDeleteEvent:[[NSUUID alloc] initWithUUIDString:eventID]];
         }
     }];
 }

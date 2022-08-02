@@ -78,9 +78,12 @@ class SyncConflictHandler : NSObject {
                 if coreDataEventHandler.queryEvent(from: eventID) == nil {
                     createNewEvent(change: eventHistory[0])
                 }
-            } else if eventHistory.count == 1 &&
+            } else if let eventID = eventHistory[0].eventID,
+                      eventHistory.count == 1 &&
                         eventHistory[0].changeType == .Delete {
-                deleteEvent(change: eventHistory[0])
+                if coreDataEventHandler.queryEvent(from: eventID) != nil {
+                    deleteEvent(change: eventHistory[0])
+                }
             } else {
                 processUpdateChanges(eventChanges: eventHistory)
             }
@@ -88,8 +91,11 @@ class SyncConflictHandler : NSObject {
     }
     
     private func processUpdateChanges(eventChanges: [Revision]) {
-        guard let eventID = eventChanges[0].eventID,
-              var event = coreDataEventHandler.queryEvent(from: eventID) else {
+        guard let eventID = eventChanges[0].eventID else {
+            return
+        }
+        guard var event = coreDataEventHandler.queryEvent(from: eventID) else {
+            delegate?.createdEventOnRemote(eventID: eventID)
             return
         }
         var changeFieldMap = [ChangeField: Int]()

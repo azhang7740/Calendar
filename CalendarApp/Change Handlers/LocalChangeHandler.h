@@ -18,8 +18,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)deleteAllLocalChanges;
 - (void)deleteLocalChange:(LocalChange *)change;
 - (void)deleteLocalChangeWithArray:(NSArray<LocalChange *> *)changes;
-- (void)saveNewLocalChange:(Event *)oldEvent
-              updatedEvent:(Event *)newEvent;
+- (void)saveNewLocalChange:(Event * _Nullable)oldEvent
+              updatedEvent:(Event * _Nullable)newEvent;
 
 @end
 

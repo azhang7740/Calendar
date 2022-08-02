@@ -52,8 +52,8 @@
     [persistentStoreCoordinator executeRequest:delete withContext:self.context error:nil];
 }
 
-- (void)saveNewLocalChange:(Event *)oldEvent
-              updatedEvent:(Event *)newEvent {
+- (void)saveNewLocalChange:(Event * _Nullable)oldEvent
+              updatedEvent:(Event * _Nullable)newEvent {
     LocalChangeBuilder *builder = [[LocalChangeBuilder alloc] initWithFirstEvent:oldEvent
                                                                     updatedEvent:newEvent
                                                                       updateDate:[NSDate date]

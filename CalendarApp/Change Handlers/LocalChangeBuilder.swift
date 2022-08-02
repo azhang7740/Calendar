@@ -21,6 +21,7 @@ class LocalChangeBuilder : NSObject, CreateRevisionDelegate {
     private var timestamp: Date
     private var context: NSManagedObjectContext
     private var delegate: LocalChangeBuildDelegate
+    private var eventID: UUID?
     
     public required init(firstEvent: Event?,
                          updatedEvent: Event?,

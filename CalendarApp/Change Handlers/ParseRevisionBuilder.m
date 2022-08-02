@@ -22,7 +22,6 @@
     [remoteChangeQuery includeKey:@"updatedField"];
     [remoteChangeQuery includeKey:@"objectUUID"];
     [remoteChangeQuery orderByAscending:@"timestamp"];
-    [remoteChangeQuery whereKey:@"timestamp" greaterThan:date];
     
     ParseChangeBuilder *builder = [[ParseChangeBuilder alloc] init];
     NSArray<ParseChange *> *parseChanges = [remoteChangeQuery findObjects];

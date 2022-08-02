@@ -53,9 +53,11 @@
     NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
     if (!lastUpdated) {
         // TODO: prompt user to query all and sync with all existing remote events
-        [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
-        [self.userData synchronize];
-        return;
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+        NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+        dayComponent.day = -30;
+        lastUpdated = [calendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
     }
     [self.parseChangeHandler queryChangesAfterUpdateDate:lastUpdated
                                               completion:^(BOOL success,
@@ -95,12 +97,19 @@
 }
 
 - (void)didDeleteEvent:(NSUUID *)eventID {
-    RemoteChangeBuilder *builder = [[RemoteChangeBuilder alloc]
-                                    initWithEventUUID:eventID
-                                    updateDate:[NSDate date]];
-    RemoteChange *deleteChange = [builder buildDeleteChangeFromEventID];
-    [self syncDeleteToParseWithEvent:[eventID UUIDString]
-                        remoteChange:deleteChange];
+    if (self.networkHandler.isOnline) {
+        RemoteChangeBuilder *builder = [[RemoteChangeBuilder alloc]
+                                        initWithEventUUID:eventID
+                                        updateDate:[NSDate date]];
+        RemoteChange *deleteChange = [builder buildDeleteChangeFromEventID];
+        [self syncDeleteToParseWithEvent:[eventID UUIDString]
+                            remoteChange:deleteChange];
+    } else {
+        Event *deletingEvent = [(CoreDataEventHandler *)self.coreDataEventHandler queryEventFromID:eventID];
+        if (deletingEvent) {
+            [self.localChangeHandler saveNewLocalChange:deletingEvent updatedEvent:nil];
+        }
+    }
 }
 
 - (void)didChangeEvent:(Event *)oldEvent
@@ -114,6 +123,7 @@
 
 - (void)syncNewEventToParseWithEvent:(Event *)event
                         remoteChange:(RemoteChange *)newChange {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
     [self.parseEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
@@ -131,6 +141,7 @@
 
 - (void)syncDeleteToParseWithEvent:(NSString *)eventID
                       remoteChange:(RemoteChange *)newChange {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
     [self.parseEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
@@ -147,6 +158,7 @@
 }
 
 - (void)syncUpdateToParseWithEvent:(Event *)event {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
     [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
@@ -155,6 +167,7 @@
 }
 
 - (void)syncRemoteChangeToParseWithRemoteChange:(RemoteChange *)newChange {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
     [self.parseChangeHandler addNewParseChange:newChange
                                     completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {

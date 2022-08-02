@@ -17,7 +17,7 @@
 - (void)queryChangesAfterUpdateDate:(NSDate *)date
                          completion:(ChangeQueryCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"RevisionHistory"];
-    [query whereKey:@"mostRecentUpdate" greaterThan:date];
+    [query whereKey:@"updatedAt" greaterThan:date];
     [query includeKey:@"objectId"];
     [query includeKey:@"mostRecentUpdate"];
     [query includeKey:@"objectUUID"];
