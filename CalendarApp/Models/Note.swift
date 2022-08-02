@@ -15,10 +15,26 @@ class Note : NSObject {
     public var title = "No title"
     
     public required init(note: Note) {
+        super.init()
+        
         createdAt = note.createdAt
         lastModified = note.lastModified
         noteID = note.noteID
         text = note.text
         title = note.title
+    }
+    
+    public required init(createDate: Date,
+                         modifiedDate: Date,
+                         noteUUID: UUID,
+                         noteText: String,
+                         noteTitle: String) {
+        super.init()
+        
+        createdAt = createDate
+        lastModified = modifiedDate
+        noteID = noteUUID
+        text = noteText
+        title = noteTitle
     }
 }
