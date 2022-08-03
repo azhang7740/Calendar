@@ -107,7 +107,7 @@
 }
 
 - (void)queryEventFromID:(NSUUID *)eventID
-              completion:(SingleEventQueryCompltion)completion {
+              completion:(SingleEventQueryCompletion)completion {
     PFUser *currentUser = [PFUser currentUser];
     ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];

@@ -49,15 +49,15 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
             if (!success) {
                 completion(false, error);
             } else {
-                completion (true, nil);
+                completion(true, nil);
             }
         }];
     } else if (self.eventKitAccess) {
         [self.eventKitEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
             if (!success) {
-                completion (false, error);
+                completion(false, error);
             } else {
-                completion (true, nil);
+                completion(true, nil);
             }
         }];
     }
@@ -78,7 +78,7 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
                 } else {
                     NSMutableArray<Event *> *allEvents = [[NSMutableArray alloc] initWithArray:eventKitEvents];
                     [allEvents addObjectsFromArray:events];
-                    completion (true, allEvents, fetchedDate, nil);
+                    completion(true, allEvents, fetchedDate, nil);
                 }
             }];
         } else {
@@ -95,7 +95,7 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
             if (!success) {
                 completion(false, error);
             } else {
-                completion (true, nil);
+                completion(true, nil);
                 [self.eventSyncHandler didChangeEvent:oldEvent updatedEvent:event];
             }
         }];
@@ -104,7 +104,7 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
             if (!success) {
                 completion(false, error);
             } else {
-                completion (true, nil);
+                completion(true, nil);
             }
         }];
     }
@@ -118,7 +118,7 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
             if (!success) {
                 completion(false, error);
             } else {
-                completion (true, nil);
+                completion(true, nil);
                 [self.eventSyncHandler didChangeEvent:oldEvent updatedEvent:updatedEvent];
             }
         }];
@@ -127,7 +127,7 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
             if (!success) {
                 completion(false, error);
             } else {
-                completion (true, nil);
+                completion(true, nil);
             }
         }];
     }
@@ -139,7 +139,7 @@ remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate {
         if (!success) {
             completion(false, error);
         } else {
-            completion (true, nil);
+            completion(true, nil);
             [self.eventSyncHandler didChangeEvent:nil updatedEvent:newEvent];
         }
     }];

@@ -11,7 +11,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^SingleEventQueryCompltion)(BOOL success,
+typedef void (^SingleEventQueryCompletion)(BOOL success,
                                           Event * _Nullable event,
                                           NSString * _Nullable error);
 
@@ -19,7 +19,7 @@ typedef void (^SingleEventQueryCompltion)(BOOL success,
 
 - (NSString *)getCurrentUsername;
 - (void)queryEventFromID:(NSUUID *)eventID
-              completion:(SingleEventQueryCompltion)completion;
+              completion:(SingleEventQueryCompletion)completion;
 
 @end
 
