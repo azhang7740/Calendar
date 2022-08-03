@@ -8,8 +8,8 @@
 import Foundation
 
 protocol ComposeNoteDelegate: NSObject {
-    func didTapBack(note: Note);
-    func didUpdateNote(note: Note);
+    func didTapBack(note: Note, index: Int);
+    func didUpdateNote(note: Note, index: Int);
     func didDelete(noteID: UUID);
     func didCreateNewNote(note: Note);
 }
@@ -17,6 +17,7 @@ protocol ComposeNoteDelegate: NSObject {
 class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFieldDelegate {
     public var isNewNote = false
     public var note = Note()
+    public var selectedIndex = 0
     public weak var delegate: ComposeNoteDelegate?
     @IBOutlet weak var titleTextView: UITextView!
     @IBOutlet weak var descriptionTextView: UITextView!
@@ -60,11 +61,34 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
         }
     }
     
+    func updateNoteWithView() {
+        note.lastModified = Date()
+        if titleTextView.textColor == UIColor.lightGray {
+            note.title = ""
+        } else {
+            note.title = titleTextView.text
+        }
+        
+        if descriptionTextView.textColor == UIColor.lightGray {
+            note.text = ""
+        } else {
+            note.text = descriptionTextView.text
+        }
+    }
+    
     @IBAction func didTapBackButton(_ sender: Any) {
-        delegate?.didTapBack(note: note)
+        updateNoteWithView()
+        delegate?.didTapBack(note: note, index: selectedIndex)
     }
     
     @IBAction func didTapDone(_ sender: Any) {
         view.endEditing(true)
+        updateNoteWithView()
+        if isNewNote {
+            delegate?.didCreateNewNote(note: note)
+            isNewNote = false
+        } else {
+            delegate?.didUpdateNote(note: note, index: selectedIndex)
+        }
     }
 }

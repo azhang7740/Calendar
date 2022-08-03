@@ -23,10 +23,10 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func onClickCompose(_ sender: Any) {
-        transitionToCompose(note: nil)
+        transitionToCompose(note: nil, index: nil)
     }
     
-    func transitionToCompose(note: Note?) {
+    func transitionToCompose(note: Note?, index: Int?) {
         let storyboard = UIStoryboard(name: "ComposeNote", bundle: .main)
         guard let composeNavigation = storyboard.instantiateViewController(withIdentifier: "ComposeNoteNavigation") as? UINavigationController else {
             return
@@ -35,11 +35,14 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
             return
         }
         
-        if let selectedNote = note {
+        if let selectedNote = note,
+           let selectedIndex = index{
             composeView.isNewNote = false
             composeView.note = selectedNote
+            composeView.selectedIndex = selectedIndex
         } else {
             composeView.isNewNote = true
+            composeView.selectedIndex = 0
         }
         composeView.delegate = self
         
@@ -74,7 +77,7 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row < notes.count {
-            transitionToCompose(note: notes[indexPath.row])
+            transitionToCompose(note: notes[indexPath.row], index: indexPath.row)
         }
     }
     
@@ -82,10 +85,10 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone.current
         
-        let difference = calendar.dateComponents([.month], from: notes[0].lastModified, to: calendar.startOfDay(for: Date()))
+        let difference = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: notes[0].lastModified)
         let dateFormatter = DateFormatter()
         if let dayDifference = difference.day,
-           dayDifference < 1{
+           dayDifference < 1 && dayDifference > 0 {
             dateFormatter.dateFormat = "H:mm"
         } else {
             dateFormatter.dateFormat = "M/d/yyyy"
@@ -93,22 +96,37 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         return dateFormatter.string(from: modifiedDate)
     }
     
-    func didTapBack(note: Note) {
+    func didTapBack(note: Note, index: Int) {
         dismiss(animated: true) { [weak self] in
             self?.dismissTransition = nil
+            DispatchQueue.main.async {
+                if index != 0 {
+                    self?.notesTableView.moveRow(at: IndexPath(row: index, section: 0),
+                                                 to: IndexPath(row: 0, section: 0))
+                    guard let note = self?.notes.remove(at: index) else {
+                        return
+                    }
+                    self?.notes.insert(note, at: 0)
+                }
+            }
         }
     }
     
-    func didUpdateNote(note: Note) {
-        
+    func didUpdateNote(note: Note, index: Int) {
+        coreDataNoteHandler.update(note: note)
+        let indexPaths = [IndexPath(row: index, section: 0)]
+        notesTableView.reloadRows(at: indexPaths,
+                                  with: .none)
     }
     
     func didDelete(noteID: UUID) {
-        
+        coreDataNoteHandler.deleteNote(noteID: noteID)
     }
     
     func didCreateNewNote(note: Note) {
-        
+        coreDataNoteHandler.saveNewNote(note: note)
+        notes.insert(note, at: 0)
+        notesTableView.reloadData()
     }
 }
 

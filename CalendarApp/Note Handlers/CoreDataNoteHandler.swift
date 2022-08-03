@@ -17,7 +17,7 @@ class CoreDataNoteHandler : NSObject {
         do {
             let fetchedNotes = try context.fetch(CoreDataNote.fetchRequest())
             let notes = noteBuilder.getNoteArray(coreDataNotes: fetchedNotes)
-            return notes.sorted(by: { $0.lastModified < $1.lastModified })
+            return notes.sorted(by: { $0.lastModified > $1.lastModified })
         } catch {
             // TODO: error handling
         }
