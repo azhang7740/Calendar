@@ -119,6 +119,7 @@ RemoteEventUpdates>
 
 - (void)didDeleteEvent:(Event *)event {
     [self.scheduleView deleteCalendarEvent:event];
+    self.objectIDToEvents[event.objectUUID] = nil;
 }
 
 - (void)didUpdateEvent:(Event *)oldEvent
@@ -126,6 +127,7 @@ RemoteEventUpdates>
     [self.scheduleView updateCalendarEvent:updatedEvent
                          originalStartDate:oldEvent.startDate.midnight
                            originalEndDate:oldEvent.startDate.midnight];
+    self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
 }
 
 - (void)didCreateEvent:(Event *)newEvent {
