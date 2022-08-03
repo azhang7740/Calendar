@@ -23,12 +23,23 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     @IBAction func onClickCompose(_ sender: Any) {
+        transitionToCompose(note: nil)
+    }
+    
+    func transitionToCompose(note: Note?) {
         let storyboard = UIStoryboard(name: "ComposeNote", bundle: .main)
         guard let composeNavigation = storyboard.instantiateViewController(withIdentifier: "ComposeNoteNavigation") as? UINavigationController else {
             return
         }
         guard let composeView = composeNavigation.topViewController as? ComposeNoteViewController else {
             return
+        }
+        
+        if let selectedNote = note {
+            composeView.isNewNote = false
+            composeView.note = selectedNote
+        } else {
+            composeView.isNewNote = true
         }
         composeView.delegate = self
         
@@ -59,6 +70,12 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
             noteCell.lastModifiedLabel.text = getDateString(modifiedDate: notes[indexPath.row].lastModified)
         }
         return noteCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row < notes.count {
+            transitionToCompose(note: notes[indexPath.row])
+        }
     }
     
     func getDateString(modifiedDate: Date) -> String {
