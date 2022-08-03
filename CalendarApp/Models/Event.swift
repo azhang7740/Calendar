@@ -9,7 +9,7 @@ import Foundation
 import CalendarKit
 
 @objcMembers
-public class Event : NSObject, NSSecureCoding {
+public class Event : NSObject {
     public static var supportsSecureCoding = true
     public var ekEventID: String?
     public var objectUUID = UUID()
@@ -30,43 +30,6 @@ public class Event : NSObject, NSSecureCoding {
     
     public required override init() {
         super.init()
-    }
-    
-    public func encode(with coder: NSCoder) {
-        coder.encode(ekEventID, forKey: "ekEventID")
-        coder.encode(objectUUID, forKey: "objectUUID")
-        coder.encode(updatedAt, forKey: "updatedAt")
-        coder.encode(createdAt, forKey: "createdAt")
-        
-        coder.encode(eventTitle, forKey: "eventTitle")
-        coder.encode(authorUsername, forKey: "authorUsername")
-        coder.encode(eventDescription, forKey: "eventDescription")
-        coder.encode(location, forKey: "location")
-        
-        coder.encode(startDate, forKey: "startDate")
-        coder.encode(endDate, forKey: "endDate")
-        coder.encode(isAllDay, forKey: "isAllDay")
-        coder.encode(color, forKey: "color")
-    }
-
-    public required init?(coder: NSCoder) {
-        super.init()
-        
-        ekEventID = coder.decodeObject(of: NSString.self, forKey: "ekEventID") as String? ?? ""
-        objectUUID = coder.decodeObject(of: NSUUID.self, forKey: "objectUUID") as UUID? ?? UUID()
-        updatedAt = coder.decodeObject(of: NSDate.self, forKey: "updatedAt") as Date? ?? Date()
-        createdAt = coder.decodeObject(of: NSDate.self, forKey: "createdAt") as Date? ?? Date()
-        
-        eventTitle = coder.decodeObject(of: NSString.self, forKey: "eventTitle") as String? ?? "[No title]"
-        authorUsername = coder.decodeObject(of: NSString.self, forKey: "authorUsername") as String? ?? ""
-        eventDescription = coder.decodeObject(of: NSString.self, forKey: "eventDescription") as String? ?? ""
-        location = coder.decodeObject(of: NSString.self, forKey: "location") as String? ?? "[No title]"
-
-        startDate = coder.decodeObject(of: NSDate.self, forKey: "startDate") as Date? ?? Date()
-        endDate = coder.decodeObject(of: NSDate.self, forKey: "endDate") as Date? ?? Date()
-        isAllDay = coder.decodeBool(forKey: "isAllDay")
-
-        color = coder.decodeObject(of: UIColor.self, forKey: "color") as UIColor? ?? SystemColors.systemBlue
     }
     
     public required init(originalEvent: Event) {

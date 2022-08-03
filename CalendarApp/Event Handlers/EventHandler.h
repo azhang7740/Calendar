@@ -6,14 +6,18 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CalendarApp-Swift.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
-typedef void (^EventQueryCompletion)(BOOL success, NSMutableArray<Event *> * _Nullable, NSDate * _Nullable, NSString * _Nullable);
-typedef void (^RemoteEventChangeCompletion)(BOOL success, NSString * _Nullable);
+@class Event;
+typedef void (^EventQueryCompletion)(BOOL success,
+                                     NSMutableArray<Event *> * _Nullable events,
+                                     NSDate * _Nullable date,
+                                     NSString * _Nullable error);
+typedef void (^RemoteEventChangeCompletion)(BOOL success,
+                                            NSString * _Nullable error);
 
-@protocol EventHandler <NSObject>
+@protocol EventHandler
 
 - (void)queryEventsOnDate:(NSDate *)date
                completion:(EventQueryCompletion)completion;
@@ -21,7 +25,7 @@ typedef void (^RemoteEventChangeCompletion)(BOOL success, NSString * _Nullable);
              completion:(RemoteEventChangeCompletion)completion;
 - (void)updateEvent:(Event *)event
          completion:(RemoteEventChangeCompletion)completion;
-- (void)deleteEvent:(Event *)event
+- (void)deleteEvent:(NSString *)eventID
          completion:(RemoteEventChangeCompletion)completion;
 
 @end

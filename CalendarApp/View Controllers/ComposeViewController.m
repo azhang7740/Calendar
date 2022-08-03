@@ -122,17 +122,14 @@
     if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
-            [self.delegate didTapChangeEvent:newEvent
-                           originalStartDate:newEvent.startDate
-                             originalEndDate:newEvent.endDate];
+            [self.delegate didTapChangeEvent:nil
+                                    newEvent:newEvent];
         }
-    } else {
-        NSDate *prevStartDate = self.event.startDate;
-        NSDate *prevEndDate = self.event.endDate;
+    } else if (self.event && [self.createUpdateButton.titleLabel.text isEqual:@"Update"]){
+        Event *oldEvent = [[Event alloc] initWithOriginalEvent:self.event];
         Event *updatedEvent = [self updateEventFromView];
-        [self.delegate didTapChangeEvent:updatedEvent
-                       originalStartDate:prevStartDate.midnight
-                         originalEndDate:prevEndDate.midnight];
+        [self.delegate didTapChangeEvent:oldEvent
+                                newEvent:updatedEvent];
     }
 }
 

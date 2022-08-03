@@ -31,13 +31,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     return YES;
 }
 
-- (instancetype)init {
-    if ((self = [super init])) {
-        [EventTransformer registerTransformer];
-    }
-    return self;
-}
-
 
 #pragma mark - UISceneSession lifecycle
 

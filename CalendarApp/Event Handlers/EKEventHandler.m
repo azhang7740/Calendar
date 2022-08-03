@@ -26,6 +26,10 @@
 }
 
 - (void)requestAccessToCalendarWithCompletion:(void (^ _Nonnull)(BOOL success, NSString * _Nullable error))completion {
+    if ([EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent] == EKAuthorizationStatusAuthorized) {
+        completion(true, nil);
+        return;
+    }
     [self.eventStore requestAccessToEntityType:EKEntityTypeEvent completion:^(BOOL granted, NSError * _Nullable error) {
         if (error) {
             completion(granted, @"Something went wrong.");
@@ -49,9 +53,9 @@
     [self.delegate remoteEventsDidChange];
 }
 
-- (void)deleteEvent:(nonnull Event *)event
+- (void)deleteEvent:(nonnull NSString *)eventID
          completion:(RemoteEventChangeCompletion)completion {
-    EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:event.ekEventID];
+    EKEvent *deletingEvent = [self.eventStore eventWithIdentifier:eventID];
     if (!deletingEvent) {
         completion(false, @"Event was not found in Apple calendar.");
     } else {
@@ -65,15 +69,20 @@
 }
 
 - (void)queryEventsOnDate:(nonnull NSDate *)date
-                   completion:(EventQueryCompletion)completion {
-    EKEventBuilder *builder = [[EKEventBuilder alloc] init];
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", date.midnight, date.nextDate, date.midnight, date.midnight];
+               completion:(EventQueryCompletion)completion {
+    NSDate *midnight = date.midnight;
+    NSDate *nextDate = date.nextDate;
+    NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:midnight
+                                                                      endDate:nextDate
+                                                                    calendars:nil];
+//    [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", date.midnight, date.nextDate, date.midnight, date.midnight];
     
     NSArray<EKEvent *> *events = [self.eventStore eventsMatchingPredicate:predicate];
     
     if (!events) {
-        completion(false, nil, nil, @"Failed to retrieve calendar events.");
+        completion(false, [[NSMutableArray alloc] init], nil, @"Failed to retrieve calendar events.");
     } else {
+        EKEventBuilder *builder = [[EKEventBuilder alloc] init];
         NSMutableArray<Event *> *newEvents = [builder getEventsFromEKEventArray:events];
         completion(true, newEvents, date.midnight, nil);
     }

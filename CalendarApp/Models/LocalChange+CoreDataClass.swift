@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 @objc(LocalChange)
-public class LocalChange: NSManagedObject {
+public class LocalChange: NSManagedObject, Revision {
 
 }

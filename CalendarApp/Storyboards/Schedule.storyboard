@@ -15,8 +15,68 @@
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfq-G9-o4p">
+                                <rect key="frame" x="0.0" y="88" width="414" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Close" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3C9-jx-y09">
+                                        <rect key="frame" x="30" y="5" width="354" height="60"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemRedColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="3C9-jx-y09" secondAttribute="bottom" constant="5" id="QcX-8P-juf"/>
+                                    <constraint firstAttribute="trailing" secondItem="3C9-jx-y09" secondAttribute="trailing" constant="30" id="Wc6-T6-Qbe"/>
+                                    <constraint firstItem="3C9-jx-y09" firstAttribute="leading" secondItem="Kfq-G9-o4p" secondAttribute="leading" constant="30" id="tUB-ee-wja"/>
+                                    <constraint firstItem="3C9-jx-y09" firstAttribute="top" secondItem="Kfq-G9-o4p" secondAttribute="top" constant="5" id="vjj-I0-HfU"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pBG-nd-CJE">
+                                <rect key="frame" x="0.0" y="88" width="414" height="70"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="error message" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cjz-zz-Qfl">
+                                        <rect key="frame" x="20" y="5" width="374" height="60"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.67028044038842216" blue="0.62813208824081657" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <gestureRecognizers/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="70" id="C70-wc-Aav"/>
+                                    <constraint firstAttribute="bottom" secondItem="Cjz-zz-Qfl" secondAttribute="bottom" constant="5" id="EGn-nN-Wbw"/>
+                                    <constraint firstItem="Cjz-zz-Qfl" firstAttribute="leading" secondItem="pBG-nd-CJE" secondAttribute="leading" constant="20" id="Gjv-hQ-pXI"/>
+                                    <constraint firstItem="Cjz-zz-Qfl" firstAttribute="top" secondItem="pBG-nd-CJE" secondAttribute="top" constant="5" id="P1U-ed-xXv"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cjz-zz-Qfl" secondAttribute="trailing" constant="20" id="PcJ-WK-zja"/>
+                                </constraints>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="zg5-9N-Ooy" appends="YES" id="ZkJ-pW-581"/>
+                                </connections>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6tw-Ib-NNA">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <color key="backgroundColor" systemColor="systemGreenColor"/>
+                            </view>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="6tw-Ib-NNA" secondAttribute="bottom" id="0y2-tr-gU0"/>
+                            <constraint firstItem="Kfq-G9-o4p" firstAttribute="trailing" secondItem="pBG-nd-CJE" secondAttribute="trailing" id="2ty-Xu-Vzt"/>
+                            <constraint firstItem="6tw-Ib-NNA" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="D0Y-X9-kHy"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="6tw-Ib-NNA" secondAttribute="trailing" id="EaO-FC-90Q"/>
+                            <constraint firstItem="Kfq-G9-o4p" firstAttribute="bottom" secondItem="pBG-nd-CJE" secondAttribute="bottom" id="IMd-Zf-TDs"/>
+                            <constraint firstItem="pBG-nd-CJE" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" id="OIS-28-tQl"/>
+                            <constraint firstItem="Kfq-G9-o4p" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="PuN-29-zPN"/>
+                            <constraint firstItem="6tw-Ib-NNA" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="QEi-g4-Zvb"/>
+                            <constraint firstItem="Kfq-G9-o4p" firstAttribute="top" secondItem="pBG-nd-CJE" secondAttribute="top" id="Sd1-6e-JnU"/>
+                            <constraint firstItem="pBG-nd-CJE" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="kMq-rB-L3M"/>
+                            <constraint firstItem="pBG-nd-CJE" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="pQ0-f2-BoJ"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Vax-3F-9ZF">
                         <barButtonItem key="leftBarButtonItem" id="b8x-HK-ivJ">
@@ -42,8 +102,19 @@
                             </button>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="containerView" destination="6tw-Ib-NNA" id="bwS-r2-9b0"/>
+                        <outlet property="errorMessageLabel" destination="Cjz-zz-Qfl" id="lVL-85-3Mt"/>
+                        <outlet property="push" destination="D0Y-X9-kHy" id="Uz9-A5-0kW"/>
+                        <outlet property="rightPush" destination="pQ0-f2-BoJ" id="3Vf-kQ-SCt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <swipeGestureRecognizer direction="right" id="zg5-9N-Ooy">
+                    <connections>
+                        <action selector="didSwipeOnAlert:" destination="Y6W-OH-hqX" id="tmu-uk-ppB"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="886.95652173913049" y="42.857142857142854"/>
         </scene>
@@ -73,6 +144,12 @@
         <image name="plus" catalog="system" width="128" height="113"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

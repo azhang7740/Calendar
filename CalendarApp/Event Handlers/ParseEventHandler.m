@@ -62,29 +62,6 @@
     }];
 }
 
-- (void)queryEventsAfterUpdateDate:(NSDate *)date
-                        completion:(EventQueryCompletion)completion {
-    PFUser *currentUser = [PFUser currentUser];
-    ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
-    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query orderByAscending:@"updatedAt"];
-    [query includeKey:@"author"];
-    [query includeKey:@"createdAt"];
-    [query includeKey:@"updatedAt"];
-    
-    [query whereKey:@"author" equalTo:currentUser];
-    [query whereKey:@"updatedAt" greaterThan:date];
-    
-    [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
-        if (parseEvents) {
-            NSMutableArray<Event *> *queriedEvents = [builder getEventsFromParseEventArray:parseEvents];
-            completion(true, queriedEvents, date, nil);
-        } else {
-            completion(false, nil, nil, @"Failed to query events.");
-        }
-    }];
-}
-
 - (void)updateEvent:(Event *)event
          completion:(RemoteEventChangeCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
@@ -110,10 +87,10 @@
     }];
 }
 
-- (void)deleteEvent:(Event *)event
+- (void)deleteEvent:(NSString *)eventID
          completion:(RemoteEventChangeCompletion)completion {
     PFQuery *query = [PFQuery queryWithClassName:@"Event"];
-    [query whereKey:@"objectUUID" equalTo:[event.objectUUID UUIDString]];
+    [query whereKey:@"objectUUID" equalTo:eventID];
     [query getFirstObjectInBackgroundWithBlock:^(PFObject * _Nullable object, NSError * _Nullable error) {
         if (error) {
             completion(false, @"Could not find the event.");
@@ -125,6 +102,29 @@
                     completion(true, nil);
                 }
             }];
+        }
+    }];
+}
+
+- (void)queryEventFromID:(NSUUID *)eventID
+              completion:(SingleEventQueryCompltion)completion {
+    PFUser *currentUser = [PFUser currentUser];
+    ParseEventBuilder *builder = [[ParseEventBuilder alloc] init];
+    PFQuery *query = [PFQuery queryWithClassName:@"Event"];
+    
+    [query orderByAscending:@"startDate"];
+    [query includeKey:@"author"];
+    [query includeKey:@"createdAt"];
+    [query includeKey:@"updatedAt"];
+    [query whereKey:@"author" equalTo:currentUser];
+    [query whereKey:@"objectUUID" equalTo:[eventID UUIDString]];
+
+    [query getFirstObjectInBackgroundWithBlock:^(PFObject *parseEvent, NSError *error) {
+        if (parseEvent) {
+            Event *event = [builder getEventFromParseEvent:(ParseEvent *)parseEvent];
+            completion(true, event, nil);
+        } else {
+            completion(false, nil, @"Failed to query events.");
         }
     }];
 }

@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Calendar_CalendarUITestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Calendar_CalendarUITestsVersionString[];
+FOUNDATION_EXPORT double Pods_CalendarApp_CalendarAppUITestsVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_CalendarApp_CalendarAppUITestsVersionString[];
 

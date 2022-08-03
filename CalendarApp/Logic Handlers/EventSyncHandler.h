@@ -6,14 +6,21 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "CalendarApp-Swift.h"
+#import "LocalChangeSyncDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class Event;
+
 @interface EventSyncHandler : NSObject
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)init:(id<LocalChangeSyncDelegate>)localChangeDelegate;
 
 - (void)didChangeEvent:(Event * _Nullable)oldEvent
           updatedEvent:(Event * _Nullable)newEvent;
+- (void)didDeleteEvent:(NSUUID *)eventID;
 
 @end
 

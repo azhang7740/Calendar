@@ -25,10 +25,10 @@
     return self;
 }
 
-- (void)deleteEvent:(nonnull Event *)event
+- (void)deleteEvent:(nonnull NSString *)eventID
          completion:(RemoteEventChangeCompletion)completion {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
-    request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", event.objectUUID];
+    request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", [[NSUUID alloc] initWithUUIDString:eventID]];
     NSArray<CoreDataEvent *> *coreDataEvents = [self.context executeFetchRequest:request error:nil];
     if (coreDataEvents.count != 1) {
         completion(false, @"Something went wrong.");
@@ -92,16 +92,16 @@
     remoteEvent.location = canonicalEvent.location;
 }
 
-- (Event *)queryEventFromID:(NSUUID *)eventID {
+- (Event * _Nullable)queryEventFromID:(NSUUID *)eventID {
     NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"CoreDataEvent"];
     request.predicate = [NSPredicate predicateWithFormat:@"objectUUID == %@", eventID];
-    NSArray<CoreDataEvent *> *coreDateEvents = [self.context executeFetchRequest:request error:nil];
-    if (coreDateEvents.count != 1) {
+    NSArray<CoreDataEvent *> *coreDataEvents = [self.context executeFetchRequest:request error:nil];
+    if (coreDataEvents.count != 1) {
         // TODO: Error handling
         return nil;
     }
     CoreDataEventBuilder *builder = [[CoreDataEventBuilder alloc] init];
-    return [builder getEventFromCoreDataEvent:coreDateEvents[0]];
+    return [builder getEventFromCoreDataEvent:coreDataEvents[0]];
 }
 
 @end

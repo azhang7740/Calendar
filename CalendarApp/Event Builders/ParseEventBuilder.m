@@ -11,6 +11,10 @@
 
 - (Event *)getEventFromParseEvent:(ParseEvent *)parseEvent {
     Event *canonicalEvent = [[Event alloc] init];
+    if (!parseEvent) {
+        return nil;
+    }
+    
     if (!parseEvent.author ||
         !parseEvent.createdAt ||
         !parseEvent.updatedAt) {

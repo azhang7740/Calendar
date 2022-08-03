@@ -13,7 +13,6 @@
 @interface DetailsViewController () <DetailsViewDelegate, ComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet DetailsView *detailsView;
-@property (nonatomic) FetchEventHandler *eventHandler;
 
 @end
 
@@ -23,7 +22,6 @@
     [super viewDidLoad];
     
     self.detailsView.delegate = self;
-    self.eventHandler = [[FetchEventHandler alloc] init];
     [self updateDetailsView];
 }
 
@@ -91,10 +89,11 @@
 }
 
 - (void)didTapDelete {
-    [self.eventHandler deleteEvent:self.event
+    NSString *eventID = (self.event.ekEventID) ? self.event.ekEventID : [self.event.objectUUID UUIDString];
+    [self.eventHandler deleteEvent:eventID
                         completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
-            [self.delegate didDeleteEvent:self.event];
+            [self.delegate didDeleteEventOnDetailView:self.event];
         } else {
             // TODO: error handling
         }
@@ -105,16 +104,16 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didTapChangeEvent:(Event *)event
-        originalStartDate:(NSDate *)startDate
-          originalEndDate:(NSDate *)endDate {
+- (void)didTapChangeEvent:(Event *)oldEvent
+                 newEvent:(Event *)updatedEvent {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.eventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.eventHandler updateEvent:oldEvent
+                          newEvent:updatedEvent
+                        completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
             [self updateDetailsView];
-            [self.delegate didUpdateEvent:event
-                        originalStartDate:startDate
-                          originalEndDate:endDate];
+            [self.delegate didUpdateEvent:oldEvent
+                                 newEvent:updatedEvent];
         } else {
             // TODO: error handling
         }

@@ -6,35 +6,45 @@
 //
 
 #import "EventSyncHandler.h"
-#import "CoreDataEventHandler.h"
 #import "ParseEventHandler.h"
-#import "AppDelegate.h"
+#import "CoreDataEventHandler.h"
+
+#import "ParseChangeHandler.h"
+#import "LocalChangeHandler.h"
 #import "CalendarApp-Swift.h"
 
-@interface EventSyncHandler () <NetworkChangeDelegate>
+@interface EventSyncHandler () <NetworkChangeDelegate, SyncChangesDelegate>
 
-@property (nonatomic) ParseEventHandler *parseEventHandler;
-@property (nonatomic) CoreDataEventHandler *coreDataEventHandler;
+@property (nonatomic) id<EventHandler> parseEventHandler;
+@property (nonatomic) id<EventHandler> coreDataEventHandler;
+@property (nonatomic) id<RemoteChangeHandler> parseChangeHandler;
+@property (weak, nonatomic) id<LocalChangeSyncDelegate> delegate;
+@property (nonatomic) LocalChangeHandler *localChangeHandler;
+
 @property (nonatomic) NetworkHandler *networkHandler;
 @property (nonatomic) BOOL isSynced;
-
-@property (nonatomic) NSManagedObjectContext *context;
 @property (nonatomic) NSUserDefaults *userData;
 
 @end
 
 @implementation EventSyncHandler
 
-- (instancetype)init {
+- (instancetype)init:(id<LocalChangeSyncDelegate>)localChangeDelegate {
     if ((self = [super init])) {
-        self.context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
         self.parseEventHandler = [[ParseEventHandler alloc] init];
+        self.parseChangeHandler = [[ParseChangeHandler alloc] init];
         self.coreDataEventHandler = [[CoreDataEventHandler alloc] init];
+        self.localChangeHandler = [[LocalChangeHandler alloc] init];
+        self.delegate = localChangeDelegate;
         self.userData = NSUserDefaults.standardUserDefaults;
         
         self.networkHandler = [[NetworkHandler alloc] init];
         self.networkHandler.delegate = self;
         [self.networkHandler startMonitoring];
+        
+        if (!self.networkHandler.isOnline) {
+            [self.delegate displayMessage:@"You're currently offline. All changes will be saved locally."];
+        }
     }
     return self;
 }
@@ -44,55 +54,69 @@
         return;
     }
     self.isSynced = true;
-    if (![self.userData objectForKey:@"lastUpdated"]) {
-        // TODO: prompt user to query all and sync with all existing remote events
-        [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
-        [self.userData synchronize];
-        return;
+    NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
+    if (!lastUpdated) {
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+        NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+        dayComponent.day = -30;
+        lastUpdated = [calendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
     }
-    [self.parseEventHandler queryEventsAfterUpdateDate:[self.userData objectForKey:@"lastUpdated"]
-                                            completion:^(BOOL success,
-                                                         NSMutableArray<Event *> * _Nullable events,
-                                                         NSDate * _Nullable updatedDate,
-                                                         NSString * _Nullable error) {
+    [self.parseChangeHandler queryChangesAfterUpdateDate:lastUpdated
+                                              completion:^(BOOL success,
+                                                           NSMutableArray <NSArray<RemoteChange *> *> * _Nullable revisionHistories,
+                                                           NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
         } else {
-            NSArray<LocalChange *> *localChanges = [self.context executeFetchRequest:LocalChange.fetchRequest error:nil];
-            
-            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] init];
-            NSArray<LocalChange *> *keptChanges = [conflictHandler getChangesToSyncWithOnlineEvents:events offlineChanges:localChanges];
-            [self syncLocalChanges:keptChanges];
-            [self deleteAllLocalChanges];
+            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
+            conflictHandler.delegate = self;
+            [conflictHandler syncChanges];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
     }];
 }
 
-- (void)deleteAllLocalChanges {
-    NSBatchDeleteRequest *delete = [[NSBatchDeleteRequest alloc] initWithFetchRequest:LocalChange.fetchRequest];
-    NSPersistentStoreCoordinator *persistentStoreCoordinator = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.persistentStoreCoordinator;
-    [persistentStoreCoordinator executeRequest:delete withContext:self.context error:nil];
-}
-
-- (void)syncLocalChanges:(NSArray<LocalChange *> *)localChanges {
-    for (LocalChange *change in localChanges) {
-        [self syncEventToParse:change.oldEvent updatedEvent:change.updatedEvent];
-    }
-}
-
 - (void)didChangeOffline {
-    self.isSynced = false;
+    if (self.isSynced) {
+        self.isSynced = false;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.delegate displayMessage:@"You're currently offline. All changes will be saved locally."];
+        });
+    }
 }
 
 - (void)syncEventToParse:(Event *)oldEvent
             updatedEvent:(Event *)newEvent {
-    if (!oldEvent) {
-        [self syncNewEventToParse:newEvent];
-    } else if (!newEvent) {
-        [self syncDeleteToParse:oldEvent];
+    RemoteChangeBuilder *builder = [[RemoteChangeBuilder alloc] initWithFirstEvent:oldEvent
+                                                                      updatedEvent:newEvent
+                                                                        updateDate:[NSDate date]];
+    NSArray<RemoteChange *> *remoteChanges = [builder buildRemoteChanges];
+    
+    if (remoteChanges.count == 1 && remoteChanges[0].changeType == ChangeTypeCreate) {
+        [self syncNewEventToParseWithEvent:newEvent
+                              remoteChange:remoteChanges[0]];
     } else {
-        [self syncUpdateToParse:newEvent];
+        [self syncUpdateToParseWithEvent:newEvent];
+        for (RemoteChange *change in remoteChanges) {
+            [self syncRemoteChangeToParseWithRemoteChange:change];
+        }
+    }
+}
+
+- (void)didDeleteEvent:(NSUUID *)eventID {
+    if (self.networkHandler.isOnline) {
+        RemoteChangeBuilder *builder = [[RemoteChangeBuilder alloc]
+                                        initWithEventUUID:eventID
+                                        updateDate:[NSDate date]];
+        RemoteChange *deleteChange = [builder buildDeleteChangeFromEventID];
+        [self syncDeleteToParseWithEvent:[eventID UUIDString]
+                            remoteChange:deleteChange];
+    } else {
+        Event *deletingEvent = [(CoreDataEventHandler *)self.coreDataEventHandler queryEventFromID:eventID];
+        if (deletingEvent) {
+            [self.localChangeHandler saveNewLocalChange:deletingEvent updatedEvent:nil];
+        }
     }
 }
 
@@ -101,44 +125,110 @@
     if (self.networkHandler.isOnline) {
         [self syncEventToParse:oldEvent updatedEvent:newEvent];
     } else {
-        [self saveNewLocalChange:oldEvent updatedEvent:newEvent];
+        [self.localChangeHandler saveNewLocalChange:oldEvent updatedEvent:newEvent];
     }
 }
 
-- (void)saveNewLocalChange:(Event *)oldEvent
-              updatedEvent:(Event *)newEvent {
-    LocalChange *localChange = [[LocalChange alloc] initWithContext:self.context];
-    localChange.timestamp = [NSDate date];
-    if (oldEvent) {
-        localChange.oldEvent = [[Event alloc] initWithOriginalEvent:oldEvent];
-    }
-    if (newEvent) {
-        localChange.updatedEvent = [[Event alloc] initWithOriginalEvent:newEvent];
-    }
-    [self.context save:nil];
-}
-
-
-- (void)syncNewEventToParse:(Event *)event {
+- (void)syncNewEventToParseWithEvent:(Event *)event
+                        remoteChange:(RemoteChange *)newChange {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
     [self.parseEventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
+        } else {
+            [self.parseChangeHandler addNewRevisionHistory:newChange.eventID
+                                                    change:newChange
+                                                completion:^(BOOL success, NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: save as local change?
+                }
+            }];
         }
     }];
 }
 
-- (void)syncDeleteToParse:(Event *)event {
-    [self.parseEventHandler deleteEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+- (void)syncDeleteToParseWithEvent:(NSString *)eventID
+                      remoteChange:(RemoteChange *)newChange {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
+    [self.parseEventHandler deleteEvent:eventID completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
+        } else {
+            [self.parseChangeHandler partiallyDeleteRevisionHistory:newChange.eventID
+                                                       remoteChange:newChange
+                                                         completion:^(BOOL success, NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: save as local change?
+                }
+            }];
         }
     }];
 }
 
-- (void)syncUpdateToParse:(Event *)event {
+- (void)syncUpdateToParseWithEvent:(Event *)event {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
     [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (!success) {
             // TODO: Error handling
+        }
+    }];
+}
+
+- (void)syncRemoteChangeToParseWithRemoteChange:(RemoteChange *)newChange {
+    [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
+    [self.parseChangeHandler addNewParseChange:newChange
+                                    completion:^(BOOL success, NSString * _Nullable error) {
+        if (!success) {
+            // TODO: save as local change?
+        }
+    }];
+}
+
+- (void)createdEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
+    [(ParseEventHandler *)self.parseEventHandler queryEventFromID:eventID
+                                                       completion:^(BOOL success,
+                                                                    Event * _Nullable event,
+                                                                    NSString * _Nullable error) {
+        if (!success) {
+            // TODO: error handling
+        } else {
+            [self.coreDataEventHandler uploadWithEvent:event completion:^(BOOL success,
+                                                                          NSString * _Nullable error) {
+                if (!success) {
+                    // TODO: error handling
+                } else {
+                    [self.delegate didCreateEvent:event];
+                }
+            }];
+        }
+    }];
+}
+
+- (void)deletedEventOnRemoteWithEventID:(NSUUID * _Nonnull)eventID {
+    Event *deletingEvent = [(CoreDataEventHandler *)self.coreDataEventHandler queryEventFromID:eventID];
+    if (!deletingEvent) {
+        return;
+    }
+    [self.delegate didDeleteEvent:deletingEvent];
+    [self.coreDataEventHandler deleteEvent:[eventID UUIDString] completion:^(BOOL success,
+                                                                             NSString * _Nullable error) {
+        if (!success) {
+            // TODO: error handling
+        }
+    }];
+}
+
+- (void)updatedEventOnRemoteWithEvent:(Event * _Nonnull)event {
+    Event *originalEvent = [(CoreDataEventHandler *)self.coreDataEventHandler queryEventFromID:event.objectUUID];
+    if (!originalEvent) {
+        return;
+    }
+    [self.coreDataEventHandler updateEvent:event completion:^(BOOL success,
+                                                              NSString * _Nullable error) {
+        if (!success) {
+            // TODO: Error handling
+        } else {
+            [self.delegate didUpdateEvent:originalEvent newEvent:event];
         }
     }];
 }

@@ -7,10 +7,21 @@
 
 #import <Foundation/Foundation.h>
 #import "EventHandler.h"
+#import "LocalChangeSyncDelegate.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface FetchEventHandler : NSObject <EventHandler>
+
++ (instancetype)new NS_UNAVAILABLE;
+- (instancetype)init NS_UNAVAILABLE;
+
+- (instancetype)init:(id<LocalChangeSyncDelegate>)localChangeDelegate
+remoteChangeDelegate:(id<RemoteEventUpdates>)remoteEventUpdatesDelegate;
+
+- (void)updateEvent:(Event *)oldEvent
+           newEvent:(Event *)updatedEvent
+         completion:(RemoteEventChangeCompletion)completion;
 
 @end
 
