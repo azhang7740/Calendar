@@ -30,19 +30,41 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
         titleTextView.text = note.title
         descriptionTextView.text = note.text
         if titleTextView.text == "" {
-            showPlaceholderText(textView: titleTextView, text: "Title")
+            showPlaceholderText(textView: titleTextView)
         }
         if descriptionTextView.text == "" {
-            showPlaceholderText(textView: descriptionTextView, text: "Type here...")
+            showPlaceholderText(textView: descriptionTextView)
         }
     }
     
-    func showPlaceholderText(textView: UITextView, text: String) {
-        textView.text = text
+    func showPlaceholderText(textView: UITextView) {
+        if textView == titleTextView {
+            textView.text = "Title"
+        } else {
+            textView.text = "Type here..."
+        }
         textView.textColor = UIColor.lightGray
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text == "" {
+            showPlaceholderText(textView: textView)
+        }
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        let isEmpty = textView.textColor == UIColor.lightGray
+        if isEmpty {
+            textView.text = ""
+            textView.textColor = UIColor.black
+        }
     }
     
     @IBAction func didTapBackButton(_ sender: Any) {
         delegate?.didTapBack(note: note)
+    }
+    
+    @IBAction func didTapDone(_ sender: Any) {
+        view.endEditing(true)
     }
 }

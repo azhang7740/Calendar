@@ -68,6 +68,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                                <connections>
+                                    <action selector="didTapDone:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="wgP-g1-n1S"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
