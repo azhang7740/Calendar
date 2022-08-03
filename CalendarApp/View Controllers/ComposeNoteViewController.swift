@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ComposeNoteDelegate: NSObject {
-    func didTapBack(note: Note, index: Int);
+    func didTapBack(note: Note, index: Int?);
     func didUpdateNote(note: Note, index: Int);
     func didDelete(noteID: UUID);
     func didCreateNewNote(note: Note);
@@ -16,6 +16,7 @@ protocol ComposeNoteDelegate: NSObject {
 
 class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFieldDelegate {
     public var isNewNote = false
+    public var noteDidChange = false
     public var note = Note()
     public var selectedIndex = 0
     public weak var delegate: ComposeNoteDelegate?
@@ -54,6 +55,7 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
     }
     
     func textViewDidBeginEditing(_ textView: UITextView) {
+        noteDidChange = true
         let isEmpty = textView.textColor == UIColor.lightGray
         if isEmpty {
             textView.text = ""
@@ -76,13 +78,7 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
         }
     }
     
-    @IBAction func didTapBackButton(_ sender: Any) {
-        updateNoteWithView()
-        delegate?.didTapBack(note: note, index: selectedIndex)
-    }
-    
-    @IBAction func didTapDone(_ sender: Any) {
-        view.endEditing(true)
+    func updateNote() {
         updateNoteWithView()
         if isNewNote {
             delegate?.didCreateNewNote(note: note)
@@ -90,5 +86,19 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
         } else {
             delegate?.didUpdateNote(note: note, index: selectedIndex)
         }
+    }
+    
+    @IBAction func didTapBackButton(_ sender: Any) {
+        if noteDidChange {
+            updateNote()
+            delegate?.didTapBack(note: note, index: selectedIndex)
+        } else {
+            delegate?.didTapBack(note: note, index: nil)
+        }
+    }
+    
+    @IBAction func didTapDone(_ sender: Any) {
+        view.endEditing(true)
+        updateNote()
     }
 }

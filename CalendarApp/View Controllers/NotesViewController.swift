@@ -96,14 +96,15 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         return dateFormatter.string(from: modifiedDate)
     }
     
-    func didTapBack(note: Note, index: Int) {
+    func didTapBack(note: Note, index: Int?) {
         dismiss(animated: true) { [weak self] in
             self?.dismissTransition = nil
             DispatchQueue.main.async {
-                if index != 0 {
-                    self?.notesTableView.moveRow(at: IndexPath(row: index, section: 0),
+                if let previousIndex = index,
+                    index != 0 {
+                    self?.notesTableView.moveRow(at: IndexPath(row: previousIndex, section: 0),
                                                  to: IndexPath(row: 0, section: 0))
-                    guard let note = self?.notes.remove(at: index) else {
+                    guard let note = self?.notes.remove(at: previousIndex) else {
                         return
                     }
                     self?.notes.insert(note, at: 0)
