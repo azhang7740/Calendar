@@ -29,6 +29,12 @@ class CoreDataNoteHandler : NSObject {
             return
         }
         context.delete(deletingNote)
+        
+        do {
+            try context.save()
+        } catch {
+            // TODO: error handling
+        }
     }
     
     func update(note: Note) {

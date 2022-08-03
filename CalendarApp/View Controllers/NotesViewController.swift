@@ -81,6 +81,16 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
+    func tableView(_ tableView: UITableView,
+                   commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete && indexPath.row < notes.count {
+            didDelete(noteID: notes[indexPath.row].noteID)
+            notes.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
     func getDateString(modifiedDate: Date) -> String {
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone.current
