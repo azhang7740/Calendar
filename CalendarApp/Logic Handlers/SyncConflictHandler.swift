@@ -35,7 +35,13 @@ class SyncConflictHandler : NSObject {
         addLocalChanges()
         checkChanges()
         syncLocalCreatesDeletes()
+        syncLocalUpdates()
         localChangeHandler.deleteAllLocalChanges()
+    }
+    
+    private func syncLocalUpdates() {
+        let changes = localChangeHandler.fetchAllLocalChanges()
+        syncChangesToParse(eventChanges: changes)
     }
     
     private func syncLocalCreatesDeletes() {
