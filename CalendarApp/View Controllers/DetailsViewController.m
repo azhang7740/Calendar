@@ -8,12 +8,12 @@
 #import "DetailsViewController.h"
 #import "DetailsView.h"
 #import "ComposeViewController.h"
-#import "CoreDataEventHandler.h"
+#import "FetchEventHandler.h"
 
 @interface DetailsViewController () <DetailsViewDelegate, ComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet DetailsView *detailsView;
-@property (nonatomic) ParseEventHandler *parseEventHandler;
+@property (nonatomic) FetchEventHandler *eventHandler;
 
 @end
 
@@ -23,7 +23,7 @@
     [super viewDidLoad];
     
     self.detailsView.delegate = self;
-    self.parseEventHandler = [[ParseEventHandler alloc] init];
+    self.eventHandler = [[FetchEventHandler alloc] init];
     [self updateDetailsView];
 }
 
@@ -86,13 +86,13 @@
     UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
     ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
     composeView.delegate = self;
-    composeView.currentUserName = [self.parseEventHandler getCurrentUsername];
     composeView.event = self.event;
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
 - (void)didTapDelete {
-    [self.parseEventHandler deleteEvent:self.event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.eventHandler deleteEvent:self.event
+                        completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
             [self.delegate didDeleteEvent:self.event];
         } else {
@@ -109,7 +109,7 @@
         originalStartDate:(NSDate *)startDate
           originalEndDate:(NSDate *)endDate {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseEventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.eventHandler updateEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (success) {
             [self updateDetailsView];
             [self.delegate didUpdateEvent:event

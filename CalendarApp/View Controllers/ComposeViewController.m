@@ -7,6 +7,7 @@
 
 #import "ComposeViewController.h"
 #import "ComposeScrollView.h"
+#import "NSDate+Midnight.h"
 
 @interface ComposeViewController () <UITextViewDelegate>
 
@@ -128,14 +129,10 @@
     } else {
         NSDate *prevStartDate = self.event.startDate;
         NSDate *prevEndDate = self.event.endDate;
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-        NSDate *midnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:prevStartDate options:0];
-        NSDate *midnightEnd = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:prevEndDate options:0];
         Event *updatedEvent = [self updateEventFromView];
         [self.delegate didTapChangeEvent:updatedEvent
-                       originalStartDate:midnightStart
-                         originalEndDate:midnightEnd];
+                       originalStartDate:prevStartDate.midnight
+                         originalEndDate:prevEndDate.midnight];
     }
 }
 

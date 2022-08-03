@@ -1,5 +1,5 @@
 //
-//  EventModel.swift
+//  Event.swift
 //  CalendarApp
 //
 //  Created by Angelina Zhang on 7/18/22.
@@ -9,8 +9,8 @@ import Foundation
 import CalendarKit
 
 @objcMembers
-public class Event : NSObject {
-    public var parseObjectId: String?
+public class Event : NSObject, NSSecureCoding {
+    public static var supportsSecureCoding = true
     public var ekEventID: String?
     public var objectUUID = UUID()
     public var updatedAt: Date?
@@ -27,6 +27,64 @@ public class Event : NSObject {
     
     public var color = SystemColors.systemBlue
     private weak var edited: EventDescriptor?
+    
+    public required override init() {
+        super.init()
+    }
+    
+    public func encode(with coder: NSCoder) {
+        coder.encode(ekEventID, forKey: "ekEventID")
+        coder.encode(objectUUID, forKey: "objectUUID")
+        coder.encode(updatedAt, forKey: "updatedAt")
+        coder.encode(createdAt, forKey: "createdAt")
+        
+        coder.encode(eventTitle, forKey: "eventTitle")
+        coder.encode(authorUsername, forKey: "authorUsername")
+        coder.encode(eventDescription, forKey: "eventDescription")
+        coder.encode(location, forKey: "location")
+        
+        coder.encode(startDate, forKey: "startDate")
+        coder.encode(endDate, forKey: "endDate")
+        coder.encode(isAllDay, forKey: "isAllDay")
+        coder.encode(color, forKey: "color")
+    }
+
+    public required init?(coder: NSCoder) {
+        super.init()
+        
+        ekEventID = coder.decodeObject(of: NSString.self, forKey: "ekEventID") as String? ?? ""
+        objectUUID = coder.decodeObject(of: NSUUID.self, forKey: "objectUUID") as UUID? ?? UUID()
+        updatedAt = coder.decodeObject(of: NSDate.self, forKey: "updatedAt") as Date? ?? Date()
+        createdAt = coder.decodeObject(of: NSDate.self, forKey: "createdAt") as Date? ?? Date()
+        
+        eventTitle = coder.decodeObject(of: NSString.self, forKey: "eventTitle") as String? ?? "[No title]"
+        authorUsername = coder.decodeObject(of: NSString.self, forKey: "authorUsername") as String? ?? ""
+        eventDescription = coder.decodeObject(of: NSString.self, forKey: "eventDescription") as String? ?? ""
+        location = coder.decodeObject(of: NSString.self, forKey: "location") as String? ?? "[No title]"
+
+        startDate = coder.decodeObject(of: NSDate.self, forKey: "startDate") as Date? ?? Date()
+        endDate = coder.decodeObject(of: NSDate.self, forKey: "endDate") as Date? ?? Date()
+        isAllDay = coder.decodeBool(forKey: "isAllDay")
+
+        color = coder.decodeObject(of: UIColor.self, forKey: "color") as UIColor? ?? SystemColors.systemBlue
+    }
+    
+    public required init(originalEvent: Event) {
+        ekEventID = originalEvent.ekEventID;
+        objectUUID = originalEvent.objectUUID;
+        updatedAt = originalEvent.updatedAt;
+        createdAt = originalEvent.createdAt;
+        
+        eventTitle = originalEvent.eventTitle;
+        authorUsername = originalEvent.authorUsername;
+        eventDescription = originalEvent.eventDescription;
+        location = originalEvent.location;
+        
+        startDate = originalEvent.startDate;
+        endDate = originalEvent.endDate;
+        isAllDay = originalEvent.isAllDay;
+        color = originalEvent.color;
+    }
 }
 
 extension Event : EventDescriptor {
@@ -72,19 +130,18 @@ extension Event : EventDescriptor {
         if (editedEvent != nil) {
             return .white
         }
-        return dynamicStandardTextColor()
+        return dynamicStandardTextColor
     }
     
     public var backgroundColor: UIColor {
         if (editedEvent != nil) {
             return color.withAlphaComponent(0.95)
         }
-        return dynamicStandardBackgroundColor()
+        return dynamicStandardBackgroundColor
     }
     
     public func makeEditable() -> Self {
         let cloned = Event()
-        cloned.parseObjectId = parseObjectId
         cloned.objectUUID = objectUUID
         cloned.updatedAt = updatedAt
         cloned.createdAt = createdAt
@@ -107,29 +164,29 @@ extension Event : EventDescriptor {
     }
     
     /// Dynamic color that changes depending on the user interface style (dark / light)
-    private func dynamicStandardBackgroundColor() -> UIColor {
-      let light = backgroundColorForLightTheme(baseColor: color)
-      let dark = backgroundColorForDarkTheme()
+    private var dynamicStandardBackgroundColor: UIColor {
+      let light = backgroundColorForLightTheme
+      let dark = backgroundColorForDarkTheme
       return dynamicColor(light: light, dark: dark)
     }
     
     /// Dynamic color that changes depending on the user interface style (dark / light)
-    private func dynamicStandardTextColor() -> UIColor {
-      let light = textColorForLightTheme(baseColor: color)
+    private var dynamicStandardTextColor: UIColor {
+      let light = textColorForLightTheme
       return dynamicColor(light: light, dark: color)
     }
     
-    private func textColorForLightTheme(baseColor: UIColor) -> UIColor {
+    private var textColorForLightTheme: UIColor {
       var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
-      baseColor.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
+      color.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
       return UIColor(hue: h, saturation: s, brightness: b * 0.4, alpha: a)
     }
     
-    private func backgroundColorForLightTheme(baseColor: UIColor) -> UIColor {
-      baseColor.withAlphaComponent(0.3)
+    private var backgroundColorForLightTheme: UIColor {
+      return color.withAlphaComponent(0.3)
     }
     
-    private func backgroundColorForDarkTheme() -> UIColor {
+    private var backgroundColorForDarkTheme: UIColor {
       var h: CGFloat = 0, s: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
       color.getHue(&h, saturation: &s, brightness: &b, alpha: &a)
       return UIColor(hue: h, saturation: s, brightness: b * 0.4, alpha: a * 0.8)

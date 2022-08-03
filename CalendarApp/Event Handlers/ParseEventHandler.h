@@ -14,6 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface ParseEventHandler : NSObject <EventHandler>
 
 - (NSString *)getCurrentUsername;
+- (void)queryEventsAfterUpdateDate:(NSDate *)date
+                        completion:(EventQueryCompletion)completion;
 
 @end
 

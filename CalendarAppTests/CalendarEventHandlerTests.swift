@@ -13,6 +13,7 @@ class CalendarEventHandlerTests: XCTestCase {
     var earlyEvent: Event!
     var laterEvent: Event!
     var currentEvent: Event!
+    var longEvent: Event!
     let yesterday = Date().advanced(by: TimeInterval(-86400))
     let tomorrow = Date().advanced(by: TimeInterval(86400))
     
@@ -24,6 +25,7 @@ class CalendarEventHandlerTests: XCTestCase {
         earlyEvent = SampleEvents.makeEvent(on: yesterday)
         laterEvent = SampleEvents.makeEvent(on: tomorrow)
         currentEvent = SampleEvents.makeEvent(on: Date())
+        longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
     }
     
     override func tearDown() {
@@ -31,19 +33,18 @@ class CalendarEventHandlerTests: XCTestCase {
         earlyEvent = nil
         laterEvent = nil
         currentEvent = nil
+        
+        super.tearDown()
     }
     
     func testAddEventsFromArray() {
         handler.addEventsFromArray([currentEvent], Date())
-        
         XCTAssertEqual(handler.getEventsForDate(Date()), [currentEvent])
     }
     
     func testGetEventsForFutureDateWithEvents() {
-        let event = SampleEvents.makeEvent(on: tomorrow)
-        handler.addEventsFromArray([event], tomorrow)
-        
-        XCTAssertEqual(handler.getEventsForDate(tomorrow), [event])
+        handler.addEventsFromArray([laterEvent], tomorrow)
+        XCTAssertEqual(handler.getEventsForDate(tomorrow), [laterEvent])
     }
     
     func testGetEventsForFutureDateWithEmptyEvents() {
@@ -51,21 +52,12 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testGetEventsForPastDate() {
-        let event = SampleEvents.makeEvent(on: yesterday)
-        handler.addEventsFromArray([event], yesterday)
-
-        XCTAssertEqual(handler.getEventsForDate(yesterday), [event])
+        handler.addEventsFromArray([earlyEvent], yesterday)
+        XCTAssertEqual(handler.getEventsForDate(yesterday), [earlyEvent])
     }
     
     func testGetEventsForPastDateWithEmptyEvents() {
         XCTAssertEqual(handler.getEventsForDate(yesterday), [])
-    }
-    
-    func testGetEventsForCurrentDate() {
-        let event = SampleEvents.makeEvent(on: Date())
-        handler.addEventsFromArray([event], Date())
-
-        XCTAssertEqual(handler.getEventsForDate(Date()), [event])
     }
     
     func testGetEventsForDateWithEmptyEvents() {
@@ -84,7 +76,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testGetEventThatStartsOnPreviousDay() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addNewEvent(longEvent)
         
         XCTAssertEqual(handler.getEventsForDate(Date()), [])
@@ -95,7 +86,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testAddEventSpanningMultipleDays() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addEventsFromArray([currentEvent], Date())
         handler.addEventsFromArray([earlyEvent], yesterday)
         handler.addEventsFromArray([], tomorrow)
@@ -154,7 +144,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testDeleteEventSpanningMultipleDays() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addEventsFromArray([], yesterday)
         handler.addEventsFromArray([], Date())
         handler.addEventsFromArray([], tomorrow)
@@ -175,7 +164,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testDeleteLongEventWithUnfetchedDates() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addEventsFromArray([], Date())
         handler.addEventsFromArray([], tomorrow)
         handler.addNewEvent(longEvent)
@@ -190,7 +178,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testDeleteMultipleEvents() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addEventsFromArray([currentEvent, longEvent], Date())
         handler.addEventsFromArray([earlyEvent, longEvent], yesterday)
         
@@ -285,7 +272,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testUpdateEventFromMultipleDayEvent() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addEventsFromArray([longEvent], Date())
         handler.addEventsFromArray([longEvent], tomorrow)
         handler.addEventsFromArray([longEvent], yesterday)
@@ -303,7 +289,6 @@ class CalendarEventHandlerTests: XCTestCase {
     }
     
     func testUpdateMultipleEvents() {
-        let longEvent = SampleEvents.makeEvent(on: yesterday, withDays: 2, withHours: 3)
         handler.addEventsFromArray([longEvent, currentEvent], Date())
         handler.addEventsFromArray([longEvent, laterEvent], tomorrow)
         handler.addEventsFromArray([longEvent, earlyEvent], yesterday)

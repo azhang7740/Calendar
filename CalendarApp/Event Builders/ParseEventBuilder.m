@@ -11,13 +11,11 @@
 
 - (Event *)getEventFromParseEvent:(ParseEvent *)parseEvent {
     Event *canonicalEvent = [[Event alloc] init];
-    if (!parseEvent.objectId ||
-        !parseEvent.author ||
+    if (!parseEvent.author ||
         !parseEvent.createdAt ||
         !parseEvent.updatedAt) {
         return nil;
     }
-    canonicalEvent.parseObjectId = parseEvent.objectId;
     canonicalEvent.authorUsername = parseEvent.author.username;
     canonicalEvent.createdAt = parseEvent.createdAt;
     canonicalEvent.updatedAt = parseEvent.updatedAt;

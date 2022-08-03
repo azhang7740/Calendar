@@ -7,6 +7,7 @@
 
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
+#import "CalendarApp-Swift.h"
 
 @interface AppDelegate ()
 
@@ -28,6 +29,13 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
     [Parse initializeWithConfiguration:config];
     return YES;
+}
+
+- (instancetype)init {
+    if ((self = [super init])) {
+        [EventTransformer registerTransformer];
+    }
+    return self;
 }
 
 

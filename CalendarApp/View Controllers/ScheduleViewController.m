@@ -11,16 +11,14 @@
 
 #import "CalendarApp-Swift.h"
 #import "AuthenticationHandler.h"
-#import "ParseEventHandler.h"
-#import "EKEventHandler.h"
-#import "CoreDataEventHandler.h"
+#import "FetchEventHandler.h"
+#import "NSDate+Midnight.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate, ComposeViewControllerDelegate>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
-@property (nonatomic) ParseEventHandler *parseHandler;
-@property (nonatomic) EKEventHandler *ekEventHandler;
+@property (nonatomic) FetchEventHandler *eventHandler;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
 
 @end
@@ -32,13 +30,7 @@
     
     self.scheduleView = [[DailyCalendarViewController alloc] init];
     self.scheduleView.controllerDelegate = self;
-    self.parseHandler = [[ParseEventHandler alloc] init];
-    self.ekEventHandler = [[EKEventHandler alloc] init];
-    [self.ekEventHandler requestAccessToCalendarWithCompletion:^(BOOL success, NSString * _Nullable error) {
-        if (error) {
-            [self failedRequestWithMessage:error];
-        }
-    }];
+    self.eventHandler = [[FetchEventHandler alloc] init];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     
@@ -54,7 +46,7 @@
 
 - (void)fetchEventsForDate:(NSDate *)date
                   callback:(void (^)(NSArray<Event *> * _Nullable, NSString * _Nullable))callback {
-    [self.parseHandler queryEventsOnDate:date
+    [self.eventHandler queryEventsOnDate:date
                               completion:^(BOOL success, NSMutableArray<Event *> * _Nullable events, NSDate * _Nonnull date, NSString * _Nullable error) {
         if (error) {
             callback(nil, error);
@@ -85,7 +77,6 @@
     UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
     ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
     composeView.delegate = self;
-    composeView.currentUserName = [self.parseHandler getCurrentUsername];
     composeView.date = date;
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
@@ -102,11 +93,7 @@
 - (void)didUpdateEvent:(Event *)event
      originalStartDate:(NSDate *)startDate
        originalEndDate:(NSDate *)endDate {
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-    NSDate *midnightStart = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:startDate options:0];
-    NSDate *midnightEnd = [calendar dateBySettingHour:0 minute:0 second:0 ofDate:endDate options:0];
-    [self.scheduleView updateCalendarEvent:event originalStartDate:midnightStart originalEndDate:midnightEnd];
+    [self.scheduleView updateCalendarEvent:event originalStartDate:startDate.midnight originalEndDate:endDate.midnight];
 }
 
 - (void)didTapCancel {
@@ -126,7 +113,6 @@
     UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
     ComposeViewController *composeView = (ComposeViewController *)composeNavigationController.topViewController;
     composeView.delegate = self;
-    composeView.currentUserName = [self.parseHandler getCurrentUsername];
     [self presentViewController:composeNavigationController animated:YES completion:nil];
 }
 
@@ -134,7 +120,7 @@
         originalStartDate:(NSDate *)startDate
           originalEndDate:(NSDate *)endDate {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.parseHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
+    [self.eventHandler uploadWithEvent:event completion:^(BOOL success, NSString * _Nullable error) {
         if (error) {
             [self failedRequestWithMessage:error];
         } else {

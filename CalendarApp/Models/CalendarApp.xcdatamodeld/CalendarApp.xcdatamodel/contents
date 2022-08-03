@@ -10,11 +10,16 @@
         <attribute name="isAllDay" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="location" optional="YES" attributeType="String"/>
         <attribute name="objectUUID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="parseID" optional="YES" attributeType="String"/>
         <attribute name="startDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="updatedAt" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
     </entity>
+    <entity name="LocalChange" representedClassName="LocalChange" syncable="YES">
+        <attribute name="oldEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="updatedEvent" optional="YES" attributeType="Transformable" valueTransformerName="EventTransformer" customClassName="Event"/>
+    </entity>
     <elements>
-        <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="209"/>
+        <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="194"/>
+        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="74"/>
     </elements>
 </model>

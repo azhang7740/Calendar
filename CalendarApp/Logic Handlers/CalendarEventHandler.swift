@@ -22,13 +22,13 @@ class CalendarEventHandler {
         return dateToCalendarKitEvents[midnight] ?? []
     }
     
-    func addNewEvent(_ event:CalendarApp.Event) {
+    func addNewEvent(_ event: CalendarApp.Event) {
         var midnight = calendar.startOfDay(for: event.startDate)
         let endMidnight = calendar.startOfDay(for: event.endDate)
         var dateComponents = DateComponents()
         dateComponents.day = 1
         
-        while (midnight <= endMidnight) {
+        while midnight <= endMidnight {
             if var calendarEvents = dateToCalendarKitEvents[midnight]  {
                 if (fetchedDates.contains(midnight)) {
                     calendarEvents.append(event)
@@ -48,7 +48,7 @@ class CalendarEventHandler {
         var dateComponents = DateComponents()
         dateComponents.day = 1
         
-        while (midnight <= endMidnight) {
+        while midnight <= endMidnight {
             if var calendarEvents = dateToCalendarKitEvents[midnight]  {
                 if (!fetchedDates.contains(midnight)) {
                     calendarEvents.append(event)
@@ -62,7 +62,7 @@ class CalendarEventHandler {
         }
     }
     
-    func addEventsFromArray(_ events:[CalendarApp.Event], _ date: Date) {
+    func addEventsFromArray(_ events: [CalendarApp.Event], _ date: Date) {
         let midnight = calendar.startOfDay(for: date)
         let calendarEvents = dateToCalendarKitEvents[midnight] ?? []
         dateToCalendarKitEvents[midnight] = calendarEvents
@@ -82,8 +82,9 @@ class CalendarEventHandler {
         var startMidnight = calendar.startOfDay(for: startDate)
         var dateComponents = DateComponents()
         dateComponents.day = 1
-        while (startMidnight <= endDate) {
-            if var calendarKitEvents = dateToCalendarKitEvents[startMidnight], let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
+        while startMidnight <= endDate {
+            if var calendarKitEvents = dateToCalendarKitEvents[startMidnight],
+                let eventIndex = getEventIndex(event.objectUUID, calendarKitEvents) {
                 calendarKitEvents.remove(at: eventIndex)
                 dateToCalendarKitEvents[startMidnight] = calendarKitEvents
             }
