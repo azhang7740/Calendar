@@ -41,6 +41,7 @@
 		41404AF42894FA1E00760287 /* UpdateBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF32894FA1E00760287 /* UpdateBuilder.swift */; };
 		41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF72896E21700760287 /* RemoteChangeBuilder.swift */; };
 		41404AFA2896E22200760287 /* LocalChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF92896E22200760287 /* LocalChangeBuilder.swift */; };
+		4198CD4B289C91800080AD9A /* Reminders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4198CD4A289C91800080AD9A /* Reminders.storyboard */; };
 		41AC97DE2891E7E3000FF838 /* TestEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */; };
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* Event.swift */; };
@@ -155,6 +156,7 @@
 		41404AF32894FA1E00760287 /* UpdateBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateBuilder.swift; sourceTree = "<group>"; };
 		41404AF72896E21700760287 /* RemoteChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteChangeBuilder.swift; sourceTree = "<group>"; };
 		41404AF92896E22200760287 /* LocalChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChangeBuilder.swift; sourceTree = "<group>"; };
+		4198CD4A289C91800080AD9A /* Reminders.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reminders.storyboard; sourceTree = "<group>"; };
 		41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4EC2885FDC800030027 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -352,6 +354,7 @@
 				412D3A4B287E0F2D0023C9AA /* Details.storyboard */,
 				41E2CF782880DE500077F173 /* Schedule.storyboard */,
 				41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */,
+				4198CD4A289C91800080AD9A /* Reminders.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -617,6 +620,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4198CD4B289C91800080AD9A /* Reminders.storyboard in Resources */,
 				410A101928764D5C0023F523 /* Compose.storyboard in Resources */,
 				41E2CF642880C9A20077F173 /* Keys.plist in Resources */,
 				412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */,

@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -118,7 +119,9 @@
         <scene sceneID="nvM-71-fE4">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6Q1-Iu-qVr" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Notes" image="book.closed" catalog="system" id="5b4-C8-EkK"/>
+                    <tabBarItem key="tabBarItem" title="Notes" id="5b4-C8-EkK">
+                        <imageReference key="image" image="book.closed" catalog="system" symbolScale="medium"/>
+                    </tabBarItem>
                     <toolbarItems/>
                     <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EbG-bS-XlV">
