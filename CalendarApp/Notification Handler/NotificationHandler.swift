@@ -25,6 +25,14 @@ class NotificationHandler : NSObject {
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in }
     }
     
+    func updateReminderForEvent(_ eventID: UUID, _ date: Date) {
+        
+    }
+    
+    func deleteReminderForEvent(_ eventID: UUID) {
+        
+    }
+    
     func checkReminderForEvent(_ eventID: UUID) -> Date? {
         let request = EventReminder.fetchRequest()
         request.predicate = NSPredicate(format: "eventID == %@",

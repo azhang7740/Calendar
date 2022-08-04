@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet ComposeScrollView *composeView;
 @property (weak, nonatomic) IBOutlet UIButton *createUpdateButton;
 @property (nonatomic) NotificationHandler *notificationHandler;
+@property (nonatomic) BOOL hasReminder;
 
 @end
 
@@ -59,9 +60,11 @@
     
     NSDate *reminderDate = [self.notificationHandler checkReminderForEvent:self.event.objectUUID];
     if (reminderDate) {
+        self.hasReminder = true;
         [self.composeView.reminderSwitch setOn:true];
         [self.composeView.alertTimePicker setDate:reminderDate];
     } else {
+        self.hasReminder = false;
         [self.composeView.alertTimePicker setHidden:true];
         [self.composeView.alertTimeLabel setHidden:true];
         [self.composeView.descriptionLabelTopConstraint setConstant:20];
@@ -87,11 +90,22 @@
     newEvent.createdAt = [NSDate date];
     [self setEventFields:newEvent];
     
+    if (self.composeView.reminderSwitch.isOn) {
+        [self.notificationHandler scheduleNotificationWithEvent:newEvent date:self.composeView.alertTimePicker.date];
+    }
+    
     return newEvent;
 }
 
 - (Event *)updateEventFromView {
     [self setEventFields:self.event];
+    if (self.composeView.reminderSwitch.isOn &&
+        self.hasReminder) {
+        [self.notificationHandler updateReminderForEvent:self.event.objectUUID :self.composeView.alertTimePicker.date];
+    } else if (!self.composeView.reminderSwitch.isOn &&
+               self.hasReminder) {
+        [self.notificationHandler deleteReminderForEvent:self.event.objectUUID];
+    }
     return self.event;
 }
 
