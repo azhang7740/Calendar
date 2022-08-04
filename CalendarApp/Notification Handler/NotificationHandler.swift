@@ -25,12 +25,43 @@ class NotificationHandler : NSObject {
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in }
     }
     
-    func updateReminderForEvent(_ eventID: UUID, _ date: Date) {
-        
+    func updateReminderForEvent(_ event: Event, _ date: Date) {
+        let request = EventReminder.fetchRequest()
+        request.predicate = NSPredicate(format: "eventID == %@",
+                                        event.objectUUID as CVarArg)
+        do {
+            let notifications = try context.fetch(request)
+            if notifications.count == 1 {
+                context.delete(notifications[0])
+                guard let reminderID = notifications[0].reminderID else {
+                    return
+                }
+                center.removePendingNotificationRequests(withIdentifiers: [reminderID.uuidString])
+                scheduleNotification(event: event, date: date)
+                try context.save()
+            }
+        } catch {
+            // TODO: error handling
+        }
     }
     
     func deleteReminderForEvent(_ eventID: UUID) {
-        
+        let request = EventReminder.fetchRequest()
+        request.predicate = NSPredicate(format: "eventID == %@",
+                                        eventID as CVarArg)
+        do {
+            let notifications = try context.fetch(request)
+            if notifications.count == 1 {
+                context.delete(notifications[0])
+                guard let reminderID = notifications[0].reminderID else {
+                    return
+                }
+                center.removePendingNotificationRequests(withIdentifiers: [reminderID.uuidString])
+                try context.save()
+            }
+        } catch {
+            // TODO: error handling
+        }
     }
     
     func checkReminderForEvent(_ eventID: UUID) -> Date? {
@@ -40,7 +71,8 @@ class NotificationHandler : NSObject {
         do {
             let notifications = try context.fetch(request)
             if notifications.count == 1 {
-                            }
+                return notifications[0].reminderDate;
+            }
         } catch {
             // TODO: error handling
         }
@@ -65,6 +97,7 @@ class NotificationHandler : NSObject {
         let eventReminder = EventReminder(context: context)
         eventReminder.eventID = event.objectUUID
         eventReminder.reminderID = notificationID
+        eventReminder.reminderDate = date;
         do {
             try context.save()
         } catch {
@@ -74,8 +107,8 @@ class NotificationHandler : NSObject {
     
     private func getDateString(event: Event, date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "H:mm"
-        var dateString = "Starting at " + dateFormatter.string(from: date)
+        dateFormatter.dateFormat = "HH:mm"
+        var dateString = "Starting " + dateFormatter.string(from: event.startDate)
 
         let difference = calendar.dateComponents([.day], from: calendar.startOfDay(for: date), to: calendar.startOfDay(for: event.startDate))
         if difference.day == 0 {

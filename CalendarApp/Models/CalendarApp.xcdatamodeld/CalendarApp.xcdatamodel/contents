@@ -22,6 +22,7 @@
     </entity>
     <entity name="EventReminder" representedClassName="EventReminder" syncable="YES" codeGenerationType="class">
         <attribute name="eventID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="reminderDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="reminderID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
     </entity>
     <entity name="LocalChange" representedClassName="LocalChange" syncable="YES">
@@ -34,7 +35,7 @@
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="194"/>
         <element name="CoreDataNote" positionX="-54" positionY="72" width="128" height="104"/>
+        <element name="EventReminder" positionX="-45" positionY="81" width="128" height="74"/>
         <element name="LocalChange" positionX="-45" positionY="90" width="128" height="104"/>
-        <element name="EventReminder" positionX="-45" positionY="81" width="128" height="59"/>
     </elements>
 </model>

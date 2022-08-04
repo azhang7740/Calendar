@@ -101,10 +101,12 @@
     [self setEventFields:self.event];
     if (self.composeView.reminderSwitch.isOn &&
         self.hasReminder) {
-        [self.notificationHandler updateReminderForEvent:self.event.objectUUID :self.composeView.alertTimePicker.date];
+        [self.notificationHandler updateReminderForEvent:self.event :self.composeView.alertTimePicker.date];
     } else if (!self.composeView.reminderSwitch.isOn &&
                self.hasReminder) {
         [self.notificationHandler deleteReminderForEvent:self.event.objectUUID];
+    } else if (self.composeView.reminderSwitch.isOn) {
+        [self.notificationHandler scheduleNotificationWithEvent:self.event date:self.composeView.alertTimePicker.date];
     }
     return self.event;
 }
