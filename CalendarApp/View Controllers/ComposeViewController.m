@@ -54,7 +54,7 @@
     [self.composeView.chooseCalendarSegment setEnabled:false];
     if (self.event.ekEventID) {
         [self.composeView.chooseCalendarSegment setSelectedSegmentIndex:1];
-    } 
+    }
     self.composeView.titleTextField.text = self.event.eventTitle;
     self.composeView.startDatePicker.date = self.event.startDate;
     self.composeView.endDatePicker.date = self.event.endDate;
@@ -141,6 +141,16 @@
 
 - (IBAction)onTapOutside:(id)sender {
     [self.view endEditing:true];
+}
+
+- (IBAction)onChangeAllDaySwitch:(id)sender {
+    if (self.composeView.allDaySwitch.isOn) {
+        [self.composeView.startDatePicker setDatePickerMode:UIDatePickerModeDate];
+        [self.composeView.endDatePicker setDatePickerMode:UIDatePickerModeDate];
+    } else {
+        [self.composeView.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+        [self.composeView.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    }
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {
