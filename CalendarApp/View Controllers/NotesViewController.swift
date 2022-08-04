@@ -95,7 +95,7 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone.current
         
-        let difference = calendar.dateComponents([.day], from: calendar.startOfDay(for: Date()), to: notes[0].lastModified)
+        let difference = calendar.dateComponents([.day], from: notes[0].lastModified, to: calendar.startOfDay(for: Date()))
         let dateFormatter = DateFormatter()
         if let dayDifference = difference.day,
            dayDifference < 1 && dayDifference > 0 {

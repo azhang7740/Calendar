@@ -20,6 +20,10 @@
         <attribute name="text" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
     </entity>
+    <entity name="EventReminder" representedClassName="EventReminder" syncable="YES" codeGenerationType="class">
+        <attribute name="eventID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="reminderID" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+    </entity>
     <entity name="LocalChange" representedClassName="LocalChange" syncable="YES">
         <attribute name="changeField" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="changeType" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -29,7 +33,8 @@
     </entity>
     <elements>
         <element name="CoreDataEvent" positionX="-63" positionY="-18" width="128" height="194"/>
-        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="104"/>
         <element name="CoreDataNote" positionX="-54" positionY="72" width="128" height="104"/>
+        <element name="LocalChange" positionX="-45" positionY="90" width="128" height="104"/>
+        <element name="EventReminder" positionX="-45" positionY="81" width="128" height="59"/>
     </elements>
 </model>
