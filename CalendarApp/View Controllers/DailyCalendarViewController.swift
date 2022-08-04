@@ -13,6 +13,7 @@ public protocol EventInteraction {
     func didTapEvent(_ eventID: UUID)
     func didLongPressTimeline(_ date: Date)
     func fetchEventsForDate(_ date: Date, callback: @escaping(_ events:[CalendarApp.Event]?, _ errorMessage: String?) -> Void)
+    func displayMessage(_ message: String)
 }
 
 @objcMembers
@@ -33,7 +34,7 @@ class DailyCalendarViewController : DayViewController {
     }
     
     func failedRequest(_ errorMessage: String) {
-        // TODO: Error handling
+        controllerDelegate?.displayMessage(errorMessage)
     }
     
     func addEvent(_ event: CalendarApp.Event) {
