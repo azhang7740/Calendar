@@ -12,6 +12,7 @@
 #import "CalendarApp-Swift.h"
 #import "AuthenticationHandler.h"
 #import "FetchEventHandler.h"
+#import "EKEventHandler.h"
 #import "NSDate+Midnight.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate,
@@ -21,6 +22,7 @@ RemoteEventUpdates>
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) FetchEventHandler *eventHandler;
+@property (nonatomic) EKEventHandler *appleEventHandler;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *push;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -35,6 +37,7 @@ RemoteEventUpdates>
     [super viewDidLoad];
     self.eventHandler = [[FetchEventHandler alloc] init:self
                                    remoteChangeDelegate:self];
+    self.appleEventHandler = [[EKEventHandler alloc] init];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     [self loadScheduleViewController];
@@ -156,16 +159,25 @@ RemoteEventUpdates>
 }
 
 - (void)didTapChangeEvent:(Event *)oldEvent
-                 newEvent:(Event *)updatedEvent {
+                 newEvent:(Event *)updatedEvent
+          isEventKitEvent:(BOOL)isEventKit {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.eventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
-        if (error) {
-            [self failedRequestWithMessage:error];
-        } else {
-            self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
-            [self.scheduleView addEvent:updatedEvent];
-        }
-    }];
+    if (isEventKit) {
+        [self.appleEventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
+            if (error) {
+                [self failedRequestWithMessage:error];
+            }
+        }];
+    } else {
+        [self.eventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
+            if (error) {
+                [self failedRequestWithMessage:error];
+            } else {
+                self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
+                [self.scheduleView addEvent:updatedEvent];
+            }
+        }];
+    }
 }
 
 - (IBAction)didSwipeOnAlert:(id)sender {

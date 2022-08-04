@@ -125,17 +125,20 @@
 }
 
 - (IBAction)onTapCreate:(id)sender {
+    BOOL isEKEvent = self.composeView.chooseCalendarSegment.selectedSegmentIndex == 1;
     if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
             [self.delegate didTapChangeEvent:nil
-                                    newEvent:newEvent];
+                                    newEvent:newEvent
+                             isEventKitEvent:isEKEvent];
         }
     } else if (self.event && [self.createUpdateButton.titleLabel.text isEqual:@"Update"]){
         Event *oldEvent = [[Event alloc] initWithOriginalEvent:self.event];
         Event *updatedEvent = [self updateEventFromView];
         [self.delegate didTapChangeEvent:oldEvent
-                                newEvent:updatedEvent];
+                                newEvent:updatedEvent
+                         isEventKitEvent:isEKEvent];
     }
 }
 

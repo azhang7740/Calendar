@@ -105,7 +105,8 @@
 }
 
 - (void)didTapChangeEvent:(Event *)oldEvent
-                 newEvent:(Event *)updatedEvent {
+                 newEvent:(Event *)updatedEvent
+          isEventKitEvent:(BOOL)isEventKit{
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.eventHandler updateEvent:oldEvent
                           newEvent:updatedEvent

@@ -14,7 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)didTapCancel;
 - (void) didTapChangeEvent:(Event * _Nullable )oldEvent
-                  newEvent:(Event *)updatedEvent;
+                  newEvent:(Event *)updatedEvent
+           isEventKitEvent:(BOOL)isEventKit;
 
 @end
 
