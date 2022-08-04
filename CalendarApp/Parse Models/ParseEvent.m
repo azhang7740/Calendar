@@ -21,6 +21,7 @@
 
 @dynamic startDate;
 @dynamic endDate;
+@dynamic isAllDay;
 
 + (nonnull NSString *)parseClassName {
     return @"Event";

@@ -30,23 +30,34 @@ class UpdateBuilder : NSObject {
         for changeField in ChangeField.allCases {
             switch (changeField) {
             case .None:
-                break;
+                break
             case .Title:
                 checkTitleChange()
-                break;
+                break
             case .Description:
                 checkDescriptionChange()
-                break;
+                break
             case .Location:
                 checkLocationChange()
-                break;
+                break
             case .StartDate:
                 checkStartDateChange()
-                break;
+                break
             case .EndDate:
                 checkEndDateChange()
-                break;
+                break
+            case .isAllDay:
+                checkIsAllDayChange()
+                break
             }
+        }
+    }
+    
+    private func checkIsAllDayChange() {
+        if oldEvent.isAllDay != newEvent.isAllDay {
+            let revision = delegate.createUpdateRevision(changeField: .isAllDay)
+            revision.changeField = .isAllDay
+            revision.updatedField = newEvent.isAllDay ? "1" : "0"
         }
     }
     

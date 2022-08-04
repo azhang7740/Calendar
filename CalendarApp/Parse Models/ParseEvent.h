@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic) NSDate *startDate;
 @property (nonatomic) NSDate *endDate;
+@property (nonatomic) BOOL isAllDay;
 
 @end
 

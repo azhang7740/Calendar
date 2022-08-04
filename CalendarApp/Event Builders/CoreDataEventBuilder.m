@@ -42,6 +42,7 @@
     }
     canonicalEvent.startDate = coreDataEvent.startDate;
     canonicalEvent.endDate = coreDataEvent.endDate;
+    canonicalEvent.isAllDay = coreDataEvent.isAllDay;
     return canonicalEvent;
 }
 

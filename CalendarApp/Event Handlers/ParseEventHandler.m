@@ -27,6 +27,7 @@
     newParseEvent.location = uploadEvent.location;
     newParseEvent.startDate = uploadEvent.startDate;
     newParseEvent.endDate = uploadEvent.endDate;
+    newParseEvent.isAllDay = uploadEvent.isAllDay;
     
     [newParseEvent saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
         if (succeeded) {
@@ -50,6 +51,7 @@
     [query includeKey:@"author"];
     [query includeKey:@"createdAt"];
     [query includeKey:@"updatedAt"];
+    [query includeKey:@"isAllDay"];
     [query whereKey:@"author" equalTo:currentUser];
 
     [query findObjectsInBackgroundWithBlock:^(NSArray<ParseEvent *> *parseEvents, NSError *error) {
@@ -71,11 +73,13 @@
         if (error) {
             completion(false, @"Could not find the event.");
         } else {
-            object[@"eventTitle"] = uploadEvent.eventTitle;
-            object[@"eventDescription"] = uploadEvent.eventDescription;
-            object[@"location"] = uploadEvent.location;
-            object[@"startDate"] = uploadEvent.startDate;
-            object[@"endDate"] = uploadEvent.endDate;
+            ParseEvent *parseEvent = (ParseEvent *)object;
+            parseEvent.eventTitle = uploadEvent.eventTitle;
+            parseEvent.eventDescription = uploadEvent.eventDescription;
+            parseEvent.location = uploadEvent.location;
+            parseEvent.startDate = uploadEvent.startDate;
+            parseEvent.endDate = uploadEvent.endDate;
+            parseEvent.isAllDay = uploadEvent.isAllDay;
             [object saveInBackgroundWithBlock:^(BOOL succeeded, NSError * _Nullable error) {
                 if (!succeeded) {
                     completion(false, @"Could not upload to Parse successfully.");

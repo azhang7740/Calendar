@@ -21,6 +21,7 @@ import Foundation
     case Location = 3
     case StartDate = 4
     case EndDate = 5
+    case isAllDay = 6
 }
 
 @objc

@@ -27,7 +27,7 @@
         return nil;
     }
     
-    if ([parseChange.changeField intValue] > 5 ||
+    if ([parseChange.changeField intValue] > 6 ||
         [parseChange.changeField intValue] < 0) {
         return nil;
     }

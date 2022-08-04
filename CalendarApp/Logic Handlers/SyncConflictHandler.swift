@@ -163,6 +163,12 @@ class SyncConflictHandler : NSObject {
             let formatter = ISO8601DateFormatter()
             newEvent.endDate = formatter.date(from: updatedField) ?? newEvent.endDate
             break
+        case .isAllDay:
+            let formatter = ISO8601DateFormatter()
+            newEvent.startDate = formatter.date(from: updatedField) ?? newEvent.startDate
+            newEvent.endDate = formatter.date(from: updatedField) ?? newEvent.endDate
+            newEvent.isAllDay = updatedField == "1";
+            break
         }
         
         return newEvent
