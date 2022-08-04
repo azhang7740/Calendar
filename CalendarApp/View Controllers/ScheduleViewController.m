@@ -21,9 +21,12 @@ RemoteEventUpdates>
 
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
+@property (nonatomic) NotificationHandler *notificationHandler;
+
 @property (nonatomic) FetchEventHandler *eventHandler;
 @property (nonatomic) EKEventHandler *appleEventHandler;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
+
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *push;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *rightPush;
@@ -38,6 +41,9 @@ RemoteEventUpdates>
     self.eventHandler = [[FetchEventHandler alloc] init:self
                                    remoteChangeDelegate:self];
     self.appleEventHandler = [[EKEventHandler alloc] init];
+    self.notificationHandler = [[NotificationHandler alloc] init];
+    [self.notificationHandler registerNotifications];
+    
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
     [self loadScheduleViewController];
