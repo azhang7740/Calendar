@@ -30,7 +30,7 @@
                                         <rect key="frame" x="131.5" y="255.5" width="240" height="43"/>
                                     </datePicker>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" scrollEnabled="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="UbP-YJ-z2T">
-                                        <rect key="frame" x="37.5" y="419.5" width="334" height="33"/>
+                                        <rect key="frame" x="37.5" y="500.5" width="334" height="33"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <color key="textColor" systemColor="labelColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -57,7 +57,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description/Notes" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="470-YC-hyB">
-                                        <rect key="frame" x="37.5" y="382.5" width="334" height="27"/>
+                                        <rect key="frame" x="37.5" y="463.5" width="334" height="27"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -95,10 +95,35 @@
                                             <segment title="Apple Calendar"/>
                                         </segments>
                                     </segmentedControl>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="H5R-Yt-Q6H">
+                                        <rect key="frame" x="302.5" y="367.5" width="51" height="31"/>
+                                        <connections>
+                                            <action selector="onChangeReminderSwitch:" destination="Y6W-OH-hqX" eventType="valueChanged" id="TbG-6V-tjw"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add Reminder" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VBQ-lb-32K">
+                                        <rect key="frame" x="37.5" y="372.5" width="108" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="Eb2-EH-T5f">
+                                        <rect key="frame" x="131.5" y="413.5" width="240" height="31"/>
+                                    </datePicker>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alert Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N0x-DB-kB8">
+                                        <rect key="frame" x="37.5" y="418.5" width="79" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="UbP-YJ-z2T" firstAttribute="leading" secondItem="1mv-kf-zre" secondAttribute="leading" id="1Xf-Lr-Jsm"/>
+                                    <constraint firstItem="VBQ-lb-32K" firstAttribute="top" secondItem="1mv-kf-zre" secondAttribute="bottom" constant="20" id="32k-h6-ea3"/>
+                                    <constraint firstItem="H5R-Yt-Q6H" firstAttribute="leading" secondItem="ojb-ha-L0f" secondAttribute="leading" id="3Z2-p2-KI6"/>
+                                    <constraint firstItem="H5R-Yt-Q6H" firstAttribute="trailing" secondItem="ojb-ha-L0f" secondAttribute="trailing" id="4qI-qZ-yX9"/>
+                                    <constraint firstItem="H5R-Yt-Q6H" firstAttribute="centerY" secondItem="VBQ-lb-32K" secondAttribute="centerY" id="5eH-9c-onX"/>
                                     <constraint firstItem="UbP-YJ-z2T" firstAttribute="trailing" secondItem="1mv-kf-zre" secondAttribute="trailing" id="6cz-GO-tuv"/>
                                     <constraint firstItem="470-YC-hyB" firstAttribute="trailing" secondItem="1mv-kf-zre" secondAttribute="trailing" id="6ke-Re-kWk"/>
                                     <constraint firstItem="k9Y-r6-oR6" firstAttribute="leading" secondItem="fU0-8R-aRc" secondAttribute="leading" constant="30" id="AZH-w0-C5H"/>
@@ -106,10 +131,14 @@
                                     <constraint firstItem="470-YC-hyB" firstAttribute="leading" secondItem="1mv-kf-zre" secondAttribute="leading" id="Bm6-hY-QKh"/>
                                     <constraint firstItem="wtf-SE-XhU" firstAttribute="top" secondItem="fxP-50-1Dt" secondAttribute="bottom" constant="40" id="CHa-Rf-qlt"/>
                                     <constraint firstItem="1mv-kf-zre" firstAttribute="trailing" secondItem="Xsd-Bh-hdC" secondAttribute="trailing" id="CTB-Y1-ATK"/>
+                                    <constraint firstItem="470-YC-hyB" firstAttribute="top" secondItem="Eb2-EH-T5f" secondAttribute="top" constant="50" id="Cyb-7l-KOO"/>
+                                    <constraint firstItem="VBQ-lb-32K" firstAttribute="leading" secondItem="1mv-kf-zre" secondAttribute="leading" id="GlC-21-iY0"/>
                                     <constraint firstItem="7Mo-ql-zTE" firstAttribute="leading" secondItem="fxP-50-1Dt" secondAttribute="trailing" constant="15" id="HTh-MX-MQr"/>
                                     <constraint firstItem="k9Y-r6-oR6" firstAttribute="centerX" secondItem="MXE-6h-Y0o" secondAttribute="centerX" id="Igw-lb-QrA"/>
                                     <constraint firstItem="1mv-kf-zre" firstAttribute="leading" secondItem="wtf-SE-XhU" secondAttribute="leading" id="L0z-zX-DJf"/>
+                                    <constraint firstItem="N0x-DB-kB8" firstAttribute="leading" secondItem="VBQ-lb-32K" secondAttribute="leading" id="LMf-0O-yc8"/>
                                     <constraint firstItem="Xsd-Bh-hdC" firstAttribute="height" secondItem="7Mo-ql-zTE" secondAttribute="height" multiplier="1.22581" id="Lge-Xm-6Tv"/>
+                                    <constraint firstItem="Eb2-EH-T5f" firstAttribute="top" secondItem="H5R-Yt-Q6H" secondAttribute="bottom" constant="15" id="QDZ-iS-cns"/>
                                     <constraint firstItem="Xsd-Bh-hdC" firstAttribute="trailing" secondItem="7Mo-ql-zTE" secondAttribute="trailing" id="Qj1-tY-yvO"/>
                                     <constraint firstItem="fU0-8R-aRc" firstAttribute="bottom" secondItem="UbP-YJ-z2T" secondAttribute="bottom" constant="400" id="Qox-VX-i0c"/>
                                     <constraint firstItem="1mv-kf-zre" firstAttribute="top" secondItem="Xsd-Bh-hdC" secondAttribute="bottom" constant="20" id="Rvj-rl-htk"/>
@@ -118,13 +147,14 @@
                                     <constraint firstItem="fxP-50-1Dt" firstAttribute="top" secondItem="JXE-20-Mnk" secondAttribute="bottom" constant="30" id="X8Z-ua-y26"/>
                                     <constraint firstItem="M1Z-d3-m5z" firstAttribute="top" secondItem="k9Y-r6-oR6" secondAttribute="bottom" constant="10" id="ZEu-lm-OJQ"/>
                                     <constraint firstItem="Xsd-Bh-hdC" firstAttribute="centerY" secondItem="wtf-SE-XhU" secondAttribute="centerY" id="ZSM-Td-con"/>
+                                    <constraint firstItem="Eb2-EH-T5f" firstAttribute="leading" secondItem="Xsd-Bh-hdC" secondAttribute="leading" id="Zxp-dL-g2a"/>
                                     <constraint firstItem="UbP-YJ-z2T" firstAttribute="top" secondItem="470-YC-hyB" secondAttribute="bottom" constant="10" id="a40-Ld-OU2"/>
                                     <constraint firstItem="7Mo-ql-zTE" firstAttribute="centerY" secondItem="fxP-50-1Dt" secondAttribute="centerY" id="b6x-Tw-nyg"/>
                                     <constraint firstItem="ojb-ha-L0f" firstAttribute="trailing" secondItem="7Mo-ql-zTE" secondAttribute="trailing" constant="-20" id="bwP-jn-ZC3"/>
                                     <constraint firstItem="k9Y-r6-oR6" firstAttribute="leading" secondItem="qsc-rz-ZVB" secondAttribute="leading" constant="-3" id="ck2-p0-pvf"/>
+                                    <constraint firstItem="Eb2-EH-T5f" firstAttribute="centerY" secondItem="N0x-DB-kB8" secondAttribute="centerY" id="eAD-Bf-Lek"/>
                                     <constraint firstItem="JXE-20-Mnk" firstAttribute="top" secondItem="M1Z-d3-m5z" secondAttribute="top" constant="60" id="eM1-KI-IRm"/>
                                     <constraint firstItem="k9Y-r6-oR6" firstAttribute="leading" secondItem="MXE-6h-Y0o" secondAttribute="leading" constant="30" id="fhL-AB-YC5"/>
-                                    <constraint firstItem="470-YC-hyB" firstAttribute="top" secondItem="1mv-kf-zre" secondAttribute="bottom" constant="30" id="g3L-Fa-Ek0"/>
                                     <constraint firstItem="qsc-rz-ZVB" firstAttribute="top" secondItem="MXE-6h-Y0o" secondAttribute="top" constant="10" id="gUa-fn-Kz7"/>
                                     <constraint firstItem="I9w-h7-bsQ" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="UbP-YJ-z2T" secondAttribute="bottom" constant="10" id="h77-FF-6jY"/>
                                     <constraint firstItem="wtf-SE-XhU" firstAttribute="leading" secondItem="fxP-50-1Dt" secondAttribute="leading" id="hML-jC-iKM"/>
@@ -135,17 +165,22 @@
                                     <constraint firstItem="fU0-8R-aRc" firstAttribute="trailing" secondItem="k9Y-r6-oR6" secondAttribute="trailing" constant="30" id="q4a-J4-y9b"/>
                                     <constraint firstItem="fxP-50-1Dt" firstAttribute="centerX" secondItem="MXE-6h-Y0o" secondAttribute="centerX" constant="-130" id="rfU-ND-6DS"/>
                                     <constraint firstAttribute="trailing" secondItem="k9Y-r6-oR6" secondAttribute="trailing" constant="30" id="tqY-Eo-XBO"/>
+                                    <constraint firstItem="Eb2-EH-T5f" firstAttribute="trailing" secondItem="Xsd-Bh-hdC" secondAttribute="trailing" id="vkU-7U-Ddr"/>
                                     <constraint firstItem="qsc-rz-ZVB" firstAttribute="top" secondItem="fU0-8R-aRc" secondAttribute="top" constant="10" id="zY8-QO-LWA"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="fU0-8R-aRc"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="I9w-h7-bsQ"/>
                                 <connections>
+                                    <outlet property="alertTimeLabel" destination="N0x-DB-kB8" id="rnP-FJ-yZe"/>
+                                    <outlet property="alertTimePicker" destination="Eb2-EH-T5f" id="ltw-6e-3uy"/>
                                     <outlet property="allDaySwitch" destination="ojb-ha-L0f" id="lUH-UB-bFj"/>
                                     <outlet property="chooseCalendarSegment" destination="M1Z-d3-m5z" id="p7t-2g-f0I"/>
+                                    <outlet property="descriptionLabelTopConstraint" destination="Cyb-7l-KOO" id="5Dv-pJ-UzU"/>
                                     <outlet property="descriptionTextView" destination="UbP-YJ-z2T" id="PNx-Qw-tqN"/>
                                     <outlet property="endDatePicker" destination="Xsd-Bh-hdC" id="exB-bq-LHZ"/>
                                     <outlet property="errorLabel" destination="qsc-rz-ZVB" id="HOG-6Q-4Nh"/>
                                     <outlet property="locationTextField" destination="1mv-kf-zre" id="TVh-2O-6JC"/>
+                                    <outlet property="reminderSwitch" destination="H5R-Yt-Q6H" id="MAs-RN-PiV"/>
                                     <outlet property="startDatePicker" destination="7Mo-ql-zTE" id="wuZ-qT-MIr"/>
                                     <outlet property="titleTextField" destination="k9Y-r6-oR6" id="VOj-66-U2A"/>
                                     <outletCollection property="gestureRecognizers" destination="XDY-iK-feO" appends="YES" id="gsf-f3-cg7"/>

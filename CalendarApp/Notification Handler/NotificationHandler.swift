@@ -25,6 +25,20 @@ class NotificationHandler : NSObject {
         center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in }
     }
     
+    func checkReminderForEvent(_ eventID: UUID) -> Date? {
+        let request = EventReminder.fetchRequest()
+        request.predicate = NSPredicate(format: "eventID == %@",
+                                        eventID as CVarArg)
+        do {
+            let notifications = try context.fetch(request)
+            if notifications.count == 1 {
+                            }
+        } catch {
+            // TODO: error handling
+        }
+        return nil
+    }
+    
     func scheduleNotification(event: Event, date: Date) {
         let content = UNMutableNotificationContent()
         content.title = event.eventTitle

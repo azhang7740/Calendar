@@ -20,6 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UISegmentedControl *chooseCalendarSegment;
 @property (weak, nonatomic) IBOutlet UISwitch *allDaySwitch;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionLabelTopConstraint;
+@property (weak, nonatomic) IBOutlet UISwitch *reminderSwitch;
+@property (weak, nonatomic) IBOutlet UILabel *alertTimeLabel;
+@property (weak, nonatomic) IBOutlet UIDatePicker *alertTimePicker;
+
 @end
 
 NS_ASSUME_NONNULL_END
