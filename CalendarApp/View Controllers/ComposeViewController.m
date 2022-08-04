@@ -51,12 +51,17 @@
 }
 
 - (void)setViewEvent {
+    [self.composeView.chooseCalendarSegment setEnabled:false];
+    if (self.event.ekEventID) {
+        [self.composeView.chooseCalendarSegment setSelectedSegmentIndex:1];
+    } 
     self.composeView.titleTextField.text = self.event.eventTitle;
     self.composeView.startDatePicker.date = self.event.startDate;
     self.composeView.endDatePicker.date = self.event.endDate;
     
     self.composeView.locationTextField.text = self.event.location;
     self.composeView.descriptionTextView.text = self.event.eventDescription;
+    [self.composeView.allDaySwitch setOn:self.event.isAllDay];
     
     [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
 }
@@ -86,6 +91,7 @@
     newEvent.startDate = self.composeView.startDatePicker.date;
     newEvent.endDate = self.composeView.endDatePicker.date;
     newEvent.updatedAt = [NSDate date];
+    newEvent.isAllDay = self.composeView.allDaySwitch.isOn;
     
     if (self.composeView.descriptionTextView.textColor
         == UIColor.lightGrayColor) {

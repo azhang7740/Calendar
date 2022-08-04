@@ -11,12 +11,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface ComposeScrollView : UIScrollView
 
-@property (nonatomic) IBOutlet UILabel *errorLabel;
-@property (nonatomic) IBOutlet UITextField *titleTextField;
-@property (nonatomic) IBOutlet UIDatePicker *startDatePicker;
-@property (nonatomic) IBOutlet UIDatePicker *endDatePicker;
-@property (nonatomic) IBOutlet UITextField *locationTextField;
-@property (nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UILabel *errorLabel;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UIDatePicker *startDatePicker;
+@property (weak, nonatomic) IBOutlet UIDatePicker *endDatePicker;
+@property (weak, nonatomic) IBOutlet UITextField *locationTextField;
+@property (weak, nonatomic) IBOutlet UITextView *descriptionTextView;
+@property (weak, nonatomic) IBOutlet UISegmentedControl *chooseCalendarSegment;
+@property (weak, nonatomic) IBOutlet UISwitch *allDaySwitch;
 
 @end
 
