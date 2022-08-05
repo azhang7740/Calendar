@@ -56,6 +56,8 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
             reminderCell.dateLabel.text = dateFormatter.string(from:date)
             if date.compare(Date()) == .orderedAscending {
                 reminderCell.dateLabel.textColor = .systemRed
+            } else {
+                reminderCell.dateLabel.textColor = .black
             }
         }
         reminderCell.titleLabel.text = reminders[indexPath.row].title
