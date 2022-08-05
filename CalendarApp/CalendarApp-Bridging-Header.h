@@ -2,3 +2,4 @@
 #import "ParseChangeHandler.h"
 #import "CoreDataEventHandler.h"
 #import "AppDelegate.h"
+#import "ScheduleViewController.h"

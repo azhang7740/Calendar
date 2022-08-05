@@ -12,8 +12,9 @@
 @interface ComposeViewController () <UITextViewDelegate>
 
 @property (weak, nonatomic) IBOutlet ComposeScrollView *composeView;
-@property (nonatomic) UIDatePicker *datePicker;
 @property (weak, nonatomic) IBOutlet UIButton *createUpdateButton;
+@property (nonatomic) NotificationHandler *notificationHandler;
+@property (nonatomic) BOOL hasReminder;
 
 @end
 
@@ -22,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.notificationHandler = [[NotificationHandler alloc] init];
     if (self.event) {
         [self setViewEvent];
     } else {
@@ -39,6 +41,11 @@
 }
 
 - (void)setViewDate {
+    self.hasReminder = false;
+    [self.composeView.alertTimePicker setHidden:true];
+    [self.composeView.alertTimeLabel setHidden:true];
+    [self.composeView.descriptionLabelTopConstraint setConstant:20];
+    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
@@ -55,6 +62,19 @@
     if (self.event.ekEventID) {
         [self.composeView.chooseCalendarSegment setSelectedSegmentIndex:1];
     }
+    
+    NSDate *reminderDate = [self.notificationHandler checkReminderForEvent:self.event.objectUUID];
+    if (reminderDate) {
+        self.hasReminder = true;
+        [self.composeView.reminderSwitch setOn:true];
+        [self.composeView.alertTimePicker setDate:reminderDate];
+    } else {
+        self.hasReminder = false;
+        [self.composeView.alertTimePicker setHidden:true];
+        [self.composeView.alertTimeLabel setHidden:true];
+        [self.composeView.descriptionLabelTopConstraint setConstant:20];
+    }
+    
     self.composeView.titleTextField.text = self.event.eventTitle;
     self.composeView.startDatePicker.date = self.event.startDate;
     self.composeView.endDatePicker.date = self.event.endDate;
@@ -75,11 +95,24 @@
     newEvent.createdAt = [NSDate date];
     [self setEventFields:newEvent];
     
+    if (self.composeView.reminderSwitch.isOn) {
+        [self.notificationHandler scheduleNotificationWithEvent:newEvent date:self.composeView.alertTimePicker.date];
+    }
+    
     return newEvent;
 }
 
 - (Event *)updateEventFromView {
     [self setEventFields:self.event];
+    if (self.composeView.reminderSwitch.isOn &&
+        self.hasReminder) {
+        [self.notificationHandler updateReminderForEvent:self.event :self.composeView.alertTimePicker.date];
+    } else if (!self.composeView.reminderSwitch.isOn &&
+               self.hasReminder) {
+        [self.notificationHandler deleteReminderForEvent:self.event.objectUUID];
+    } else if (self.composeView.reminderSwitch.isOn) {
+        [self.notificationHandler scheduleNotificationWithEvent:self.event date:self.composeView.alertTimePicker.date];
+    }
     return self.event;
 }
 
@@ -153,6 +186,19 @@
     } else {
         [self.composeView.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
         [self.composeView.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    }
+}
+
+- (IBAction)onChangeReminderSwitch:(id)sender {
+    if (self.composeView.reminderSwitch.isOn) {
+        [self.composeView.alertTimePicker setHidden:false];
+        [self.composeView.alertTimeLabel setHidden:false];
+        [self.composeView.alertTimePicker setDate:self.event.startDate];
+        [self.composeView.descriptionLabelTopConstraint setConstant:50];
+    } else {
+        [self.composeView.alertTimePicker setHidden:true];
+        [self.composeView.alertTimeLabel setHidden:true];
+        [self.composeView.descriptionLabelTopConstraint setConstant:20];
     }
 }
 

@@ -9,7 +9,11 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class NotificationReceiveHandler;
+
 @interface ScheduleViewController : UIViewController
+
+@property (nonatomic) NotificationReceiveHandler *receiveHandler;
 
 @end
 
