@@ -42,7 +42,6 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
             composeView.selectedIndex = selectedIndex
         } else {
             composeView.isNewNote = true
-            composeView.selectedIndex = 0
         }
         composeView.delegate = self
         
@@ -95,10 +94,10 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         var calendar = Calendar(identifier: .gregorian)
         calendar.timeZone = TimeZone.current
         
-        let difference = calendar.dateComponents([.day], from: notes[0].lastModified, to: calendar.startOfDay(for: Date()))
+        let difference = calendar.dateComponents([.day], from: calendar.startOfDay(for: notes[0].lastModified), to: calendar.startOfDay(for: Date()))
         let dateFormatter = DateFormatter()
         if let dayDifference = difference.day,
-           dayDifference < 1 && dayDifference > 0 {
+           dayDifference == 0 {
             dateFormatter.dateFormat = "h:mm a"
         } else {
             dateFormatter.dateFormat = "M/d/yyyy"
@@ -119,6 +118,23 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
                     }
                     self?.notes.insert(note, at: 0)
                 }
+            }
+        }
+    }
+    
+    func didTapBackWithEmptyNote(_ note: Note, index: Int?) {
+        dismiss(animated: true) { [weak self] in
+            self?.dismissTransition = nil
+            DispatchQueue.main.async {
+                guard let previousIndex = index,
+                      previousIndex < self?.notes.count ?? 0,
+                      let noteID = self?.notes[previousIndex].noteID else {
+                    self?.coreDataNoteHandler.deleteNote(noteID: note.noteID)
+                    return
+                }
+                self?.notes.remove(at: previousIndex)
+                self?.coreDataNoteHandler.deleteNote(noteID: noteID)
+                self?.notesTableView.deleteRows(at: [IndexPath(row: previousIndex, section: 0)], with: .fade)
             }
         }
     }
