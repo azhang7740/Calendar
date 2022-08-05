@@ -26,6 +26,9 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        reminderTableView.estimatedRowHeight = 200.0
+        reminderTableView.rowHeight = UITableView.automaticDimension
+        
         fetchAllReminders()
         reminderTableView.reloadData()
     }
