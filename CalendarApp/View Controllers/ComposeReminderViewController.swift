@@ -21,6 +21,7 @@ class ComposeReminderViewController: UIViewController, UITextViewDelegate {
     @IBOutlet weak var reminderDatePicker: UIDatePicker!
     @IBOutlet weak var reminderTitle: UITextView!
     @IBOutlet weak var reminderText: UITextView!
+    @IBOutlet weak var errorMessageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,9 @@ class ComposeReminderViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onTapDone(_ sender: Any) {
+        if !checkValidInputs() {
+            return
+        }
         let newReminder = updateReminderFromView()
         do {
             try context.save()
@@ -51,11 +55,24 @@ class ComposeReminderViewController: UIViewController, UITextViewDelegate {
         delegate?.didTapDone(reminder: newReminder, index: selectedIndex)
     }
     
+    func checkValidInputs() -> Bool {
+        if reminderTitle.textColor == UIColor.lightGray {
+            displayErrorMessage("Title shouldn't be empty.")
+            return false
+        }
+        return true
+    }
+    
+    func displayErrorMessage(_ errorMessage: String) {
+        errorMessageLabel.isHidden = false
+        errorMessageLabel.text = errorMessage
+    }
+    
     func createReminderFromView() -> Reminder {
         let newReminder = Reminder(context: context)
         newReminder.reminderID = UUID()
         newReminder.title = reminderTitle.text
-        newReminder.reminderDescription = reminderText.text
+        newReminder.reminderDescription = reminderText.textColor == UIColor.lightGray ? "" : reminderText.text
         newReminder.reminderDate = reminderDatePicker.date
         newReminder.archived = false
         
@@ -67,7 +84,7 @@ class ComposeReminderViewController: UIViewController, UITextViewDelegate {
             return createReminderFromView()
         }
         updatedReminder.title = reminderTitle.text
-        updatedReminder.reminderDescription = reminderText.text
+        updatedReminder.reminderDescription = reminderText.textColor == UIColor.lightGray ? "" : reminderText.text
         updatedReminder.reminderDate = reminderDatePicker.date
         
         return updatedReminder

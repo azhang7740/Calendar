@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="Reminder Title" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Nnx-8g-lul">
-                                <rect key="frame" x="25" y="103" width="364" height="52"/>
+                                <rect key="frame" x="25" y="112" width="364" height="52"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <color key="textColor" systemColor="labelColor"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="30"/>
@@ -27,20 +27,26 @@
                                 </connections>
                             </textView>
                             <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="5UE-9m-zW5">
-                                <rect key="frame" x="148" y="165" width="241" height="31"/>
+                                <rect key="frame" x="148" y="174" width="241" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="241" id="4ic-lZ-voM"/>
                                     <constraint firstAttribute="height" constant="31" id="vVq-bn-XYR"/>
                                 </constraints>
                             </datePicker>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EeX-kz-3CF">
-                                <rect key="frame" x="30" y="170" width="38" height="21"/>
+                                <rect key="frame" x="30" y="179" width="38" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error message" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b89-OH-9TI">
+                                <rect key="frame" x="31" y="95" width="358" height="17"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" systemColor="systemRedColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Reminder text" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="MeD-M2-Dw2">
-                                <rect key="frame" x="25" y="211" width="364" height="150"/>
+                                <rect key="frame" x="25" y="220" width="364" height="150"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="150" id="pRh-zL-Mpg"/>
@@ -56,11 +62,14 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="b89-OH-9TI" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="7" id="09w-VP-CCh"/>
                             <constraint firstItem="EeX-kz-3CF" firstAttribute="centerY" secondItem="5UE-9m-zW5" secondAttribute="centerY" id="3Qa-87-n0O"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="b89-OH-9TI" secondAttribute="trailing" constant="25" id="7XP-bx-btj"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="Nnx-8g-lul" secondAttribute="trailing" constant="25" id="AgQ-Th-pqT"/>
                             <constraint firstItem="EeX-kz-3CF" firstAttribute="leading" secondItem="Nnx-8g-lul" secondAttribute="leading" constant="5" id="Bid-UO-qyv"/>
                             <constraint firstItem="Nnx-8g-lul" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="25" id="C4d-Gw-uq9"/>
-                            <constraint firstItem="Nnx-8g-lul" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="15" id="XOY-sZ-IM6"/>
+                            <constraint firstItem="b89-OH-9TI" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="31" id="Ob4-xM-nqJ"/>
+                            <constraint firstItem="Nnx-8g-lul" firstAttribute="top" secondItem="b89-OH-9TI" secondAttribute="bottom" id="XOY-sZ-IM6"/>
                             <constraint firstItem="MeD-M2-Dw2" firstAttribute="leading" secondItem="Nnx-8g-lul" secondAttribute="leading" id="cWN-82-UYB"/>
                             <constraint firstItem="5UE-9m-zW5" firstAttribute="trailing" secondItem="Nnx-8g-lul" secondAttribute="trailing" id="de9-9p-8gT"/>
                             <constraint firstItem="MeD-M2-Dw2" firstAttribute="top" secondItem="5UE-9m-zW5" secondAttribute="bottom" constant="15" id="hq6-Hb-DxR"/>
@@ -93,6 +102,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="errorMessageLabel" destination="b89-OH-9TI" id="VNR-4T-Y4d"/>
                         <outlet property="reminderDatePicker" destination="5UE-9m-zW5" id="Jrr-VL-S7E"/>
                         <outlet property="reminderText" destination="MeD-M2-Dw2" id="SO1-my-xSu"/>
                         <outlet property="reminderTitle" destination="Nnx-8g-lul" id="nja-jl-qP5"/>
@@ -127,6 +137,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
