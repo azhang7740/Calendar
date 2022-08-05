@@ -16,7 +16,11 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let viewController = self.navigationController?.tabBarController?.viewControllers?[0] as? ScheduleViewController else {
+        guard let navigationController = self.navigationController?.tabBarController?.viewControllers?.first as? UINavigationController else {
+            return
+        }
+        
+        guard let viewController = navigationController.topViewController as? ScheduleViewController else {
             return
         }
         receiveHandler = viewController.receiveHandler
