@@ -27,6 +27,7 @@
 
 - (void)requestAccessToCalendarWithCompletion:(void (^ _Nonnull)(BOOL success, NSString * _Nullable error))completion {
     if ([EKEventStore authorizationStatusForEntityType:EKEntityTypeEvent] == EKAuthorizationStatusAuthorized) {
+        [self subscribeToNotifications];
         completion(true, nil);
         return;
     }
@@ -75,8 +76,6 @@
     NSPredicate *predicate = [self.eventStore predicateForEventsWithStartDate:midnight
                                                                       endDate:nextDate
                                                                     calendars:nil];
-//    [NSPredicate predicateWithFormat:@"(startDate >= %@ AND startDate <= %@) OR (startDate < %@ AND endDate > %@)", date.midnight, date.nextDate, date.midnight, date.midnight];
-    
     NSArray<EKEvent *> *events = [self.eventStore eventsMatchingPredicate:predicate];
     
     if (!events) {

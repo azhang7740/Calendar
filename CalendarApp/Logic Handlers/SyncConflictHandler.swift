@@ -35,7 +35,13 @@ class SyncConflictHandler : NSObject {
         addLocalChanges()
         checkChanges()
         syncLocalCreatesDeletes()
+        syncLocalUpdates()
         localChangeHandler.deleteAllLocalChanges()
+    }
+    
+    private func syncLocalUpdates() {
+        let changes = localChangeHandler.fetchAllLocalChanges()
+        syncChangesToParse(eventChanges: changes)
     }
     
     private func syncLocalCreatesDeletes() {
@@ -65,21 +71,27 @@ class SyncConflictHandler : NSObject {
             guard let eventID = revisionHistories[historyIndex][0].eventID else {
                 break
             }
-            revisionHistories[historyIndex].append(contentsOf: localChangeHandler.fetchLocalChanges(forEvent: eventID))
-            revisionHistories[historyIndex].sort(by: { $0.timestamp < $1.timestamp })
+            let localChanges = localChangeHandler.fetchLocalChanges(forEvent: eventID)
+            if localChanges.count == 1,
+               localChanges[0].changeType == .Delete {
+                revisionHistories[historyIndex] = []
+            } else {
+                revisionHistories[historyIndex].append(contentsOf: localChanges)
+                revisionHistories[historyIndex].sort(by: { $0.timestamp < $1.timestamp })
+            }
         }
     }
     
     private func checkChanges() {
         for eventHistory in revisionHistories {
-            if let eventID = eventHistory[0].eventID,
-                eventHistory.count == 1 &&
+            if eventHistory.count == 1,
+                let eventID = eventHistory[0].eventID,
                 eventHistory[0].changeType == .Create {
                 if coreDataEventHandler.queryEvent(from: eventID) == nil {
                     createNewEvent(change: eventHistory[0])
                 }
-            } else if let eventID = eventHistory[0].eventID,
-                      eventHistory.count == 1 &&
+            } else if eventHistory.count == 1,
+                        let eventID = eventHistory[0].eventID,
                         eventHistory[0].changeType == .Delete {
                 if coreDataEventHandler.queryEvent(from: eventID) != nil {
                     deleteEvent(change: eventHistory[0])
@@ -91,6 +103,9 @@ class SyncConflictHandler : NSObject {
     }
     
     private func processUpdateChanges(eventChanges: [Revision]) {
+        if eventChanges.count == 0 {
+            return
+        }
         guard let eventID = eventChanges[0].eventID else {
             return
         }
@@ -147,6 +162,12 @@ class SyncConflictHandler : NSObject {
         case .EndDate:
             let formatter = ISO8601DateFormatter()
             newEvent.endDate = formatter.date(from: updatedField) ?? newEvent.endDate
+            break
+        case .isAllDay:
+            let formatter = ISO8601DateFormatter()
+            newEvent.startDate = formatter.date(from: updatedField) ?? newEvent.startDate
+            newEvent.endDate = formatter.date(from: updatedField) ?? newEvent.endDate
+            newEvent.isAllDay = updatedField == "1";
             break
         }
         

@@ -51,12 +51,17 @@
 }
 
 - (void)setViewEvent {
+    [self.composeView.chooseCalendarSegment setEnabled:false];
+    if (self.event.ekEventID) {
+        [self.composeView.chooseCalendarSegment setSelectedSegmentIndex:1];
+    }
     self.composeView.titleTextField.text = self.event.eventTitle;
     self.composeView.startDatePicker.date = self.event.startDate;
     self.composeView.endDatePicker.date = self.event.endDate;
     
     self.composeView.locationTextField.text = self.event.location;
     self.composeView.descriptionTextView.text = self.event.eventDescription;
+    [self.composeView.allDaySwitch setOn:self.event.isAllDay];
     
     [self.createUpdateButton setTitle:@"Update" forState:UIControlStateNormal];
 }
@@ -86,6 +91,7 @@
     newEvent.startDate = self.composeView.startDatePicker.date;
     newEvent.endDate = self.composeView.endDatePicker.date;
     newEvent.updatedAt = [NSDate date];
+    newEvent.isAllDay = self.composeView.allDaySwitch.isOn;
     
     if (self.composeView.descriptionTextView.textColor
         == UIColor.lightGrayColor) {
@@ -119,22 +125,35 @@
 }
 
 - (IBAction)onTapCreate:(id)sender {
+    BOOL isEKEvent = self.composeView.chooseCalendarSegment.selectedSegmentIndex == 1;
     if ([self.createUpdateButton.titleLabel.text isEqual:@"Create"]){
         Event *newEvent = [self createEventFromView];
         if (newEvent) {
             [self.delegate didTapChangeEvent:nil
-                                    newEvent:newEvent];
+                                    newEvent:newEvent
+                             isEventKitEvent:isEKEvent];
         }
     } else if (self.event && [self.createUpdateButton.titleLabel.text isEqual:@"Update"]){
         Event *oldEvent = [[Event alloc] initWithOriginalEvent:self.event];
         Event *updatedEvent = [self updateEventFromView];
         [self.delegate didTapChangeEvent:oldEvent
-                                newEvent:updatedEvent];
+                                newEvent:updatedEvent
+                         isEventKitEvent:isEKEvent];
     }
 }
 
 - (IBAction)onTapOutside:(id)sender {
     [self.view endEditing:true];
+}
+
+- (IBAction)onChangeAllDaySwitch:(id)sender {
+    if (self.composeView.allDaySwitch.isOn) {
+        [self.composeView.startDatePicker setDatePickerMode:UIDatePickerModeDate];
+        [self.composeView.endDatePicker setDatePickerMode:UIDatePickerModeDate];
+    } else {
+        [self.composeView.startDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+        [self.composeView.endDatePicker setDatePickerMode:UIDatePickerModeDateAndTime];
+    }
 }
 
 - (void)textViewDidBeginEditing:(UITextView *)textView {

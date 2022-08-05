@@ -25,9 +25,8 @@
 		413DE52F2874B39400CCF8E1 /* CalendarUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE52E2874B39400CCF8E1 /* CalendarUITests.m */; };
 		413DE5312874B39400CCF8E1 /* CalendarUITestsLaunchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE5302874B39400CCF8E1 /* CalendarUITestsLaunchTests.m */; };
 		413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE53F287600C000CCF8E1 /* LoginViewController.m */; };
-		413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE542287600E800CCF8E1 /* TodoViewController.m */; };
 		413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */; };
-		413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* TodoList.storyboard */; };
+		413DE55428762DB300CCF8E1 /* Notes.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 413DE55328762DB300CCF8E1 /* Notes.storyboard */; };
 		413DE55A287634A700CCF8E1 /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 413DE559287634A700CCF8E1 /* LoginView.m */; };
 		413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41422891A40E00D0EE6E /* NSDate+Midnight.m */; };
 		413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 413F41462891BDEC00D0EE6E /* ParseChangeHandler.m */; };
@@ -64,6 +63,16 @@
 		41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */; };
 		41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF782880DE500077F173 /* Schedule.storyboard */; };
 		41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 41E2CF7B2880DE930077F173 /* ScheduleViewController.m */; };
+		41FDE0652899C9E00090AA93 /* TestLocalChangeDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0642899C9E00090AA93 /* TestLocalChangeDelegate.swift */; };
+		41FDE0672899CB3C0090AA93 /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0662899CB3C0090AA93 /* NotesViewController.swift */; };
+		41FDE0692899CBC20090AA93 /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0682899CBC20090AA93 /* NoteCell.swift */; };
+		41FDE06C2899CDA70090AA93 /* CoreDataNoteHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE06B2899CDA70090AA93 /* CoreDataNoteHandler.swift */; };
+		41FDE06E2899D1C50090AA93 /* Note.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE06D2899D1C50090AA93 /* Note.swift */; };
+		41FDE0702899D1F10090AA93 /* CoreDataNoteBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE06F2899D1F10090AA93 /* CoreDataNoteBuilder.swift */; };
+		41FDE0732899E00A0090AA93 /* ComposeNote.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */; };
+		41FDE0752899E2280090AA93 /* ComposeNoteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0742899E2280090AA93 /* ComposeNoteViewController.swift */; };
+		41FDE0772899E7C50090AA93 /* RightToLeftTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0762899E7C50090AA93 /* RightToLeftTransition.swift */; };
+		41FDE07A2899E7E00090AA93 /* LeftToRightTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41FDE0792899E7E00090AA93 /* LeftToRightTransition.swift */; };
 		D0AA35CB9107C2559171CC34 /* libPods-CalendarApp-CalendarAppUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9633B55E3DEF7AC08BA63816 /* libPods-CalendarApp-CalendarAppUITests.a */; };
 		DF20BF322935DA0B246A299A /* libPods-CalendarAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 098709094717F22ED0142810 /* libPods-CalendarAppTests.a */; };
 		DF61EBD7D1CA57ECC4BD7B4C /* libPods-CalendarApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D96919343321A6FD4A4A87BD /* libPods-CalendarApp.a */; };
@@ -121,11 +130,9 @@
 		413DE5302874B39400CCF8E1 /* CalendarUITestsLaunchTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalendarUITestsLaunchTests.m; sourceTree = "<group>"; };
 		413DE53E287600C000CCF8E1 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		413DE53F287600C000CCF8E1 /* LoginViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
-		413DE541287600E800CCF8E1 /* TodoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TodoViewController.h; sourceTree = "<group>"; };
-		413DE542287600E800CCF8E1 /* TodoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TodoViewController.m; sourceTree = "<group>"; };
 		413DE54828761EBE00CCF8E1 /* AuthenticationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthenticationHandler.h; sourceTree = "<group>"; };
 		413DE54A28761EBF00CCF8E1 /* AuthenticationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthenticationHandler.m; sourceTree = "<group>"; };
-		413DE55328762DB300CCF8E1 /* TodoList.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = TodoList.storyboard; sourceTree = "<group>"; };
+		413DE55328762DB300CCF8E1 /* Notes.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Notes.storyboard; sourceTree = "<group>"; };
 		413DE558287634A700CCF8E1 /* LoginView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		413DE559287634A700CCF8E1 /* LoginView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		413F41412891A40E00D0EE6E /* NSDate+Midnight.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSDate+Midnight.h"; sourceTree = "<group>"; };
@@ -182,6 +189,16 @@
 		41E2CF7A2880DE930077F173 /* ScheduleViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScheduleViewController.h; sourceTree = "<group>"; };
 		41E2CF7B2880DE930077F173 /* ScheduleViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScheduleViewController.m; sourceTree = "<group>"; };
 		41FDE0602898A4560090AA93 /* LocalChangeSyncDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocalChangeSyncDelegate.h; sourceTree = "<group>"; };
+		41FDE0642899C9E00090AA93 /* TestLocalChangeDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestLocalChangeDelegate.swift; sourceTree = "<group>"; };
+		41FDE0662899CB3C0090AA93 /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		41FDE0682899CBC20090AA93 /* NoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteCell.swift; sourceTree = "<group>"; };
+		41FDE06B2899CDA70090AA93 /* CoreDataNoteHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataNoteHandler.swift; sourceTree = "<group>"; };
+		41FDE06D2899D1C50090AA93 /* Note.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Note.swift; sourceTree = "<group>"; };
+		41FDE06F2899D1F10090AA93 /* CoreDataNoteBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataNoteBuilder.swift; sourceTree = "<group>"; };
+		41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeNote.storyboard; sourceTree = "<group>"; };
+		41FDE0742899E2280090AA93 /* ComposeNoteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeNoteViewController.swift; sourceTree = "<group>"; };
+		41FDE0762899E7C50090AA93 /* RightToLeftTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightToLeftTransition.swift; sourceTree = "<group>"; };
+		41FDE0792899E7E00090AA93 /* LeftToRightTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeftToRightTransition.swift; sourceTree = "<group>"; };
 		6720ECC35A2267B0C1169EC5 /* Pods-CalendarAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.release.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		867CA3B7D8BFAE5D63E3831C /* Pods-CalendarApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarApp.debug.xcconfig"; path = "Target Support Files/Pods-CalendarApp/Pods-CalendarApp.debug.xcconfig"; sourceTree = "<group>"; };
 		9608745C3DDEC7A8339FB4E3 /* Pods-CalendarAppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CalendarAppTests.debug.xcconfig"; path = "Target Support Files/Pods-CalendarAppTests/Pods-CalendarAppTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -256,6 +273,8 @@
 		413DE5072874B39200CCF8E1 /* CalendarApp */ = {
 			isa = PBXGroup;
 			children = (
+				41FDE0782899E7CF0090AA93 /* Transitions */,
+				41FDE06A2899CCB80090AA93 /* Note Handlers */,
 				413F41482891DB8200D0EE6E /* Parse Models */,
 				41B7F54A2889AF0C00030027 /* Event Builders */,
 				41B7F4EE2887160100030027 /* Event Handlers */,
@@ -285,6 +304,7 @@
 				41B7F5462888A28700030027 /* CalendarEventHandlerTests.swift */,
 				41B7F5452888A28600030027 /* CalendarAppTests-Bridging-Header.h */,
 				41B7F5482888A79400030027 /* SampleEvents.swift */,
+				41FDE0642899C9E00090AA93 /* TestLocalChangeDelegate.swift */,
 				413F41542891E1F200D0EE6E /* EventSyncHandlerTests.swift */,
 				41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */,
 				41404AEA28944C0B00760287 /* TestRemoteChangeHandler.swift */,
@@ -306,8 +326,8 @@
 			children = (
 				413DE53E287600C000CCF8E1 /* LoginViewController.h */,
 				413DE53F287600C000CCF8E1 /* LoginViewController.m */,
-				413DE541287600E800CCF8E1 /* TodoViewController.h */,
-				413DE542287600E800CCF8E1 /* TodoViewController.m */,
+				41FDE0662899CB3C0090AA93 /* NotesViewController.swift */,
+				41FDE0742899E2280090AA93 /* ComposeNoteViewController.swift */,
 				410A101A287659E40023F523 /* ComposeViewController.h */,
 				410A101B287659E40023F523 /* ComposeViewController.m */,
 				412D3A51287F388E0023C9AA /* DetailsViewController.h */,
@@ -324,10 +344,11 @@
 			children = (
 				413DE5112874B39200CCF8E1 /* Main.storyboard */,
 				413DE5162874B39400CCF8E1 /* LaunchScreen.storyboard */,
-				413DE55328762DB300CCF8E1 /* TodoList.storyboard */,
+				413DE55328762DB300CCF8E1 /* Notes.storyboard */,
 				410A101828764D5C0023F523 /* Compose.storyboard */,
 				412D3A4B287E0F2D0023C9AA /* Details.storyboard */,
 				41E2CF782880DE500077F173 /* Schedule.storyboard */,
+				41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -343,6 +364,7 @@
 				413F41422891A40E00D0EE6E /* NSDate+Midnight.m */,
 				41B7F4EC2885FDC800030027 /* Event.swift */,
 				41B7F53B288868E800030027 /* CalendarApp.xcdatamodeld */,
+				41FDE06D2899D1C50090AA93 /* Note.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -365,6 +387,7 @@
 				410A1021287744120023F523 /* ComposeScrollView.m */,
 				412D3A54287F394D0023C9AA /* DetailsView.h */,
 				412D3A55287F394D0023C9AA /* DetailsView.m */,
+				41FDE0682899CBC20090AA93 /* NoteCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -430,6 +453,24 @@
 				41B7F54E2889AF5800030027 /* CoreDataEventBuilder.m */,
 			);
 			path = "Event Builders";
+			sourceTree = "<group>";
+		};
+		41FDE06A2899CCB80090AA93 /* Note Handlers */ = {
+			isa = PBXGroup;
+			children = (
+				41FDE06B2899CDA70090AA93 /* CoreDataNoteHandler.swift */,
+				41FDE06F2899D1F10090AA93 /* CoreDataNoteBuilder.swift */,
+			);
+			path = "Note Handlers";
+			sourceTree = "<group>";
+		};
+		41FDE0782899E7CF0090AA93 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				41FDE0762899E7C50090AA93 /* RightToLeftTransition.swift */,
+				41FDE0792899E7E00090AA93 /* LeftToRightTransition.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 		F795144D40A42030DEA6F66C /* Pods */ = {
@@ -571,8 +612,9 @@
 				413DE5182874B39400CCF8E1 /* LaunchScreen.storyboard in Resources */,
 				413DE5152874B39400CCF8E1 /* Assets.xcassets in Resources */,
 				413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */,
-				413DE55428762DB300CCF8E1 /* TodoList.storyboard in Resources */,
+				413DE55428762DB300CCF8E1 /* Notes.storyboard in Resources */,
 				41E2CF792880DE500077F173 /* Schedule.storyboard in Resources */,
+				41FDE0732899E00A0090AA93 /* ComposeNote.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -702,8 +744,11 @@
 			files = (
 				410A1022287744120023F523 /* ComposeScrollView.m in Sources */,
 				413DE54C28761EBF00CCF8E1 /* AuthenticationHandler.m in Sources */,
+				41FDE0752899E2280090AA93 /* ComposeNoteViewController.swift in Sources */,
 				41B7F554288B5DD600030027 /* EventSyncHandler.m in Sources */,
+				41FDE0672899CB3C0090AA93 /* NotesViewController.swift in Sources */,
 				41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */,
+				41FDE06E2899D1C50090AA93 /* Note.swift in Sources */,
 				413DE540287600C000CCF8E1 /* LoginViewController.m in Sources */,
 				41B7F559288EFF7900030027 /* FetchEventHandler.m in Sources */,
 				41404AF02894CD7200760287 /* Revision.swift in Sources */,
@@ -722,16 +767,20 @@
 				41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
+				41FDE06C2899CDA70090AA93 /* CoreDataNoteHandler.swift in Sources */,
 				41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */,
+				41FDE0772899E7C50090AA93 /* RightToLeftTransition.swift in Sources */,
 				413DE50A2874B39200CCF8E1 /* AppDelegate.m in Sources */,
 				41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */,
+				41FDE0702899D1F10090AA93 /* CoreDataNoteBuilder.swift in Sources */,
 				413DE51B2874B39400CCF8E1 /* main.m in Sources */,
-				413DE543287600E800CCF8E1 /* TodoViewController.m in Sources */,
 				41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */,
+				41FDE07A2899E7E00090AA93 /* LeftToRightTransition.swift in Sources */,
 				41B7F4F6288740B400030027 /* EKEventBuilder.m in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
+				41FDE0692899CBC20090AA93 /* NoteCell.swift in Sources */,
 				413F414E2891DBDF00D0EE6E /* ParseChange.m in Sources */,
 				41404AF42894FA1E00760287 /* UpdateBuilder.swift in Sources */,
 				413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */,
@@ -749,6 +798,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				41FDE0652899C9E00090AA93 /* TestLocalChangeDelegate.swift in Sources */,
 				41B7F5492888A79400030027 /* SampleEvents.swift in Sources */,
 				41404AEB28944C0B00760287 /* TestRemoteChangeHandler.swift in Sources */,
 				41AC97DE2891E7E3000FF838 /* TestEventHandler.swift in Sources */,

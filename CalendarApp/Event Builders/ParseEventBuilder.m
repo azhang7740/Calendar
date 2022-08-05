@@ -48,6 +48,7 @@
     }
     canonicalEvent.startDate = parseEvent.startDate;
     canonicalEvent.endDate = parseEvent.endDate;
+    canonicalEvent.isAllDay = parseEvent.isAllDay;
     
     return canonicalEvent;
 }

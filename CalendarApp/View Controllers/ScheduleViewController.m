@@ -12,6 +12,7 @@
 #import "CalendarApp-Swift.h"
 #import "AuthenticationHandler.h"
 #import "FetchEventHandler.h"
+#import "EKEventHandler.h"
 #import "NSDate+Midnight.h"
 
 @interface ScheduleViewController () <EventInteraction, DetailsViewControllerDelegate,
@@ -21,6 +22,7 @@ RemoteEventUpdates>
 @property (nonatomic) DailyCalendarViewController* scheduleView;
 @property (nonatomic) AuthenticationHandler *authenticationHandler;
 @property (nonatomic) FetchEventHandler *eventHandler;
+@property (nonatomic) EKEventHandler *appleEventHandler;
 @property (nonatomic) NSMutableDictionary<NSUUID *, Event *> *objectIDToEvents;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *push;
 @property (weak, nonatomic) IBOutlet UIView *containerView;
@@ -33,13 +35,17 @@ RemoteEventUpdates>
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    self.scheduleView = [[DailyCalendarViewController alloc] init];
-    self.scheduleView.controllerDelegate = self;
     self.eventHandler = [[FetchEventHandler alloc] init:self
                                    remoteChangeDelegate:self];
+    self.appleEventHandler = [[EKEventHandler alloc] init];
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];
+    [self loadScheduleViewController];
+}
+
+- (void)loadScheduleViewController {
+    self.scheduleView = [[DailyCalendarViewController alloc] init];
+    self.scheduleView.controllerDelegate = self;
     
     self.scheduleView.view.translatesAutoresizingMaskIntoConstraints = false;
     [self addChildViewController:self.scheduleView];
@@ -64,14 +70,7 @@ RemoteEventUpdates>
 }
 
 - (void)remoteEventsDidChange {
-    self.scheduleView = [[DailyCalendarViewController alloc] init];
-    self.scheduleView.controllerDelegate = self;
-    self.objectIDToEvents = [[NSMutableDictionary alloc] init];
-    
-    [self addChildViewController:self.scheduleView];
-    [self.view addSubview:self.scheduleView.view];
-    [self.scheduleView didMoveToParentViewController:self];
-    self.scheduleView.view.frame = self.view.bounds;
+    [self loadScheduleViewController];
 }
 
 - (void)failedRequestWithMessage:(NSString *)errorMessage {
@@ -103,10 +102,6 @@ RemoteEventUpdates>
     [self presentViewController:detailsNavigationController animated:YES completion:nil];
 }
 
-- (void)didLongPressEvent:(NSUUID *)eventID {
-    
-}
-
 - (void)didLongPressTimeline:(NSDate *)date {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Compose" bundle:[NSBundle mainBundle]];
     UINavigationController *composeNavigationController = (UINavigationController*)[storyboard instantiateViewControllerWithIdentifier:@"ComposeNavigation"];
@@ -127,6 +122,7 @@ RemoteEventUpdates>
 
 - (void)didDeleteEvent:(Event *)event {
     [self.scheduleView deleteCalendarEvent:event];
+    self.objectIDToEvents[event.objectUUID] = nil;
 }
 
 - (void)didUpdateEvent:(Event *)oldEvent
@@ -134,6 +130,7 @@ RemoteEventUpdates>
     [self.scheduleView updateCalendarEvent:updatedEvent
                          originalStartDate:oldEvent.startDate.midnight
                            originalEndDate:oldEvent.startDate.midnight];
+    self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
 }
 
 - (void)didCreateEvent:(Event *)newEvent {
@@ -162,16 +159,25 @@ RemoteEventUpdates>
 }
 
 - (void)didTapChangeEvent:(Event *)oldEvent
-                 newEvent:(Event *)updatedEvent {
+                 newEvent:(Event *)updatedEvent
+          isEventKitEvent:(BOOL)isEventKit {
     [self dismissViewControllerAnimated:YES completion:nil];
-    [self.eventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
-        if (error) {
-            [self failedRequestWithMessage:error];
-        } else {
-            self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
-            [self.scheduleView addEvent:updatedEvent];
-        }
-    }];
+    if (isEventKit) {
+        [self.appleEventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
+            if (error) {
+                [self failedRequestWithMessage:error];
+            }
+        }];
+    } else {
+        [self.eventHandler uploadWithEvent:updatedEvent completion:^(BOOL success, NSString * _Nullable error) {
+            if (error) {
+                [self failedRequestWithMessage:error];
+            } else {
+                self.objectIDToEvents[updatedEvent.objectUUID] = updatedEvent;
+                [self.scheduleView addEvent:updatedEvent];
+            }
+        }];
+    }
 }
 
 - (IBAction)didSwipeOnAlert:(id)sender {

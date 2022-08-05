@@ -60,6 +60,9 @@
     NSString *startDay = [dateFormatter stringFromDate:self.event.startDate];
     NSString *endDay = [dateFormatter stringFromDate:self.event.endDate];
     
+    if (self.event.isAllDay) {
+        return [startDay stringByAppendingString:@" (All day)"];
+    }
     [dateFormatter setLocalizedDateFormatFromTemplate:@"h:mm"];
     NSString *startTime = [dateFormatter stringFromDate:self.event.startDate];
     NSString *endTime = [dateFormatter stringFromDate:self.event.endDate];
@@ -105,7 +108,8 @@
 }
 
 - (void)didTapChangeEvent:(Event *)oldEvent
-                 newEvent:(Event *)updatedEvent {
+                 newEvent:(Event *)updatedEvent
+          isEventKitEvent:(BOOL)isEventKit{
     [self dismissViewControllerAnimated:YES completion:nil];
     [self.eventHandler updateEvent:oldEvent
                           newEvent:updatedEvent

@@ -4,6 +4,7 @@
 #import "EventSyncHandler.h"
 #import "EventHandler.h"
 #import "ParseChangeHandler.h"
+#import "CalendarApp-Bridging-Header.h"
 
 @class Event;
 
