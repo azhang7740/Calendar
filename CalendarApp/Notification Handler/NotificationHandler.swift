@@ -27,6 +27,25 @@ class NotificationHandler : NSObject {
         }
     }
     
+    func deleteReminderWithID(_ reminderID: UUID) {
+        let request = Reminder.fetchRequest()
+        request.predicate = NSPredicate(format: "reminderID == %@",
+                                        reminderID as CVarArg)
+        do {
+            let notifications = try context.fetch(request)
+            if notifications.count == 1 {
+                context.delete(notifications[0])
+                guard let reminderID = notifications[0].reminderID else {
+                    return
+                }
+                center.removePendingNotificationRequests(withIdentifiers: [reminderID.uuidString])
+                try context.save()
+            }
+        } catch {
+            // TODO: error handling
+        }
+    }
+    
     func fetchReminderInfo() -> [Reminder] {
         let request = Reminder.fetchRequest()
         request.predicate = NSPredicate(format: "archived == false")

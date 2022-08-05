@@ -51,6 +51,9 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         dateFormatter.dateFormat = "M/d/yyyy, h:mm a"
         if let date = reminders[indexPath.row].reminderDate {
             reminderCell.dateLabel.text = dateFormatter.string(from:date)
+            if date.compare(Date()) == .orderedAscending {
+                reminderCell.dateLabel.textColor = .systemRed
+            }
         }
         reminderCell.titleLabel.text = reminders[indexPath.row].title
         reminderCell.descriptionLabel.text = reminders[indexPath.row].reminderDescription
@@ -71,7 +74,13 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func deleteReminder(_ index: Int) {
-        
+        guard index < reminders.count,
+                let reminderID = reminders[index].reminderID else {
+            return
+        }
+        notificationHandler.deleteReminderWithID(reminderID)
+        reminders.remove(at: index)
+        reminderTableView.deleteRows(at: [IndexPath(row: index, section: 0)], with: .fade)
     }
     
     func editReminder(_ index: Int) {
@@ -79,6 +88,6 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func didReceiveNotification(_ notification: UNNotification) {
-        
+        reminderTableView.reloadData()
     }
 }
