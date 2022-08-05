@@ -99,7 +99,7 @@ class NotesViewController : UIViewController, UITableViewDelegate, UITableViewDa
         let dateFormatter = DateFormatter()
         if let dayDifference = difference.day,
            dayDifference < 1 && dayDifference > 0 {
-            dateFormatter.dateFormat = "H:mm"
+            dateFormatter.dateFormat = "h:mm a"
         } else {
             dateFormatter.dateFormat = "M/d/yyyy"
         }

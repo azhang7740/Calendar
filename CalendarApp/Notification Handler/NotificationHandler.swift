@@ -107,7 +107,7 @@ class NotificationHandler : NSObject {
     
     private func getDateString(event: Event, date: Date) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.dateFormat = "h:mm a"
         var dateString = "Starting " + dateFormatter.string(from: event.startDate)
 
         let difference = calendar.dateComponents([.day], from: calendar.startOfDay(for: date), to: calendar.startOfDay(for: event.startDate))
