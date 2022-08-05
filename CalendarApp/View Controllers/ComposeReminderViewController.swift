@@ -14,7 +14,6 @@ protocol ComposeReminderDelegate: NSObject {
 
 class ComposeReminderViewController: UIViewController, UITextViewDelegate {
     public var reminder: Reminder?
-    private let notificationHandler = NotificationHandler()
     public var selectedIndex: Int?
     public weak var delegate: ComposeReminderDelegate?
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
@@ -43,17 +42,22 @@ class ComposeReminderViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func onTapDone(_ sender: Any) {
-        if reminder == nil {
-            let newReminder = createReminderFromView()
-            delegate?.didTapDone(reminder: newReminder, index: nil)
-        } else {
-            let newReminder = updateReminderFromView()
-            delegate?.didTapDone(reminder: newReminder, index: selectedIndex)
+        let newReminder = updateReminderFromView()
+        do {
+            try context.save()
+        } catch {
+            // TODO: error handling
         }
+        delegate?.didTapDone(reminder: newReminder, index: selectedIndex)
     }
     
     func createReminderFromView() -> Reminder {
         let newReminder = Reminder(context: context)
+        newReminder.reminderID = UUID()
+        newReminder.title = reminderTitle.text
+        newReminder.reminderDescription = reminderText.text
+        newReminder.reminderDate = reminderDatePicker.date
+        newReminder.archived = false
         
         return newReminder
     }
@@ -62,6 +66,9 @@ class ComposeReminderViewController: UIViewController, UITextViewDelegate {
         guard let updatedReminder = reminder else {
             return createReminderFromView()
         }
+        updatedReminder.title = reminderTitle.text
+        updatedReminder.reminderDescription = reminderText.text
+        updatedReminder.reminderDate = reminderDatePicker.date
         
         return updatedReminder
     }

@@ -46,9 +46,8 @@ class NotificationHandler : NSObject {
         }
     }
     
-    func fetchReminderInfo() -> [Reminder] {
+    func fetchReminders() -> [Reminder] {
         let request = Reminder.fetchRequest()
-        request.predicate = NSPredicate(format: "archived == false")
         do {
             let reminders = try context.fetch(request)
             return reminders

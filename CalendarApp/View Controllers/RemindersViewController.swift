@@ -34,7 +34,7 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func fetchAllReminders() {
-        reminders = notificationHandler.fetchReminderInfo()
+        reminders = notificationHandler.fetchReminders()
         reminders.sort(by: { $0.reminderDate ?? Date() < $1.reminderDate ?? Date() })
     }
     
@@ -111,12 +111,21 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         if let index = reminderIndex,
            index < reminders.count {
             composeView.reminder = reminders[index]
+            composeView.selectedIndex = index
         }
         present(composeNavigation, animated: true)
     }
     
     func didTapDone(reminder: Reminder, index: Int?) {
-        
+        dismiss(animated: true)
+        if let selectedIndex = index,
+           selectedIndex < reminders.count {
+            notificationHandler.updateNotification(with: reminder)
+        } else {
+            notificationHandler.scheduleNotification(with: reminder)
+        }
+        fetchAllReminders()
+        reminderTableView.reloadData()
     }
     
     func didTapCancel() {
