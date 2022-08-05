@@ -8,10 +8,11 @@
 import Foundation
 
 protocol ComposeNoteDelegate: NSObject {
-    func didTapBack(note: Note, index: Int?);
-    func didUpdateNote(note: Note, index: Int);
-    func didDelete(noteID: UUID);
-    func didCreateNewNote(note: Note);
+    func didTapBack(note: Note, index: Int?)
+    func didUpdateNote(note: Note, index: Int)
+    func didDelete(noteID: UUID)
+    func didCreateNewNote(note: Note)
+    func didTapBackWithEmptyNote(_ note: Note, index: Int?)
 }
 
 class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFieldDelegate {
@@ -80,10 +81,10 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
     
     func updateNote() {
         updateNoteWithView()
-        if isNewNote {
+        if isNewNote && (note.title != "" || note.text != "") {
             delegate?.didCreateNewNote(note: note)
             isNewNote = false
-        } else {
+        } else if note.title != "" || note.text != "" {
             delegate?.didUpdateNote(note: note, index: selectedIndex)
         }
     }
@@ -91,7 +92,11 @@ class ComposeNoteViewController : UIViewController, UITextViewDelegate, UITextFi
     @IBAction func didTapBackButton(_ sender: Any) {
         if noteDidChange {
             updateNote()
-            delegate?.didTapBack(note: note, index: selectedIndex)
+            if note.title == "" && note.text == "" {
+                delegate?.didTapBackWithEmptyNote(note, index: selectedIndex)
+            } else {
+                delegate?.didTapBack(note: note, index: selectedIndex)
+            }
         } else {
             delegate?.didTapBack(note: note, index: nil)
         }

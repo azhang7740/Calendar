@@ -10,6 +10,11 @@
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
 
+#import <CoreData/CoreData.h>
+#import "CalendarApp-Swift.h"
+#import "AppDelegate.h"
+#import <UserNotifications/UserNotifications.h>
+
 @implementation AuthenticationHandler
 
 - (BOOL)fieldsAreEmptyWithUsername:(NSString *)username
@@ -68,6 +73,7 @@
         if (error) {
             completion(@"Failed to logout.");
         } else {
+            [self deleteAllLocalData];
             SceneDelegate *sceneDelegate = (SceneDelegate * ) UIApplication.sharedApplication.connectedScenes.allObjects.firstObject.delegate;
             
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -76,6 +82,24 @@
             completion(nil);
         }
     }];
+}
+
+- (void)deleteAllLocalData {
+    NSBatchDeleteRequest *deleteLocalChange = [[NSBatchDeleteRequest alloc] initWithFetchRequest:LocalChange.fetchRequest];
+    NSBatchDeleteRequest *deleteReminders = [[NSBatchDeleteRequest alloc] initWithFetchRequest:Reminder.fetchRequest];
+    NSBatchDeleteRequest *deleteEvents = [[NSBatchDeleteRequest alloc] initWithFetchRequest:CoreDataEvent.fetchRequest];
+    NSBatchDeleteRequest *deleteNotes = [[NSBatchDeleteRequest alloc] initWithFetchRequest:CoreDataNote.fetchRequest];
+
+    NSPersistentStoreCoordinator *persistentStoreCoordinator = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.persistentStoreCoordinator;
+    NSManagedObjectContext *context = ((AppDelegate *)UIApplication.sharedApplication.delegate).persistentContainer.viewContext;
+    
+    [persistentStoreCoordinator executeRequest:deleteLocalChange withContext:context error:nil];
+    [persistentStoreCoordinator executeRequest:deleteEvents withContext:context error:nil];
+    [persistentStoreCoordinator executeRequest:deleteReminders withContext:context error:nil];
+    [persistentStoreCoordinator executeRequest:deleteNotes withContext:context error:nil];
+    
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
+    [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests];
 }
 
 @end

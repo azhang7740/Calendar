@@ -46,9 +46,8 @@ class NotificationHandler : NSObject {
         }
     }
     
-    func fetchReminderInfo() -> [Reminder] {
+    func fetchReminders() -> [Reminder] {
         let request = Reminder.fetchRequest()
-        request.predicate = NSPredicate(format: "archived == false")
         do {
             let reminders = try context.fetch(request)
             return reminders
@@ -75,6 +74,14 @@ class NotificationHandler : NSObject {
         } catch {
             // TODO: error handling
         }
+    }
+    
+    func updateNotification(with reminder: Reminder) {
+        guard let reminderID = reminder.reminderID else {
+            return
+        }
+        center.removePendingNotificationRequests(withIdentifiers: [reminderID.uuidString])
+        scheduleNotification(with: reminder)
     }
     
     func deleteReminderForEvent(_ eventID: UUID) {
@@ -138,6 +145,25 @@ class NotificationHandler : NSObject {
         } catch {
             // TODO: error handling
         }
+    }
+    
+    func scheduleNotification(with reminder: Reminder) {
+        let content = UNMutableNotificationContent()
+        content.title = reminder.title ?? "No title"
+        content.body = reminder.reminderDescription ?? ""
+        content.categoryIdentifier = "alarm"
+        content.sound = UNNotificationSound.default
+        
+        guard let date = reminder.reminderDate,
+              let reminderID = reminder.reminderID else {
+            return
+        }
+        
+        let dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: false)
+        let request = UNNotificationRequest(identifier: reminderID.uuidString, content: content, trigger: trigger)
+        
+        center.add(request)
     }
     
     private func getDateString(event: Event, date: Date) -> String {

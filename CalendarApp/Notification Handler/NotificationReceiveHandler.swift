@@ -8,14 +8,14 @@
 import Foundation
 import UserNotifications
 
-protocol ReceivedNotificationDelegate {
+protocol ReceivedNotificationDelegate: NSObject {
     func didReceiveNotification(_ notification: UNNotification)
 }
 
 @objcMembers
 class NotificationReceiveHandler : NSObject, UNUserNotificationCenterDelegate {
     private let center = UNUserNotificationCenter.current()
-    public var delegate: ReceivedNotificationDelegate?
+    public weak var delegate: ReceivedNotificationDelegate?
     
     override init() {
         super.init()
