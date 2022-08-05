@@ -57,6 +57,7 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         }
         reminderCell.titleLabel.text = reminders[indexPath.row].title
         reminderCell.descriptionLabel.text = reminders[indexPath.row].reminderDescription
+        cell.layoutIfNeeded()
         return cell
     }
     
