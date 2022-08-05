@@ -13,6 +13,7 @@
 		410A1028287749860023F523 /* ParseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A1027287749860023F523 /* ParseEvent.m */; };
 		410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102A28774BE50023F523 /* ParseEventBuilder.m */; };
 		410A102E287797850023F523 /* ParseEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102D287797850023F523 /* ParseEventHandler.m */; };
+		410F2CB4289CD79E006F35FC /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F2CB3289CD79E006F35FC /* ReminderCell.swift */; };
 		412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A4B287E0F2D0023C9AA /* Details.storyboard */; };
 		412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A52287F388E0023C9AA /* DetailsViewController.m */; };
 		412D3A56287F394D0023C9AA /* DetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A55287F394D0023C9AA /* DetailsView.m */; };
@@ -42,6 +43,7 @@
 		41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF72896E21700760287 /* RemoteChangeBuilder.swift */; };
 		41404AFA2896E22200760287 /* LocalChangeBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41404AF92896E22200760287 /* LocalChangeBuilder.swift */; };
 		4198CD4B289C91800080AD9A /* Reminders.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4198CD4A289C91800080AD9A /* Reminders.storyboard */; };
+		4198CD4D289CA6DB0080AD9A /* RemindersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4198CD4C289CA6DB0080AD9A /* RemindersViewController.swift */; };
 		41AC97DE2891E7E3000FF838 /* TestEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */; };
 		41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */; };
 		41B7F4ED2885FDC800030027 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F4EC2885FDC800030027 /* Event.swift */; };
@@ -111,6 +113,7 @@
 		410A102A28774BE50023F523 /* ParseEventBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEventBuilder.m; sourceTree = "<group>"; };
 		410A102C287797850023F523 /* ParseEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEventHandler.h; sourceTree = "<group>"; };
 		410A102D287797850023F523 /* ParseEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEventHandler.m; sourceTree = "<group>"; };
+		410F2CB3289CD79E006F35FC /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
 		412D3A4B287E0F2D0023C9AA /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		412D3A51287F388E0023C9AA /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		412D3A52287F388E0023C9AA /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
@@ -157,6 +160,7 @@
 		41404AF72896E21700760287 /* RemoteChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteChangeBuilder.swift; sourceTree = "<group>"; };
 		41404AF92896E22200760287 /* LocalChangeBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalChangeBuilder.swift; sourceTree = "<group>"; };
 		4198CD4A289C91800080AD9A /* Reminders.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Reminders.storyboard; sourceTree = "<group>"; };
+		4198CD4C289CA6DB0080AD9A /* RemindersViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemindersViewController.swift; sourceTree = "<group>"; };
 		41AC97DD2891E7E3000FF838 /* TestEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4E82885CFD200030027 /* CalendarEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarEventHandler.swift; sourceTree = "<group>"; };
 		41B7F4EC2885FDC800030027 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -340,6 +344,7 @@
 				41E2CF6D2880CBC60077F173 /* DailyCalendarViewController.swift */,
 				41E2CF7A2880DE930077F173 /* ScheduleViewController.h */,
 				41E2CF7B2880DE930077F173 /* ScheduleViewController.m */,
+				4198CD4C289CA6DB0080AD9A /* RemindersViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -394,6 +399,7 @@
 				412D3A54287F394D0023C9AA /* DetailsView.h */,
 				412D3A55287F394D0023C9AA /* DetailsView.m */,
 				41FDE0682899CBC20090AA93 /* NoteCell.swift */,
+				410F2CB3289CD79E006F35FC /* ReminderCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -768,6 +774,7 @@
 				41B7F559288EFF7900030027 /* FetchEventHandler.m in Sources */,
 				41404AF02894CD7200760287 /* Revision.swift in Sources */,
 				41E2CF7C2880DE930077F173 /* ScheduleViewController.m in Sources */,
+				410F2CB4289CD79E006F35FC /* ReminderCell.swift in Sources */,
 				41B7F544288886DF00030027 /* CoreDataEventHandler.m in Sources */,
 				41E2CF6E2880CBC60077F173 /* DailyCalendarViewController.swift in Sources */,
 				413F41512891DC4C00D0EE6E /* ParseArchivedEvent.m in Sources */,
@@ -780,6 +787,7 @@
 				410A101C287659E40023F523 /* ComposeViewController.m in Sources */,
 				413F41472891BDEC00D0EE6E /* ParseChangeHandler.m in Sources */,
 				41B7F4F12887162B00030027 /* EKEventHandler.m in Sources */,
+				4198CD4D289CA6DB0080AD9A /* RemindersViewController.swift in Sources */,
 				413DE55A287634A700CCF8E1 /* LoginView.m in Sources */,
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				41FDE06C2899CDA70090AA93 /* CoreDataNoteHandler.swift in Sources */,

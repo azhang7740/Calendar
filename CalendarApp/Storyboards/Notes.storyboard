@@ -82,23 +82,24 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <viewLayoutGuide key="safeArea" id="ydA-dU-Sd2"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="WiX-Pm-twA" secondAttribute="trailing" id="AkN-fq-5zu"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="bMD-Yk-18k" secondAttribute="trailing" constant="20" id="J2o-UQ-V5j"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="WiX-Pm-twA" secondAttribute="bottom" id="PQR-NN-dxW"/>
-                            <constraint firstItem="bMD-Yk-18k" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="SFM-sc-70b"/>
-                            <constraint firstItem="bMD-Yk-18k" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="bl4-Mt-gKM"/>
+                            <constraint firstItem="ydA-dU-Sd2" firstAttribute="trailing" secondItem="WiX-Pm-twA" secondAttribute="trailing" id="AkN-fq-5zu"/>
+                            <constraint firstItem="ydA-dU-Sd2" firstAttribute="trailing" secondItem="bMD-Yk-18k" secondAttribute="trailing" constant="20" id="J2o-UQ-V5j"/>
+                            <constraint firstItem="ydA-dU-Sd2" firstAttribute="bottom" secondItem="WiX-Pm-twA" secondAttribute="bottom" id="PQR-NN-dxW"/>
+                            <constraint firstItem="bMD-Yk-18k" firstAttribute="top" secondItem="ydA-dU-Sd2" secondAttribute="top" constant="20" id="SFM-sc-70b"/>
+                            <constraint firstItem="bMD-Yk-18k" firstAttribute="leading" secondItem="ydA-dU-Sd2" secondAttribute="leading" constant="20" id="bl4-Mt-gKM"/>
                             <constraint firstItem="WiX-Pm-twA" firstAttribute="top" secondItem="bMD-Yk-18k" secondAttribute="bottom" constant="10" id="s2e-Ee-mpG"/>
-                            <constraint firstItem="WiX-Pm-twA" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="xSM-Rq-7N7"/>
+                            <constraint firstItem="WiX-Pm-twA" firstAttribute="leading" secondItem="ydA-dU-Sd2" secondAttribute="leading" id="xSM-Rq-7N7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="mYU-6H-QXR">
                         <barButtonItem key="rightBarButtonItem" id="xgg-HO-bYd">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fGS-r6-CxO">
-                                <rect key="frame" x="373" y="11" width="21" height="22"/>
+                                <rect key="frame" x="322" y="10.5" width="72" height="23"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
                                 <connections>
