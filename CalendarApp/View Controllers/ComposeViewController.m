@@ -41,6 +41,11 @@
 }
 
 - (void)setViewDate {
+    self.hasReminder = false;
+    [self.composeView.alertTimePicker setHidden:true];
+    [self.composeView.alertTimeLabel setHidden:true];
+    [self.composeView.descriptionLabelTopConstraint setConstant:20];
+    
     NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     [calendar setTimeZone:[NSTimeZone systemTimeZone]];
     NSDateComponents *dayComponent = [[NSDateComponents alloc] init];

@@ -27,8 +27,19 @@ class NotificationHandler : NSObject {
         }
     }
     
+    func fetchReminderInfo() -> [Reminder] {
+        let request = Reminder.fetchRequest()
+        request.predicate = NSPredicate(format: "archived == false")
+        do {
+            let reminders = try context.fetch(request)
+            return reminders
+        } catch {
+            return [Reminder]()
+        }
+    }
+    
     func updateReminderForEvent(_ event: Event, _ date: Date) {
-        let request = EventReminder.fetchRequest()
+        let request = Reminder.fetchRequest()
         request.predicate = NSPredicate(format: "eventID == %@",
                                         event.objectUUID as CVarArg)
         do {
@@ -48,7 +59,7 @@ class NotificationHandler : NSObject {
     }
     
     func deleteReminderForEvent(_ eventID: UUID) {
-        let request = EventReminder.fetchRequest()
+        let request = Reminder.fetchRequest()
         request.predicate = NSPredicate(format: "eventID == %@",
                                         eventID as CVarArg)
         do {
@@ -67,7 +78,7 @@ class NotificationHandler : NSObject {
     }
     
     func checkReminderForEvent(_ eventID: UUID) -> Date? {
-        let request = EventReminder.fetchRequest()
+        let request = Reminder.fetchRequest()
         request.predicate = NSPredicate(format: "eventID == %@",
                                         eventID as CVarArg)
         do {
@@ -83,7 +94,7 @@ class NotificationHandler : NSObject {
     
     func scheduleNotification(event: Event, date: Date) {
         let content = UNMutableNotificationContent()
-        content.title = event.eventTitle
+        content.title = event.eventTitle + " Event"
         content.body = getDateString(event: event, date: date)
         content.categoryIdentifier = "alarm"
         content.sound = UNNotificationSound.default
@@ -96,10 +107,13 @@ class NotificationHandler : NSObject {
         
         center.add(request)
         
-        let eventReminder = EventReminder(context: context)
+        let eventReminder = Reminder(context: context)
         eventReminder.eventID = event.objectUUID
         eventReminder.reminderID = notificationID
-        eventReminder.reminderDate = date;
+        eventReminder.reminderDate = date
+        eventReminder.archived = false
+        eventReminder.reminderDescription = content.body
+        eventReminder.title = content.title
         do {
             try context.save()
         } catch {
@@ -111,7 +125,7 @@ class NotificationHandler : NSObject {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
         var dateString = "Starting " + dateFormatter.string(from: event.startDate)
-
+        
         let difference = calendar.dateComponents([.day], from: calendar.startOfDay(for: date), to: calendar.startOfDay(for: event.startDate))
         if difference.day == 0 {
             dateString += " today"

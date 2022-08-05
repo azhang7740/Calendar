@@ -10,6 +10,8 @@ import Foundation
 class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ReceivedNotificationDelegate {
     @IBOutlet weak var reminderTableView: UITableView!
     private var receiveHandler: NotificationReceiveHandler?
+    private var reminders = [Reminder]()
+    private let notificationHandler = NotificationHandler()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,17 +23,37 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         receiveHandler?.delegate = self
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        fetchAllReminders()
+        reminderTableView.reloadData()
+    }
+    
+    func fetchAllReminders() {
+        reminders = notificationHandler.fetchReminderInfo()
+        reminders.sort(by: { $0.reminderDate ?? Date() < $1.reminderDate ?? Date() })
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return reminders.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = reminderTableView.dequeueReusableCell(withIdentifier: "ReminderCell", for: indexPath)
         cell.selectionStyle = .none
-        guard let reminderCell = cell as? ReminderCell else {
+        guard let reminderCell = cell as? ReminderCell,
+              indexPath.row < reminders.count else {
             return cell
         }
         
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "M/d/yyyy, h:mm a"
+        if let date = reminders[indexPath.row].reminderDate {
+            reminderCell.dateLabel.text = dateFormatter.string(from:date)
+        }
+        reminderCell.titleLabel.text = reminders[indexPath.row].title
+        reminderCell.descriptionLabel.text = reminders[indexPath.row].reminderDescription
         return cell
     }
     
