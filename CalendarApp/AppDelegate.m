@@ -8,9 +8,8 @@
 #import "AppDelegate.h"
 #import <Parse/Parse.h>
 #import "CalendarApp-Swift.h"
-#import "UserNotifications/UserNotifications.h"
 
-@interface AppDelegate () <UNUserNotificationCenterDelegate>
+@interface AppDelegate ()
 
 @end
 
@@ -29,7 +28,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     }];
 
     [Parse initializeWithConfiguration:config];
-    UNUserNotificationCenter.currentNotificationCenter.delegate = self;
     return YES;
 }
 
@@ -73,12 +71,6 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
         NSLog(@"Unresolved error %@, %@", error, error.userInfo);
         abort();
     }
-}
-
-#pragma mark - UNUserNotificationCenterDelegate
-
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions))completionHandler {
-    completionHandler(UNNotificationPresentationOptionBanner);
 }
 
 @end
