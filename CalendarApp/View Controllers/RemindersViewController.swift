@@ -108,6 +108,10 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
             return
         }
         composeView.delegate = self
+        if let index = reminderIndex,
+           index < reminders.count {
+            composeView.reminder = reminders[index]
+        }
         present(composeNavigation, animated: true)
     }
     
