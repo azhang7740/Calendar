@@ -61,6 +61,8 @@
 		41B7F564288F14BD00030027 /* LocalChange+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */; };
 		41B7F565288F14BD00030027 /* LocalChange+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */; };
 		41B7F56C28904FBD00030027 /* SyncConflictHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */; };
+		41CA021D289D91C5005E55D9 /* ComposeReminder.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 41CA021C289D91C5005E55D9 /* ComposeReminder.storyboard */; };
+		41CA021F289D9247005E55D9 /* ComposeReminderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 41CA021E289D9247005E55D9 /* ComposeReminderViewController.swift */; };
 		41D17EDB28920B1600EE4EEE /* ParseChangeBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */; };
 		41D17EE02892254300EE4EEE /* ParseRevisionBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 41D17EDF2892254300EE4EEE /* ParseRevisionBuilder.m */; };
 		41E2CF642880C9A20077F173 /* Keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 41E2CF632880C9A20077F173 /* Keys.plist */; };
@@ -187,6 +189,8 @@
 		41B7F562288F14BD00030027 /* LocalChange+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalChange+CoreDataClass.swift"; sourceTree = "<group>"; };
 		41B7F563288F14BD00030027 /* LocalChange+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalChange+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		41B7F56B28904FBD00030027 /* SyncConflictHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncConflictHandler.swift; sourceTree = "<group>"; };
+		41CA021C289D91C5005E55D9 /* ComposeReminder.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ComposeReminder.storyboard; sourceTree = "<group>"; };
+		41CA021E289D9247005E55D9 /* ComposeReminderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeReminderViewController.swift; sourceTree = "<group>"; };
 		41D17ED928920B1600EE4EEE /* ParseChangeBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseChangeBuilder.h; sourceTree = "<group>"; };
 		41D17EDA28920B1600EE4EEE /* ParseChangeBuilder.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseChangeBuilder.m; sourceTree = "<group>"; };
 		41D17EDE2892254300EE4EEE /* ParseRevisionBuilder.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseRevisionBuilder.h; sourceTree = "<group>"; };
@@ -347,6 +351,7 @@
 				41E2CF7A2880DE930077F173 /* ScheduleViewController.h */,
 				41E2CF7B2880DE930077F173 /* ScheduleViewController.m */,
 				4198CD4C289CA6DB0080AD9A /* RemindersViewController.swift */,
+				41CA021E289D9247005E55D9 /* ComposeReminderViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -362,6 +367,7 @@
 				41E2CF782880DE500077F173 /* Schedule.storyboard */,
 				41FDE0722899E00A0090AA93 /* ComposeNote.storyboard */,
 				4198CD4A289C91800080AD9A /* Reminders.storyboard */,
+				41CA021C289D91C5005E55D9 /* ComposeReminder.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -633,6 +639,7 @@
 				410A101928764D5C0023F523 /* Compose.storyboard in Resources */,
 				41E2CF642880C9A20077F173 /* Keys.plist in Resources */,
 				412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */,
+				41CA021D289D91C5005E55D9 /* ComposeReminder.storyboard in Resources */,
 				413DE5182874B39400CCF8E1 /* LaunchScreen.storyboard in Resources */,
 				413DE5152874B39400CCF8E1 /* Assets.xcassets in Resources */,
 				413DE5132874B39200CCF8E1 /* Main.storyboard in Resources */,
@@ -795,6 +802,7 @@
 				41B7F4E92885CFD200030027 /* CalendarEventHandler.swift in Sources */,
 				41FDE06C2899CDA70090AA93 /* CoreDataNoteHandler.swift in Sources */,
 				41404AEE2894582C00760287 /* LocalChangeHandler.m in Sources */,
+				41CA021F289D9247005E55D9 /* ComposeReminderViewController.swift in Sources */,
 				412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */,
 				41404AF82896E21700760287 /* RemoteChangeBuilder.swift in Sources */,
 				41FDE0772899E7C50090AA93 /* RightToLeftTransition.swift in Sources */,
