@@ -8,10 +8,14 @@
 import Foundation
 import UserNotifications
 
+protocol ReceivedNotificationDelegate {
+    func didReceiveNotification(_ notification: UNNotification)
+}
+
 @objcMembers
 class NotificationReceiveHandler : NSObject, UNUserNotificationCenterDelegate {
     private let center = UNUserNotificationCenter.current()
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    public var delegate: ReceivedNotificationDelegate?
     
     override init() {
         super.init()
@@ -20,6 +24,7 @@ class NotificationReceiveHandler : NSObject, UNUserNotificationCenterDelegate {
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        delegate?.didReceiveNotification(notification)
         completionHandler([.banner, .list])
     }
 }

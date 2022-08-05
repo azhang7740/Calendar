@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ReceivedNotificationDelegate {
     @IBOutlet weak var reminderTableView: UITableView!
     private var receiveHandler: NotificationReceiveHandler?
     
@@ -18,6 +18,7 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
             return
         }
         receiveHandler = viewController.receiveHandler
+        receiveHandler?.delegate = self
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -52,6 +53,10 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func editReminder(_ index: Int) {
+        
+    }
+    
+    func didReceiveNotification(_ notification: UNNotification) {
         
     }
 }
