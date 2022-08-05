@@ -9,6 +9,16 @@ import Foundation
 
 class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var reminderTableView: UITableView!
+    private var receiveHandler: NotificationReceiveHandler?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        guard let viewController = self.navigationController?.tabBarController?.viewControllers?[0] as? ScheduleViewController else {
+            return
+        }
+        receiveHandler = viewController.receiveHandler
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1

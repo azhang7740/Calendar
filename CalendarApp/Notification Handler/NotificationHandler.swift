@@ -21,8 +21,10 @@ class NotificationHandler : NSObject {
         calendar.timeZone = TimeZone.current
     }
     
-    func registerNotifications() {
-        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in }
+    func registerNotifications(with completion: @escaping() -> Void) {
+        center.requestAuthorization(options: [.alert, .badge, .sound]) { (granted, error) in
+            completion()
+        }
     }
     
     func updateReminderForEvent(_ event: Event, _ date: Date) {

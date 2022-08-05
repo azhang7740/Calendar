@@ -14,6 +14,7 @@
 		410A102B28774BE50023F523 /* ParseEventBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102A28774BE50023F523 /* ParseEventBuilder.m */; };
 		410A102E287797850023F523 /* ParseEventHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 410A102D287797850023F523 /* ParseEventHandler.m */; };
 		410F2CB4289CD79E006F35FC /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F2CB3289CD79E006F35FC /* ReminderCell.swift */; };
+		410F2CB8289D82B2006F35FC /* NotificationReceiveHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 410F2CB7289D82B2006F35FC /* NotificationReceiveHandler.swift */; };
 		412D3A4C287E0F2D0023C9AA /* Details.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 412D3A4B287E0F2D0023C9AA /* Details.storyboard */; };
 		412D3A53287F388E0023C9AA /* DetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A52287F388E0023C9AA /* DetailsViewController.m */; };
 		412D3A56287F394D0023C9AA /* DetailsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 412D3A55287F394D0023C9AA /* DetailsView.m */; };
@@ -114,6 +115,7 @@
 		410A102C287797850023F523 /* ParseEventHandler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ParseEventHandler.h; sourceTree = "<group>"; };
 		410A102D287797850023F523 /* ParseEventHandler.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ParseEventHandler.m; sourceTree = "<group>"; };
 		410F2CB3289CD79E006F35FC /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
+		410F2CB7289D82B2006F35FC /* NotificationReceiveHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationReceiveHandler.swift; sourceTree = "<group>"; };
 		412D3A4B287E0F2D0023C9AA /* Details.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Details.storyboard; sourceTree = "<group>"; };
 		412D3A51287F388E0023C9AA /* DetailsViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailsViewController.h; sourceTree = "<group>"; };
 		412D3A52287F388E0023C9AA /* DetailsViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailsViewController.m; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				41FDE07C289C76AA0090AA93 /* NotificationHandler.swift */,
+				410F2CB7289D82B2006F35FC /* NotificationReceiveHandler.swift */,
 			);
 			path = "Notification Handler";
 			sourceTree = "<group>";
@@ -805,6 +808,7 @@
 				41FDE07D289C76AA0090AA93 /* NotificationHandler.swift in Sources */,
 				412D3A56287F394D0023C9AA /* DetailsView.m in Sources */,
 				41FDE0692899CBC20090AA93 /* NoteCell.swift in Sources */,
+				410F2CB8289D82B2006F35FC /* NotificationReceiveHandler.swift in Sources */,
 				413F414E2891DBDF00D0EE6E /* ParseChange.m in Sources */,
 				41404AF42894FA1E00760287 /* UpdateBuilder.swift in Sources */,
 				413F41432891A40E00D0EE6E /* NSDate+Midnight.m in Sources */,

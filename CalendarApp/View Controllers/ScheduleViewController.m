@@ -42,7 +42,9 @@ RemoteEventUpdates>
                                    remoteChangeDelegate:self];
     self.appleEventHandler = [[EKEventHandler alloc] init];
     self.notificationHandler = [[NotificationHandler alloc] init];
-    [self.notificationHandler registerNotifications];
+    [self.notificationHandler registerNotificationsWith:^{
+        self.receiveHandler = [[NotificationReceiveHandler alloc] init];
+    }];
     
     self.authenticationHandler = [[AuthenticationHandler alloc] init];
     self.objectIDToEvents = [[NSMutableDictionary alloc] init];

@@ -81,8 +81,4 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     completionHandler(UNNotificationPresentationOptionBanner);
 }
 
-- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void (^)(void))completionHandler {
-    
-}
-
 @end
