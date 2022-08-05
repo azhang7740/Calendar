@@ -7,7 +7,7 @@
 
 import Foundation
 
-class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ReceivedNotificationDelegate {
+class RemindersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, ReceivedNotificationDelegate, ComposeReminderDelegate {
     @IBOutlet weak var reminderTableView: UITableView!
     private var receiveHandler: NotificationReceiveHandler?
     private var reminders = [Reminder]()
@@ -77,6 +77,10 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
         return UISwipeActionsConfiguration(actions: [delete, edit])
     }
     
+    @IBAction func onTapCompose(_ sender: Any) {
+        transitionToCompose(with: nil)
+    }
+    
     func deleteReminder(_ index: Int) {
         guard index < reminders.count,
                 let reminderID = reminders[index].reminderID else {
@@ -88,10 +92,30 @@ class RemindersViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func editReminder(_ index: Int) {
-        
+        transitionToCompose(with: index)
     }
     
     func didReceiveNotification(_ notification: UNNotification) {
         reminderTableView.reloadData()
+    }
+    
+    func transitionToCompose(with reminderIndex: Int?) {
+        let storyboard = UIStoryboard(name: "ComposeReminder", bundle: .main)
+        guard let composeNavigation = storyboard.instantiateViewController(withIdentifier: "ComposeReminderNavigation") as? UINavigationController else {
+            return
+        }
+        guard let composeView = composeNavigation.topViewController as? ComposeReminderViewController else {
+            return
+        }
+        composeView.delegate = self
+        present(composeNavigation, animated: true)
+    }
+    
+    func didTapDone(reminder: Reminder, index: Int?) {
+        
+    }
+    
+    func didTapCancel() {
+        dismiss(animated: true)
     }
 }

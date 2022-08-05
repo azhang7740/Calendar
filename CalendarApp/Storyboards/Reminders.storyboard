@@ -98,6 +98,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" image="plus" catalog="system"/>
+                                <connections>
+                                    <action selector="onTapCompose:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="XF9-NO-mu8"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>

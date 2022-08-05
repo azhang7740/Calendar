@@ -7,9 +7,16 @@
 
 import Foundation
 
+protocol ComposeReminderDelegate: NSObject {
+    func didTapDone(reminder: Reminder, index: Int?);
+    func didTapCancel();
+}
+
 class ComposeReminderViewController: UIViewController {
     public var reminder: Reminder?
     private let notificationHandler = NotificationHandler()
+    public var selectedIndex: Int?
+    public weak var delegate: ComposeReminderDelegate?
     
     
 }
