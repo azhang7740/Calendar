@@ -25,14 +25,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Cancel"/>
+                                <connections>
+                                    <action selector="onTapCancel:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="Gsi-TM-cKx"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="tNs-yH-RBL">
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="dGd-Ui-cMN">
-                                <rect key="frame" x="-33" y="-15" width="92" height="34"/>
+                                <rect key="frame" x="302" y="5" width="92" height="34.5"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Done"/>
+                                <connections>
+                                    <action selector="onTapDone:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="XSU-v3-VGc"/>
+                                </connections>
                             </button>
                         </barButtonItem>
                     </navigationItem>
