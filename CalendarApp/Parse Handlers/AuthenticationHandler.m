@@ -100,6 +100,14 @@
     
     [[UNUserNotificationCenter currentNotificationCenter] removeAllDeliveredNotifications];
     [[UNUserNotificationCenter currentNotificationCenter] removeAllPendingNotificationRequests];
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+    NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+    dayComponent.day = -30;
+    NSDate *monthAgoDate = [calendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
+    
+    [NSUserDefaults.standardUserDefaults setObject:monthAgoDate forKey:@"lastUpdated"];
 }
 
 @end
