@@ -56,15 +56,7 @@
     }
     self.isOffline = false;
     self.isSynced = true;
-    NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
-    if (!lastUpdated) {
-        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
-        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
-        NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
-        dayComponent.day = -30;
-        lastUpdated = [calendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
-    }
-    [self.parseChangeHandler queryChangesAfterUpdateDate:lastUpdated
+    [self.parseChangeHandler queryChangesAfterUpdateDate:[self getQueryDate]
                                               completion:^(BOOL success,
                                                            NSMutableArray <NSArray<RemoteChange *> *> * _Nullable revisionHistories,
                                                            NSString * _Nullable error) {
@@ -77,6 +69,18 @@
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
     }];
+}
+
+- (NSDate *)getQueryDate {
+    NSDate *lastUpdated = [self.userData objectForKey:@"lastUpdated"];
+    if (!lastUpdated) {
+        NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+        [calendar setTimeZone:[NSTimeZone systemTimeZone]];
+        NSDateComponents *dayComponent = [[NSDateComponents alloc] init];
+        dayComponent.day = -30;
+        lastUpdated = [calendar dateByAddingComponents:dayComponent toDate:[NSDate date] options:0];
+    }
+    return lastUpdated;
 }
 
 - (void)didChangeOffline {
