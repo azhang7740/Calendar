@@ -64,7 +64,7 @@ class SyncConflictHandler : NSObject {
               let eventID = change.eventID,
               coreDataEventHandler.queryEvent(from: eventID) != nil
         else {
-            processUpdateChanges(eventChanges: changes)
+            applyLocalRemoteUpdates(with: changes)
             return
         }
         
@@ -73,6 +73,34 @@ class SyncConflictHandler : NSObject {
         } else if change.changeType == .Delete {
             deleteEvent(change: change)
         }
+    }
+    
+    private func applyLocalRemoteUpdates(with changes: [Revision]) {
+        guard changes.count == 0,
+              let change = changes.first,
+              let eventID = change.eventID
+        else {
+            return
+        }
+        
+        guard var event = coreDataEventHandler.queryEvent(from: eventID)
+        else {
+            delegate?.createdEventOnRemote(eventID: eventID)
+            return
+        }
+        
+        var changeFieldMap = [ChangeField: Revision]()
+        changes.forEach { change in
+            if let previousChange = changeFieldMap[change.changeField] {
+                deletePreviousRevision(change: previousChange)
+            }
+            changeFieldMap[change.changeField] = change
+            event = applyChange(event: event, change: change)
+        }
+        
+        delegate?.updatedEventOnRemote(event: event)
+        delegate?.syncUpdateToParse(event: event)
+        syncChangesToParse(eventChanges: changes)
     }
     
     private func syncLocalUpdates() {
@@ -97,32 +125,6 @@ class SyncConflictHandler : NSObject {
                                             remoteChange: getRemoteChange(localChange: change))
             }
         }
-    }
-    
-    private func processUpdateChanges(eventChanges: [Revision]) {
-        if eventChanges.count == 0 {
-            return
-        }
-        guard let eventID = eventChanges[0].eventID else {
-            return
-        }
-        guard var event = coreDataEventHandler.queryEvent(from: eventID) else {
-            delegate?.createdEventOnRemote(eventID: eventID)
-            return
-        }
-        var changeFieldMap = [ChangeField: Int]()
-        for (index, change) in eventChanges.enumerated() {
-            if let previousChangeIndex = changeFieldMap[change.changeField] {
-                deletePreviousRevision(change: eventChanges[previousChangeIndex])
-                changeFieldMap[change.changeField] = index
-            } else {
-                changeFieldMap[change.changeField] = index
-            }
-            event = applyChange(event: event, change: change)
-        }
-        delegate?.updatedEventOnRemote(event: event)
-        delegate?.syncUpdateToParse(event: event)
-        syncChangesToParse(eventChanges: eventChanges)
     }
     
     private func syncChangesToParse(eventChanges: [Revision]) {
