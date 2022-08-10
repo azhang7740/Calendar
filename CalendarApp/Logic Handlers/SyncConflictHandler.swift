@@ -183,12 +183,14 @@ class SyncConflictHandler : NSObject {
     
     private func deleteEvent(change: Revision) {
         if let remoteDelete = change as? RemoteChange {
-            guard let eventUUID = remoteDelete.eventID else {
+            guard let eventUUID = remoteDelete.eventID
+            else {
                 return
             }
             delegate?.deletedEventOnRemote(eventID: eventUUID)
         } else if let localDelete = change as? LocalChange {
-            guard let eventID = localDelete.eventID else {
+            guard let eventID = localDelete.eventID
+            else {
                 return
             }
             delegate?.syncDeleteToParse(
@@ -200,13 +202,15 @@ class SyncConflictHandler : NSObject {
     
     private func createNewEvent(change: Revision) {
         if let remoteCreate = change as? RemoteChange {
-            guard let eventUUID = remoteCreate.eventID else {
+            guard let eventUUID = remoteCreate.eventID
+            else {
                 return
             }
             delegate?.createdEventOnRemote(eventID: eventUUID)
         } else if let localCreate = change as? LocalChange {
             guard let eventID = localCreate.eventID,
-                  let event = coreDataEventHandler.queryEvent(from: eventID) else {
+                  let event = coreDataEventHandler.queryEvent(from: eventID)
+            else {
                 return
             }
             delegate?.syncNewEventToParse(
@@ -218,7 +222,8 @@ class SyncConflictHandler : NSObject {
     
     private func deletePreviousRevision(change: Revision) {
         if let remoteChange = change as? RemoteChange {
-            guard let parseID = remoteChange.parseID else {
+            guard let parseID = remoteChange.parseID
+            else {
                 return
             }
             parseChangeHandler.deleteParseChange(parseID) { success, error in
