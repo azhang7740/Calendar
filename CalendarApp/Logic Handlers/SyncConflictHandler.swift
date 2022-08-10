@@ -22,21 +22,57 @@ public protocol SyncChangesDelegate {
 @objcMembers
 class SyncConflictHandler : NSObject {
     weak var delegate: SyncChangesDelegate?
-    private var revisionHistories: [[Revision]]
     private let localChangeHandler = LocalChangeHandler()
     private let parseChangeHandler = ParseChangeHandler()
     private let coreDataEventHandler = CoreDataEventHandler()
     
-    init(histories: [[RemoteChange]]) {
-        revisionHistories = histories
-    }
-    
-    func syncChanges() {
-        addLocalChanges()
-        checkChanges()
+    func syncChanges(remoteChanges: [[RemoteChange]]) {
+        let allChanges = getChangesForEvents(with: remoteChanges)
+        applyAllLocalRemoteChanges(with: allChanges)
         syncLocalCreatesDeletes()
         syncLocalUpdates()
         localChangeHandler.deleteAllLocalChanges()
+    }
+    
+    private func getChangesForEvents(with remoteChanges: [[RemoteChange]]) -> [[Revision]] {
+        var changes = remoteChanges as [[Revision]]
+        remoteChanges.forEach { eventChanges in
+            if eventChanges.count > 0,
+               let eventID = eventChanges.first?.eventID {
+                var combinedEventChanges = eventChanges as [Revision]
+                let localChanges = localChangeHandler.fetchLocalChanges(forEvent: eventID)
+                if localChanges.count > 0,
+                   localChanges.first?.changeType == .Delete {
+                    combinedEventChanges.append(contentsOf: localChanges)
+                    combinedEventChanges.sort(by: { $0.timestamp < $1.timestamp })
+                    changes.append(combinedEventChanges)
+                }
+            }
+        }
+        return changes
+    }
+    
+    private func applyAllLocalRemoteChanges(with changes: [[Revision]]) {
+        changes.forEach { change in
+            applyChanges(with: change)
+        }
+    }
+    
+    private func applyChanges(with changes: [Revision]) {
+        guard changes.count == 1,
+              let change = changes.first,
+              let eventID = change.eventID,
+              coreDataEventHandler.queryEvent(from: eventID) != nil
+        else {
+            processUpdateChanges(eventChanges: changes)
+            return
+        }
+        
+        if change.changeType == .Create {
+            createNewEvent(change: change)
+        } else if change.changeType == .Delete {
+            deleteEvent(change: change)
+        }
     }
     
     private func syncLocalUpdates() {
@@ -59,45 +95,6 @@ class SyncConflictHandler : NSObject {
                 }
                 delegate?.syncDeleteToParse(event: eventID.uuidString,
                                             remoteChange: getRemoteChange(localChange: change))
-            }
-        }
-    }
-    
-    private func addLocalChanges() {
-        if (revisionHistories.count == 0) {
-            return
-        }
-        for historyIndex in 0...revisionHistories.count - 1 {
-            guard let eventID = revisionHistories[historyIndex][0].eventID else {
-                break
-            }
-            let localChanges = localChangeHandler.fetchLocalChanges(forEvent: eventID)
-            if localChanges.count == 1,
-               localChanges[0].changeType == .Delete {
-                revisionHistories[historyIndex] = []
-            } else {
-                revisionHistories[historyIndex].append(contentsOf: localChanges)
-                revisionHistories[historyIndex].sort(by: { $0.timestamp < $1.timestamp })
-            }
-        }
-    }
-    
-    private func checkChanges() {
-        for eventHistory in revisionHistories {
-            if eventHistory.count == 1,
-                let eventID = eventHistory[0].eventID,
-                eventHistory[0].changeType == .Create {
-                if coreDataEventHandler.queryEvent(from: eventID) == nil {
-                    createNewEvent(change: eventHistory[0])
-                }
-            } else if eventHistory.count == 1,
-                        let eventID = eventHistory[0].eventID,
-                        eventHistory[0].changeType == .Delete {
-                if coreDataEventHandler.queryEvent(from: eventID) != nil {
-                    deleteEvent(change: eventHistory[0])
-                }
-            } else {
-                processUpdateChanges(eventChanges: eventHistory)
             }
         }
     }

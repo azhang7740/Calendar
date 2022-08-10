@@ -63,9 +63,9 @@
         if (!success) {
             // TODO: Error handling
         } else {
-            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] initWithHistories:revisionHistories];
+            SyncConflictHandler *conflictHandler = [[SyncConflictHandler alloc] init];
             conflictHandler.delegate = self;
-            [conflictHandler syncChanges];
+            [conflictHandler syncChangesWithRemoteChanges:revisionHistories];
             [self.userData setObject:[NSDate date] forKey:@"lastUpdated"];
         }
     }];
