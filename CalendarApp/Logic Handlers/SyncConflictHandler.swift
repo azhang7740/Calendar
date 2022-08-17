@@ -40,10 +40,10 @@ class SyncConflictHandler : NSObject {
         remoteChanges.forEach { eventChanges in
             if eventChanges.count > 0,
                let eventID = eventChanges.first?.eventID {
-                var combinedEventChanges = eventChanges as [Revision]
                 let localChanges = localChangeHandler.fetchLocalChanges(forEvent: eventID)
-                if localChanges.count > 0,
-                   localChanges.first?.changeType == .Delete {
+                if localChanges.count != 1 ||
+                   localChanges.first?.changeType != .Delete {
+                    var combinedEventChanges = eventChanges as [Revision]
                     combinedEventChanges.append(contentsOf: localChanges)
                     combinedEventChanges.sort(by: { $0.timestamp < $1.timestamp })
                     changes.append(combinedEventChanges)
@@ -77,7 +77,7 @@ class SyncConflictHandler : NSObject {
     }
     
     private func applyLocalRemoteUpdates(with changes: [Revision]) {
-        guard changes.count == 0,
+        guard changes.count != 0,
               let change = changes.first,
               let eventID = change.eventID
         else {
